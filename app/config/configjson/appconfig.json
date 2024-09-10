@@ -1,0 +1,49 @@
+{
+    "data": {
+            "app_config":{
+            "app_name":"临沂网格化"
+            },
+            "pollutant_config":[
+            {"name":"AQI","code":"AQI","unit":""},
+            {"name":"PM25","code":"a34004","unit":"ug/m3"},
+            {"name":"PM10","code":"a34002","unit":"ug/m3"},
+            {"name":"NO2","code":"a21004","unit":"ug/m3"},
+            {"name":"SO2","code":"a21026","unit":"ug/m3"},
+            {"name":"CO","code":"a21005","unit":"mg/m3"},
+            {"name":"O3","code":"a05024","unit":"ug/m3"},
+            {"name":"TVOC","code":"a99054","unit":"ug/m3"}
+            ],
+            "equipment_config":[
+            {"name":"六参数微型站","code":"30","image":""},
+            {"name":"六参数及VOC","code":"35","image":""},
+            {"name":"国控点","code":"23","image":""},
+            {"name":"省控点","code":"24","image":""},
+            {"name":"市控点","code":"25","image":""}
+            ],
+            "grid_type_config":[
+            {"name":"敏感目标","code":"30"},
+            {"name":"道路网格","code":"35"}
+            ],
+            "map_config":{
+            "region_name":"武汉市",
+            "region_code":"12213164",
+            "map_default_center":{"lat":35.103663,"lng":118.356618},
+            "map_default_level":12,
+            "map_default_range":{
+            "min":{"lat":34.327786,"lng":117.394222},
+            "max":{"lat":36.180897,"Lng":119.214348}},
+            "map_tendency_img_range":{
+            "min":{"lat":34.3776250003,"lng":116.70123},
+            "max":{"lat":36.2068410004,"lng":119.911327}}},
+            "url":{
+            "knowledge_url":"http://61.50.135.114:8031/webgrid/development/h5/Knowledge.html",
+            "map_tendency_img_url":"http://61.50.135.114:4047/LinYi",
+            "image_url":"https://api.chsdl.cn/GridWebApi/WebGrid_Api/upload",
+            "report_url":"https://api.chsdl.cn/GridWebApi/WebGrid_Api/upload"
+            }
+    },
+    "operation": "Post",
+    "reason": "验证成功",
+    "requstresult": "1",
+    "total": 0
+}

@@ -1,0 +1,25 @@
+{
+    "data": {
+        "stats": [{ "code": "01", "name": "在线" }, { "code": "02", "name": "离线" }, { "code": "03", "name": "全部" }],
+        "integrity": [{ "code": "01", "name": "已确认" }, { "code": "02", "name": "未确认" }, { "code": "03", "name": "全部" }],
+        "person": [{ "code": "01", "name": "全部" }, { "code": "02", "name": "张三" }, { "code": "03", "name": "李四" }, { "code": "04", "name": "王五" }],
+        "flatlistData": [
+            { "MN": "dust0001801151", "pointName": "山西澳瑞特健康产业股份有限公司", "person": "张三", "stats": "正常", "integrity": "完整" },
+            { "MN": "dust0001801168", "pointName": "长治学院-附属太行中学", "person": "张三", "stats": "正常", "integrity": "欠缺" },
+            { "MN": "dust0001801168", "pointName": "老顶山镇社会治安综合治理委员会", "person": "王五", "stats": "正常", "integrity": "完整" },
+            { "MN": "dust0001801168", "pointName": "山西省农村信用社长治市郊区联社", "person": "李四", "stats": "正常", "integrity": "完整" },
+            { "MN": "dust0001801151", "pointName": "山西澳瑞特健康产业股份有限公司", "person": "张三", "stats": "正常", "integrity": "欠缺" },
+            { "MN": "dust0001801168", "pointName": "长治学院-附属太行中学", "person": "张三", "stats": "正常", "integrity": "完整" },
+            { "MN": "dust0001801168", "pointName": "老顶山镇社会治安综合治理委员会", "person": "张三", "stats": "正常", "integrity": "完整" },
+            { "MN": "dust0001801168", "pointName": "山西省农村信用社长治市郊区联社", "person": "王五", "stats": "正常", "integrity": "完整" },
+            { "MN": "dust0001801151", "pointName": "山西澳瑞特健康产业股份有限公司", "person": "李四", "stats": "正常", "integrity": "欠缺" },
+            { "MN": "dust0001801168", "pointName": "长治学院-附属太行中学", "person": "张三", "stats": "正常", "integrity": "完整" },
+            { "MN": "dust0001801168", "pointName": "老顶山镇社会治安综合治理委员会", "person": "张三", "stats": "正常", "integrity": "完整" },
+            { "MN": "dust0001801168", "pointName": "山西省农村信用社长治市郊区联社", "person": "张三", "stats": "正常", "integrity": "欠缺" },
+            { "MN": "dust0001801151", "pointName": "山西澳瑞特健康产业股份有限公司", "person": "李四", "stats": "正常", "integrity": "完整" },
+            { "MN": "dust0001801168", "pointName": "长治学院-附属太行中学", "person": "张三", "stats": "正常", "integrity": "完整" },
+            { "MN": "dust0001801168", "pointName": "老顶山镇社会治安综合治理委员会", "person": "张三", "stats": "正常", "integrity": "完整" },
+            { "MN": "dust0001801168", "pointName": "山西省农村信用社长治市郊区联社", "person": "王五", "stats": "正常", "integrity": "欠缺" }
+        ]
+    }
+}
