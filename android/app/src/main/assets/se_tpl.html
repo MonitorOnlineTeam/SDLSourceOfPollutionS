@@ -2206,10 +2206,6 @@
       }(Eventful));
       each(['click', 'mousedown', 'mouseup', 'mousewheel', 'dblclick', 'contextmenu'], function (name) {
         Handler.prototype[name] = function (event) {
-        window.postMessage(JSON.stringify({"types":"ON_PRESS","payload": 'test'}));
-        alert('click1');
-        window.postMessage('ON_PRESS','test');
-        alert('click2');
           var x = event.zrX;
           var y = event.zrY;
           var isOutside = isOutsideBoundary(this, x, y);

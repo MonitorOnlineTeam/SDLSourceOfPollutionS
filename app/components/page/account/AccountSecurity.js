@@ -19,27 +19,27 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
     ResetPwdInfo: app.ResetPwdInfo,
     user: app.user,
     Complexity: account.Complexity,
-    loading: loading.effects['app/ResetPwd']
+    // loading: loading.effects['app/ResetPwd']
 }))
 class AccountSecurity extends PureComponent {
-    static navigationOptions = ({ navigation }) => {
-        const user = getToken();
-        let pwdSimple = typeof user.Complexity == 'boolean' && !user.Complexity;
-        // console.log('AccountSecurity user = ',user);
-        // console.log('AccountSecurity pwdSimple = ',pwdSimple);
-        // console.log('AccountSecurity Complexity = ',(typeof user.Complexity == 'boolean' && !user.Complexity));
-        // if (pwdSimple&&false) {
-        if (pwdSimple) {
-            return createNavigationOptions({
-                title: '账户安全'
-            });
-        } else {
-            return createNavigationOptions({
-                title: '账户安全',
-                headerTitleStyle: { flex: 1, textAlign: 'center', fontSize: 17, marginRight: Platform.OS === 'android' ? 76 : 0 } //标题居中
-            });
-        }
-    };
+    // static navigationOptions = ({ navigation }) => {
+    //     const user = getToken();
+    //     let pwdSimple = typeof user.Complexity == 'boolean' && !user.Complexity;
+    //     // console.log('AccountSecurity user = ',user);
+    //     // console.log('AccountSecurity pwdSimple = ',pwdSimple);
+    //     // console.log('AccountSecurity Complexity = ',(typeof user.Complexity == 'boolean' && !user.Complexity));
+    //     // if (pwdSimple&&false) {
+    //     if (pwdSimple) {
+    //         return createNavigationOptions({
+    //             title: '账户安全'
+    //         });
+    //     } else {
+    //         return createNavigationOptions({
+    //             title: '账户安全',
+    //             headerTitleStyle: { flex: 1, textAlign: 'center', fontSize: 17, marginRight: Platform.OS === 'android' ? 76 : 0 } //标题居中
+    //         });
+    //     }
+    // };
 
     constructor(props) {
         super(props);

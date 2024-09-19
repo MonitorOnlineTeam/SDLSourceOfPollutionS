@@ -1,8 +1,8 @@
 /*
  * @Description: 
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2023-09-12 11:31:23
- * @LastEditTime: 2023-09-13 15:47:38
+ * @LastEditTime: 2024-09-12 18:31:07
  * @FilePath: /SDLMainProject36/app/pOperationContainers/tabView/chengTaoXiaoXi/NormalMessageDetail.js
  */
 import React, { Component } from 'react'
@@ -12,13 +12,17 @@ import { createNavigationOptions, SentencedToEmpty } from '../../../utils';
 
 export default class NormalMessageDetail extends Component {
     
-    static navigationOptions = ({ navigation }) => {
-        return createNavigationOptions({
-            title: SentencedToEmpty(navigation,['state','params','viewTitle'],'消息'),
-            headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 },
-        });
-    };
-
+    // static navigationOptions = ({ navigation }) => {
+    //     return createNavigationOptions({
+    //         title: SentencedToEmpty(navigation,['state','params','viewTitle'],'消息'),
+    //         headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 },
+    //     });
+    // };
+    componentDidMount(){
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(this.props.route,['params','params','viewTitle'],'消息'),
+          });
+    }
     render() {
         return (
             <View style={[{width:SCREEN_WIDTH,flex:1}]}>
@@ -31,8 +35,8 @@ export default class NormalMessageDetail extends Component {
                             , width:SCREEN_WIDTH-40
                         }]}
                     >
-                        {`${SentencedToEmpty(this.props
-                            , ['navigation','state','params','title']
+                       {`${SentencedToEmpty(this.props
+                            , ['route','params','params','title']
                             , '消息标题'
                         )}`}
                     </Text>
@@ -48,7 +52,7 @@ export default class NormalMessageDetail extends Component {
                             , justifyContent:'center'
                         }]}>
                             <Text>{`消息时间:${SentencedToEmpty(this.props
-                                , ['navigation','state','params','dateTime']
+                                , ['route','params','params','dateTime']
                                 , '----'
                             )}`}</Text>
                         </View>
@@ -59,7 +63,7 @@ export default class NormalMessageDetail extends Component {
                             , justifyContent:'center'
                         }]}>
                             <Text>{`推送时间:${SentencedToEmpty(this.props
-                                , ['navigation','state','params','PushTime']
+                                , ['route','params','params','PushTime']
                                 , '----'
                             )}`}</Text>
                         </View>
@@ -83,7 +87,7 @@ export default class NormalMessageDetail extends Component {
                         , color:'#666666', lineHeight:19, marginVertical:12
                     }]}>
                         {`${SentencedToEmpty(this.props
-                        , ['navigation','state','params','Msg']
+                        , ['route','params','params','Msg']
                         , '消息内容'
                     )}`}
                     </Text>

@@ -12,10 +12,10 @@ import { createNavigationOptions } from '../../../utils';
 
 export default class DownLoadAPP extends Component {
 
-    static navigationOptions = ({ navigation }) => createNavigationOptions({
-        title: '下载应用',
-        headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-    });
+    // static navigationOptions = ({ navigation }) => createNavigationOptions({
+    //     title: '下载应用',
+    //     headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
+    // });
 
     render() {
         return (

@@ -1,8 +1,8 @@
 /*
  * @Description:主页 tabview
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2023-08-09 11:24:20
- * @LastEditTime: 2024-09-05 14:12:33
+ * @LastEditTime: 2024-09-12 09:58:45
  * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/MyTabView.js
  */
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -45,7 +45,7 @@ export default function MyTab() {
             ChengTaoXiaoXi.name = 'chengTaoXiaoXi';
             tabviews.push({
                 view: ChengTaoXiaoXi, options: {
-                    title: '工作台',
+                    title: '消息',
                     headerStyle: {
                         backgroundColor: globalcolor.headerBackgroundColor,
                     },

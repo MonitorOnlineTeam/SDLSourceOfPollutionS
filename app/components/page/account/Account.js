@@ -8,6 +8,7 @@ import { VersionInfo } from '../../../config/globalconst';
 import { Touchable } from '../../../components';
 import { AccountConfig, UrlInfo, CURRENT_PROJECT } from '../../../config/globalconst';
 import color from '../../../config/globalcolor';
+import { Alert } from '../../../../node_modules/react-native/types/index';
 // import { jumpSystem } from 'react-native-alipush';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -139,13 +140,9 @@ class Account extends PureComponent {
         } else if (routeName == 'logout') {
             console.log('clickItem logout');
             this.props.dispatch(createAction('login/logout')());
-        } else if (routeName == 'pushSetting') {
-            if (Platform.OS == 'ios') {
+        } else if (routeName == 'PushSetting' && Platform.OS == 'ios') {
                 console.log('ios 插件未添加');
                 // jumpSystem();
-            } else {
-                this.props.dispatch(NavigationActions.navigate({ routeName: 'pushSetting' }));
-            }
         } else {
             this.props.dispatch(NavigationActions.navigate({ routeName: routeName, params: params }));
         }

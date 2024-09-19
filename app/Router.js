@@ -1,8 +1,8 @@
 /*
  * @Description: 
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2024-09-19 17:03:42
+ * @LastEditTime: 2024-09-19 18:15:55
  * @FilePath: /SDLMainProject/app/Router.js
  */
 import { View, Text, TouchableOpacity } from 'react-native'
@@ -59,6 +59,21 @@ import MissAlarm from './pOperationContainers/tabView/workbench/MissAlarm';
 import AlarmRecords from './pollutionContainers/pointDetails/AlarmRecords';
 // import Login from './components/page/login/Login';
 // const dispatch = useDispatch();
+
+/* jab */
+import ServiceDispatchMessage from './pOperationContainers/tabView/chengTaoXiaoXi/ServiceDispatchMessage';
+import NormalMessageDetail from './pOperationContainers/tabView/chengTaoXiaoXi/NormalMessageDetail';
+import PerformanceDetail from './pOperationContainers/tabView/workbench/PerformanceDetail';
+import SuperviseRectifyDetail from './pOperationContainers/tabView/workbench/SuperviseRectifyDetail';
+import ServiceReminderInfoDetail from './pOperationContainers/tabView/workbench/ServiceReminderInfoDetail';
+import ReviewWorkOrderStatistics from './pOperationContainers/tabView/workbench/ReviewWorkOrderStatistics';
+// import ChengTaoTaskDetail from './pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoTaskDetail';
+import HelpCenter from './components/page/account/HelpCenter';
+import DownLoadAPP from './components/page/account/DownLoadAPP';
+import OperaStaffInfo from './pollutionContainers/pointDetails/OperaStaffInfo';
+import AccountSecurity from './components/page/account/AccountSecurity';
+import PushSetting from './components/page/account/PushSetting';
+// import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
 function Test() {
     return (
         <View>
@@ -156,6 +171,24 @@ Actions.pushViewWithName(OverAlarm, 'OverAlarm', { title: '超标报警' });
 Actions.pushViewWithName(ExceptionAlarm, 'ExceptionAlarm', { title: '异常报警' });
 Actions.pushViewWithName(MissAlarm, 'MissAlarm', { title: '异常报警' });
 Actions.pushViewWithName(AlarmRecords, 'AlarmRecords', { title: '报警详情' });
+
+/* jab */
+// 消息中心
+Actions.pushViewWithName(ServiceDispatchMessage, 'ServiceDispatchMessage');
+Actions.pushViewWithName(NormalMessageDetail, 'NormalMessageDetail');//  成套通用消息详情
+Actions.pushViewWithName(SuperviseRectifyDetail, 'SuperviseRectifyDetail', { title: '督查结果' });//督查整改详情
+Actions.pushViewWithName(PerformanceDetail, 'PerformanceDetail', { title: '绩效消息' });//绩效消息详情
+Actions.pushViewWithName(ReviewWorkOrderStatistics, 'ReviewWorkOrderStatistics');//绩效消息-审核工单统计详情
+Actions.pushViewWithName(ServiceReminderInfoDetail, 'ServiceReminderInfoDetail', { title: '服务提醒' });// 服务提醒详情
+// Actions.pushViewWithName(ChengTaoTaskDetail, 'ChengTaoTaskDetail', { title: '派单详情' });// 成套派单详情
+// 我的
+Actions.pushViewWithName(HelpCenter, 'HelpCenter', { title: '帮助中心' }); //帮助中心
+Actions.pushViewWithName(DownLoadAPP, 'DownLoadAPP', { title: '下载应用' }); //下载应用
+Actions.pushViewWithName(OperaStaffInfo, 'OperaStaffInfo', { title: '我的证书' }); //查看运维人员信息
+Actions.pushViewWithName(AccountSecurity, 'AccountSecurity', { title: '账户与安全' }); //下载应用
+Actions.pushViewWithName(PushSetting, 'PushSetting', { title: '推送设置' }); //推送设置
+// Actions.pushViewWithName(OfflineImageUploadList, 'OfflineImageUploadList', { title: '离线图片上传' }); //离线图片上传
+
 
 
 Actions.pushView(Test, { headerShown: false });
