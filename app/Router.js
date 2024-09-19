@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2024-09-19 18:10:44
+ * @LastEditTime: 2024-09-19 18:15:55
  * @FilePath: /SDLMainProject/app/Router.js
  */
 import { View, Text, TouchableOpacity } from 'react-native'
@@ -60,7 +60,7 @@ import AlarmRecords from './pollutionContainers/pointDetails/AlarmRecords';
 // import Login from './components/page/login/Login';
 // const dispatch = useDispatch();
 
-//jab
+/* jab */
 import ServiceDispatchMessage from './pOperationContainers/tabView/chengTaoXiaoXi/ServiceDispatchMessage';
 import NormalMessageDetail from './pOperationContainers/tabView/chengTaoXiaoXi/NormalMessageDetail';
 import PerformanceDetail from './pOperationContainers/tabView/workbench/PerformanceDetail';
@@ -172,8 +172,8 @@ Actions.pushViewWithName(ExceptionAlarm, 'ExceptionAlarm', { title: '异常报�
 Actions.pushViewWithName(MissAlarm, 'MissAlarm', { title: '异常报警' });
 Actions.pushViewWithName(AlarmRecords, 'AlarmRecords', { title: '报警详情' });
 
-
-//jab 消息中心
+/* jab */
+// 消息中心
 Actions.pushViewWithName(ServiceDispatchMessage, 'ServiceDispatchMessage');
 Actions.pushViewWithName(NormalMessageDetail, 'NormalMessageDetail');//  成套通用消息详情
 Actions.pushViewWithName(SuperviseRectifyDetail, 'SuperviseRectifyDetail', { title: '督查结果' });//督查整改详情
@@ -181,8 +181,7 @@ Actions.pushViewWithName(PerformanceDetail, 'PerformanceDetail', { title: '绩�
 Actions.pushViewWithName(ReviewWorkOrderStatistics, 'ReviewWorkOrderStatistics');//绩效消息-审核工单统计详情
 Actions.pushViewWithName(ServiceReminderInfoDetail, 'ServiceReminderInfoDetail', { title: '服务提醒' });// 服务提醒详情
 // Actions.pushViewWithName(ChengTaoTaskDetail, 'ChengTaoTaskDetail', { title: '派单详情' });// 成套派单详情
-
-//jab 我的
+// 我的
 Actions.pushViewWithName(HelpCenter, 'HelpCenter', { title: '帮助中心' }); //帮助中心
 Actions.pushViewWithName(DownLoadAPP, 'DownLoadAPP', { title: '下载应用' }); //下载应用
 Actions.pushViewWithName(OperaStaffInfo, 'OperaStaffInfo', { title: '我的证书' }); //查看运维人员信息
