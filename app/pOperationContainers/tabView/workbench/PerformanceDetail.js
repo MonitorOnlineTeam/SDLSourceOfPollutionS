@@ -1,8 +1,8 @@
 /*
  * @Description: 绩效详情
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2022-05-29 18:32:27
- * @LastEditTime: 2023-08-06 21:19:47
+ * @LastEditTime: 2024-09-12 17:32:54
  * @FilePath: /SDLMainProject36/app/pOperationContainers/tabView/workbench/PerformanceDetail.js
  */
 import React, { Component } from 'react'
@@ -17,10 +17,10 @@ import { createAction, createNavigationOptions, SentencedToEmpty } from '../../.
 }))
 export default class PerformanceDetail extends Component {
 
-    static navigationOptions = ({ navigation }) => createNavigationOptions({
-        title: SentencedToEmpty(navigation,['state','params','title'],'绩效统计'),
-        headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-    });
+    // static navigationOptions = ({ navigation }) => createNavigationOptions({
+    //     title: SentencedToEmpty(navigation,['state','params','title'],'绩效统计'),
+    //     headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
+    // });
 
     componentDidMount() {
         this.statusPageOnRefresh();
@@ -29,7 +29,7 @@ export default class PerformanceDetail extends Component {
     statusPageOnRefresh = () => {
         this.props.dispatch(createAction('notice/updateState')({ coefficientMsgInfoResult:{status:-1} }));
         this.props.dispatch(createAction('notice/getCoefficientMsgInfo')({
-            ID:this.props.navigation.state.params.ID
+            ID:this.props.route.params.params.ID
         }))
     }
 

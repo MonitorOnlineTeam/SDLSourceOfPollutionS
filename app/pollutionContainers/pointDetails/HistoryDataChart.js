@@ -25,7 +25,6 @@ export default class HistoryDataChart extends React.Component {
     static propTypes = {};
 
     static defaultProps = {};
-
     constructor(props) {
         super(props);
         this.state = {
@@ -35,28 +34,9 @@ export default class HistoryDataChart extends React.Component {
             option1: {
                 tooltip: {
                     trigger: 'axis',
+                    show: true,
                     formatter: function (params) {
-                        alert('123');
-                        var relVal = params[0].name;
-
-                        for (var i = 0; i < params.length; i++) {
-                            var v = params[i].value;
-                            if (typeof v == 'undefined') {
-                                v = '--';
-                            } //默认值
-                            if (params[i].data) {
-                                if (params[i].data.unit) v = '' + v + params[i].data.unit;
-                                if (params[i].data.direction) v = '' + v + params[i].data.direction;
-                            }
-                            relVal +=
-                                '<div class="circle" style= "font-size: 0.7rem;display:none;margin-top:-4px"><span style="background-color:' +
-                                params[i].color +
-                                ';display:inline-block;margin-right:5px;border-radius:6px;width:6px;height:6px;"></span>' +
-                                params[i].seriesName +
-                                ' : ' +
-                                v +
-                                '</div>';
-                        }
+                        'show source';
                         var seen = [];
                         var paramsString = JSON.stringify(params, function (key, val) {
                             if (val != null && typeof val == 'object') {
@@ -75,7 +55,6 @@ export default class HistoryDataChart extends React.Component {
                     data: [],
                     y: '20px'
                 },
-
                 grid: {
                     show: true,
                     top: 50,
@@ -103,7 +82,6 @@ export default class HistoryDataChart extends React.Component {
                             show: false
                         },
                         splitLine: {
-                            //坐标轴在 grid 区域中的分隔线。
                             show: true,
                             interval: 5,
                             lineStyle: {
@@ -201,10 +179,10 @@ export default class HistoryDataChart extends React.Component {
         };
     };
     onPress = e => {
-        console.log('e = ', e);
         this.setState({ clickDatas: e });
     };
     componentDidMount() {
+        // console.log(this.state.option1.tooltip.formatter.toString(),'11111111111111111')
         this.props.onRef(this); //将组件实例this传递给onRe
     }
     getRequestTime(time, type) {
@@ -355,9 +333,8 @@ export default class HistoryDataChart extends React.Component {
                     y: '10px',
                     data: legendNames,
                     type: 'scroll',
-                    selectedMode: false //取消图例上的点击事件
+                    selectedMode: false
                 },
-
                 xAxis: [
                     {
                         boundaryGap: false,
@@ -366,10 +343,7 @@ export default class HistoryDataChart extends React.Component {
                         axisTick: {
                             show: false
                         },
-
                         axisLabel: {
-                            //坐标轴刻度标签的相关设置。
-
                             textStyle: {
                                 color: '#999',
                                 fontWeight: 'normal',
@@ -509,45 +483,45 @@ export default class HistoryDataChart extends React.Component {
                                                 {this.state.clickDatas.length > 0 &&
                                                     this.state.chartDatas[this.state.clickDatas[0].dataIndex][item.PollutantCode + '_params'] != undefined &&
                                                     this.state.chartDatas[this.state.clickDatas[0].dataIndex][item.PollutantCode + '_params'].split('§')[0] == 0 ? (
-                                                    <View
-                                                        style={{
-                                                            borderTopLeftRadius: 13,
-                                                            borderTopRightRadius: 10,
-                                                            borderBottomRightRadius: 10,
+                                                        <View
+                                                            style={{
+                                                                borderTopLeftRadius: 13,
+                                                                borderTopRightRadius: 10,
+                                                                borderBottomRightRadius: 10,
 
-                                                            backgroundColor: getDataStatusByData(this.state.chartDatas[this.state.clickDatas[0].dataIndex], item.PollutantCode).color,
-                                                            width: 28,
-                                                            height: 20,
-                                                            position: 'absolute',
-                                                            right: 2,
-                                                            top: -8,
-                                                            alignItems: 'center',
-                                                            justifyContent: 'center'
-                                                        }}
-                                                    >
-                                                        <Text style={{ fontSize: 10, color: '#fff' }}>超标</Text>
-                                                    </View>
-                                                ) : this.state.clickDatas.length > 0 &&
-                                                    this.state.chartDatas[this.state.clickDatas[0].dataIndex][item.PollutantCode + '_params'] != undefined &&
-                                                    this.state.chartDatas[this.state.clickDatas[0].dataIndex][item.PollutantCode + '_params'].split('§')[0] == 1 ? (
-                                                    <View
-                                                        style={{
-                                                            borderTopLeftRadius: 13,
-                                                            borderTopRightRadius: 10,
-                                                            borderBottomRightRadius: 10,
-                                                            backgroundColor: getDataStatusByData(this.state.chartDatas[this.state.clickDatas[0].dataIndex], item.PollutantCode).color,
-                                                            width: 28,
-                                                            height: 20,
-                                                            position: 'absolute',
-                                                            right: 2,
-                                                            top: -8,
-                                                            alignItems: 'center',
-                                                            justifyContent: 'center'
-                                                        }}
-                                                    >
-                                                        <Text style={{ fontSize: 10, color: '#fff' }}>异常</Text>
-                                                    </View>
-                                                ) : null}
+                                                                backgroundColor: getDataStatusByData(this.state.chartDatas[this.state.clickDatas[0].dataIndex], item.PollutantCode).color,
+                                                                width: 28,
+                                                                height: 20,
+                                                                position: 'absolute',
+                                                                right: 2,
+                                                                top: -8,
+                                                                alignItems: 'center',
+                                                                justifyContent: 'center'
+                                                            }}
+                                                        >
+                                                            <Text style={{ fontSize: 10, color: '#fff' }}>超标</Text>
+                                                        </View>
+                                                    ) : this.state.clickDatas.length > 0 &&
+                                                        this.state.chartDatas[this.state.clickDatas[0].dataIndex][item.PollutantCode + '_params'] != undefined &&
+                                                        this.state.chartDatas[this.state.clickDatas[0].dataIndex][item.PollutantCode + '_params'].split('§')[0] == 1 ? (
+                                                            <View
+                                                                style={{
+                                                                    borderTopLeftRadius: 13,
+                                                                    borderTopRightRadius: 10,
+                                                                    borderBottomRightRadius: 10,
+                                                                    backgroundColor: getDataStatusByData(this.state.chartDatas[this.state.clickDatas[0].dataIndex], item.PollutantCode).color,
+                                                                    width: 28,
+                                                                    height: 20,
+                                                                    position: 'absolute',
+                                                                    right: 2,
+                                                                    top: -8,
+                                                                    alignItems: 'center',
+                                                                    justifyContent: 'center'
+                                                                }}
+                                                            >
+                                                                <Text style={{ fontSize: 10, color: '#fff' }}>异常</Text>
+                                                            </View>
+                                                        ) : null}
                                                 <SDLText>{item.PollutantName}</SDLText>
                                                 <SDLText fontType={'small'} style={[{ marginTop: 6 }]}>
                                                     {this.state.clickDatas.length > 0 ? this.state.clickDatas[0].axisValue.replace('\n', ' ') : '---'}

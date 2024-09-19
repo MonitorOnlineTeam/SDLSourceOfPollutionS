@@ -1,8 +1,8 @@
 /*
  * @Description: 审核工单统计
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2022-05-29 15:10:14
- * @LastEditTime: 2024-08-12 16:34:17
+ * @LastEditTime: 2024-09-12 18:26:20
  * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/workbench/ReviewWorkOrderStatistics.js
  */
 import React, { Component } from 'react'
@@ -17,19 +17,22 @@ import { createAction, createNavigationOptions, SentencedToEmpty } from '../../.
 }))
 export default class ReviewWorkOrderStatistics extends Component {
 
-    static navigationOptions = ({ navigation }) => createNavigationOptions({
-        title: SentencedToEmpty(navigation, ['state', 'params', 'title'], '待审批工单统计'),
-        headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-    });
+    // static navigationOptions = ({ navigation }) => createNavigationOptions({
+    //     title: SentencedToEmpty(navigation, ['state', 'params', 'title'], '待审批工单统计'),
+    //     headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
+    // });
 
     componentDidMount() {
         this.statusPageOnRefresh();
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(this.props.route,['params','params','title'],'待审批工单统计'),
+          });
     }
 
     statusPageOnRefresh = () => {
         this.props.dispatch(createAction('notice/updateState')({ notAuditTaskMsgInfoResult: { status: -1 } }));
         this.props.dispatch(createAction('notice/getNotAuditTaskMsgInfo')({
-            ID: this.props.navigation.state.params.ID
+            ID: this.props.route.params.params.ID
         }))
     }
 

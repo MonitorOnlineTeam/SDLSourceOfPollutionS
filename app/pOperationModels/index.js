@@ -1,8 +1,8 @@
 /*
  * @Description:
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2023-06-16 17:09:37
- * @LastEditTime: 2024-09-09 09:30:24
+ * @LastEditTime: 2024-09-19 14:24:08
  * @FilePath: /SDLMainProject/app/pOperationModels/index.js
  */
 /**
@@ -16,7 +16,7 @@
 import appModel from './app';
 import sdlNavigateModel from './sdlNavigateModel';
 import login from './login'; //登录
-// import account from './account'; //个人中心
+import account from './account'; //个人中心
 import websocket from './websocket'; //websocket
 import map from '../pollutionModels/map';
 import pointDetails from '../pollutionModels/pointDetails';
@@ -85,7 +85,7 @@ export function registerModels(app) {
     // app.model(CTPeiHeJianCha);
     app.model(helpCenter);
     app.model(login);
-    // app.model(account);
+    app.model(account);
     app.model(websocket);
     app.model(taskModel);
     app.model(map);

@@ -1205,7 +1205,7 @@ class Workbench extends Component {
 
     render() {
         // return (<View><Text>workbench</Text></View>);
-        console.log('workerBenchMenu = ', SentencedToEmpty(this.props, ['workerBenchMenu'], []));
+        // console.log('workerBenchMenu = ', SentencedToEmpty(this.props, ['workerBenchMenu'], []));
         const workerBenchMenu = SentencedToEmpty(this.props, ['workerBenchMenu'], {});
         const user = getToken();
         const tabLength = SentencedToEmpty(this.props, ['tabList'], []).length;

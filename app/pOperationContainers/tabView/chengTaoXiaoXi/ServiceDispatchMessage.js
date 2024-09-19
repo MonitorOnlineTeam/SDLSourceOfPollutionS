@@ -1,8 +1,8 @@
 /*
  * @Description: 
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2023-09-05 16:47:21
- * @LastEditTime: 2024-08-12 16:32:19
+ * @LastEditTime: 2024-09-13 10:42:39
  * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceDispatchMessage.js
  */
 import React, { Component } from 'react'
@@ -22,21 +22,21 @@ import { createAction, createNavigationOptions, SentencedToEmpty, NavigationActi
 }))
 export default class ServiceDispatchMessage extends Component {
 
-    static navigationOptions = ({ navigation }) => {
-        return createNavigationOptions({
-            title: SentencedToEmpty(navigation, ['state', 'params', 'title'], '消息'),
-            headerRight: (
-                <TouchableOpacity
-                    style={{ width: 56, height: 32, marginRight: 10, alignItems: 'center', justifyContent: 'center' }}
-                    onPress={() => {
-                        navigation.state.params.navigatePress();
-                    }}
-                >
-                    <Text style={[{ fontSize: 12, color: '#FFFFFF' }]}>{'全部已读'}</Text>
-                </TouchableOpacity>
-            )
-        });
-    };
+    // static navigationOptions = ({ navigation }) => {
+    //     return createNavigationOptions({
+    //         title: SentencedToEmpty(navigation, ['state', 'params', 'title'], '消息'),
+    //         headerRight: (
+    //             <TouchableOpacity
+    //                 style={{ width: 56, height: 32, marginRight: 10, alignItems: 'center', justifyContent: 'center' }}
+    //                 onPress={() => {
+    //                     navigation.state.params.navigatePress();
+    //                 }}
+    //             >
+    //                 <Text style={[{ fontSize: 12, color: '#FFFFFF' }]}>{'全部已读'}</Text>
+    //             </TouchableOpacity>
+    //         )
+    //     });
+    // };
 
     componentDidMount() {
         this.statusPageOnRefresh();
@@ -54,8 +54,44 @@ export default class ServiceDispatchMessage extends Component {
                 // ShowToast(`${SentencedToEmpty(this.props.navigation, ['state', 'params', 'title'], '消息')}全部置为已读`);
             }
         }))
-        this.props.navigation.setParams({
-            navigatePress: () => {
+        // this.props.navigation.setParams({
+        //     navigatePress: () => {
+        //         this.props.dispatch(createAction('notice/updateMessageReadByMsgType')({
+        //             params: {
+        //                 pushType:
+        //                     this.props.PushType == 5
+        //                         || this.props.PushType == 6
+        //                         || this.props.PushType == 7
+        //                         || this.props.PushType == 8 ? [5, 6, 7, 8]
+        //                         : [this.props.PushType]
+        //             }
+        //             , success: () => {
+        //                 this.statusPageOnRefresh();
+        //                 // this.props.dispatch(NavigationActions.back());
+        //                 // ShowToast(`${SentencedToEmpty(this.props.navigation, ['state', 'params', 'title'], '消息')}全部置为已读`);
+        //             }
+        //         }))
+        //         // this.props.dispatch(createAction('notice/setMessageRead')({
+        //         //     params: {
+        //         //         pushType:
+        //         //             this.props.PushType == 5
+        //         //                 || this.props.PushType == 6
+        //         //                 || this.props.PushType == 7
+        //         //                 || this.props.PushType == 8 ? [5, 6, 7, 8]
+        //         //                 : [this.props.PushType]
+        //         //     }
+        //         //     , success: () => {
+        //         //         this.props.dispatch(NavigationActions.back());
+        //         //         ShowToast(`${SentencedToEmpty(this.props.navigation, ['state', 'params', 'title'], '消息')}全部置为已读`);
+        //         //     }
+        //         // }))
+        //     }
+        // });
+        this.props.navigation.setOptions({
+             title: SentencedToEmpty(this.props.route, ['params', 'params', 'title'], '工单消息'),
+             headerRight: () => <TouchableOpacity
+             style={{ width: 56, height: 32, marginRight: 10, alignItems: 'center', justifyContent: 'center' }}
+             onPress={() => {
                 this.props.dispatch(createAction('notice/updateMessageReadByMsgType')({
                     params: {
                         pushType:
@@ -71,21 +107,10 @@ export default class ServiceDispatchMessage extends Component {
                         // ShowToast(`${SentencedToEmpty(this.props.navigation, ['state', 'params', 'title'], '消息')}全部置为已读`);
                     }
                 }))
-                // this.props.dispatch(createAction('notice/setMessageRead')({
-                //     params: {
-                //         pushType:
-                //             this.props.PushType == 5
-                //                 || this.props.PushType == 6
-                //                 || this.props.PushType == 7
-                //                 || this.props.PushType == 8 ? [5, 6, 7, 8]
-                //                 : [this.props.PushType]
-                //     }
-                //     , success: () => {
-                //         this.props.dispatch(NavigationActions.back());
-                //         ShowToast(`${SentencedToEmpty(this.props.navigation, ['state', 'params', 'title'], '消息')}全部置为已读`);
-                //     }
-                // }))
-            }
+             }}
+         >
+             <Text style={[{ fontSize: 12, color: '#FFFFFF' }]}>{'全部已读'}</Text>
+         </TouchableOpacity>
         });
     }
 
@@ -144,6 +169,7 @@ export default class ServiceDispatchMessage extends Component {
                         params: { ID: item.ID, index }
                     }));
                     if (item.pushType == 26) {
+                        console.log(1111)
                         // 服务提醒
                         this.props.dispatch(NavigationActions.navigate({
                             routeName: 'ServiceReminderInfoDetail',
@@ -169,8 +195,8 @@ export default class ServiceDispatchMessage extends Component {
                             params: {
                                 ...item
                                 , viewTitle: SentencedToEmpty(this.props
-                                    , ['navigation', 'state', 'params', 'title']
-                                    , '消息标题'
+                                    , ['route', 'params', 'params', 'title']
+                                    , '工单消息'
                                 )
                             }
                         }));
@@ -189,8 +215,8 @@ export default class ServiceDispatchMessage extends Component {
                                 params: {
                                     ...item
                                     , viewTitle: SentencedToEmpty(this.props
-                                        , ['navigation', 'state', 'params', 'title']
-                                        , '消息123'
+                                        , ['route', 'params', 'params', 'title']
+                                        , '绩效消息'
                                     )
                                 }
                             }));
@@ -206,7 +232,7 @@ export default class ServiceDispatchMessage extends Component {
                             params: {
                                 ...item
                                 , viewTitle: SentencedToEmpty(this.props
-                                    , ['navigation', 'state', 'params', 'title']
+                                    , ['route', 'params', 'params', 'title']
                                     , '更换提醒'
                                 )
                             }
@@ -280,8 +306,8 @@ export default class ServiceDispatchMessage extends Component {
                             params: {
                                 ...item
                                 , viewTitle: SentencedToEmpty(this.props
-                                    , ['navigation', 'state', 'params', 'title']
-                                    , '消息标题'
+                                    , ['route', 'params', 'params', 'title']
+                                    , '工单消息'
                                 )
                             }
                         }));

@@ -21,11 +21,11 @@ import { StatusPage } from '../../StatusPages';
     helpCenterResult:helpCenter.helpCenterResult
 }))
 export default class HelpCenter extends Component {
-    static navigationOptions = ({ navigation }) =>
-        createNavigationOptions({
-            title: '帮助中心',
-            headerTitleStyle: { flex: 1, textAlign: 'center', fontSize: 17, marginRight: Platform.OS === 'android' ? 76 : 0 } //标题居中
-        });
+    // static navigationOptions = ({ navigation }) =>
+    //     createNavigationOptions({
+    //         title: '帮助中心',
+    //         headerTitleStyle: { flex: 1, textAlign: 'center', fontSize: 17, marginRight: Platform.OS === 'android' ? 76 : 0 } //标题居中
+    //     });
 
     componentDidMount() {
         this.props.dispatch(

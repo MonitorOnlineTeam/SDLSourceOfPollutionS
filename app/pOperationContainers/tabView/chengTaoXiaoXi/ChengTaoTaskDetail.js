@@ -15,12 +15,12 @@ import color from '../../../components/StatusPages/color';
     OneServiceDispatchResult: CTModel.OneServiceDispatchResult
 }))
 export default class ChengTaoTaskDetail extends Component {
-    static navigationOptions = ({ navigation }) => {
-        return createNavigationOptions({
-            title: '派单详情',
-            headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-        });
-    };
+    // static navigationOptions = ({ navigation }) => {
+    //     return createNavigationOptions({
+    //         title: '派单详情',
+    //         headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
+    //     });
+    // };
 
     componentDidMount() {
         // 获取 服务统计 的状态
@@ -28,7 +28,7 @@ export default class ChengTaoTaskDetail extends Component {
     }
 
     getBaseInfo = () => {
-        const content = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], null);
+        const content = SentencedToEmpty(this.props, ['route','params','params'], null);
         if (content) {
             return content;
         } else {

@@ -1,8 +1,8 @@
 /*
  * @Description: 督查整改详情
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2023-08-06 21:19:30
- * @LastEditTime: 2023-08-08 15:28:39
+ * @LastEditTime: 2024-09-12 17:29:36
  * @FilePath: /SDLMainProject36/app/pOperationContainers/tabView/workbench/SuperviseRectifyDetail.js
  */
 import React, { Component } from 'react'
@@ -16,10 +16,10 @@ import { connect } from 'react-redux';
     inspectorMessageResult:notice.inspectorMessageResult
 }))
 export default class SuperviseRectifyDetail extends Component {
-    static navigationOptions = ({ navigation }) => createNavigationOptions({
-        title: '设施核查详情',
-        headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-    });
+    // static navigationOptions = ({ navigation }) => createNavigationOptions({
+    //     title: '设施核查详情',
+    //     headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
+    // });
 
     componentDidMount() {
         this.statusPageOnRefresh();

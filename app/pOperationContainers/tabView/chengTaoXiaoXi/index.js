@@ -1,8 +1,8 @@
 /*
  * @Description: 成套在主tab上增加消息模块
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2023-09-04 08:59:54
- * @LastEditTime: 2024-09-04 17:03:19
+ * @LastEditTime: 2024-09-12 11:18:52
  * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/index.js
  */
 import Popover from 'react-native-popover';

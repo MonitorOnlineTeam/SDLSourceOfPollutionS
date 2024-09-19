@@ -180,7 +180,7 @@ const getAccountConfig = () => {
     if (CURRENT_PROJECT == AIR_PROJECT) {
         return [
             { title: '账户与安全', routeName: 'AccountSecurity', params: {} },
-            { title: '推送设置', routeName: 'pushSetting', params: {} },
+            { title: '推送设置', routeName: 'PushSetting', params: {} },
             { title: '报警消息', routeName: 'Alarm', params: {} },
             {
                 title: `版本更新 (v${getVersionInfo().app_version_name})`,
@@ -192,7 +192,7 @@ const getAccountConfig = () => {
     } else if (CURRENT_PROJECT == ORERATION) {
         return [
             { title: '账户与安全', routeName: 'AccountSecurity', params: {} },
-            { title: '推送设置', routeName: 'pushSetting', params: {} },
+            { title: '推送设置', routeName: 'PushSetting', params: {} },
             {
                 title: `版本更新 (v${getVersionInfo().app_version_name})`,
                 routeName: 'update',
@@ -203,7 +203,7 @@ const getAccountConfig = () => {
     } else if (CURRENT_PROJECT == WATER_PROJECT) {
         return [
             { title: '账户与安全', routeName: 'AccountSecurity', params: {} },
-            { title: '推送设置', routeName: 'pushSetting', params: {} },
+            { title: '推送设置', routeName: 'PushSetting', params: {} },
             {
                 title: `版本更新 (v${getVersionInfo().app_version_name})`,
                 routeName: 'update',
@@ -213,7 +213,7 @@ const getAccountConfig = () => {
         ];
     } else if (CURRENT_PROJECT == GRID_PROJECT) {
         return [
-            { title: '推送设置', routeName: 'pushSetting', params: {} },
+            { title: '推送设置', routeName: 'PushSetting', params: {} },
             {
                 title: `版本更新 (v${getVersionInfo().app_version_name})`,
                 routeName: 'update',
@@ -225,7 +225,7 @@ const getAccountConfig = () => {
         return [
             { title: '消息中心', routeName: 'Notice', params: {} },
             { title: '账户与安全', routeName: 'AccountSecurity', params: {} },
-            { title: '推送设置', routeName: 'pushSetting', params: {} },
+            { title: '推送设置', routeName: 'PushSetting', params: {} },
             {
                 title: `版本更新 (v${getVersionInfo().app_version_name})`,
                 routeName: 'update',
@@ -240,7 +240,7 @@ const getAccountConfig = () => {
             { title: '下载应用', routeName: 'DownLoadAPP', params: {} },
             { title: '我的证书', routeName: 'OperaStaffInfo', params: {} },
             { title: '账户与安全', routeName: 'AccountSecurity', params: {} },
-            { title: '推送设置', routeName: 'pushSetting', params: {} },
+            { title: '推送设置', routeName: 'PushSetting', params: {} },
             { title: '微信公众号绑定', routeName: 'wxPushBinding', params: {} },
             { title: '离线图片上传', routeName: 'OfflineImageUploadList', params: {} },
             {

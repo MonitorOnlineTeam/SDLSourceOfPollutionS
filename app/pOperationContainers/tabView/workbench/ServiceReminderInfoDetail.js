@@ -1,8 +1,8 @@
 /*
- * @Description: 审核工单统计
- * @LastEditors: hxf
+ * @Description: 服务提醒详情
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2022-05-29 15:10:14
- * @LastEditTime: 2024-08-12 16:44:53
+ * @LastEditTime: 2024-09-12 17:28:55
  * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/workbench/ServiceReminderInfoDetail.js
  */
 import React, { Component } from 'react'
@@ -17,10 +17,10 @@ import { createAction, createNavigationOptions, SentencedToEmpty } from '../../.
 }))
 export default class ServiceReminderInfoDetail extends Component {
 
-    static navigationOptions = ({ navigation }) => createNavigationOptions({
-        title: SentencedToEmpty(navigation, ['state', 'params', 'title'], '待审批工单统计'),
-        headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-    });
+    // static navigationOptions = ({ navigation }) => createNavigationOptions({
+    //     title: SentencedToEmpty(navigation, ['state', 'params', 'title'], '待审批工单统计'),
+    //     headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
+    // });
 
     componentDidMount() {
         this.statusPageOnRefresh();
@@ -29,7 +29,7 @@ export default class ServiceReminderInfoDetail extends Component {
     statusPageOnRefresh = () => {
         this.props.dispatch(createAction('notice/updateState')({ serviceReminderInfoResult: { status: -1 } }));
         this.props.dispatch(createAction('notice/getServiceReminderInfo')({
-            ID: this.props.navigation.state.params.ID
+            ID: this.props.route.params.params.ID
         }))
     }
 

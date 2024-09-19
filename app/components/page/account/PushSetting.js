@@ -15,21 +15,21 @@ import { savePushSetting, getPushSetting } from '../../../dvapack/storage';
  * @extends {PureComponent}
  */
 class PushSetting extends PureComponent {
-    static navigationOptions = ({ navigation }) => ({
-        title: '推送设置',
-        tabBarLable: '推送设置',
-        animationEnabled: false,
-        headerBackTitle: null,
-        headerTintColor: '#ffffff',
-        headerTitleStyle: {
-            flex: 1,
-            textAlign: 'center',
-            fontSize: 17,
-            marginRight: Platform.OS === 'android' ? 76 : 0
-        }, //标题居中
-        headerStyle: { backgroundColor: globalcolor.headerBackgroundColor, height: 45 },
-        labelStyle: { fontSize: 14 }
-    });
+    // static navigationOptions = ({ navigation }) => ({
+    //     title: '推送设置',
+    //     tabBarLable: '推送设置',
+    //     animationEnabled: false,
+    //     headerBackTitle: null,
+    //     headerTintColor: '#ffffff',
+    //     headerTitleStyle: {
+    //         flex: 1,
+    //         textAlign: 'center',
+    //         fontSize: 17,
+    //         marginRight: Platform.OS === 'android' ? 76 : 0
+    //     }, //标题居中
+    //     headerStyle: { backgroundColor: globalcolor.headerBackgroundColor, height: 45 },
+    //     labelStyle: { fontSize: 14 }
+    // });
     constructor(props) {
         super(props);
         let pushSetting = getPushSetting();
