@@ -78,6 +78,12 @@ class SetEnterpriseInformation extends Component {
         }
     };
 
+
+
+    onPress = e => {
+        console.log('e = ', e);
+    };
+
     render() {
         return (
             <ScrollView style={{ flex: 1, width: SCREEN_WIDTH }}
@@ -90,6 +96,7 @@ class SetEnterpriseInformation extends Component {
                 <ImageBackground source={require('../../../images/background_blue.png')} style={[{ width: '100%' }, { height: this.state.contentHeight }]}>
                     <ImageBackground source={require('../../../images/bacground_grey.png')} opacity={0.6} style={[{ width: '100%' }, { height: this.state.contentHeight }]}>
                         <View style={[{ flex: 1, width: SCREEN_WIDTH }]}>
+
                             <TouchableOpacity onPress={() => { }} style={styles.container}>
                                 <Text
                                     style={[

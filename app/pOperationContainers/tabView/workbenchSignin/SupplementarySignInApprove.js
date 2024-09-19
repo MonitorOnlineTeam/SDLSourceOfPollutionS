@@ -3,9 +3,7 @@ import React, { Component } from 'react'
 import { CloseToast, NavigationActions, SentencedToEmpty, ShowLoadingToast, ShowToast, createAction, createNavigationOptions } from '../../../utils';
 import { SCREEN_WIDTH } from '../../../config/globalsize';
 import ImageGrid from '../../../components/form/images/ImageGrid';
-import FormHorizontalTextArea from '../../../operationContainers/taskViews/taskExecution/components/FormHorizontalTextArea';
 import FormTextArea from '../../../operationContainers/taskViews/taskExecution/components/FormTextArea';
-import TimeLine from '../../../operationContainers/approval/components/TimeLine';
 import globalcolor from '../../../config/globalcolor';
 import { connect } from 'react-redux';
 import { AlertDialog, StatusPage } from '../../../components';
@@ -36,7 +34,7 @@ export default class SupplementarySignInApprove extends Component {
 
     componentDidMount() {
         const editType = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'item', 'editType'], '');
+            , ['route', 'params', 'params', 'item', 'editType'], '');
 
         if (editType == 'uploader') {
             // 设置加载状态
@@ -47,7 +45,7 @@ export default class SupplementarySignInApprove extends Component {
                 {
                     params: {
                         appID: SentencedToEmpty(this.props
-                            , ['navigation', 'state', 'params', 'item', 'ID'], ''),// 审核ID
+                            , ['route', 'params', 'params', 'item', 'ID'], ''),// 审核ID
                     }
                 }
             ));
@@ -86,7 +84,7 @@ export default class SupplementarySignInApprove extends Component {
         let params = {};
         // params.appID = this.props.currentApproval.ID;
         params.appID = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'item', 'ID'], '');
+            , ['route', 'params', 'params', 'item', 'ID'], '');
         console.log('params.appID = ', params.appID);
         if (isConsent) {
             params.examStaus = 1;
@@ -121,7 +119,7 @@ export default class SupplementarySignInApprove extends Component {
             {
                 params: {
                     appID: SentencedToEmpty(this.props
-                        , ['navigation', 'state', 'params', 'item', 'ID'], ''),// 审核ID
+                        , ['route', 'params', 'params', 'item', 'ID'], ''),// 审核ID
                 }
             }
         ));
@@ -140,7 +138,7 @@ export default class SupplementarySignInApprove extends Component {
     // 补签日期字符串
     getSupplementaryTargetDateStr = () => {
         const itemData = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'item'], {});
+            , ['route', 'state', 'params', 'item'], {});
         const SupplementaryTargetDate = SentencedToEmpty(itemData, ['SupplementaryTargetDate'], '')
         if (SupplementaryTargetDate == '') {
             return '--------'
@@ -157,9 +155,9 @@ export default class SupplementarySignInApprove extends Component {
 
     render() {
         const itemData = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'item'], {});
+            , ['route', 'params', 'params', 'item'], {});
         const editType = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'item', 'editType'], '');
+            , ['route', 'params', 'params', 'item', 'editType'], '');
         console.log('props = ', this.props);
         const withdrawApplicationOptions = {
             headTitle: '提示',
@@ -458,7 +456,7 @@ export default class SupplementarySignInApprove extends Component {
                                         {
                                             params: {
                                                 appID: SentencedToEmpty(this.props
-                                                    , ['navigation', 'state', 'params', 'item', 'ID'], ''),// 审核ID
+                                                    , ['route', 'params', 'params', 'item', 'ID'], ''),// 审核ID
                                             }, successCallback: (response) => {
                                                 console.log('successCallback');
                                                 // 关闭进度

@@ -2,8 +2,8 @@
  * @Description: 超标预警
  * @LastEditors: hxf
  * @Date: 2022-08-22 11:58:18
- * @LastEditTime: 2024-07-17 10:29:17
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/workbench/OverWarning.js
+ * @LastEditTime: 2024-09-19 17:21:56
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbench/OverWarning.js
  */
 import moment from 'moment';
 import React, { Component } from 'react'
@@ -24,10 +24,35 @@ import { createAction, createNavigationOptions, NavigationActions, SentencedToEm
 }))
 export default class OverWarning extends Component {
 
-    static navigationOptions = createNavigationOptions({
-        title: '超标预警',
-        headerRight: (
-            <DeclareModule
+    //     static navigationOptions = createNavigationOptions({
+    //         title: '超标预警',
+    //         headerRight: (
+    //             <DeclareModule
+    //                 contentRender={() => {
+    //                     return <Text style={[{ fontSize: 13, color: 'white', marginHorizontal: 16 }]}>{'说明'}</Text>;
+    //                 }}
+    //                 options={{
+    //                     headTitle: '说明',
+    //                     innersHeight: 220,
+    //                     messText: `1、监测点分钟数据出现超标后，系统发出超标预警，并推送预警消息给点位运维负责人。
+    // 2、该页面只显示今日、昨日出现分钟数据超标的企业监测点。`,
+    //                     headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
+    //                     buttons: [
+    //                         {
+    //                             txt: '知道了',
+    //                             btnStyle: { backgroundColor: '#fff' },
+    //                             txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
+    //                             onpress: () => { }
+    //                         }
+    //                     ]
+    //                 }}
+    //             />
+    //         )
+    //     });
+
+    componentDidMount() {
+        this.props.navigation.setOptions({
+            headerRight: () => <DeclareModule
                 contentRender={() => {
                     return <Text style={[{ fontSize: 13, color: 'white', marginHorizontal: 16 }]}>{'说明'}</Text>;
                 }}
@@ -47,10 +72,7 @@ export default class OverWarning extends Component {
                     ]
                 }}
             />
-        )
-    });
-
-    componentDidMount() {
+        });
         this.statusOnRefresh();
     }
     onRefresh = index => {

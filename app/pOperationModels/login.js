@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-08-21 15:00:35
- * @LastEditTime: 2024-09-04 19:00:13
+ * @LastEditTime: 2024-09-18 15:02:53
  * @FilePath: /SDLMainProject/app/pOperationModels/login.js
  */
 // import { AsyncStorage } from 'react-native';
@@ -36,7 +36,7 @@ import api from '../config/globalapi';
 import { Model } from '../dvapack';
 import { RSAPubSecret, UrlInfo } from '../config/globalconst';
 import Actions, { NavigationActions } from '../utils/RouterUtils';
-// import { addAlias, removeAlias } from 'react-native-alipush';
+import { addAlias, removeAlias } from 'react-native-alipush';
 // import { isSecret } from '../config/globalconfig';
 // import { TabBarItem } from 'react-native-vector-icons/Ionicons';
 let ws = null;
@@ -275,16 +275,16 @@ export default Model.extend({
                 initialRouteName,
                 tabSelectIndex: 0
             });
-            // addAlias(user.UserId, (str = '') => {
-            //     if (str.indexOf('errorCode') != -1) {
-            //         _dispatch(
-            //             createAction('app/addClockInLog')({
-            //                 //阿里云注册别名产生的错误日志
-            //                 msg: `{"target":"addAlias","msgType":"addAlias","UserId":${user.UserId},"data":${str}}`
-            //             })
-            //         );
-            //     }
-            // });
+            addAlias(user.UserId, (str = '') => {
+                if (str.indexOf('errorCode') != -1) {
+                    _dispatch(
+                        createAction('app/addClockInLog')({
+                            //阿里云注册别名产生的错误日志
+                            msg: `{"target":"addAlias","msgType":"addAlias","UserId":${user.UserId},"data":${str}}`
+                        })
+                    );
+                }
+            });
 
             // yield saveRouterConfig([{ routeName: 'PollutionAll' }, { routeName: 'Workbench' }
             //     , { routeName: 'chengTaoXiaoXi' }

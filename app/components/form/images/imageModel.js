@@ -52,12 +52,16 @@ export default Model.extend({
                 body: formdata,
                 headers: {
                     authorization: 'Bearer ' + user.dataAnalyzeTicket,
-                    ProxyCode: encryData
+                    ProxyCode: encryData,
+                    Accept: "application/json, text/plain, */*",
                 }
             })
                 .then(res => {
                     if (res.status == 200) {
-                        let urls = JSON.parse(res._bodyInit).Datas;
+                        const response = res.json()
+                        console.log('response = ', response);
+                        // let urls = JSON.parse(res._bodyInit).Datas;
+                        let urls = SentencedToEmpty(response, ['_j', 'Datas'], []);
                         let url = '';
                         for (let index = 0; index < images.length; index++) {
                             url = SentencedToEmpty(urls, [index], '');
@@ -114,12 +118,18 @@ export default Model.extend({
                 body: formdata,
                 headers: {
                     authorization: 'Bearer ' + user.dataAnalyzeTicket,
-                    ProxyCode: encryData
+                    ProxyCode: encryData,
+                    Accept: "application/json, text/plain, */*",
                 }
             })
                 .then(res => {
-                    if (res.status == 200) {
-                        let attachIDArr = SentencedToEmpty(JSON.parse(res._bodyInit), ['Datas'], '').split(',');
+                    console.log('res = ', res);
+                    console.log('res = ', res.json());
+                    console.log('res.status == 200 = ', res.status == 200);
+                    if (res.ok) {
+                        const response = res.json()
+                        // let attachIDArr = SentencedToEmpty(JSON.parse(res._bodyInit), ['Datas'], '').split(',');
+                        let attachIDArr = SentencedToEmpty(response, ['_j', 'Datas'], '').split(',');
                         let imageName = '';
                         nameArray = [];
                         for (let index = 0; index < images.length; index++) {

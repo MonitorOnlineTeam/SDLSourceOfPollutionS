@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, Text, Platform, TextInput } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Text, Platform, TextInput, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { createStackNavigator, NavigationActions } from 'react-navigation';
+// import { createStackNavigator, NavigationActions } from 'react-navigation';
 import moment from 'moment';
 
 import { SCREEN_WIDTH } from '../../config/globalsize';
-import { ShowToast, createNavigationOptions, createAction, SentencedToEmpty, makePhone } from '../../utils';
+import { ShowToast, createNavigationOptions, createAction, SentencedToEmpty, makePhone, NavigationActions } from '../../utils';
 import { StatusPage, SimpleLoadingComponent, Touchable, ModalParent, SDLText } from '../../components';
 import TimeLine from '../../components/TimeLine';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -18,7 +18,7 @@ import globalcolor from '../../config/globalcolor';
 @connect(({ taskDetailModel, approvalModel }) => ({
     taskDetail: taskDetailModel.taskDetail,
     currentApproval: approvalModel.currentApproval,
-    approvalStatue:approvalModel.approvalStatue
+    approvalStatue: approvalModel.approvalStatue
 }))
 export default class TaskInfo extends Component {
     constructor(props) {
@@ -30,7 +30,7 @@ export default class TaskInfo extends Component {
 
     componentDidMount() {
         if (this.props.taskDetail.isSigned == false
-            &&SentencedToEmpty(this.props,['taskDetail','OperationFlag'],'1') != 2) {
+            && SentencedToEmpty(this.props, ['taskDetail', 'OperationFlag'], '1') != 2) {
             this._modalParent.showModal();
         }
     }
@@ -52,10 +52,10 @@ export default class TaskInfo extends Component {
                 callback: () => {
                     ShowToast('审批完成')
                     this.props.dispatch(createAction('approvalModel/getTaskListRight')({
-                        params:{
-                        type:'0',
-                        pageIndex:1,
-                        pageSize:10
+                        params: {
+                            type: '0',
+                            pageIndex: 1,
+                            pageSize: 10
                         }
                     }));
                     this.props.dispatch(NavigationActions.back());
@@ -81,7 +81,7 @@ export default class TaskInfo extends Component {
                     console.log('错误操作回调');
                 }}
             >
-                <KeyboardAwareScrollView showsVerticalScrollIndicator={false} ref="scroll" style={{ flex: 1, width: SCREEN_WIDTH }}>
+                <ScrollView showsVerticalScrollIndicator={false} ref="scroll" style={{ flex: 1, width: SCREEN_WIDTH }}>
                     <View style={[styles.card]}>
                         <SDLText fontType={'large'}>{`${SentencedToEmpty(this.props.taskDetail, ['EnterpriseName'], '')}-${SentencedToEmpty(this.props.taskDetail, ['PointName'], '')}`}</SDLText>
                         <View style={[styles.oneRow, { marginTop: 15 }]}>
@@ -104,7 +104,7 @@ export default class TaskInfo extends Component {
                             <SDLText style={[styles.label]}>来源及类型：</SDLText>
                             <SDLText style={[styles.content]}>{`${SentencedToEmpty(this.props.taskDetail, ['TaskFromText'], '')} | ${SentencedToEmpty(this.props.taskDetail, ['TaskTypeText'], '')}`}</SDLText>
                         </View>
-                        
+
                         <View style={[styles.oneRow, {}]}>
                             <SDLText style={[styles.label]}>描述：</SDLText>
                             <SDLText style={[styles.content, { flex: 1 }]}>{`${SentencedToEmpty(this.props.taskDetail, ['Remark'], '暂未填写')}`}</SDLText>
@@ -134,13 +134,13 @@ export default class TaskInfo extends Component {
                                 <Text style={[styles.actionLabel, {}]}>进入站房</Text>
                             </View>
                         </TouchableOpacity>
-                        {SentencedToEmpty(this.props,['taskDetail','AlarmNums'],0)>0?(
+                        {SentencedToEmpty(this.props, ['taskDetail', 'AlarmNums'], 0) > 0 ? (
                             <TouchableOpacity
                                 onPress={() => {
                                     //'报警记录'
                                     this.props.dispatch(
                                         createAction('pointDetails/updateState')({
-                                            sourceType:'AssociatedAlarm',// 任务中看报警
+                                            sourceType: 'AssociatedAlarm',// 任务中看报警
                                             alarmRecordsIndex: 1,
                                             alarmRecordsTotal: 0,
                                             alarmRecordsListData: [],
@@ -213,7 +213,7 @@ export default class TaskInfo extends Component {
                                     // } else {
                                     //     ShowToast('报警信息获取失败');
                                     // }
-                                    
+
                                 }}
                             >
                                 <View
@@ -251,7 +251,7 @@ export default class TaskInfo extends Component {
                     </View>
                     {/* 审批 */}
                     {
-                        this.props.needApproval?<View style={[styles.card, {marginTop:0, minHeight: 162, borderBottomWidth:1, borderBottomColor:globalcolor.borderBottomColor }]}>
+                        this.props.needApproval ? <View style={[styles.card, { marginTop: 0, minHeight: 162, borderBottomWidth: 1, borderBottomColor: globalcolor.borderBottomColor }]}>
                             <Text style={[{ fontSize: 15, color: globalcolor.taskImfoLabel }]}>拒绝原因</Text>
                             <View style={[styles.selectRow, { marginBottom: 15 }]}>
                                 <TextInput
@@ -275,67 +275,67 @@ export default class TaskInfo extends Component {
                                     }}
                                 />
                             </View>
-                        </View>:null
+                        </View> : null
                     }
                     {
-                        this.props.needApproval?<View style={[{ height: 45, width: SCREEN_WIDTH, flexDirection: 'row', marginVertical:4 }]}>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        this.examApplication(false);
-                                    }}
+                        this.props.needApproval ? <View style={[{ height: 45, width: SCREEN_WIDTH, flexDirection: 'row', marginVertical: 4 }]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.examApplication(false);
+                                }}
+                            >
+                                <View
+                                    style={[
+                                        {
+                                            height: 45,
+                                            width: SCREEN_WIDTH / 2 - 6,
+                                            backgroundColor: 'white',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            borderWidth: 1,
+                                            borderColor: globalcolor.borderBottomColor,
+                                            borderRadius: 8,
+                                        }
+                                    ]}
                                 >
-                                    <View
-                                        style={[
-                                            {
-                                                height: 45,
-                                                width: SCREEN_WIDTH / 2 - 6,
-                                                backgroundColor: 'white',
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                                borderWidth:1,
-                                                borderColor: globalcolor.borderBottomColor,
-                                                borderRadius:8,
-                                            }
-                                        ]}
-                                    >
-                                        <Text style={[{ fontSize: 15, color: '#666666' }]}>拒绝</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <View style={{width:8}}/>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        this.examApplication(true);
-                                    }}
+                                    <Text style={[{ fontSize: 15, color: '#666666' }]}>拒绝</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <View style={{ width: 8 }} />
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.examApplication(true);
+                                }}
+                            >
+                                <View
+                                    style={[
+                                        {
+                                            height: 45,
+                                            width: SCREEN_WIDTH / 2 - 6,
+                                            backgroundColor: 'white',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            borderWidth: 1,
+                                            borderColor: globalcolor.borderBottomColor,
+                                            borderRadius: 8,
+                                        }
+                                    ]}
                                 >
-                                    <View
-                                        style={[
-                                            {
-                                                height: 45,
-                                                width: SCREEN_WIDTH / 2 - 6,
-                                                backgroundColor: 'white',
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                                borderWidth:1,
-                                                borderColor: globalcolor.borderBottomColor,
-                                                borderRadius:8,
-                                            }
-                                        ]}
-                                    >
-                                        <Text style={[{ fontSize: 15, color: '#4ba1ff' }]}>同意</Text>
-                                    </View>
-                                </TouchableOpacity>
-                        </View>:null
+                                    <Text style={[{ fontSize: 15, color: '#4ba1ff' }]}>同意</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View> : null
                     }
                     {/* 审批 end */}
                     {
-                        SentencedToEmpty(this.props,['taskDetail','TaskLogList'],[]).length>0
-                        ?<View style={[{ backgroundColor: globalcolor.white, width: SCREEN_WIDTH, flex: 1 }]}>
-                            <TimeLine data={this.props.taskDetail.TaskLogList ? this.props.taskDetail.TaskLogList : []} />
-                        </View>:null
+                        SentencedToEmpty(this.props, ['taskDetail', 'TaskLogList'], []).length > 0
+                            ? <View style={[{ backgroundColor: globalcolor.white, width: SCREEN_WIDTH, flex: 1 }]}>
+                                <TimeLine data={this.props.taskDetail.TaskLogList ? this.props.taskDetail.TaskLogList : []} />
+                            </View> : null
                     }
-                </KeyboardAwareScrollView>
+                </ScrollView>
                 {/* {this.props.gasParametersChangeRecordSaveResult.status == -1?<SimpleLoadingComponent message={'提交中'} />:null} */}
-                {this.props.approvalStatue.status== -1?<SimpleLoadingComponent message={'提交中'} />:null}
+                {this.props.approvalStatue.status == -1 ? <SimpleLoadingComponent message={'提交中'} /> : null}
             </StatusPage>
         );
     }

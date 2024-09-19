@@ -1,5 +1,7 @@
 // export { NavigationActions, StackActions } from 'react-navigation';
 import { HeaderBackButton } from '@react-navigation/elements';
+import { MessageBarManager } from 'react-native-message-bar';
+import LoadingManager from '../framework/LoadingManager';
 export const createAction = type => payload => ({ type, payload });
 
 const NavigationActions = {
@@ -50,9 +52,26 @@ export const fast = (time = 5000) =>
         }, time)
     );
 
-export const ShowToast = msg => {
-    console.log('Toast 插件未添加');
+export const ShowToast = msgOption => {
+    // MessageBarManager.showAlert({
+    //     message: '请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空',
+    //     alertType: 'info',
+    // })
+    // MessageBarManager.showAlert({
+    //     message: '请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空',
+    //     alertType: 'warning',
+    // })
+    // MessageBarManager.showAlert({
+    //     message: '请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空',
+    //     alertType: 'success',
+    // })
+    // MessageBarManager.showAlert({
+    //     message: '请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空',
+    //     alertType: 'error',
+    // })
+    console.log('ShowToast 被调用');
     // Toast.info(msg, 1);
+    MessageBarManager.showAlert(msgOption);
 };
 
 export const SentencedToEmpty = (obj, keys, emptyValue) => {
@@ -311,12 +330,14 @@ export const getCurrentScreen = navigationState => {
     return route.routeName;
 };
 export const CloseToast = () => {
-    console.log('Toast 插件未添加');
+    console.log('CloseToast 插件未添加');
     // Toast.hide();
+    LoadingManager.hide();
 };
 export const ShowLoadingToast = msg => {
     console.log('Toast 插件未添加');
     // Toast.loading(msg, 10000, () => { });
+    LoadingManager.show(msg);
 };
 export const getCurrentParams = navigationState => {
     if (!navigationState) {

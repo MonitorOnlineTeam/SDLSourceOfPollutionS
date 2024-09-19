@@ -18,14 +18,18 @@ class CalendarView extends PureComponent {
 
     constructor(props) {
         super(props);
-        if (props.navigation.state.params.allowRangeSelection) {
+        // if (props.navigation.state.params.allowRangeSelection) {
+        if (props.allowRangeSelection) {
             this.state = {
-                selectedStartDate: props.navigation.state.params.selectedStartDate,
-                selectedEndDate: props.navigation.state.params.selectedEndDate,
+                // selectedStartDate: props.navigation.state.params.selectedStartDate,
+                // selectedEndDate: props.navigation.state.params.selectedEndDate,
+                selectedStartDate: props.selectedStartDate,
+                selectedEndDate: props.selectedEndDate,
             };
         } else {
             this.state = {
-                selectedStartDate: props.navigation.state.params.selectedStartDate,
+                // selectedStartDate: props.navigation.state.params.selectedStartDate,
+                selectedStartDate: props.selectedStartDate,
                 selectedEndDate: null,
             };
         }
@@ -40,8 +44,11 @@ class CalendarView extends PureComponent {
             this.setState({
                 'selectedEndDate': date,
             });
-            if (this.props.navigation.state.params.allowRangeSelection) {
-                this.props.navigation.state.params.callbackFun([this.state.selectedStartDate, date]);
+            // if (this.props.navigation.state.params.allowRangeSelection) {
+            //     this.props.navigation.state.params.callbackFun([this.state.selectedStartDate, date]);
+            // }
+            if (this.props.allowRangeSelection) {
+                this.props.callbackFun([this.state.selectedStartDate, date]);
             }
         } else {
             let selectedStartDate = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'selectedStartDate'], moment());
@@ -49,8 +56,11 @@ class CalendarView extends PureComponent {
                 'selectedStartDate': date,
                 'selectedEndDate': null,
             });
-            if (!this.props.navigation.state.params.allowRangeSelection) {
-                this.props.navigation.state.params.callbackFun(date);
+            // if (!this.props.navigation.state.params.allowRangeSelection) {
+            //     this.props.navigation.state.params.callbackFun(date);
+            // }
+            if (!this.props.allowRangeSelection) {
+                this.props.callbackFun(date);
             }
         }
     }
@@ -79,8 +89,10 @@ class CalendarView extends PureComponent {
                     startFromMonday={true}
                     selectedStartDate={this.state.selectedStartDate}
                     selectedEndDate={this.state.selectedEndDate}
-                    allowRangeSelection={this.props.navigation.state.params.allowRangeSelection}
-                    initialDate={this.props.navigation.state.params.defaultDate}
+                    // allowRangeSelection={this.props.navigation.state.params.allowRangeSelection}
+                    allowRangeSelection={this.props.allowRangeSelection}
+                    // initialDate={this.props.navigation.state.params.defaultDate}
+                    initialDate={this.props.defaultDate}
                     weekdays={['一', '二', '三', '四', '五', '六', '日']}
                     months={['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月',]}
                     previousTitle={require('../../../images/calenderLeft.png')}

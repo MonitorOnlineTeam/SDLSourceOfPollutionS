@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-// import { init } from 'react-native-amap-geolocation';
+import { init } from 'react-native-amap-geolocation';
 import { NavigationActions } from '../../../utils/RouterUtils'
 
 
@@ -80,18 +80,18 @@ export default class BootPage extends Component {
      * @memberof Router
      */
     initLocation = () => {
-        // init({
-        //     ios: '9df5f713ad0f0b8d2550436f5793e371',
-        //     android:
-        //         CURRENT_PROJECT == 'POLLUTION_ORERATION_PROJECT' || CURRENT_PROJECT == 'POLLUTION_PROJECT'
-        //             ? // ? '4502a480cb8cefdeb655628a5c89c36d'
-        //             '90af9eb2dd0b43367d0102d81842b5f7'
-        //             : CURRENT_PROJECT == 'GRID_PROJECT'
-        //                 ? 'c1e5f6237a8bdd6d80cca037d9d48721'
-        //                 : CURRENT_PROJECT == 'GRID_ORERATION_PROJECT'
-        //                     ? 'e0038624faec949f08168cc5dc41222a'
-        //                     : '90af9eb2dd0b43367d0102d81842b5f7'
-        // }); //后台定位~
+        init({
+            ios: '9df5f713ad0f0b8d2550436f5793e371',
+            android:
+                CURRENT_PROJECT == 'POLLUTION_ORERATION_PROJECT' || CURRENT_PROJECT == 'POLLUTION_PROJECT'
+                    ? // ? '4502a480cb8cefdeb655628a5c89c36d'
+                    '90af9eb2dd0b43367d0102d81842b5f7'
+                    : CURRENT_PROJECT == 'GRID_PROJECT'
+                        ? 'c1e5f6237a8bdd6d80cca037d9d48721'
+                        : CURRENT_PROJECT == 'GRID_ORERATION_PROJECT'
+                            ? 'e0038624faec949f08168cc5dc41222a'
+                            : '90af9eb2dd0b43367d0102d81842b5f7'
+        }); //后台定位~
     };
 
     loadNativeConfig = async () => {

@@ -6,11 +6,11 @@ import {
 import React, { Component } from 'react'
 import { SCREEN_WIDTH } from '../../../config/globalsize'
 import FormPicker from '../../../operationContainers/taskViews/taskExecution/components/FormPicker'
-import AutoTimerText from '../../../operationContainers/home/workbench/components/AutoTimerText'
 import MapView from 'react-native-amap3d'
 import { CloseToast, NavigationActions, SentencedToEmpty, ShowLoadingToast, ShowToast, createAction } from '../../../utils'
 import { connect } from 'react-redux'
 import { Geolocation, stop } from 'react-native-amap-geolocation';
+import AutoTimerText from '../../components/AutoTimerText'
 
 
 const AMapPOISearch = NativeModules.AMapPOISearch;

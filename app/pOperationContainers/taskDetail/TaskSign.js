@@ -2,17 +2,19 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2022-11-30 09:14:10
- * @LastEditTime: 2024-04-23 15:44:13
- * @FilePath: /SDLMainProject37_backup/app/pOperationContainers/taskDetail/TaskSign.js
+ * @LastEditTime: 2024-09-12 11:57:17
+ * @FilePath: /SDLMainProject/app/pOperationContainers/taskDetail/TaskSign.js
  */
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, NativeModules, Platform, Alert, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { SCREEN_WIDTH } from '../../config/globalsize';
-import AutoTimerText from '../../operationContainers/home/workbench/components/AutoTimerText';
-import IconDialog from '../../operationContainers/taskViews/taskExecution/components/IconDialog';
+// import AutoTimerText from '../../operationContainers/home/workbench/components/AutoTimerText';
+// import IconDialog from '../../operationContainers/taskViews/taskExecution/components/IconDialog';
 import { SentencedToEmpty, NavigationActions, ShowLoadingToast, CloseToast, createAction, ShowToast } from '../../utils';
 import { Geolocation, stop } from 'react-native-amap-geolocation';
+import AutoTimerText from '../components/AutoTimerText';
+import IconDialog from '../../components/IconDialog';
 
 const AMapGeolocation = NativeModules.AMapGeolocation;
 let _me;

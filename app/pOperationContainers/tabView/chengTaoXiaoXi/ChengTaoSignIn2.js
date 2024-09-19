@@ -2,8 +2,8 @@
  * @Description:对成套打卡功能进行升级
  * @LastEditors: hxf
  * @Date: 2023-09-06 14:20:53
- * @LastEditTime: 2024-08-30 09:37:01
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoSignIn2.js
+ * @LastEditTime: 2024-09-19 14:30:49
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoSignIn2.js
  */
 import moment from 'moment';
 import React, { Component, PureComponent } from 'react';
@@ -13,7 +13,6 @@ import { connect } from 'react-redux';
 import { Geolocation, stop } from 'react-native-amap-geolocation';
 
 import { SCREEN_WIDTH } from '../../../config/globalsize';
-import AutoTimerText from '../../../operationContainers/home/workbench/components/AutoTimerText';
 import { CloseToast, createAction, createNavigationOptions, NavigationActions, SentencedToEmpty, ShowLoadingToast, ShowToast } from '../../../utils';
 import IconDialog from '../../../operationContainers/taskViews/taskExecution/components/IconDialog';
 import ChengTaoOffSideSignIn from './ChengTaoOffSideSignIn';
@@ -23,6 +22,7 @@ import { getEncryptData } from '../../../dvapack/storage';
 import ImageUploadTouch from '../../../components/form/images/ImageUploadTouch';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import ImageDeleteTouch from '../../../components/form/images/ImageDeleteTouch';
+import AutoTimerText from '../../components/AutoTimerText';
 const AMapGeolocation = NativeModules.AMapGeolocation;
 // const calenderComponentHeight = 300;
 const calenderComponentHeight = 260;

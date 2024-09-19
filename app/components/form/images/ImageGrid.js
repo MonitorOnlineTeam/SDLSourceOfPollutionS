@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { View, Image, Modal, Alert, CameraRoll, Platform, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import RNFS from 'react-native-fs';
+// import RNFS from 'react-native-fs';
 
 import Touchable from '../../base/Touchable';
 import ImageUploadTouch from './ImageUploadTouch';
@@ -9,7 +9,7 @@ import ImageUploadTouchNetCore from './ImageUploadTouchNetCore';
 import ImageDeleteTouch from './ImageDeleteTouch';
 import { getEncryptData, getRootUrl } from '../../../dvapack/storage';
 import { IMAGE_DEBUG, ImageUrlPrefix, UrlInfo } from '../../../config';
-import ImageViewer from 'react-native-image-zoom-viewer';
+// import ImageViewer from 'react-native-image-zoom-viewer';
 import { SDLText } from '../..';
 import ImageDeleteTouchNetCore from './ImageDeleteTouchNetCore';
 import { SentencedToEmpty } from '../../../utils';
@@ -117,45 +117,43 @@ export default class ImageGrid extends PureComponent {
         }
         let fileUrl = url;
         let fileName = this.state.showUrls[0].AttachID;
-        // const downloadDest = `${RNFS.ExternalDirectoryPath}/${fileName}`;
-        const downloadDest = `${RNFS.PicturesDirectoryPath}/${fileName}`;
-        const options = {
-            fromUrl: fileUrl,
-            toFile: downloadDest,
-            background: true,
-            begin: res => { },
-            progress: res => {
-                // let pro = res.bytesWritten +'/'+ res.contentLength;
-                let pro = Math.round((res.bytesWritten / res.contentLength) * 100) / 100;
-                let _text = Math.round((res.bytesWritten / res.contentLength) * 100);
-                this.setState({
-                    progressText: _text,
-                    number: pro
-                });
-            }
-        };
-        try {
-            const ret = RNFS.downloadFile(options);
-            ret.promise
-                .then(res => {
-                    // 未奔溃，无法访问到文件
-                    if (res && typeof res != 'undefined' && res.statusCode == 200) {
-                        Alert.alert('提示', '图片保存成功！');
-                        return;
-                    }
-                    Alert.alert('提示', '图片保存失败！');
-                })
-                .catch(err => {
-                    console.log('err', err);
-                });
-        } catch (e) {
-            console.log(error);
-            return;
-        }
+        // const downloadDest = `${RNFS.PicturesDirectoryPath}/${fileName}`;
+        // const options = {
+        //     fromUrl: fileUrl,
+        //     toFile: downloadDest,
+        //     background: true,
+        //     begin: res => { },
+        //     progress: res => {
+        //         // let pro = res.bytesWritten +'/'+ res.contentLength;
+        //         let pro = Math.round((res.bytesWritten / res.contentLength) * 100) / 100;
+        //         let _text = Math.round((res.bytesWritten / res.contentLength) * 100);
+        //         this.setState({
+        //             progressText: _text,
+        //             number: pro
+        //         });
+        //     }
+        // };
+        // try {
+        //     const ret = RNFS.downloadFile(options);
+        //     ret.promise
+        //         .then(res => {
+        //             // 未奔溃，无法访问到文件
+        //             if (res && typeof res != 'undefined' && res.statusCode == 200) {
+        //                 Alert.alert('提示', '图片保存成功！');
+        //                 return;
+        //             }
+        //             Alert.alert('提示', '图片保存失败！');
+        //         })
+        //         .catch(err => {
+        //             console.log('err', err);
+        //         });
+        // } catch (e) {
+        //     console.log(error);
+        //     return;
+        // }
     }
 
     render() {
-        // console.log('图片信息->', this.state.Imgs);
         const rootUrl = getRootUrl();
 
         /**
@@ -250,13 +248,10 @@ export default class ImageGrid extends PureComponent {
                 let encryData = getEncryptData();
                 const rootUrl = getRootUrl();
                 let source = {
-                    // uri: `${rootUrl.ReactUrl}/upload/${SentencedToEmpty(item, ['AttachID'], '')}`,
-                    // uri: `${ImageUrlPrefix}/${item.AttachID}`,
                     uri: IMAGE_DEBUG ? `${ImageUrlPrefix}/thumb_${item.AttachID}`
                         : `${ImageUrlPrefix}${ProxyCode}/thumb_${item.AttachID}`,
                 };
                 if (
-                    // interfaceName == 'netCore'|| 
                     false && interfaceName == 'DataAnalyze') {
                     source = { uri: `${UrlInfo.DataAnalyze}/${SentencedToEmpty(item, ['url'], '')}` };
                 }
@@ -278,8 +273,6 @@ export default class ImageGrid extends PureComponent {
                                         index: key,
                                         showUrls: [
                                             {
-                                                // url: `${UrlInfo.ImageUrl + item.AttachID}/Attachment?code=${this.state.encryData}`,
-                                                // url: `${UrlInfo.ImageUrl}${item.AttachID}`,
                                                 url: `${UrlInfo.DataAnalyze}/${SentencedToEmpty(item, ['url'], '')}`,
                                                 AttachID: item.AttachID
                                                 // You can pass props to <Image />.
@@ -295,10 +288,6 @@ export default class ImageGrid extends PureComponent {
                                         index: key,
                                         showUrls: [
                                             {
-                                                // url: `${UrlInfo.ImageUrl + item.AttachID}/Attachment?code=${this.state.encryData}`,
-                                                // url: `${UrlInfo.ImageUrl}${item.AttachID}`,
-                                                // url: `${rootUrl.ReactUrl}/upload/${item.AttachID}`,
-                                                // url: `${ImageUrlPrefix}/${item.AttachID}`,
                                                 url: IMAGE_DEBUG ? `${ImageUrlPrefix}/${item.AttachID}`
                                                     : `${ImageUrlPrefix}${ProxyCode}/${item.AttachID}`,
                                                 AttachID: item.AttachID
@@ -434,7 +423,7 @@ export default class ImageGrid extends PureComponent {
                 <View style={[{ flexDirection: 'row', width: '100%', backgroundColor: '#ffffff', alignItems: 'center', flexWrap: 'wrap' }, style, {}]}>
                     {rtnVal}
                     <Modal visible={this.state.modalVisible} transparent={true} onRequestClose={() => this.setState({ modalVisible: false })}>
-                        <ImageViewer
+                        {/* <ImageViewer
                             saveToLocalByLongPress={false}
                             menuContext={{ saveToLocal: '保存图片', cancel: '取消' }}
                             onClick={() => {
@@ -450,7 +439,7 @@ export default class ImageGrid extends PureComponent {
                             imageUrls={isMultiplePictures ? this.state.largImage : this.state.showUrls}
                             // index={0}
                             index={isMultiplePictures ? this.state.index : 0}
-                        />
+                        /> */}
                     </Modal>
                 </View>
             );

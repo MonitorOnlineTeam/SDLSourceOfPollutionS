@@ -6,6 +6,8 @@ import { MessageBar, MessageBarManager } from 'react-native-message-bar';
 import LoadingManager from './LoadingManager'
 
 import { createAction, getCommonHeaderStyle, SentencedToEmpty } from '../utils';
+import { SimpleLoadingView } from '../components';
+import GlobalLoadingView from './GlobalLoadingView';
 // import SimpleLoadingView from '@oldProjectComponent/SimpleLoadingView';
 
 const Stack = createNativeStackNavigator();
@@ -25,6 +27,7 @@ export default function RootView({ navigation }) {
         LoadingManager.registerLoadingView(_loadingViewRef.current);
         return () => {
             MessageBarManager.unregisterMessageBar();
+            LoadingManager.unregisterMessageBar();
         }
     }, [])
     exportNavigation = navigation;
@@ -36,7 +39,7 @@ export default function RootView({ navigation }) {
                 })
             }
         </Stack.Navigator>
-        {/* <SimpleLoadingView ref={_loadingViewRef} message={'loadingMessage'} /> */}
+        <GlobalLoadingView ref={_loadingViewRef} message={'loadingMessage'} />
         <MessageBar messageStyle={{ textAlign: 'center' }} ref={_messagebarRef} />
     </View>
     )
@@ -65,6 +68,11 @@ export class MyActions {
             }
         });
         ViewList.push({ view, options });
+    }
+    setOptions = (options = {}) => {
+        console.log('setOptions options = ', options);
+        console.log('setOptions exportNavigation = ', exportNavigation);
+        exportNavigation.setOptions(options);
     }
     pushViewWithName = (view, name, options = {}) => {
         let isDuplication = false;

@@ -12,6 +12,7 @@ import { UrlInfo } from '../config/globalconst';
 export default Model.extend({
     namespace: 'taskDetailModel',
     state: {
+        tabIndex: 0, //当前tab索引
         helperOperator: {}, //协助人信息
         delHelperOperator: {}, //删除协助人
         taskID: '',

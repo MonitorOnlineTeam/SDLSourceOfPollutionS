@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-04-26 11:47:43
- * @LastEditTime: 2024-06-06 20:16:48
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeEditor.js
+ * @LastEditTime: 2024-09-19 16:37:52
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeEditor.js
  */
 import { Image, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
@@ -75,8 +75,8 @@ export default class SparePartsChangeEditor extends Component {
         console.log('constructor props = ', props);
         const user = getToken();
         const from = SentencedToEmpty(props
-            , ['navigation', 'state', 'params', 'from'], '');
-        const RecordStatus = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'secondItem', 'RecordStatus'], '0');
+            , ['route', 'params', 'params', 'from'], '');
+        const RecordStatus = SentencedToEmpty(this.props, ['route', 'params', 'params', 'secondItem', 'RecordStatus'], '0');
 
         let comiteParams = {
             "recordType": 2, //1.派单备件更换2.工作台备件更换
@@ -107,8 +107,8 @@ export default class SparePartsChangeEditor extends Component {
             ]
         }
         if (from == 'ChengTaoTaskDetail') {
-            const recordId = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'secondItem', 'RecordId'], '');
-            const serviceId = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'firstItem', 'ItemId'], '');
+            const recordId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'secondItem', 'RecordId'], '');
+            const serviceId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'firstItem', 'ItemId'], '');
             comiteParams = {
                 MainId: this.props.dispatchId, // 如果是服务属性的单子传
                 ServiceId: serviceId, // 如果是服务属性的单子传
@@ -141,7 +141,8 @@ export default class SparePartsChangeEditor extends Component {
         this.state = {
             isEmpty: from == 'ChengTaoTaskDetail' && RecordStatus == 1 ? false : true,
             isVisible: false,
-            spinnerRect: {},
+            // spinnerRect: {},
+            spinnerRect: { x: 100 - 100 / 2, y: 100 - 80, width: 100, height: 40 },
             data: { Status: 1 },
             projectList: [], // 项目列表
             entList: [], // 企业列表
@@ -150,11 +151,40 @@ export default class SparePartsChangeEditor extends Component {
             // 提交参数
             comiteParams: comiteParams,
         };
-        this.props.navigation.setParams({
-            navigateRightPress: (pageX, pageY) => {
-                this.showSpinner(pageX, pageY);
-            }
-        });
+        // this.props.navigation.setParams({
+        //     navigateRightPress: (pageX, pageY) => {
+        //         this.showSpinner(pageX, pageY);
+        //     }
+        // });
+
+        if (from == '') {
+            this.props.navigation.setOptions({
+                title: '备件更换'
+                , headerRight: () => <View>
+                    <TouchableOpacity
+                        style={{ width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}
+                        onPress={(e) => {
+                            const {
+                                nativeEvent: { pageX, pageY }
+                            } = e;
+                            // navigation.state.params.navigateRightPress(pageX, pageY);
+                            this.showSpinner(pageX, pageY);
+                        }}
+                    >
+                        <Image source={require('../../../../images/ic_more_option.png')} style={{ width: 18, height: 18, marginRight: 16, tintColor: '#fff' }} />
+                    </TouchableOpacity>
+                </View>
+            });
+        } else if (from == "ChengTaoTaskDetail") {
+            this.props.navigation.setOptions({
+                title: '备件更换'
+            });
+        } else {
+            this.props.navigation.setOptions({
+                title: '备件更换'
+            });
+        }
+
     }
 
     componentDidMount() {
@@ -169,7 +199,7 @@ export default class SparePartsChangeEditor extends Component {
         const placement = 'bottom';
         this.setState({
             isVisible: true,
-            spinnerRect: { x: pageX - width / 2, y: placement == 'bottom' ? pageY - 80 : pageY - 50, width: width, height: height }
+            spinnerRect: { x: pageX - (width / 2), y: placement == 'bottom' ? pageY - 80 : pageY - 50, width: width, height: height }
         });
     };
 
@@ -238,11 +268,10 @@ export default class SparePartsChangeEditor extends Component {
 
     getPageStatus = () => {
         const from = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'from'], '');
-        const RecordStatus = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'secondItem', 'RecordStatus'], '0');
+            , ['route', 'params', 'params', 'from'], '');
+        const RecordStatus = SentencedToEmpty(this.props, ['route', 'params', 'params', 'secondItem', 'RecordStatus'], '0');
 
 
-        console.log('projectEntPointSysModelResult = ', this.props.projectEntPointSysModelResult);
         const projectEntPointSysModelStatus = SentencedToEmpty(this.props
             , ['projectEntPointSysModelResult', 'status'], 1000
         );
@@ -252,9 +281,6 @@ export default class SparePartsChangeEditor extends Component {
         const cisPartsListStatus = SentencedToEmpty(this.props
             , ['cisPartsListResult', 'status'], 1000
         );
-        console.log('projectEntPointSysModelStatus = ', projectEntPointSysModelStatus);
-        console.log('cemsSystemModelInventoryStatus = ', cemsSystemModelInventoryStatus);
-        console.log('cisPartsListStatus = ', cisPartsListStatus);
         if (from == 'ChengtaoTaskDetail'
             && RecordStatus == '1'
         ) {
@@ -328,7 +354,7 @@ export default class SparePartsChangeEditor extends Component {
         // { checkStatus: true, params }
         // const comiteParams = this.state.comiteParams;
         const from = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'from'], '');
+            , ['route', 'params', 'params', 'from'], '');
         const comiteParamsData = SentencedToEmpty(this.state
             , ['comiteParams', 'cList', 0], {});
         if (this.props.equipmentInstalled != 1
@@ -404,7 +430,7 @@ export default class SparePartsChangeEditor extends Component {
     commitForm = () => {
         ShowLoadingToast('正在提交');
         const from = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'from'], '');
+            , ['route', 'params', 'params', 'from'], '');
         const comiteParams = this.state.comiteParams;
         console.log('comiteParams = ', comiteParams);
         const checkResult = this.checkParams();
@@ -456,8 +482,8 @@ export default class SparePartsChangeEditor extends Component {
 
     onRefresh = () => {
 
-        const secondItem = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'secondItem'], {});
-        const firstItem = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'firstItem'], {});
+        const secondItem = SentencedToEmpty(this.props, ['route', 'params', 'params', 'secondItem'], {});
+        const firstItem = SentencedToEmpty(this.props, ['route', 'params', 'params', 'firstItem'], {});
         console.log('firstItem = ', firstItem);
         console.log('secondItem = ', secondItem);
 
@@ -475,13 +501,13 @@ export default class SparePartsChangeEditor extends Component {
         this.props.dispatch(createAction('CTSparePartsChangeModel/getCisPartsList')({}));
 
         const from = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'from'], '');
+            , ['route', 'params', 'params', 'from'], '');
 
         if (from == 'ChengTaoTaskDetail') {
-            const RecordStatus = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'secondItem', 'RecordStatus'], '0');
+            const RecordStatus = SentencedToEmpty(this.props, ['route', 'params', 'params', 'secondItem', 'RecordStatus'], '0');
             if (RecordStatus == 1) {
-                const recordId = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'secondItem', 'RecordId'], '');
-                const serviceId = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'firstItem', 'ItemId'], '');
+                const recordId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'secondItem', 'RecordId'], '');
+                const serviceId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'firstItem', 'ItemId'], '');
                 this.props.dispatch(createAction(
                     'CTSparePartsChangeModel/updateState')
                     ({
@@ -593,8 +619,8 @@ export default class SparePartsChangeEditor extends Component {
     deleteConfirm = () => {
         if (SentencedToEmpty(this.state, ['deleteID'], '') != '') {
             ShowLoadingToast('删除中...');
-            const recordId = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'secondItem', 'RecordId'], '');
-            const serviceId = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'firstItem', 'ItemId'], '');
+            const recordId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'secondItem', 'RecordId'], '');
+            const serviceId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'firstItem', 'ItemId'], '');
             this.props.dispatch(createAction('CTSparePartsChangeModel/deleteSpareReplacementRecord')({
                 params: {
                     RecordType: 2, //1服务属性的单子 2 工作台的单子
@@ -624,7 +650,7 @@ export default class SparePartsChangeEditor extends Component {
         console.log('state = ', this.state);
         console.log('props = ', this.props);
         const from = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'from'], '');
+            , ['route', 'params', 'params', 'from'], '');
         const deleteOptions = {
             headTitle: '提示',
             messText: '确认删除这条备件更换记录吗？',
@@ -1485,6 +1511,7 @@ export default class SparePartsChangeEditor extends Component {
                 >
                     <View style={{ alignItems: 'center' }}>
                         {['历史记录', '功能说明'].map((result, i, arr) => {
+                            console.log('popover render');
                             return (
                                 <TouchableOpacity key={i} onPress={() => this.onItemClick(arr[i])} underlayColor="transparent">
                                     <Text style={{ fontSize: 16, color: 'white', padding: 8, fontWeight: '400' }}>{arr[i]}</Text>

@@ -2,8 +2,8 @@
  * @Description: 补签
  * @LastEditors: hxf
  * @Date: 2024-02-01 14:59:20
- * @LastEditTime: 2024-04-23 18:22:51
- * @FilePath: /SDLMainProject37_backup/app/pOperationContainers/tabView/workbenchSignin/SupplementarySignIn.js
+ * @LastEditTime: 2024-09-19 11:44:27
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbenchSignin/SupplementarySignIn.js
  */
 import { Image, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'

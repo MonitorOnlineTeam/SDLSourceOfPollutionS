@@ -72,7 +72,7 @@ class RangeDay extends PureComponent {
     }
 
     render() {
-        return (<View><Text>RangeDay</Text></View>)
+        // return (<View><Text>RangeDay</Text></View>)
         return (
             <View style={[styles.container,]}>
                 <View style={[{
@@ -152,13 +152,41 @@ class RangeDay extends PureComponent {
                     </TouchableOpacity>
                 </View>
                 <View style={[{ height: calendarHeight, width: WINDOW_WIDTH, paddingTop: 3, }]}>
-                    <this.state.TimeNavigator ref={ref => {
+                    {/* <this.state.TimeNavigator ref={ref => {
                         if (ref !== null && __DEV__) {
                             // console.log(ref);
                             // console.log(ref._navigation);
                         }
                         return this.timeNavigator = ref;
-                    }} />
+                    }} /> */}
+                    <CalendarView
+                        // defaultDate={this.props.defaultDate.format('YYYY-MM-DD')}
+                        callbackFun={([selectedStartDate, selectedEndDate]) => {
+                            let preSelectedStartDate, preSelectedEndDate;
+                            if (this.state.selectedStartDate) {
+                                let dateStr = this.state.selectedStartDate.format('YYYY-MM-DD HH:mm');
+                                preSelectedStartDate = moment(dateStr);
+                            } else {
+                                preSelectedStartDate = moment();
+                            }
+                            if (this.state.selectedEndDate) {
+                                let dateStr = this.state.selectedEndDate.format('YYYY-MM-DD HH:mm');
+                                preSelectedEndDate = moment(dateStr);
+                            } else {
+                                preSelectedEndDate = moment();
+                            }
+                            preSelectedStartDate.set('year', selectedStartDate.get('year'));
+                            preSelectedStartDate.set('month', selectedStartDate.get('month'));
+                            preSelectedStartDate.set('date', selectedStartDate.get('date'));
+                            preSelectedEndDate.set('year', selectedEndDate.get('year'));
+                            preSelectedEndDate.set('month', selectedEndDate.get('month'));
+                            preSelectedEndDate.set('date', selectedEndDate.get('date'));
+                            this.setState({ 'selectedStartDate': preSelectedStartDate, 'selectedEndDate': preSelectedEndDate });
+                        }}
+                        allowRangeSelection={true}
+                        selectedStartDate={this.props.selectedStartDate}
+                        selectedEndDate={this.props.selectedEndDate}
+                    />
                 </View>
             </View>
         );

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, Platform, Text } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { createStackNavigator, NavigationActions } from 'react-navigation';
+// import { createStackNavigator, NavigationActions } from 'react-navigation';
 
 import { SCREEN_WIDTH } from '../../../config/globalsize';
-import { ShowToast, createNavigationOptions, createAction, SentencedToEmpty } from '../../../utils';
+import { ShowToast, createNavigationOptions, createAction, SentencedToEmpty, NavigationActions } from '../../../utils';
 import { StatusPagem, SimpleLoadingComponent, Touchable, FlatListWithHeaderAndFooter, SDLText, StatusPage, AlertDialog } from '../../../components';
 import globalcolor from '../../../config/globalcolor.js';
 import { SCREEN_HEIGHT } from '../../../components/SDLPicker/constant/globalsize';

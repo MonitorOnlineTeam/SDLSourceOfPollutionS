@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, Platform, Text } from 'react-native';
+import {
+    View, StyleSheet, Image, TouchableOpacity
+    , TouchableWithoutFeedback, Platform, Text
+    , KeyboardAvoidingView,
+    ScrollView
+} from 'react-native';
 import { connect } from 'react-redux';
-import { createStackNavigator, NavigationActions } from 'react-navigation';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+// import { createStackNavigator, NavigationActions } from 'react-navigation';
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { SCREEN_WIDTH } from '../../config/globalsize';
-import { ShowToast, createNavigationOptions, createAction, StackActions, SentencedToEmpty } from '../../utils';
+import { ShowToast, createNavigationOptions, createAction, StackActions, SentencedToEmpty, NavigationActions, CloseToast } from '../../utils';
 import { StatusPage, SimpleLoadingComponent, Touchable, SDLText, TextInput, PickerTouchable, AlertDialog, SimpleLoadingView } from '../../components';
 
 import globalcolor from '../../config/globalcolor';
 import ImageGrid from '../../components/form/images/ImageGrid';
-import IconDialog from '../../operationContainers/taskViews/taskExecution/components/IconDialog';
 
 /**
  * 任务处理
@@ -622,70 +626,75 @@ export default class TaskHandle extends Component {
         };
         return (
             <View style={styles.container}>
-                <KeyboardAwareScrollView style={styles.container}>
-                    {this.renderBar(require('../../images/icon_task_processing.png'), '处理说明')}
-                    <View style={{ width: SCREEN_WIDTH, minHeight: 60, backgroundColor: '#fff' }}>
-                        {
-                            <TextInput
-                                editable={this.isEdit()}
-                                multiline={true}
-                                placeholder={this.isEdit() ? '请填写任务处理说明' : '暂无任务处理说明'}
-                                style={{ marginHorizontal: 13, minHeight: 40, marginTop: 4, marginBottom: 15, borderBottomWidth: 1, borderBottomColor: '#e7e7e7', textAlignVertical: 'top', color: '#666666' }}
-                                onChangeText={text => this.setState({ TaskContent: text })}
-                            >
-                                {this.state.TaskContent}
-                            </TextInput>
-                            /*
-                            <TextInput
-                                editable={this.isEdit()}
-                                multiline={true}
-                                style={{ marginHorizontal: 13, height: 80, marginTop: 4, marginBottom: 10, borderWidth: 1, borderRadius: 3, borderColor: '#e7e7e7', textAlignVertical: 'top' }}
-                                onChangeText={text => this.setState({ TaskContent: text })}
-                            >
-                                {this.state.TaskContent}
-                            </TextInput>*/
-                        }
-                    </View>
-                    {this.renderUpdateButton()}
-                    {this.renderBar(require('../../images/icon_add_new_form.png'), '运维台账')}
-                    {this.renderForms()}
-                    {this.renderBar(require('../../images/icon_upload_pictures.png'), '上传图片')}
-                    <ImageGrid
-                        componentType={'taskhandle'}
-                        extraInfo={taskDetail}
-                        style={{ paddingLeft: 13, paddingRight: 13, paddingBottom: 10, backgroundColor: '#fff' }}
-                        Imgs={Images}
-                        isUpload={this.isEdit()}
-                        isDel={this.isEdit()}
-                        UUID={SentencedToEmpty(taskDetail, ['AttachmentsId'], taskID)}
-                        uploadCallback={items => {
-                            console.log('uploadCallback');
-                            let newTaskDetail = { ...taskDetail };
-                            // let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], [])); 
-                            let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []));
-                            items.map(imageItem => {
-                                newImgList.push(imageItem.AttachID);
-                            });
-                            let Attachments = SentencedToEmpty(taskDetail, ['Attachments'], {});
-                            Attachments.ImgNameList = newImgList;
-                            newTaskDetail.Attachments = Attachments;
-                            this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
-                        }}
-                        delCallback={index => {
-                            console.log('delCallback');
-                            let newTaskDetail = { ...taskDetail };
-                            // let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], []));
-                            let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []));
-                            newImgList.splice(index, 1);
-                            let Attachments = SentencedToEmpty(taskDetail, ['Attachments'], {});
-                            Attachments.ImgNameList = newImgList;
-                            newTaskDetail.Attachments = Attachments;
-                            this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
-                        }}
-                    />
-                    {this.renderBar(require('../../images/ic_add_helper.png'), '协助人员')}
-                    {this.renderTaskHelpersList()}
-                </KeyboardAwareScrollView>
+                <ScrollView style={[styles.container]}>
+                    <KeyboardAvoidingView
+                        behavior={Platform.OS == 'ios' ? "padding" : "height"}
+                        style={styles.container}>
+                        {this.renderBar(require('../../images/icon_task_processing.png'), '处理说明')}
+                        <View style={{ width: SCREEN_WIDTH, minHeight: 60, backgroundColor: '#fff' }}>
+                            {
+                                <TextInput
+                                    editable={this.isEdit()}
+                                    multiline={true}
+                                    placeholder={this.isEdit() ? '请填写任务处理说明' : '暂无任务处理说明'}
+                                    style={{ marginHorizontal: 13, minHeight: 40, marginTop: 4, marginBottom: 15, borderBottomWidth: 1, borderBottomColor: '#e7e7e7', textAlignVertical: 'top', color: '#666666' }}
+                                    onChangeText={text => this.setState({ TaskContent: text })}
+                                >
+                                    {this.state.TaskContent}
+                                </TextInput>
+                                /*
+                                <TextInput
+                                    editable={this.isEdit()}
+                                    multiline={true}
+                                    style={{ marginHorizontal: 13, height: 80, marginTop: 4, marginBottom: 10, borderWidth: 1, borderRadius: 3, borderColor: '#e7e7e7', textAlignVertical: 'top' }}
+                                    onChangeText={text => this.setState({ TaskContent: text })}
+                                >
+                                    {this.state.TaskContent}
+                                </TextInput>*/
+                            }
+                        </View>
+                        {this.renderUpdateButton()}
+                        {this.renderBar(require('../../images/icon_add_new_form.png'), '运维台账')}
+                        {this.renderForms()}
+                        {this.renderBar(require('../../images/icon_upload_pictures.png'), '上传图片')}
+                        <ImageGrid
+                            componentType={'taskhandle'}
+                            extraInfo={taskDetail}
+                            style={{ paddingLeft: 13, paddingRight: 13, paddingBottom: 10, backgroundColor: '#fff' }}
+                            Imgs={Images}
+                            isUpload={this.isEdit()}
+                            isDel={this.isEdit()}
+                            UUID={SentencedToEmpty(taskDetail, ['AttachmentsId'], taskID)}
+                            uploadCallback={items => {
+                                console.log('uploadCallback');
+                                let newTaskDetail = { ...taskDetail };
+                                // let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], [])); 
+                                let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []));
+                                items.map(imageItem => {
+                                    newImgList.push(imageItem.AttachID);
+                                });
+                                let Attachments = SentencedToEmpty(taskDetail, ['Attachments'], {});
+                                Attachments.ImgNameList = newImgList;
+                                newTaskDetail.Attachments = Attachments;
+                                this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
+                            }}
+                            delCallback={index => {
+                                console.log('delCallback');
+                                let newTaskDetail = { ...taskDetail };
+                                // let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], []));
+                                let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []));
+                                newImgList.splice(index, 1);
+                                let Attachments = SentencedToEmpty(taskDetail, ['Attachments'], {});
+                                Attachments.ImgNameList = newImgList;
+                                newTaskDetail.Attachments = Attachments;
+                                this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
+                                CloseToast();
+                            }}
+                        />
+                        {this.renderBar(require('../../images/ic_add_helper.png'), '协助人员')}
+                        {this.renderTaskHelpersList()}
+                    </KeyboardAvoidingView>
+                </ScrollView>
                 {this.renderBottomBtn()}
                 {SentencedToEmpty(this.props, ['taskDetail', 'OperationFlag'], '1') == 2 || isSigned ? null : <Touchable style={{ width: '100%', height: '100%', position: 'absolute', bottom: 0, left: 0 }} onPress={this.props.taskSign} />}
                 <AlertDialog options={alertOptions} ref="doAlert" />
