@@ -593,6 +593,7 @@ export default Model.extend({
             { call, put, take, update, select }
         ) {
             let { verifyListTargetDGIMN, verifyIndex, verifyBeginTime, verifyEndTime, VerifyState, verifyListData } = yield select(state => state.pointDetails);
+            let { constants } = yield select(state => state.app);
             let innerParam = {
                 rel: '$and',
                 group: [
@@ -617,7 +618,7 @@ export default Model.extend({
                 pageSize: 20,
                 ConditionWhere: JSON.stringify(innerParam)
             };
-            if (global.constants.isSecret == true) {
+            if (constants.isSecret == true) {
                 params.configId = Base64.encode(params.configId);
                 params.ConditionWhere = Base64.encode(params.ConditionWhere);
             }

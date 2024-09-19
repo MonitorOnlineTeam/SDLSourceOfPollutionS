@@ -76,11 +76,13 @@ android {
 
     namespace "com.sdlmainproject"
     defaultConfig {
-        applicationId "com.sdlmainproject"
+//        applicationId "com.sdlmainproject"
+        applicationId "com.chsdlenterprise.intelligenceoperations" // 公司运维
+
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 72
+        versionName "1.7.2"
     }
     signingConfigs {
         release {
@@ -119,8 +121,12 @@ android {
 }
 
 dependencies {
+//    implementation project(':gradle-plugin-library')
+//    implementation("com.facebook.react:react-native-gradle-plugin")
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    implementation 'org.greenrobot:greendao:3.3.0'
+    compileOnly('com.aliyun.ams:alicloud-android-third-push-huawei:3.8.6.1')
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
@@ -130,3 +136,4 @@ dependencies {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+

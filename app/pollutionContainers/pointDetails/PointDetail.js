@@ -506,6 +506,8 @@ export default class PointDetail extends PureComponent {
     };
 
     click = item => {
+        console.log('CURRENT_PROJECT = ', CURRENT_PROJECT);
+        console.log('CURRENT_PROJECT boolean = ', CURRENT_PROJECT == POLLUTION_ORERATION_PROJECT);
         if (CURRENT_PROJECT == POLLUTION_ORERATION_PROJECT) {
             switch (item.id) {
                 case '6d5b5e59-8833-496c-89b6-461eacf1bfbb':
@@ -513,10 +515,10 @@ export default class PointDetail extends PureComponent {
                     this.props.dispatch(createAction('pointDetails/updateState')({ abnormalListDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN'] }));
                     this.props.dispatch(NavigationActions.navigate({ routeName: 'AbnormalityReportLst', params: { abnormalListDGIMN: this.props.route.params.params.DGIMN } }));
                     break;
-                case 'f9801b6d-9b89-4465-8a63-d57ed31b46a1':
-                    // 基础设置
-                    this.props.dispatch(NavigationActions.navigate({ routeName: 'BaseFacilities', params: { DGIMN: this.props.route.params.params.DGIMN } }));
-                    break;
+                // case 'f9801b6d-9b89-4465-8a63-d57ed31b46a1':
+                //     // 基础设置
+                //     this.props.dispatch(NavigationActions.navigate({ routeName: 'BaseFacilities', params: { DGIMN: this.props.route.params.params.DGIMN } }));
+                //     break;
                 case 'b3f6a1dc-23da-4150-ace1-bc83788cd7c1':
                     // 超标报警核实
                     this.props.dispatch(createAction('pointDetails/updateState')({ verifyListTargetDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN'] }));
@@ -530,12 +532,16 @@ export default class PointDetail extends PureComponent {
                     );
                     break;
                 case '4b2f2a58-d18a-4fe1-97bb-03d2609d6fa4':
+                    console.log('CURRENT_PROJECT1 = ', CURRENT_PROJECT);
                     //数据查询
                     this.props.dispatch(createAction('historyDataModel/updateState')({
                         showIndex: getShowIndex({}),
                         chartOrList: 'chart',
                     }));
                     this.props.dispatch(NavigationActions.navigate({ routeName: 'HistoryData', params: { DGIMN: this.props.route.params.params.DGIMN } }));
+
+                    // 测试
+                    // this.props.dispatch(NavigationActions.navigate({ routeName: 'TestView', params: { DGIMN: this.props.route.params.params.DGIMN } }));
                     break;
                 case 'f4f359b4-6c27-4757-84f4-00df140e011d':
                     // '超标数据'
@@ -701,6 +707,8 @@ export default class PointDetail extends PureComponent {
                     );
                     break;
                 case '7dbc22e1-1eab-41ba-af86-90ef933910e7':
+                    // this.props.dispatch(NavigationActions.navigate({ routeName: 'TestView', params: { DGIMN: this.props.route.params.params.DGIMN } }));
+                    console.log('CURRENT_PROJECT2 = ', CURRENT_PROJECT);
                     //数据查询
                     this.props.dispatch(NavigationActions.navigate({ routeName: 'HistoryData', params: { DGIMN: this.props.route.params.params.DGIMN } }));
                     // 排口任务记录

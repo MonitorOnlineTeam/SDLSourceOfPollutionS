@@ -2,13 +2,13 @@
  * @Description: 水印相机
  * @LastEditors: hxf
  * @Date: 2023-06-01 14:09:24
- * @LastEditTime: 2024-08-22 09:48:57
- * @FilePath: /SDLMainProject37/app/pOperationContainers/taskDetail/WaterMaskCamera.js
+ * @LastEditTime: 2024-09-13 15:33:46
+ * @FilePath: /SDLMainProject/app/pOperationContainers/taskDetail/WaterMaskCamera.js
  */
 import React, { Component } from 'react'
 import { Text, View, Platform, TouchableOpacity } from 'react-native'
 import { CameraWaterMaskComponent, takePhoto, releaseView } from 'react-native-camera-water-mask';
-import { saveWaterMaskImage } from 'react-native-offline-image-upload';
+// import { saveWaterMaskImage } from 'react-native-offline-image-upload';
 
 import { SCREEN_WIDTH } from '../../config/globalsize';
 import { createNavigationOptions, SentencedToEmpty, NavigationActions, createAction, ShowToast, ShowLoadingToast, CloseToast } from '../../utils';
@@ -49,6 +49,8 @@ export default class WaterMaskCamera extends Component {
     }
 
     uploadImageCallBack = (images, isSuccess) => {
+        CloseToast();
+        console.log('uploadImageCallBack isSuccess = ', isSuccess);
         if (isSuccess) {
             // this.props.callback(img);
             const { taskDetail } = this.props;
@@ -61,21 +63,27 @@ export default class WaterMaskCamera extends Component {
             let Attachments = SentencedToEmpty(taskDetail, ['Attachments'], {});
             Attachments.ImgNameList = newImgList;
             newTaskDetail.Attachments = Attachments;
-            const navigationCallback = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'callback'], () => { return false; });
+            const navigationCallback = SentencedToEmpty(this.props, ['route', 'params', 'params', 'callback'], () => { return false; });
             const callbackHandle = navigationCallback(images, true, SentencedToEmpty(this.props
-                , ['navigation', 'state', 'params', 'saveType'], 'online'
+                , ['route', 'params', 'params', 'saveType'], 'online'
             ));
             if (!callbackHandle) {
                 this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
             }
             this.props.dispatch(NavigationActions.back());
-            ShowToast('上传成功');
+            ShowToast({
+                message: '上传成功',
+                alertType: 'success',
+            });
         } else {
             if (images == '') {
-                ShowToast('上传失败！');
+                ShowToast({
+                    message: '上传失败！',
+                    alertType: 'error',
+                });
             } else {
                 // console.log('images', images);
-                ShowToast(images);
+                // ShowToast(images);
             }
 
         }
@@ -88,7 +96,7 @@ export default class WaterMaskCamera extends Component {
     render() {
         console.log('props = ', this.props);
         const saveType = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'saveType'], 'online'
+            , ['route', 'params', 'params', 'saveType'], 'online'
         )
         console.log('saveType = ', saveType);
         // `${SentencedToEmpty(this.props.taskDetail, ['EnterpriseName'], '')}-${SentencedToEmpty(this.props.taskDetail, ['PointName'], '')}`
@@ -115,7 +123,8 @@ export default class WaterMaskCamera extends Component {
                                     if (!this.state.takingPhoto) {
                                         this.setState({ takingPhoto: true }
                                             , () => {
-                                                let uuid = this.props.navigation.state.params.uuid;
+                                                // let uuid = this.props.navigation.state.params.uuid;
+                                                let uuid = this.props.route.params.params.uuid;
                                                 takePhoto(options, response => {
                                                     const { assets = [] } = response;
                                                     let imageObj = null;
@@ -175,27 +184,27 @@ export default class WaterMaskCamera extends Component {
                                                             setTimeout(() => {
                                                                 const time = moment().format('YYYY-MM-DD HH:mm:ss');
                                                                 const user = getToken();
-                                                                saveWaterMaskImage({
-                                                                    imageId: new Date().getTime() + '',
-                                                                    uuid: uuid,
-                                                                    urlstr: imageObj.uri,
-                                                                    imageFrom: 6, // CT_SIGN_IN_WATER_MASK
-                                                                    saveTime: time,
-                                                                    saveTimel: new Date().getTime(),
-                                                                    userName: user.UserName,
-                                                                    userId: user.UserId,
-                                                                    waterMaskEntName: response.EntName,
-                                                                    waterMaskPointName: response.PointName,
-                                                                    waterMaskAddress: response.RegionName,
-                                                                    waterMaskLocation: `${r_long},${r_lat}`,
-                                                                    signInTime: time,
-                                                                }, response => {
-                                                                    const { saveStatus, msg } = response;
-                                                                    CloseToast();
-                                                                    if (saveStatus) {
-                                                                        this.uploadImageCallBack([{ uri: imageObj.uri }], true);
-                                                                    }
-                                                                });
+                                                                // saveWaterMaskImage({
+                                                                //     imageId: new Date().getTime() + '',
+                                                                //     uuid: uuid,
+                                                                //     urlstr: imageObj.uri,
+                                                                //     imageFrom: 6, // CT_SIGN_IN_WATER_MASK
+                                                                //     saveTime: time,
+                                                                //     saveTimel: new Date().getTime(),
+                                                                //     userName: user.UserName,
+                                                                //     userId: user.UserId,
+                                                                //     waterMaskEntName: response.EntName,
+                                                                //     waterMaskPointName: response.PointName,
+                                                                //     waterMaskAddress: response.RegionName,
+                                                                //     waterMaskLocation: `${r_long},${r_lat}`,
+                                                                //     signInTime: time,
+                                                                // }, response => {
+                                                                //     const { saveStatus, msg } = response;
+                                                                //     CloseToast();
+                                                                //     if (saveStatus) {
+                                                                //         this.uploadImageCallBack([{ uri: imageObj.uri }], true);
+                                                                //     }
+                                                                // });
                                                             }, 2000)
                                                         } else {
                                                             this.props.dispatch(createAction('imageFormModel/updateState')({ imageStatus: { status: -1 } }));

@@ -28,7 +28,8 @@ let generateRdStr = () => {
     return text;
 };
 
-const timeout = 18000;
+// const timeout = 18000;
+const timeout = 60000;
 
 export const instance = axios.create({
     baseURL: UrlInfo.BaseUrl,

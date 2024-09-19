@@ -9,6 +9,8 @@ import { Echarts, echarts } from 'react-native-secharts';
 import { getImageByType, getDataStatusByData } from '../../pollutionModels/utils';
 import moment from 'moment';
 import { WindTransform, isWindDirection, getWindSpeed } from '../../utils/mapconfig';
+import RNEChartsPro from 'react-native-echarts-pro';
+
 /**
  *
  *站点详情
@@ -443,8 +445,9 @@ export default class HistoryDataChart extends React.Component {
                                 </View>
                             </TouchableOpacity>
                         </View>
-                        <View style={{ height: 250, width: SCREEN_WIDTH, backgroundColor: '#fff', marginTop: 10 }}>
-                            <Echarts option={this.state.option1} height={250} onPress={this.onPress} width={SCREEN_WIDTH} />
+                        <View style={{ flexDirection: 'row', height: 250, width: SCREEN_WIDTH, marginTop: 10 }}>
+                            {/* <Echarts option={this.state.option1} height={250} onPress={this.onPress} width={SCREEN_WIDTH} /> */}
+                            <RNEChartsPro width={SCREEN_WIDTH} height={250} option={this.state.option1} onPress={this.onPress} />
                         </View>
                         <ScrollView
                             style={{

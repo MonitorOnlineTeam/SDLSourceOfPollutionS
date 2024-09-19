@@ -9,6 +9,10 @@ import moment from 'moment';
 export default Model.extend({
     namespace: 'app',
     state: {
+        constants: {
+            isSecret: false,
+            name: '百度'
+        },
         networkTest: false,// 是否需要网络测试
         screenOrientation: 'Portrait',// 数据查询 屏幕方向 // Portrait Landscape
         // MenuID: '317a708d-f762-44a3-b27e-a96beffbec65',

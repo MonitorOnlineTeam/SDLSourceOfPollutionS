@@ -1,4 +1,49 @@
+//pluginManagement {
+//    repositories {
+//        google {
+//            content {
+//                includeGroupByRegex("com\\.android.*")
+//                includeGroupByRegex("com\\.google.*")
+//                includeGroupByRegex("androidx.*")
+//            }
+//        }
+//        mavenCentral()
+//        gradlePluginPortal()
+//    }
+//}
+
+
 rootProject.name = 'SDLMainProject'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
-include ':app'
 includeBuild('../node_modules/@react-native/gradle-plugin')
+//include('../node_modules/@react-native/gradle-plugin')
+
+//include ':gradle-plugin-library'
+//project(':react-native-alipush').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-alipush/lib/android')
+//project(':gradle-plugin-library').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native/gradle-plugin')
+//includeBuild('gradle-plugin')
+//include('gradle-plugin')
+//include ':gradle-plugin'
+//project(':gradle-plugin').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native/gradle-plugin')
+//include ':my-module'
+//project(':my-module').projectDir = new File(settingsDir, '../node_modules/@react-native/gradle-plugin')
+
+//dependencyResolutionManagement {
+//    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+//    repositories {
+//        google()
+//        mavenCentral()
+//        maven {
+//            url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
+//        }
+//
+//        // 配置HMS Core SDK的Maven仓地址，集成华为通道需要。
+//        maven {
+//            url 'https://developer.huawei.com/repo/'
+//        }
+//    }
+//}
+
+include ':app'
+
+

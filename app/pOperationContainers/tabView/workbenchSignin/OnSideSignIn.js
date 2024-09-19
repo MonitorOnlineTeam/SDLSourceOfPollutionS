@@ -2,8 +2,8 @@
  * @Description: 现场签到
  * @LastEditors: hxf
  * @Date: 2024-01-31 08:34:22
- * @LastEditTime: 2024-07-26 10:17:06
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/workbenchSignin/OnSideSignIn.js
+ * @LastEditTime: 2024-09-19 10:49:39
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbenchSignin/OnSideSignIn.js
  */
 import {
     Image, ImageBackground, Text, TouchableOpacity
@@ -15,7 +15,6 @@ import React, { Component } from 'react'
 import { SCREEN_WIDTH } from '../../../config/globalsize'
 import FormPicker from '../../../operationContainers/taskViews/taskExecution/components/FormPicker'
 import moment from 'moment'
-import AutoTimerText from '../../../operationContainers/home/workbench/components/AutoTimerText'
 import { CloseToast, NavigationActions, SentencedToEmpty, ShowLoadingToast, ShowToast, createAction } from '../../../utils'
 import { connect } from 'react-redux'
 import { Geolocation, stop } from 'react-native-amap-geolocation';
@@ -25,6 +24,7 @@ import ImageDeleteTouch from '../../../components/form/images/ImageDeleteTouch'
 import ImageViewer from 'react-native-image-zoom-viewer'
 import { getEncryptData } from '../../../dvapack/storage'
 import { IMAGE_DEBUG, ImageUrlPrefix } from '../../../config'
+import AutoTimerText from '../../components/AutoTimerText'
 
 
 const AMapGeolocation = NativeModules.AMapGeolocation;

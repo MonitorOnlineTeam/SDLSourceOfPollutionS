@@ -4,16 +4,38 @@ buildscript {
         minSdkVersion = 23
         compileSdkVersion = 34
         targetSdkVersion = 34
+
+//        buildToolsVersion = "30.0.2"
+//        minSdkVersion = 21
+//        compileSdkVersion = 31
+//        targetSdkVersion = 31
+
         ndkVersion = "26.1.10909125"
         kotlinVersion = "1.9.22"
         kotlin_version = "1.9.22"
         reactNativeVersion = "0.74.3"
     }
     repositories {
+        maven{
+            url 'https://maven.aliyun.com/repository/google'
+        }
+        maven{
+            url 'https://maven.aliyun.com/repository/central'
+        }
+        maven {
+            url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
+
+        // 配置HMS Core SDK的Maven仓地址，集成华为通道需要。
+        maven {
+            url 'https://developer.huawei.com/repo/'
+        }
         google()
         mavenCentral()
     }
     dependencies {
+//        classpath 'com.android.tools.build:gradle:4.2.2'
+//        classpath 'com.android.tools.build:gradle:8.6.0'
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
@@ -21,3 +43,5 @@ buildscript {
 }
 
 apply plugin: "com.facebook.react.rootproject"
+
+

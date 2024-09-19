@@ -1,6 +1,6 @@
 import React, { PureComponent, Component } from 'react';
 import { connect } from 'react-redux';
-import { Dimensions, View, ScrollView, StyleSheet, Alert, TouchableOpacity, Platform } from 'react-native';
+import { Dimensions, View, ScrollView, StyleSheet, Alert, TouchableOpacity, Platform, PermissionsAndroid } from 'react-native';
 import { ShowToast, ShowLoadingToast, CloseToast, createAction, NavigationActions } from '../../../utils';
 import { DeviceEventEmitter } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -42,12 +42,28 @@ export default class ImageUploadTouch extends Component {
 
     uploadImageCallBack = (img, isSuccess, type = 'online') => {
         console.log('上传图片回调', img, isSuccess);
+        CloseToast();
         if (isSuccess) {
             this.props.callback(img, type);
             if (type == 'online') {
-                ShowToast('上传成功');
+                ShowToast({
+                    message: '上传成功',
+                    alertType: 'success',
+                });
+                // MessageBarManager.showAlert({
+                //     message: '请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空',
+                //     alertType: 'success',
+                // })
+
             } else if (type == 'offline') {
-                ShowToast('离线保存成功');
+                ShowToast({
+                    message: '离线保存成功',
+                    alertType: 'error',
+                });
+                // MessageBarManager.showAlert({
+                //     message: '请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空',
+                //     alertType: 'error',
+                // })
             }
         } else {
             if (type == 'online') {
@@ -58,6 +74,59 @@ export default class ImageUploadTouch extends Component {
         }
         this.props.dispatch(createAction('imageFormModel/updateState')({ imageStatus: { status: -1 } }));
         return;
+    };
+
+    requestCameraPermission = async () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.CAMERA,
+                {
+                    title: "Cool Photo App Camera Permission",
+                    message:
+                        "Cool Photo App needs access to your camera " +
+                        "so you can take awesome pictures.",
+                    buttonNeutral: "Ask Me Later",
+                    buttonNegative: "Cancel",
+                    buttonPositive: "OK"
+                }
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log("You can use the camera");
+                const { componentType } = this.props;
+                const _this = this;
+                if (componentType == 'taskhandle') {
+                    _this.props.dispatch(
+                        NavigationActions.navigate({
+                            routeName: 'WaterMaskCamera',
+                            params: {
+                                // uuid
+                                uuid: _this.props.uuid,
+                            }
+                        })
+                    );
+                } else if (componentType == 'signIn') {
+                    _this.props.dispatch(
+                        createAction('taskDetailModel/updateState')({
+                            taskDetail: { EnterpriseName: _this.props.extraInfo.EnterpriseName }
+                        })
+                    );
+                    _this.props.dispatch(
+                        NavigationActions.navigate({
+                            routeName: 'WaterMaskCamera',
+                            params: {
+                                // uuid
+                                uuid: _this.props.uuid,
+                                callback: _this.uploadImageCallBack
+                            }
+                        })
+                    );
+                }
+            } else {
+                console.log("Camera permission denied");
+            }
+        } catch (err) {
+            console.warn(err);
+        }
     };
 
     render() {
@@ -291,65 +360,70 @@ export default class ImageUploadTouch extends Component {
                     txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
                     onpress: () => {
                         {
-                            const _this = this;
-                            if (componentType == 'taskhandle' || componentType == 'signIn') {
-                                CameraWaterMaskModule.checkPermission(function (args) {
-                                    if (args) {
-                                        // setShowState(true);
-                                        if (componentType == 'taskhandle') {
-                                            _this.props.dispatch(
-                                                NavigationActions.navigate({
-                                                    routeName: 'WaterMaskCamera',
-                                                    params: {
-                                                        // uuid
-                                                        uuid: _this.props.uuid,
-                                                    }
-                                                })
-                                            );
-                                        } else if (componentType == 'signIn') {
-                                            _this.props.dispatch(
-                                                createAction('taskDetailModel/updateState')({
-                                                    taskDetail: { EnterpriseName: _this.props.extraInfo.EnterpriseName }
-                                                })
-                                            );
-                                            _this.props.dispatch(
-                                                NavigationActions.navigate({
-                                                    routeName: 'WaterMaskCamera',
-                                                    params: {
-                                                        // uuid
-                                                        uuid: _this.props.uuid,
-                                                        callback: _this.uploadImageCallBack
-                                                    }
-                                                })
-                                            );
-                                        }
+                            this.requestCameraPermission();
+                            // const _this = this;
+                            // if (componentType == 'taskhandle' || componentType == 'signIn') {
+                            //     CameraWaterMaskModule.checkPermission(function (args) {
+                            //         console.log('checkPermission:', args);
+                            //         if (args) {
+                            //             // setShowState(true);
+                            //             if (componentType == 'taskhandle') {
+                            //                 _this.props.dispatch(
+                            //                     NavigationActions.navigate({
+                            //                         routeName: 'WaterMaskCamera',
+                            //                         params: {
+                            //                             // uuid
+                            //                             uuid: _this.props.uuid,
+                            //                         }
+                            //                     })
+                            //                 );
+                            //             } else if (componentType == 'signIn') {
+                            //                 _this.props.dispatch(
+                            //                     createAction('taskDetailModel/updateState')({
+                            //                         taskDetail: { EnterpriseName: _this.props.extraInfo.EnterpriseName }
+                            //                     })
+                            //                 );
+                            //                 _this.props.dispatch(
+                            //                     NavigationActions.navigate({
+                            //                         routeName: 'WaterMaskCamera',
+                            //                         params: {
+                            //                             // uuid
+                            //                             uuid: _this.props.uuid,
+                            //                             callback: _this.uploadImageCallBack
+                            //                         }
+                            //                     })
+                            //                 );
+                            //             }
 
-                                    }
-                                });
+                            //         } else {
+                            //             // ToastAndroid.show('请先开启相机权限', ToastAndroid.SHORT);
+                            //             console.log('请先开启相机权限');
+                            //         }
+                            //     });
 
-                                // this.props.dispatch(NavigationActions.navigate({ routeName: 'WaterMaskCamera' }));
-                            } else {
-                                launchCamera(options, response => {
-                                    const { assets = [] } = response;
-                                    let imageObj = null;
-                                    if (assets.length <= 0) {
-                                        return;
-                                    } else {
-                                        imageObj = assets[0];
-                                        ShowLoadingToast('正在上传图片');
-                                        // this.props.dispatch(createAction('imageFormModel/updateState')({ imageStatus: { status: -1 } }));
-                                        that.props.dispatch(
-                                            createAction('imageModel/uploadimage')({
-                                                image: imageObj,
-                                                images: assets,
-                                                // uuid: uuid,
-                                                uuid: this.props.uuid,
-                                                callback: this.uploadImageCallBack
-                                            })
-                                        );
-                                    }
-                                });
-                            }
+                            //     // this.props.dispatch(NavigationActions.navigate({ routeName: 'WaterMaskCamera' }));
+                            // } else {
+                            //     launchCamera(options, response => {
+                            //         const { assets = [] } = response;
+                            //         let imageObj = null;
+                            //         if (assets.length <= 0) {
+                            //             return;
+                            //         } else {
+                            //             imageObj = assets[0];
+                            //             ShowLoadingToast('正在上传图片');
+                            //             // this.props.dispatch(createAction('imageFormModel/updateState')({ imageStatus: { status: -1 } }));
+                            //             that.props.dispatch(
+                            //                 createAction('imageModel/uploadimage')({
+                            //                     image: imageObj,
+                            //                     images: assets,
+                            //                     // uuid: uuid,
+                            //                     uuid: this.props.uuid,
+                            //                     callback: this.uploadImageCallBack
+                            //                 })
+                            //             );
+                            //         }
+                            //     });
+                            // }
                         }
                     }
                 },

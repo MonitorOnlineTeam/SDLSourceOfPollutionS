@@ -25,7 +25,7 @@ export default class SimplePickerTouchable extends PureComponent {
     }
 
     static defaultProps = {
-        lastIcon:require('../../images/ic_filt_arrows.png')
+        lastIcon: require('../../images/ic_filt_arrows.png')
     }
 
     setSelectItem = item => {
@@ -40,6 +40,7 @@ export default class SimplePickerTouchable extends PureComponent {
 
     render() {
         let { placeHolder = '请选择', textStyle = {}, disImage, showName } = this.props.option;
+        // return (<View><Text>SimplePicker</Text></View>);
         return (
             <PickerTouchable
                 ref={ref => (this._touchable = ref)}

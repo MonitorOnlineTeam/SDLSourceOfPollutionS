@@ -2,8 +2,8 @@
  * @Description: 搜索列表 无加载
  * @LastEditors: hxf
  * @Date: 2023-11-07 10:06:19
- * @LastEditTime: 2023-11-07 15:45:22
- * @FilePath: /SDLMainProject36/app/components/page/SearchListWithoutLoad.js
+ * @LastEditTime: 2024-09-12 09:38:26
+ * @FilePath: /SDLMainProject/app/components/page/SearchListWithoutLoad.js
  */
 import { Text, View, TouchableOpacity, TextInput, Image, Platform } from 'react-native'
 import React, { Component } from 'react'
@@ -33,10 +33,10 @@ export default class SearchListWithoutLoad extends Component {
     }
 
     render() {
-        const getDataFun = SentencedToEmpty(this.props.navigation, ['state', 'params', 'getDataFun'], () => { return []; })
-        const callback = SentencedToEmpty(this.props.navigation, ['state', 'params', 'callback'], () => { return []; })
-        const showTextNames = SentencedToEmpty(this.props.navigation, ['state', 'params', 'showTextNames'], [])
-        const searchPlaceHolder = SentencedToEmpty(this.props.navigation, ['state', 'params', 'searchPlaceHolder'], '搜索名称')
+        const getDataFun = SentencedToEmpty(this.props.route, ['params', 'params', 'getDataFun'], () => { return []; })
+        const callback = SentencedToEmpty(this.props.route, ['params', 'params', 'callback'], () => { return []; })
+        const showTextNames = SentencedToEmpty(this.props.route, ['params', 'params', 'showTextNames'], [])
+        const searchPlaceHolder = SentencedToEmpty(this.props.route, ['params', 'params', 'searchPlaceHolder'], '搜索名称')
         return (
             <View style={[{ width: SCREEN_WIDTH, flex: 1 }]}>
                 <View

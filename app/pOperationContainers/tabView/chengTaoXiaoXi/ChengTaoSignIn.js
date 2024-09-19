@@ -13,9 +13,9 @@ import { connect } from 'react-redux';
 import { Geolocation, stop } from 'react-native-amap-geolocation';
 
 import { SCREEN_WIDTH } from '../../../config/globalsize';
-import AutoTimerText from '../../../operationContainers/home/workbench/components/AutoTimerText';
 import { CloseToast, createAction, createNavigationOptions, NavigationActions, SentencedToEmpty, ShowLoadingToast, ShowToast } from '../../../utils';
 import IconDialog from '../../../operationContainers/taskViews/taskExecution/components/IconDialog';
+import AutoTimerText from '../../components/AutoTimerText';
 const AMapGeolocation = NativeModules.AMapGeolocation;
 const calenderComponentHeight = 300;
 const SWIPE_LEFT = 'SWIPE_LEFT';
