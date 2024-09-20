@@ -2,7 +2,7 @@
  * @Description:对成套打卡功能进行升级
  * @LastEditors: hxf
  * @Date: 2023-09-06 14:20:53
- * @LastEditTime: 2024-09-19 14:30:49
+ * @LastEditTime: 2024-09-19 19:10:52
  * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoSignIn2.js
  */
 import moment from 'moment';
@@ -797,7 +797,7 @@ class SignInComponent extends Component {
                                     }]}>
                                         {SentencedToEmpty(this.props, ['selectedProject', 'ProjectId'], 'emptyProjectOrProperty') != 'emptyProjectOrProperty'
                                             ? <ImageUploadTouch
-                                                hasOffline={true}
+                                                hasOffline={false}
                                                 style={{ width: 80, height: 80, marginBottom: 5 }}
                                                 // componentType={'normal'}
                                                 componentType={'signIn'}

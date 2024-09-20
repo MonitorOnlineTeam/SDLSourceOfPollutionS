@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Image, TextInput, Platform, DeviceEventEmitter, ActivityIndicator, ScrollView } from 'react-native';
 // import { BaseTable, PickerSingleTimeTouchable, PickerTouchable, KeyboardDis, AlertDialog, Touchable, SimpleMultipleItemPicker, StatusPage, SimplePicker, OperationAlertDialog, SimpleLoadingView } from '../../../components';
-import { PickerTouchable, KeyboardDis, AlertDialog, Touchable, StatusPage, OperationAlertDialog, SimpleLoadingView } from '../../../components';
+import { PickerTouchable, KeyboardDis, AlertDialog, Touchable, StatusPage, OperationAlertDialog, SimpleLoadingView, SimplePicker } from '../../../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../../../config/globalsize';
 import { connect } from 'react-redux';
@@ -697,14 +697,14 @@ export default class CreateTask extends Component {
                             <View style={[styles.row, { justifyContent: 'space-between' }]}>
                                 <View style={[styles.rowInner, {}]}>
                                     <Text style={{ fontSize: 14, color: 'red', marginLeft: 20 }}>{'* 任务类型'}</Text>
-                                    {/* <SimplePicker
+                                    <SimplePicker
                                         ref={ref => {
                                             this.simplePicker = ref;
                                         }}
                                         option={this.getTaskTypeOption()}
                                         style={[{ marginLeft: 14, width: SCREEN_WIDTH - 140 }]}
                                         textStyle={{ textAlign: 'left', flex: 1 }}
-                                    /> */}
+                                    />
                                 </View>
                                 <Image style={{ width: 10, height: 10, marginRight: 20 }} source={ic_arrows_down} />
                             </View>

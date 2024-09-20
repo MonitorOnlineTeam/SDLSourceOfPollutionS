@@ -71,7 +71,7 @@ class SingleTimeWheel extends PureComponent {
     }
 
     render() {
-        return (<View><Text>SingleTimeWheel</Text></View>)
+        let defaultDate = moment(this.props.defaultDate.format(this.props.format));
         return (
             <View
                 style={styles.container}
@@ -112,13 +112,29 @@ class SingleTimeWheel extends PureComponent {
                             return true;
                         }}
                         style={{ height: 200, width: WINDOW_WIDTH }}>
-                        <this.state.TimeNavigator ref={ref => {
+                        {/* <this.state.TimeNavigator ref={ref => {
                             if (ref !== null && __DEV__) {
                                 // console.log(ref);
                                 // console.log(ref._navigation);
                             }
                             return this.timeNavigator = ref;
-                        }} />
+                        }} /> */}
+                        <WheelPicker
+                            defaultDate={defaultDate}
+                            callbackFun={(date) => {
+                                let dateStr = this.state.currentDate.format(this.props.format);
+                                let preDate = moment(dateStr);
+                                // let preDate = this.state.currentDate;
+                                date = moment(date.format(this.props.format));
+                                preDate.set('year', date.get('year'));
+                                preDate.set('month', date.get('month'));
+                                preDate.set('date', date.get('date'));
+                                preDate.set('hour', date.get('hour'));
+                                preDate.set('minute', date.get('minute'));
+                                this.setState({ currentDate: preDate });
+                            }}
+                            format={this.props.format}
+                        />
                     </View>
                 </View>
             </View>

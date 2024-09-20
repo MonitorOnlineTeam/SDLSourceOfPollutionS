@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2024-09-19 18:33:25
+ * @LastEditTime: 2024-09-20 10:40:44
  * @FilePath: /SDLMainProject/app/Router.js
  */
 import { View, Text, TouchableOpacity } from 'react-native'
@@ -56,6 +56,7 @@ import OverAlarm from './pOperationContainers/tabView/workbench/OverAlarm';
 import ExceptionAlarm from './pOperationContainers/tabView/workbench/ExceptionAlarm';
 import MissAlarm from './pOperationContainers/tabView/workbench/MissAlarm';
 import AlarmRecords from './pollutionContainers/pointDetails/AlarmRecords';
+import RemoteAlarmHandleEditer from './pOperationContainers/tabView/alarm/RemoteAlarmHandleEditer';
 // import Login from './components/page/login/Login';
 // const dispatch = useDispatch();
 
@@ -169,6 +170,7 @@ Actions.pushViewWithName(OverAlarm, 'OverAlarm', { title: '超标报警' });
 Actions.pushViewWithName(ExceptionAlarm, 'ExceptionAlarm', { title: '异常报警' });
 Actions.pushViewWithName(MissAlarm, 'MissAlarm', { title: '异常报警' });
 Actions.pushViewWithName(AlarmRecords, 'AlarmRecords', { title: '报警详情' });
+Actions.pushViewWithName(RemoteAlarmHandleEditer, 'RemoteAlarmHandleEditer', { title: '报警处理登记表' });
 
 /* jab */
 // 消息中心
