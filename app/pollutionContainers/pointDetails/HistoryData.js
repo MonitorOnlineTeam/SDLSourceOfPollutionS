@@ -1,8 +1,8 @@
 /*
  * @Description: 
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-04-25 09:20:10
- * @LastEditTime: 2024-09-09 09:59:15
+ * @LastEditTime: 2024-09-20 10:40:01
  * @FilePath: /SDLMainProject/app/pollutionContainers/pointDetails/HistoryData.js
  */
 import React, { PureComponent } from 'react';
@@ -232,8 +232,19 @@ export default class HistoryData extends PureComponent {
                                 , width: SCREEN_WIDTH, alignItems: 'center'
                                 , justifyContent: 'space-between'
                                 , backgroundColor: 'white', marginBottom: 5
-                            }]}>
-                                <SDLTabButton
+                            }]}
+                            >
+                                {
+                                    ['小时','日均', '小时', '月均'].map((item,index) => <SDLTabButton
+                                        topButtonWidth={SCREEN_WIDTH / 4}
+                                        selected={index==this.props.showIndex}
+                                        label={item}
+                                        onPress={obj => {
+                                            this.props.chartOrList == 'chart' ? this.onChange(index, 'chart') : null;
+                                        }}
+                                    />)
+                                } 
+                                {/* <SDLTabButton
                                     topButtonWidth={SCREEN_WIDTH / 4}
                                     selected={true}
                                     label='小时'
@@ -252,7 +263,7 @@ export default class HistoryData extends PureComponent {
                                     topButtonWidth={SCREEN_WIDTH / 4}
                                     selected={false}
                                     label='月均'
-                                />
+                                />  */}
                             </View>
                             {
                                 this.props.showIndex == 0 ?

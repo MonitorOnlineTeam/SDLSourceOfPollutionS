@@ -60,30 +60,30 @@ export default class OfflineImageUploadTouch extends Component {
     takePhoto = () => {
         this.setState({ testIndex: this.state.testIndex + 1 }
             , () => {
-                offlineLaunchCamera(
-                    {
-                        ...options
-                        , ...{
-                            uuid: this.state.testIndex + '',
-                            imageFrom: 1,
-                            userName: 'SDLCS05',
-                            userId: 'SDLCS05',
-                        }
-                    }
-                    , response => {
-                        // launchCamera(options, response => {
-                        const { assets = [] } = response;
-                        let imageObj = null;
-                        if (assets.length <= 0) {
-                            return;
-                        } else {
-                            imageObj = assets[0];
-                            console.log('assets = ', assets);
-                            console.log('OfflineImageUploadModule = ', OfflineImageUploadModule);
-                            console.log('saveImageToLocal = ', saveImageToLocal);
-                            saveImageToLocal({ url: assets[0].uri }, response => { })
-                        }
-                    });
+                // offlineLaunchCamera(
+                //     {
+                //         ...options
+                //         , ...{
+                //             uuid: this.state.testIndex + '',
+                //             imageFrom: 1,
+                //             userName: 'SDLCS05',
+                //             userId: 'SDLCS05',
+                //         }
+                //     }
+                //     , response => {
+                //         // launchCamera(options, response => {
+                //         const { assets = [] } = response;
+                //         let imageObj = null;
+                //         if (assets.length <= 0) {
+                //             return;
+                //         } else {
+                //             imageObj = assets[0];
+                //             console.log('assets = ', assets);
+                //             // console.log('OfflineImageUploadModule = ', OfflineImageUploadModule);
+                //             // console.log('saveImageToLocal = ', saveImageToLocal);
+                //             // saveImageToLocal({ url: assets[0].uri }, response => { })
+                //         }
+                //     });
             });
     }
 
@@ -107,7 +107,7 @@ export default class OfflineImageUploadTouch extends Component {
                             return;
                         } else {
                             imageObj = assets[0];
-                            saveImageToLocal({ url: assets[0].uri }, response => { })
+                            // saveImageToLocal({ url: assets[0].uri }, response => { })
                         }
                     });
             }

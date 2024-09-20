@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2024-09-19 18:15:55
+ * @LastEditTime: 2024-09-19 18:33:25
  * @FilePath: /SDLMainProject/app/Router.js
  */
 import { View, Text, TouchableOpacity } from 'react-native'
@@ -37,7 +37,6 @@ import SearchListWithoutLoad from './components/page/SearchListWithoutLoad';
 import GTasks from './pOperationContainers/tabView/workbench/GTasks';
 import TaskDetail from './pOperationContainers/taskDetail/TaskDetail';
 import WaterMaskCamera from './pOperationContainers/taskDetail/WaterMaskCamera';
-import DownLoadAPP from './components/page/account/DownLoadAPP';
 import OverData from './pollutionContainers/pointDetails/OverData';
 import ExceptionData from './pollutionContainers/pointDetails/ExceptionData';
 import MissDataList from './pollutionContainers/pointDetails/MissDataList';
@@ -132,7 +131,6 @@ Actions.pushViewWithName(SearchListWithoutLoad, 'SearchListWithoutLoad', { title
 Actions.pushViewWithName(GTasks, 'GTasks', { title: '待办任务' });
 Actions.pushViewWithName(TaskDetail, 'TaskDetail', { title: '任务详情' });
 Actions.pushViewWithName(WaterMaskCamera, 'WaterMaskCamera', { headerShown: false });
-Actions.pushViewWithName(DownLoadAPP, 'DownLoadAPP', { title: '下载应用' });
 Actions.pushViewWithName(OverData, 'OverData', { title: '超标数据' });
 Actions.pushViewWithName(ExceptionData, 'ExceptionData', { title: '异常数据' });
 Actions.pushViewWithName(MissDataList, 'MissDataList', { title: '确实数据' });

@@ -1,8 +1,8 @@
 /*
  * @Description: 
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-09-11 14:03:38
- * @LastEditTime: 2024-09-13 16:41:11
+ * @LastEditTime: 2024-09-19 18:44:41
  * @FilePath: /SDLMainProject/app/pOperationContainers/TestView.js
  */
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native'
@@ -12,7 +12,7 @@ import moment from 'moment';
 import { MessageBarManager } from 'react-native-message-bar';
 
 import { createAction, SentencedToEmpty, ShowToast } from '../utils';
-import RNEChartsPro from 'react-native-echarts-pro';
+// import RNEChartsPro from 'react-native-echarts-pro';
 import { SCREEN_WIDTH } from '../config/globalsize';
 
 let that;
@@ -617,7 +617,7 @@ export default class TestView extends Component {
                         : <SDLChartView option={this.state.option1} />
                 }
 
-                <RNEChartsPro width={400} height={250} option={option} onPress={this.onPress} tooltipEvent={e => { console.log('e = ', e); }} />
+                {/* <RNEChartsPro width={400} height={250} option={option} onPress={this.onPress} tooltipEvent={e => { console.log('e = ', e); }} /> */}
             </View>
         )
     }
@@ -630,7 +630,8 @@ class SDLChartView extends Component {
     };
     render() {
         return (
-            <RNEChartsPro width={SCREEN_WIDTH} height={250} option={this.props.option} onPress={this.onPress} />
-        )
+            //  <RNEChartsPro width={SCREEN_WIDTH} height={250} option={this.props.option} onPress={this.onPress} />
+              <View />
+            )
     }
 }

@@ -7,10 +7,10 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import SyanImagePicker from 'react-native-syan-image-picker';
 import OperationAlertDialog from '../../modal/OperationAlertDialog';
 import { pressentController, CameraWaterMaskModule } from 'react-native-camera-water-mask';
-import {
-    OfflineImageUploadModule, saveImageToLocal, offlineLaunchCamera, checkPermission
-    , test1, test2, offlineLaunchImageLibrary
-} from 'react-native-offline-image-upload';
+// import {
+//     OfflineImageUploadModule, saveImageToLocal, offlineLaunchCamera, checkPermission
+//     , test1, test2, offlineLaunchImageLibrary
+// } from 'react-native-offline-image-upload';
 import { getToken } from '../../../dvapack/storage';
 const { width, height } = Dimensions.get('window');
 let that;
@@ -206,29 +206,29 @@ export default class ImageUploadTouch extends Component {
                     btnStyle: { backgroundColor: '#fff', height: 40, borderBottomWidth: 1, borderBottomColor: '#f0f0f0' },
                     txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
                     onpress: () => {
-                        offlineLaunchImageLibrary(
-                            {
-                                ...options
-                                , ...{
-                                    uuid: uuid,
-                                    imageFrom: 5, // OTHER
-                                    userName: user.UserName,//.UserAccount,
-                                    userId: user.UserId,
-                                }
-                            }
-                            , response => {
-                                console.log('response = ', response);
-                                const { assets = [] } = response;
-                                this.uploadImageCallBack(assets, true, "offline");
+                        // offlineLaunchImageLibrary(
+                        //     {
+                        //         ...options
+                        //         , ...{
+                        //             uuid: uuid,
+                        //             imageFrom: 5, // OTHER
+                        //             userName: user.UserName,//.UserAccount,
+                        //             userId: user.UserId,
+                        //         }
+                        //     }
+                        //     , response => {
+                        //         console.log('response = ', response);
+                        //         const { assets = [] } = response;
+                        //         this.uploadImageCallBack(assets, true, "offline");
 
-                                let imageObj = null;
-                                if (assets.length <= 0) {
-                                    return;
-                                } else {
-                                    imageObj = assets[0];
-                                    // saveImageToLocal({ url: assets[0].uri }, response => { })
-                                }
-                            });
+                        //         let imageObj = null;
+                        //         if (assets.length <= 0) {
+                        //             return;
+                        //         } else {
+                        //             imageObj = assets[0];
+                        //             // saveImageToLocal({ url: assets[0].uri }, response => { })
+                        //         }
+                        //     });
                     }
                     // launchImageLibrary(options, response => {
                     //     const { assets = [] } = response;
