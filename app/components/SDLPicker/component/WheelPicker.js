@@ -23,8 +23,10 @@ class WheelPicker extends PureComponent {
 
     constructor(props) {
         super(props);
-        let month = props.navigation.state.params.defaultDate.month();
-        let year = props.navigation.state.params.defaultDate.year();
+        // let month = props.navigation.state.params.defaultDate.month();
+        // let year = props.navigation.state.params.defaultDate.year();
+        let month = props.defaultDate.month();
+        let year = props.defaultDate.year();
         let _date = day31;
         if (isNaN(month)) {
             month = moment().month();
@@ -43,7 +45,7 @@ class WheelPicker extends PureComponent {
             }
         }
         this.state = {
-            result: props.navigation.state.params.defaultDate,
+            result: props.defaultDate,
             date: _date
         };
     }
@@ -51,24 +53,17 @@ class WheelPicker extends PureComponent {
     static defaultProps = {
         pickerType: 'time', //time date data
         defaultDate: moment(),
-        navigation: {
-            state: {
-                params: {
-                    defaultDate: moment(),
-                    callbackFun: () => { },
-                    initResult: moment().format('HH:mm'),
-                    format: 'HH:mm'
-                }
-            }
-        }
+        callbackFun: () => { },
+        initResult: moment().format('HH:mm'),
+        format: 'HH:mm',
     };
 
     creactePicker = () => {
         let pickerComponentArray = [];
-        let _format = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'format'], 'HH:mm');
+        let _format = SentencedToEmpty(this.props, ['format'], 'HH:mm');
         if (this.props.pickerType == 'time') {
             if (_format.indexOf('YYYY') != -1) {
-                let _year = this.props.navigation.state.params.defaultDate.year();
+                let _year = this.props.defaultDate.year();
                 if (isNaN(_year)) {
                     _year = moment().year();
                 }
@@ -95,7 +90,7 @@ class WheelPicker extends PureComponent {
                             if (this.dateWheel && typeof this.dateWheel != 'undefined') {
                                 this.dateWheel.yearMonthChange(result.year(), result.month(), result.date());
                             }
-                            this.props.navigation.state.params.callbackFun(result);
+                            this.props.callbackFun(result);
                         }}
                         getShowValue={(item, selected) => {
                             if (selected) {
@@ -110,7 +105,7 @@ class WheelPicker extends PureComponent {
                 );
             }
             if (_format.indexOf('MM') != -1) {
-                let _month = this.props.navigation.state.params.defaultDate.month();
+                let _month = this.props.defaultDate.month();
                 if (isNaN(_month)) {
                     _month = moment().month();
                 }
@@ -137,7 +132,7 @@ class WheelPicker extends PureComponent {
                             if (this.dateWheel && typeof this.dateWheel != 'undefined') {
                                 this.dateWheel.yearMonthChange(result.year(), result.month(), result.date());
                             }
-                            this.props.navigation.state.params.callbackFun(result);
+                            this.props.callbackFun(result);
                         }}
                         getShowValue={(item, selected) => {
                             if (selected) {
@@ -152,7 +147,7 @@ class WheelPicker extends PureComponent {
                 );
             }
             if (_format.indexOf('DD') != -1) {
-                let _date = this.props.navigation.state.params.defaultDate.date();
+                let _date = this.props.defaultDate.date();
                 if (isNaN(_date)) {
                     _date = moment().date();
                 }
@@ -177,7 +172,7 @@ class WheelPicker extends PureComponent {
                             }
                             result.set('date', item.value);
                             this.setState({ result });
-                            this.props.navigation.state.params.callbackFun(result);
+                            this.props.callbackFun(result);
                         }}
                         getShowValue={(item, selected) => {
                             if (selected) {
@@ -192,7 +187,7 @@ class WheelPicker extends PureComponent {
                 );
             }
             if (_format.indexOf('HH') != -1) {
-                let _hours = this.props.navigation.state.params.defaultDate.hours();
+                let _hours = this.props.defaultDate.hours();
                 if (isNaN(_hours)) {
                     _hours = moment().hours();
                 }
@@ -216,7 +211,7 @@ class WheelPicker extends PureComponent {
                             }
                             result.set('hour', item.value);
                             this.setState({ result });
-                            this.props.navigation.state.params.callbackFun(result);
+                            this.props.callbackFun(result);
                         }}
                         getShowValue={(item, selected) => {
                             if (selected) {
@@ -231,7 +226,7 @@ class WheelPicker extends PureComponent {
                 );
             }
             if (_format.indexOf('mm') != -1) {
-                let _minute = this.props.navigation.state.params.defaultDate.minute();
+                let _minute = this.props.defaultDate.minute();
                 if (isNaN(_minute)) {
                     _minute = moment().minutes();
                 }
@@ -255,7 +250,7 @@ class WheelPicker extends PureComponent {
                             }
                             result.set('minute', item.value);
                             this.setState({ result });
-                            this.props.navigation.state.params.callbackFun(result);
+                            this.props.callbackFun(result);
                         }}
                         getShowValue={(item, selected) => {
                             if (selected) {
@@ -270,7 +265,7 @@ class WheelPicker extends PureComponent {
                 );
             }
             if (_format.indexOf('ss') != -1) {
-                let _second = this.props.navigation.state.params.defaultDate.second();
+                let _second = this.props.defaultDate.second();
                 if (isNaN(_second)) {
                     _second = moment().seconds();
                 }
@@ -294,7 +289,7 @@ class WheelPicker extends PureComponent {
                             }
                             result.set('second', item.value);
                             this.setState({ result });
-                            this.props.navigation.state.params.callbackFun(result);
+                            this.props.callbackFun(result);
                         }}
                         getShowValue={(item, selected) => {
                             if (selected) {

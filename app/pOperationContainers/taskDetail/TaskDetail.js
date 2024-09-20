@@ -522,9 +522,10 @@ export default class TaskDetail extends Component {
                         <TouchableOpacity
                             style={{}}
                             onPress={() => {
-                                if (this.scrollableTabView) {
-                                    this.scrollableTabView.goToPage(0)
-                                }
+                                // if (this.scrollableTabView) {
+                                //     this.scrollableTabView.goToPage(0)
+                                // }
+                                this.props.dispatch(createAction('taskDetailModel/updateState')({ tabIndex: 0 }));
                                 this.iconDialog.hide();
                             }}
                         >

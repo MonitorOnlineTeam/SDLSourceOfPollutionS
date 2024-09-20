@@ -1,8 +1,8 @@
 /*
  * @Description: 
- * @LastEditors: outman0611 jia_anbo@163.com
+ * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2024-09-19 18:15:55
+ * @LastEditTime: 2024-09-20 08:59:36
  * @FilePath: /SDLMainProject/app/Router.js
  */
 import { View, Text, TouchableOpacity } from 'react-native'
@@ -37,7 +37,6 @@ import SearchListWithoutLoad from './components/page/SearchListWithoutLoad';
 import GTasks from './pOperationContainers/tabView/workbench/GTasks';
 import TaskDetail from './pOperationContainers/taskDetail/TaskDetail';
 import WaterMaskCamera from './pOperationContainers/taskDetail/WaterMaskCamera';
-import DownLoadAPP from './components/page/account/DownLoadAPP';
 import OverData from './pollutionContainers/pointDetails/OverData';
 import ExceptionData from './pollutionContainers/pointDetails/ExceptionData';
 import MissDataList from './pollutionContainers/pointDetails/MissDataList';
@@ -57,6 +56,7 @@ import OverAlarm from './pOperationContainers/tabView/workbench/OverAlarm';
 import ExceptionAlarm from './pOperationContainers/tabView/workbench/ExceptionAlarm';
 import MissAlarm from './pOperationContainers/tabView/workbench/MissAlarm';
 import AlarmRecords from './pollutionContainers/pointDetails/AlarmRecords';
+import RemoteAlarmHandleEditer from './pOperationContainers/tabView/alarm/RemoteAlarmHandleEditer';
 // import Login from './components/page/login/Login';
 // const dispatch = useDispatch();
 
@@ -171,6 +171,7 @@ Actions.pushViewWithName(OverAlarm, 'OverAlarm', { title: '超标报警' });
 Actions.pushViewWithName(ExceptionAlarm, 'ExceptionAlarm', { title: '异常报警' });
 Actions.pushViewWithName(MissAlarm, 'MissAlarm', { title: '异常报警' });
 Actions.pushViewWithName(AlarmRecords, 'AlarmRecords', { title: '报警详情' });
+Actions.pushViewWithName(RemoteAlarmHandleEditer, 'RemoteAlarmHandleEditer', { title: '报警处理登记表' });
 
 /* jab */
 // 消息中心
