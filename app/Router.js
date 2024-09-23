@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2024-09-20 10:40:44
+ * @LastEditTime: 2024-09-20 16:11:48
  * @FilePath: /SDLMainProject/app/Router.js
  */
 import { View, Text, TouchableOpacity } from 'react-native'
@@ -31,6 +31,9 @@ import AnnouncementsList from './pOperationContainers/tabView/workbench/Announce
 import CusWebView from './components/CusWebView';
 import PointDetail from './pollutionContainers/pointDetails/PointDetail';
 import HistoryData from './pollutionContainers/pointDetails/HistoryData';
+import HistoryDataLandscape from './pollutionContainers/pointDetails/HistoryDataLandscape';
+import HistoryDataLandscapeChart from './pollutionContainers/pointDetails/HistoryDataLandscapeChart';
+import HistoryDataLandscapeList from './pollutionContainers/pointDetails/HistoryDataLandscapeList';
 import TestView from './pOperationContainers/TestView';
 import ContactOperation from './pOperationContainers/components/ContactOperation';
 import SearchListWithoutLoad from './components/page/SearchListWithoutLoad';
@@ -56,7 +59,7 @@ import OverAlarm from './pOperationContainers/tabView/workbench/OverAlarm';
 import ExceptionAlarm from './pOperationContainers/tabView/workbench/ExceptionAlarm';
 import MissAlarm from './pOperationContainers/tabView/workbench/MissAlarm';
 import AlarmRecords from './pollutionContainers/pointDetails/AlarmRecords';
-import RemoteAlarmHandleEditer from './pOperationContainers/tabView/alarm/RemoteAlarmHandleEditer';
+// import RemoteAlarmHandleEditer from './pOperationContainers/tabView/alarm/RemoteAlarmHandleEditer';
 // import Login from './components/page/login/Login';
 // const dispatch = useDispatch();
 
@@ -126,6 +129,9 @@ Actions.pushViewWithName(AnnouncementsList, 'AnnouncementsList', { title: '通�
 Actions.pushViewWithName(CusWebView, 'CusWebView', { title: '公告详情' });
 Actions.pushViewWithName(PointDetail, 'PointDetail', { title: '站点详情' });
 Actions.pushViewWithName(HistoryData, 'HistoryData', { title: '数据查询' });
+Actions.pushViewWithName(HistoryDataLandscape, 'HistoryDataLandscape', { headerShown: false }); //  切换横评 数据查询
+Actions.pushViewWithName(HistoryDataLandscapeChart, 'HistoryDataLandscapeChart');//横评 数据查询 图表
+Actions.pushViewWithName(HistoryDataLandscapeList, 'HistoryDataLandscapeList'); //横评 数据查询 列表
 Actions.pushViewWithName(TestView, 'TestView', { title: '测试页面' });
 Actions.pushViewWithName(ContactOperation, 'ContactOperation', { title: '监测目标' });
 Actions.pushViewWithName(SearchListWithoutLoad, 'SearchListWithoutLoad', { title: '监测点选择' });
@@ -170,9 +176,9 @@ Actions.pushViewWithName(OverAlarm, 'OverAlarm', { title: '超标报警' });
 Actions.pushViewWithName(ExceptionAlarm, 'ExceptionAlarm', { title: '异常报警' });
 Actions.pushViewWithName(MissAlarm, 'MissAlarm', { title: '异常报警' });
 Actions.pushViewWithName(AlarmRecords, 'AlarmRecords', { title: '报警详情' });
-Actions.pushViewWithName(RemoteAlarmHandleEditer, 'RemoteAlarmHandleEditer', { title: '报警处理登记表' });
+// Actions.pushViewWithName(RemoteAlarmHandleEditer, 'RemoteAlarmHandleEditer', { title: '报警处理登记表' });
 
-/* jab */
+
 // 消息中心
 Actions.pushViewWithName(ServiceDispatchMessage, 'ServiceDispatchMessage');
 Actions.pushViewWithName(NormalMessageDetail, 'NormalMessageDetail');//  成套通用消息详情
@@ -181,6 +187,7 @@ Actions.pushViewWithName(PerformanceDetail, 'PerformanceDetail', { title: '绩�
 Actions.pushViewWithName(ReviewWorkOrderStatistics, 'ReviewWorkOrderStatistics');//绩效消息-审核工单统计详情
 Actions.pushViewWithName(ServiceReminderInfoDetail, 'ServiceReminderInfoDetail', { title: '服务提醒' });// 服务提醒详情
 // Actions.pushViewWithName(ChengTaoTaskDetail, 'ChengTaoTaskDetail', { title: '派单详情' });// 成套派单详情
+
 // 我的
 Actions.pushViewWithName(HelpCenter, 'HelpCenter', { title: '帮助中心' }); //帮助中心
 Actions.pushViewWithName(DownLoadAPP, 'DownLoadAPP', { title: '下载应用' }); //下载应用

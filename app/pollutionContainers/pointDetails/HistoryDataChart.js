@@ -9,7 +9,6 @@ import { Echarts, echarts } from 'react-native-secharts';
 import { getImageByType, getDataStatusByData } from '../../pollutionModels/utils';
 import moment from 'moment';
 import { WindTransform, isWindDirection, getWindSpeed } from '../../utils/mapconfig';
-import { Alert } from '../../../node_modules/react-native/types/index';
 // import RNEChartsPro from 'react-native-echarts-pro';
 
 /**
@@ -242,6 +241,7 @@ export default class HistoryDataChart extends React.Component {
         return [beginTime, endTime];
     }
     refreshData = () => {
+        console.log('这是刷新的请求',this.props.datatype,this.props.dgimn)
         let codeStr = '';
         this.props.selectCodeArr.map(item => {
             codeStr = codeStr + ',' + item.PollutantCode;

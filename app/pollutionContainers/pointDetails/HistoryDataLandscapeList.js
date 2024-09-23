@@ -38,9 +38,9 @@ import SimpleLandscapeMultipleItemPicker from '../../components/LandscapeCompone
     { withRef: true }
 )
 export default class HistoryDataLandscapeList extends Component {
-    static navigationOptions = {
-        header: null
-    };
+    // static navigationOptions = {
+    //     header: null
+    // };
 
     static defaultProps = {
         signInType: 0

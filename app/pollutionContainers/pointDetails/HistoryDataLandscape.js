@@ -1,8 +1,8 @@
 /*
  * @Description: 横屏 列表和图表 入口
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-06-26 09:07:50
- * @LastEditTime: 2024-07-10 09:57:43
+ * @LastEditTime: 2024-09-20 16:08:21
  * @FilePath: /SDLMainProject37/app/pollutionContainers/pointDetails/HistoryDataLandscape.js
  */
 import { StatusBar, Text, TouchableOpacity, View, Image, Platform } from 'react-native';
@@ -32,13 +32,13 @@ import { SafeAreaView } from 'react-navigation';
     signInType: historyDataModel.signInType
 }))
 export default class HistoryDataLandscape extends Component {
-    static navigationOptions = {
-        header: null
-    };
+    // static navigationOptions = {
+    //     header: null
+    // };
 
     constructor(props) {
         super(props);
-        const pageState = SentencedToEmpty(props, ['navigation', 'state', 'params', 'pageState'], {});
+        const pageState = SentencedToEmpty(props, ['route', 'params', 'params', 'pageState'], {});
         this.state = {
             // chartDatas: [],
             // signInType: this.getSignInTypeCode(),
@@ -55,8 +55,8 @@ export default class HistoryDataLandscape extends Component {
 
     componentWillUnmount() {
         lockToPortrait();
-        const setRightButtonState = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'setRightButtonState'], () => { });
-        const goToPage = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'goToPage'], () => { });
+        const setRightButtonState = SentencedToEmpty(this.props, ['route', 'params', 'params',  'setRightButtonState'], () => { });
+        const goToPage = SentencedToEmpty(this.props, ['route', 'params', 'params', 'goToPage'], () => { });
         setRightButtonState(this.props.chartOrList);
         goToPage({
             signInType: this.props.signInType,
@@ -586,20 +586,20 @@ export default class HistoryDataLandscape extends Component {
                     this.props.chartOrList == 'chart' ? (
                         <HistoryDataLandscapeChart
                             ref="chart1"
-                            pageState={SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'pageState'], {})}
-                            datatype={this.props.navigation.state.params.datatype}
-                            setRightButtonState={SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'setRightButtonState'], () => { })}
-                            goToPage={SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'goToPage'], () => { })}
-                            dgimn={this.props.navigation.state.params.dgimn}
+                            pageState={SentencedToEmpty(this.props, ['route', 'params', 'params',  'pageState'], {})}
+                            datatype={this.props.route.params.params.datatype}
+                            setRightButtonState={SentencedToEmpty(this.props, ['route', 'params', 'params',  'setRightButtonState'], () => { })}
+                            goToPage={SentencedToEmpty(this.props, ['route', 'params', 'params',  'goToPage'], () => { })}
+                            dgimn={this.props.route.params.params.dgimn}
                         />
                     ) : (
                         <HistoryDataLandscapeList
                             ref="list1"
-                            pageState={SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'pageState'], {})}
-                            datatype={this.props.navigation.state.params.datatype}
-                            setRightButtonState={SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'setRightButtonState'], () => { })}
-                            goToPage={SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'goToPage'], () => { })}
-                            dgimn={this.props.navigation.state.params.dgimn}
+                            pageState={SentencedToEmpty(this.props, ['route', 'params', 'params',  'pageState'], {})}
+                            datatype={this.props.route.params.params.datatype}
+                            setRightButtonState={SentencedToEmpty(this.props, ['route', 'params', 'params',  'setRightButtonState'], () => { })}
+                            goToPage={SentencedToEmpty(this.props, ['route', 'params', 'params', 'goToPage'], () => { })}
+                            dgimn={this.props.route.params.params.dgimn}
                         />
                     )
                 }

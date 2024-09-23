@@ -28,9 +28,9 @@ import globalcolor from '../../config/globalcolor';
     { withRef: true }
 )
 export default class HistoryDataLandscapeChart extends Component {
-    static navigationOptions = {
-        header: null
-    };
+    // static navigationOptions = {
+    //     header: null
+    // };
 
     constructor(props) {
         super(props);
@@ -47,6 +47,7 @@ export default class HistoryDataLandscapeChart extends Component {
                 tooltip: {
                     trigger: 'axis',
                     formatter: function (params) {
+                        'show source';
                         var relVal = params[0].name;
 
                         for (var i = 0; i < params.length; i++) {
