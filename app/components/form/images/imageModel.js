@@ -73,7 +73,59 @@ export default Model.extend({
       // formdata.append('type', '2');
       // console.log('formdata = ', formdata);
 
-                        for (let index = 0; index < images.length; index++) {
+      fetch(UrlInfo.BaseUrl + api.pollutionApi.Alarm.uploadimage, {
+        method: 'POST',
+        bodyType: 'file', //后端接收的类型
+        body: formdata,
+        headers: {
+          authorization: 'Bearer ' + user.dataAnalyzeTicket,
+          ProxyCode: encryData,
+          Accept: 'application/json, text/plain, */*',
+        },
+      })
+        .then(response => response.json())
+        .then(res => {
+          if (res.StatusCode == 200) {
+            //     console.log('res = ', res);
+            //     console.log('typeof = ', typeof res);
+            //     const response = res.json();
+            //     console.log('response = ', response);
+            //     debugger;
+            //     // let urls = JSON.parse(res._bodyInit).Datas;
+            // let urls = SentencedToEmpty(response, ['_j', 'Datas'], []);
+            //     let url = '';
+            //     for (let index = 0; index < urls.length; index++) {
+            //       url = SentencedToEmpty(urls, [index], '');
+            //       if (url != '') {
+            //         let attachIDArr = urls[index].split('/');
+            //         images[index].attachID = attachIDArr[attachIDArr.length - 1];
+            //         images[index].url = url;
+            //       }
+            //     }
+            //     console.log('images = ', images);
+            //     callback(images, true);
+            //   } else {
+            //     callback(res._bodyInit, false);
+
+            let images = res.Datas.map(item => {
+              return {attachID: item.split('/').pop(), url: item};
+            });
+            callback(images, true);
+          } else {
+            callback(res.Message, false);
+          }
+        })
+        .catch(error => {
+          // console.log('error = ', error);
+          callback('', false);
+        });
+    },
+    //反馈上传图片-服务端加水印
+    *uploadimageWaterMask(
+      {payload: {image, images = [], callback, uuid, imageParams = {}}},
+      {call},
+    ) {
+      let encryData = getEncryptData();
 
       const user = yield loadToken();
       let formdata = new FormData();
