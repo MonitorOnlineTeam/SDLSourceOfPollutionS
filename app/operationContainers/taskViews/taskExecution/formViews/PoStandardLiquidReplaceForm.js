@@ -2,13 +2,13 @@
  * @Description: 试剂更换记录编辑页面
  * @LastEditors: hxf
  * @Date: 2021-11-22 16:18:28
- * @LastEditTime: 2023-08-31 17:55:44
- * @FilePath: /SDLMainProject36/app/operationContainers/taskViews/taskExecution/formViews/PoStandardLiquidReplaceForm.js
+ * @LastEditTime: 2024-09-25 21:01:47
+ * @FilePath: /SDLMainProject/app/operationContainers/taskViews/taskExecution/formViews/PoStandardLiquidReplaceForm.js
  */
 
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, Platform, TextInput, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Platform, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -53,10 +53,10 @@ class PoStandardLiquidReplaceForm extends Component {
     constructor(props) {
         super(props);
         const user = getToken();
-        if (props.navigation.state.params.index == -1) {
+        if (props.route.params.params.index == -1) {
             this.state = {
-                PartType: SentencedToEmpty(this, ['props', 'navigation', 'state', 'params', 'item', 'PartType'], SentencedToEmpty(user, ['IsShowTask'], false) ? 2 : 1),// 供货类型 字段名称PartType   下拉列表 1 我公司供货 2 甲方供货  默认1
-                PartName: this.getPartName(SentencedToEmpty(this, ['props', 'navigation', 'state', 'params', 'item', 'PartType'], 1)),// 供货类型显示字段
+                PartType: SentencedToEmpty(this, ['props', 'route', 'params', 'params', 'item', 'PartType'], SentencedToEmpty(user, ['IsShowTask'], false) ? 2 : 1),// 供货类型 字段名称PartType   下拉列表 1 我公司供货 2 甲方供货  默认1
+                PartName: this.getPartName(SentencedToEmpty(this, ['props', 'route', 'params', 'params', 'item', 'PartType'], 1)),// 供货类型显示字段
                 // pointEquipmentSelected:null, // 需要更换试剂的设备
                 ReplaceDate: moment().toDate(), //更换时间
                 showReplaceDate: moment().format('YYYY-MM-DD'),
@@ -77,7 +77,7 @@ class PoStandardLiquidReplaceForm extends Component {
                 Component: '' // 规格型号
             };
         } else {
-            let item = this.props.standardLiquidRepalceRecordList[props.navigation.state.params.index];
+            let item = this.props.standardLiquidRepalceRecordList[props.route.params.params.index];
             this.state = {
                 PartType: SentencedToEmpty(item, ['PartType'], SentencedToEmpty(user, ['IsShowTask'], false) ? 2 : 1),// 供货类型 字段名称PartType   下拉列表 1 我公司供货 2 甲方供货  默认1
                 PartName: this.getPartName(SentencedToEmpty(item, ['PartType'], 1)),// 供货类型显示字段   
@@ -129,7 +129,7 @@ class PoStandardLiquidReplaceForm extends Component {
         //删除记录
         this.props.dispatch(
             createAction('taskModel/delItemStandardLiquidRepalce')({
-                index: this.props.navigation.state.params.index,
+                index: this.props.route.params.params.index,
                 callback: () => {
                     this.props.dispatch(createAction('taskModel/getStandardLiquidRepalceRecordList')({ createForm: false }));
                     this.props.dispatch(NavigationActions.back());
@@ -175,7 +175,11 @@ class PoStandardLiquidReplaceForm extends Component {
                     this.onRefresh();
                 }}
             >
-                <KeyboardAwareScrollView behavior={Platform.OS == 'ios' ? 'padding' : ''} style={styles.container}>
+                {/* <KeyboardAwareScrollView behavior={Platform.OS == 'ios' ? 'padding' : ''} style={styles.container}>
+                </KeyboardAwareScrollView> */}
+                <ScrollView
+                    style={[{ width: SCREEN_WIDTH, flex: 1 }]}
+                >
                     <View style={[{ width: SCREEN_WIDTH, alignItems: 'center', marginVertical: 22, justifyContent: 'center' }]}>
                         <View
                             style={[
@@ -461,7 +465,7 @@ class PoStandardLiquidReplaceForm extends Component {
                                     </View>
                             }
                         </View>
-                        {this.props.navigation.state.params.index != -1 ? (
+                        {this.props.route.params.params.index != -1 ? (
                             <TouchableOpacity
                                 style={[styles.button, { backgroundColor: globalcolor.orange }, { marginVertical: 10 }]}
                                 onPress={() => {
@@ -504,7 +508,7 @@ class PoStandardLiquidReplaceForm extends Component {
                                 } else {
                                     this.props.dispatch(
                                         createAction('taskModel/saveItemStandardLiquidRepalce')({
-                                            index: this.props.navigation.state.params.index,
+                                            index: this.props.route.params.params.index,
                                             record: {
                                                 PartType: this.state.PartType,
                                                 // EquipmentName: SentencedToEmpty(this.state.pointEquipmentSelected,['EquipmentName'],''),//设备厂家
@@ -533,7 +537,7 @@ class PoStandardLiquidReplaceForm extends Component {
                             </View>
                         </TouchableOpacity>
                     </View>
-                </KeyboardAwareScrollView>
+                </ScrollView>
                 {this.props.editstatus.status == -2 ? <SimpleLoadingComponent message={'提交中'} /> : null}
                 {this.props.editstatus.status == -1 ? <SimpleLoadingComponent message={'删除中'} /> : null}
                 <AlertDialog options={options} ref="doAlert" />

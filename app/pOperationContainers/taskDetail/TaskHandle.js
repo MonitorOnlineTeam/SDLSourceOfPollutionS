@@ -424,7 +424,7 @@ export default class TaskHandle extends Component {
             if (item.TypeName == 'FaultHistoryList') {
                 // 异常小时数记录
                 this.props.dispatch(
-                    StackActions.push({
+                    NavigationActions.navigate({
                         routeName: 'EquipmentFaultForm',
                         params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
                     })
@@ -432,18 +432,17 @@ export default class TaskHandle extends Component {
             } else {
                 // 0：图片   1：电子表单    Type字段
                 if (item.Type == '0') {
-                    this.props.dispatch(
-                        StackActions.push({
-                            routeName: 'ImageForm',
-                            params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
-                        })
-                    );
+                    this.props.dispatch(NavigationActions.navigate({
+                        routeName: 'ImageForm'
+                        , params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
+                    }));
+
                 } else if (item.Type == '1') {
                     switch (item.ID) {
                         case 59: // 异常小时数记录 废气
                         case 58: // 异常小时数记录 废水
                             this.props.dispatch(
-                                StackActions.push({
+                                NavigationActions.navigate({
                                     routeName: 'EquipmentFaultForm',
                                     params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
                                 })
@@ -471,6 +470,7 @@ export default class TaskHandle extends Component {
                             this.props.dispatch(NavigationActions.navigate({ routeName: 'PoConsumablesReplaceRecord', params: { TypeName: 'ConsumablesReplaceRecord', item } }));
                             break;
                         case 4: //标气记录
+                            this.props.dispatch(createAction('taskModel/getInfoGas')({ params: { TypeName: 'StandardGasRepalceHistoryList' } }));
                             this.props.dispatch(NavigationActions.navigate({ routeName: 'PoStandardGasRepalceForm', params: { TypeName: 'StandardGasRepalceHistoryList' } }));
                             break;
                         case 8: //零点量程漂移校准
@@ -484,6 +484,7 @@ export default class TaskHandle extends Component {
                                     TaskID: item.TaskID
                                 })
                             );
+                            this.props.dispatch(createAction('calibrationRecord/getJzItem')({ ...item, createForm: true }));
                             this.props.dispatch(
                                 NavigationActions.navigate({
                                     routeName: 'CalibrationRecordList',
@@ -502,6 +503,12 @@ export default class TaskHandle extends Component {
                             this.props.dispatch(NavigationActions.navigate({ routeName: 'MachineryMaintenanceRecords', params: { TaskID: this.props.taskDetail.TaskID } }));
                             break;
                         case 15: //试剂更换记录
+                            this.props.dispatch(createAction('taskModel/updateState')({
+                                standardLiquidRepalceRecordListResult: { status: -1 }
+                            }));
+                            this.props.dispatch(createAction('taskModel/getStandardLiquidRepalceRecordList')({
+                                TypeName: 'StandardLiquidReplaceHistoryList'
+                            }));
                             this.props.dispatch(NavigationActions.navigate({ routeName: 'PoStandardLiquidReplaceRecord', params: { TypeName: 'StandardLiquidReplaceHistoryList' } }));
                             break;
                         case 61: // 废水 配合检查

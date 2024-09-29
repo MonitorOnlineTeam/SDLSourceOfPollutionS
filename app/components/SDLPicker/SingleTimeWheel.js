@@ -107,10 +107,10 @@ class SingleTimeWheel extends PureComponent {
                 </View>
                 <View style={[{ height: calendarHeight, flex: 1, width: WINDOW_WIDTH, justifyContent: 'center' }]}>
                     <View
-                        onStartShouldSetResponderCapture={() => {
-                            // 拦截事件 不传递给父组件
-                            return true;
-                        }}
+                        // onStartShouldSetResponderCapture={() => {
+                        //     // 拦截事件 不传递给父组件
+                        //     return true;
+                        // }}
                         style={{ height: 200, width: WINDOW_WIDTH }}>
                         {/* <this.state.TimeNavigator ref={ref => {
                             if (ref !== null && __DEV__) {

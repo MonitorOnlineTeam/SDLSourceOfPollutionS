@@ -12,7 +12,7 @@ import moment from 'moment';
     consumablesReplace: taskModel.consumablesReplace,
     currentTask: taskModel.currentTask,
     consumableRecord: taskModel.consumableRecord,
-    editstatus:taskModel.editstatus
+    editstatus: taskModel.editstatus
 }))
 class PoConsumablesReplaceRecord extends Component {
     static navigationOptions = ({ navigation }) =>
@@ -21,8 +21,8 @@ class PoConsumablesReplaceRecord extends Component {
             headerRight: (
                 <TouchableOpacity
                     onPress={() => {
-                        const formItem = SentencedToEmpty(navigation,['state','params','item'],{});
-                        _me.props.dispatch(NavigationActions.navigate({ routeName: 'PoConsumablesReplaceForm',params: { formItem }}));
+                        const formItem = SentencedToEmpty(navigation, ['state', 'params', 'item'], {});
+                        _me.props.dispatch(NavigationActions.navigate({ routeName: 'PoConsumablesReplaceForm', params: { formItem } }));
                     }}
                 >
                     <Image source={require('../../../../images/jiarecord.png')} style={{ width: 24, height: 24, marginRight: 16 }} />
@@ -38,6 +38,16 @@ class PoConsumablesReplaceRecord extends Component {
         };
 
         _me = this;
+        this.props.navigation.setOptions({
+            headerRight: () => <TouchableOpacity
+                onPress={() => {
+                    const formItem = SentencedToEmpty(this.props.route, ['params', 'params', 'item'], {});
+                    _me.props.dispatch(NavigationActions.navigate({ routeName: 'PoConsumablesReplaceForm', params: { formItem } }));
+                }}
+            >
+                <Image source={require('../../../../images/jiarecord.png')} style={{ width: 24, height: 24, marginRight: 16 }} />
+            </TouchableOpacity>
+        });
     }
 
     componentDidMount() {
@@ -49,12 +59,12 @@ class PoConsumablesReplaceRecord extends Component {
         });
     }
     onRefresh() {
-        const { ID } = SentencedToEmpty(this.props,['navigation','state','params','item'],{});
+        const { ID } = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
         this.props.dispatch(
             createAction('taskModel/getConsumablesReplace')({
                 params: {
                     TaskID: this.props.currentTask.TaskID,
-                    TypeID:ID,
+                    TypeID: ID,
                 }
             })
         );
@@ -75,7 +85,7 @@ class PoConsumablesReplaceRecord extends Component {
             <View style={[{ width: SCREEN_WIDTH, alignItems: 'center' }]}>
                 <TouchableOpacity
                     onPress={() => {
-                        const formItem = SentencedToEmpty(this.props,['navigation','state','params','item'],{});
+                        const formItem = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
                         this.props.dispatch(
                             NavigationActions.navigate({
                                 routeName: 'PoConsumablesReplaceForm',
@@ -98,54 +108,54 @@ class PoConsumablesReplaceRecord extends Component {
                         }
                     ]}
                 >
-                    <View style={[{ flexDirection: 'row', marginTop: 10, alignItems: 'center', width:contentWidth }]}>
-                        <View style={[{ flexDirection: 'row', width:contentWidth }]}>
+                    <View style={[{ flexDirection: 'row', marginTop: 10, alignItems: 'center', width: contentWidth }]}>
+                        <View style={[{ flexDirection: 'row', width: contentWidth }]}>
                             <Text style={[{ fontSize: 15, color: globalcolor.taskImfoLabel }]}>易耗品名称：</Text>
-                            <Text numberOfLines={1} style={[{ fontSize: 15, color: globalcolor.recordde, flex:1 }]}>{item.ConsumablesName}</Text>
+                            <Text numberOfLines={1} style={[{ fontSize: 15, color: globalcolor.recordde, flex: 1 }]}>{item.ConsumablesName}</Text>
                         </View>
                     </View>
-                    <View style={[{ flexDirection: 'row', marginTop: 10, alignItems: 'center', width:contentWidth }]}>
-                        <View style={[{ flexDirection: 'row', flex: 1, width:SCREEN_WIDTH/2-15 }]}>
+                    <View style={[{ flexDirection: 'row', marginTop: 10, alignItems: 'center', width: contentWidth }]}>
+                        <View style={[{ flexDirection: 'row', flex: 1, width: SCREEN_WIDTH / 2 - 15 }]}>
                             <Text style={[{ fontSize: 15, color: globalcolor.taskImfoLabel }]}>数量：</Text>
                             <Text style={[{ fontSize: 15, color: globalcolor.recordde }]}>{item.Num}</Text>
                         </View>
-                        <View style={[{ flexDirection: 'row', width:SCREEN_WIDTH/2-15 }]}>
+                        <View style={[{ flexDirection: 'row', width: SCREEN_WIDTH / 2 - 15 }]}>
                             <Text style={[{ fontSize: 15, color: globalcolor.taskImfoLabel }]}>单位：</Text>
-                            <Text numberOfLines={1} style={[{ fontSize: 15, color: globalcolor.recordde, flex:1 }]}>{item.Unit}</Text>
+                            <Text numberOfLines={1} style={[{ fontSize: 15, color: globalcolor.recordde, flex: 1 }]}>{item.Unit}</Text>
                         </View>
                     </View>
-                    <View style={[{ flexDirection: 'row', marginTop: 6, alignItems: 'center', width:contentWidth }]}>
-                        <View style={[{ flexDirection: 'row', width:contentWidth }]}>
+                    <View style={[{ flexDirection: 'row', marginTop: 6, alignItems: 'center', width: contentWidth }]}>
+                        <View style={[{ flexDirection: 'row', width: contentWidth }]}>
                             <Text style={[{ fontSize: 15, color: globalcolor.taskImfoLabel }]}>规格型号：</Text>
-                            <Text style={[{ fontSize: 15, color: globalcolor.recordde, flex:1 }]}>{item.Model}</Text>
+                            <Text style={[{ fontSize: 15, color: globalcolor.recordde, flex: 1 }]}>{item.Model}</Text>
                         </View>
                     </View>
                     {
-                        SentencedToEmpty(item,['PartType'],1) == 1?<View style={[{ flexDirection: 'row', marginTop: 10, alignItems: 'center', width:contentWidth }]}>
+                        SentencedToEmpty(item, ['PartType'], 1) == 1 ? <View style={[{ flexDirection: 'row', marginTop: 10, alignItems: 'center', width: contentWidth }]}>
                             <View style={[{ flexDirection: 'row', minWidth: contentWidth }]}>
                                 <Text style={[{ fontSize: 15, color: globalcolor.taskImfoLabel }]}>存货编码：</Text>
                                 <Text style={[{ fontSize: 15, color: globalcolor.recordde }]}>{item.PartCode}</Text>
                             </View>
                         </View>
-                        :null
+                            : null
                     }
                     {
-                        SentencedToEmpty(item,['PartType'],1) == 1?<View style={[{ flexDirection: 'row', marginTop: 10, alignItems: 'center', width:contentWidth }]}>
+                        SentencedToEmpty(item, ['PartType'], 1) == 1 ? <View style={[{ flexDirection: 'row', marginTop: 10, alignItems: 'center', width: contentWidth }]}>
                             <View style={[{ flexDirection: 'row', minWidth: contentWidth }]}>
                                 <Text style={[{ fontSize: 15, color: globalcolor.taskImfoLabel }]}>仓库名称：</Text>
-                                <Text style={[{ fontSize: 15, color: globalcolor.recordde, flex:1 }]}>{item.StorehouseName}</Text>
+                                <Text style={[{ fontSize: 15, color: globalcolor.recordde, flex: 1 }]}>{item.StorehouseName}</Text>
                             </View>
                         </View>
-                        :null
+                            : null
                     }
-                    
+
                     <View style={[{ flexDirection: 'row', marginTop: 10 }]}>
                         <Text style={[{ fontSize: 15, color: globalcolor.taskImfoLabel }]}>更换时间：</Text>
                         <Text style={[{ fontSize: 15, color: globalcolor.recordde }]}>{moment(item.ReplaceDate).format('YYYY-MM-DD')}</Text>
                     </View>
                     <View style={{ width: contentWidth, height: 1, backgroundColor: '#efefef', marginTop: 10 }} />
                     <Text style={[{ fontSize: 16, color: globalcolor.taskImfoLabel, marginTop: 10 }]}>更换原因</Text>
-                    <Text style={[{ width:contentWidth, marginTop: 10, fontSize: 14, color: globalcolor.recordde, marginBottom: 10 }]}>{item.Remark}</Text>
+                    <Text style={[{ width: contentWidth, marginTop: 10, fontSize: 14, color: globalcolor.recordde, marginBottom: 10 }]}>{item.Remark}</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -185,9 +195,9 @@ class PoConsumablesReplaceRecord extends Component {
             </View>
         );
     };
-    cancelButton = () => {};
+    cancelButton = () => { };
     confirm = () => {
-        const { ID } = SentencedToEmpty(this.props,['navigation','state','params','item'],{});
+        const { ID } = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
         this.props.dispatch(
             createAction('taskModel/deleteConsumablesReplace')({
                 params: {
@@ -264,7 +274,7 @@ class PoConsumablesReplaceRecord extends Component {
                     </View>
                 ) : null}
                 <AlertDialog options={options} ref="doAlert" />
-                {this.props.editstatus.status == -1?<SimpleLoadingComponent message={'删除中'} />:null}
+                {this.props.editstatus.status == -1 ? <SimpleLoadingComponent message={'删除中'} /> : null}
             </StatusPage>
         );
     }

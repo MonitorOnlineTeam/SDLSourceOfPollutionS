@@ -2,8 +2,8 @@
  * @Description: 设备故障反馈记录 编辑页
  * @LastEditors: hxf
  * @Date: 2022-02-10 10:04:13
- * @LastEditTime: 2023-06-26 15:43:06
- * @FilePath: /SDLMainProject36/app/pOperationContainers/tabView/workbench/EquipmentFailureFeedbackEdit.js
+ * @LastEditTime: 2024-09-27 11:53:14
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbench/EquipmentFailureFeedbackEdit.js
  */
 
 import moment from 'moment';
@@ -23,37 +23,37 @@ const ic_arrows_down = require('../../../images/ic_arrows_down.png');
 
 @connect(({ app, equipmentFailureFeedbackModel }) => ({
     selectEnterprise: app.selectEnterprise,
-    dataArray:equipmentFailureFeedbackModel.dataArray,
-    faultFeedbackParamesResult:equipmentFailureFeedbackModel.faultFeedbackParamesResult,
+    dataArray: equipmentFailureFeedbackModel.dataArray,
+    faultFeedbackParamesResult: equipmentFailureFeedbackModel.faultFeedbackParamesResult,
 }))
 export default class EquipmentFailureFeedbackEdit extends Component {
 
     static navigationOptions = ({ navigation }) => {
-        return  createNavigationOptions({
+        return createNavigationOptions({
             title: `故障反馈记录`,
             headerTitleStyle: { flex: 1, textAlign: 'center', fontSize: 17, marginRight: Platform.OS === 'android' ? 76 : 0 } //标题居中
         });
     }
     constructor(props) {
         super(props);
-        console.log('constructor ID = ',SentencedToEmpty(props,['dataArray','ID'],''));
+        console.log('constructor ID = ', SentencedToEmpty(props, ['dataArray', 'ID'], ''));
         this.state = {
             selectPointItem: { PointName: '请选择监测点位' }, // 选中排口
         };
-        if (SentencedToEmpty(props,['dataArray','ID'],'') != '') {
+        if (SentencedToEmpty(props, ['dataArray', 'ID'], '') != '') {
             this.state.selectPointItem = {
-                PointName:SentencedToEmpty(props,['dataArray','PointName'],''),
-                DGIMN:SentencedToEmpty(props,['dataArray','DGIMN'],''),
+                PointName: SentencedToEmpty(props, ['dataArray', 'PointName'], ''),
+                DGIMN: SentencedToEmpty(props, ['dataArray', 'DGIMN'], ''),
             }
         }
     }
 
     componentDidMount() {
-        if (SentencedToEmpty(this.props,['dataArray','ID'],'') != '') {
+        if (SentencedToEmpty(this.props, ['dataArray', 'ID'], '') != '') {
             this.props.dispatch(
                 createAction('app/getPointListByEntCode')({
                     params: {
-                        entCode: SentencedToEmpty(this.props,['dataArray','EntCode'],''),
+                        entCode: SentencedToEmpty(this.props, ['dataArray', 'EntCode'], ''),
                         callback: item => {
                             this.props.selectEnterprise.PointList = item;
                             if (this.pointS && typeof this.pointS != 'undefined') {
@@ -66,17 +66,17 @@ export default class EquipmentFailureFeedbackEdit extends Component {
             );
             this.props.dispatch(
                 createAction('equipmentFailureFeedbackModel/getFaultFeedbackParames')({
-                    DGIMN: SentencedToEmpty(this.props,['dataArray','DGIMN'],''),
-                    callback:(result)=>{
-                        const arr = SentencedToEmpty(result,['data','Datas','FaultUnitList'],[])
-                        console.log('arr = ',arr);
-                        let newArray = SentencedToEmpty(this.props,['dataArray'],{})
-                        arr.map((item,index)=>{
-                            if (SentencedToEmpty(this.props,['dataArray','FaultUnitID'],'')== item.ID) {
+                    DGIMN: SentencedToEmpty(this.props, ['dataArray', 'DGIMN'], ''),
+                    callback: (result) => {
+                        const arr = SentencedToEmpty(result, ['data', 'Datas', 'FaultUnitList'], [])
+                        console.log('arr = ', arr);
+                        let newArray = SentencedToEmpty(this.props, ['dataArray'], {})
+                        arr.map((item, index) => {
+                            if (SentencedToEmpty(this.props, ['dataArray', 'FaultUnitID'], '') == item.ID) {
                                 newArray.IsMaster = item.IsMaster;
                                 this.props.dispatch(
                                     createAction('equipmentFailureFeedbackModel/updateState')(
-                                        {dataArray:newArray}));
+                                        { dataArray: newArray }));
                             }
                         })
                     }
@@ -86,7 +86,7 @@ export default class EquipmentFailureFeedbackEdit extends Component {
     }
 
     callback = item => {
-        console.log('企业：',item);
+        console.log('企业：', item);
         this.setState({ selectPointItem: { PointName: '请选择监测点位' } });
         this.props.dispatch(
             createAction('app/updateState')({
@@ -116,7 +116,7 @@ export default class EquipmentFailureFeedbackEdit extends Component {
             nameKey: 'PointName',
             dataArr: this.props.selectEnterprise.PointList || [],
             onSelectListener: item => {
-                console.log('EquipmentFailureFeedbackEdit getPointSelect item = ',item);
+                console.log('EquipmentFailureFeedbackEdit getPointSelect item = ', item);
                 if (item && typeof item != 'undefined') {
                     this.props.dispatch(
                         createAction('equipmentFailureFeedbackModel/getFaultFeedbackParames')({
@@ -131,23 +131,23 @@ export default class EquipmentFailureFeedbackEdit extends Component {
         };
     };
 
-    upDateItem = (index,paramName,value) =>{
+    upDateItem = (index, paramName, value) => {
         // let newArray = [...this.props.dataArray];
         // newArray[index][paramName] = value;
-        let newArray = {...this.props.dataArray};
+        let newArray = { ...this.props.dataArray };
         newArray[paramName] = value;
         this.props.dispatch(
             createAction('equipmentFailureFeedbackModel/updateState')(
-                {dataArray:newArray}));
+                { dataArray: newArray }));
     }
 
     render() {
-        let item = SentencedToEmpty(this.props,['dataArray'],{})
-        console.log('item = ',item);
-        console.log('item = ',SentencedToEmpty(this.props,['navigation'],{}));
+        let item = SentencedToEmpty(this.props, ['dataArray'], {})
+        console.log('item = ', item);
+        console.log('item = ', SentencedToEmpty(this.props, ['route'], {}));
         return (
-            <View style={[{width:SCREEN_WIDTH,flex:1, alignItems:'center'}]}>
-                <ScrollView style={[{width:SCREEN_WIDTH}]} >
+            <View style={[{ width: SCREEN_WIDTH, flex: 1, alignItems: 'center' }]}>
+                <ScrollView style={[{ width: SCREEN_WIDTH }]} >
                     <TouchableOpacity
                         onPress={() => {
                             this.props.dispatch(
@@ -163,18 +163,18 @@ export default class EquipmentFailureFeedbackEdit extends Component {
                         }}
                         style={[styles.row, { justifyContent: 'space-between' }]}
                     >
-                        <View style={[styles.rowInner,{flex:1, marginRight:8}]}>
+                        <View style={[styles.rowInner, { flex: 1, marginRight: 8 }]}>
                             <Text style={{ fontSize: 14, color: 'red', marginLeft: 20 }}>{'* '}</Text>
                             <Text style={{ fontSize: 14, color: globalcolor.textBlack }}>{'企业/监测站'}</Text>
                             <Text
                                 numberOfLines={1}
                                 style={{
-                                    flex:1,
+                                    flex: 1,
                                     maxWidth: SCREEN_WIDTH - 150,
                                     fontSize: 14,
                                     color: '#666',
                                     marginLeft: 24,
-                                    textAlign:'right'
+                                    textAlign: 'right'
                                 }}
                             >
                                 {this.props.selectEnterprise.EntName}
@@ -191,16 +191,18 @@ export default class EquipmentFailureFeedbackEdit extends Component {
                         onPress={this.props.selectEnterprise.EntName == '请选择' ? this.judgeEnterprise : null}
                         style={[styles.row, { justifyContent: 'space-between' }]}
                     >
-                        <View style={[styles.rowInner,{flex:1, marginRight:8}]}>
+                        <View style={[styles.rowInner, { flex: 1, marginRight: 8 }]}>
                             <Text style={{ fontSize: 14, color: 'red', marginLeft: 20 }}>{'* '}</Text>
                             <Text style={{ fontSize: 14, color: globalcolor.textBlack }}>{'监测点位'}</Text>
-                            <Text style={{ fontSize: 14, color: '#666', marginLeft: 24, textAlign:'right', flex:1 }}>{SentencedToEmpty(this.state, ['selectPointItem', 'PointName'], '')}</Text>
+                            <Text style={{ fontSize: 14, color: '#666', marginLeft: 24, textAlign: 'right', flex: 1 }}>{SentencedToEmpty(this.state, ['selectPointItem', 'PointName'], '')}</Text>
                         </View>
 
                         <Image style={{ width: 10, height: 10, marginRight: 20 }} source={ic_arrows_down} />
                     </PickerTouchable>
-                    <View style={[{ width: SCREEN_WIDTH-24, alignItems: 'center'
-                        , marginHorizontal: 12, paddingHorizontal:6 }]}>
+                    <View style={[{
+                        width: SCREEN_WIDTH - 24, alignItems: 'center'
+                        , marginHorizontal: 12, paddingHorizontal: 6
+                    }]}>
                         {
                             /**
                                 ID 传ID就是修改否则就是添加
@@ -214,11 +216,15 @@ export default class EquipmentFailureFeedbackEdit extends Component {
                                 ProcessingMethod 处理方法
                                 */
                         }
-                        <View style={[{ width: SCREEN_WIDTH-24, alignItems: 'center'
-                                ,  marginTop:12}]}>
-                            <View style={[{width: SCREEN_WIDTH-24,height:32,flexDirection:'row'
-                                ,justifyContent:'space-between' }]}>
-                                <Text style={[{ fontSize:16 }]}>{`故障记录`}</Text>
+                        <View style={[{
+                            width: SCREEN_WIDTH - 24, alignItems: 'center'
+                            , marginTop: 12
+                        }]}>
+                            <View style={[{
+                                width: SCREEN_WIDTH - 24, height: 32, flexDirection: 'row'
+                                , justifyContent: 'space-between'
+                            }]}>
+                                <Text style={[{ fontSize: 16 }]}>{`故障记录`}</Text>
                                 {/* <TouchableOpacity
                                     onPress={() => {
                                         let newArray = [...this.props.dataArray];
@@ -232,113 +238,115 @@ export default class EquipmentFailureFeedbackEdit extends Component {
                                     <SDLText style={{ color: '#4aa0ff' }}>删除</SDLText>
                                 </TouchableOpacity> */}
                             </View>
-                            <View style={[{ width: SCREEN_WIDTH-24, alignItems: 'center'
-                                ,backgroundColor:globalcolor.white,paddingHorizontal:6,}]}>
+                            <View style={[{
+                                width: SCREEN_WIDTH - 24, alignItems: 'center'
+                                , backgroundColor: globalcolor.white, paddingHorizontal: 6,
+                            }]}>
                                 <FormPicker
                                     required={true}
                                     label='故障单元'
-                                    defaultCode={SentencedToEmpty(item,['FaultUnitID'],'')}
+                                    defaultCode={SentencedToEmpty(item, ['FaultUnitID'], '')}
                                     option={{
                                         codeKey: 'ID',
                                         nameKey: 'FaultUnitName',
-                                        defaultCode: SentencedToEmpty(item,['FaultUnitID'],''),
-                                        dataArr:SentencedToEmpty(this.props.faultFeedbackParamesResult,['data','Datas','FaultUnitList'],[]),
+                                        defaultCode: SentencedToEmpty(item, ['FaultUnitID'], ''),
+                                        dataArr: SentencedToEmpty(this.props.faultFeedbackParamesResult, ['data', 'Datas', 'FaultUnitList'], []),
                                         onSelectListener: callBackItem => {
                                             // let newArray = [...this.props.dataArray];
-                                            let newArray = {...this.props.dataArray};
+                                            let newArray = { ...this.props.dataArray };
                                             newArray.selectedFaultUnit = callBackItem;
                                             newArray.FaultUnitID = callBackItem.ID;
                                             newArray.FaultUnitName = callBackItem.FaultUnitName;
                                             newArray.IsMaster = callBackItem.IsMaster;
                                             this.props.dispatch(
                                                 createAction('equipmentFailureFeedbackModel/updateState')(
-                                                    {dataArray:newArray}));
+                                                    { dataArray: newArray }));
                                         }
                                     }}
-                                    showText={SentencedToEmpty(item,['FaultUnitName'],'') } 
+                                    showText={SentencedToEmpty(item, ['FaultUnitName'], '')}
                                     placeHolder='请选择'
                                 />
-                                <FormDatePicker 
+                                <FormDatePicker
                                     required={true}
                                     getPickerOption={
-                                        () =>{
+                                        () => {
                                             return {
                                                 defaultTime: moment(item.FaultTime).format('YYYY-MM-DD HH:mm:ss'),
                                                 type: 'hour',
                                                 onSureClickListener: time => {
-                                                    console.log('time = ',time);
-                                                    this.upDateItem(0,'FaultTime',time);
+                                                    console.log('time = ', time);
+                                                    this.upDateItem(0, 'FaultTime', time);
                                                 },
                                             };
                                         }
                                     }
-                                    label={'故障时间'} 
+                                    label={'故障时间'}
                                     timeString={moment(item.FaultTime).format('YYYY-MM-DD HH:00')}
                                 />
-                                {   
+                                {
                                     // IsMaster 1 主机  2是其他吗？
-                                    SentencedToEmpty(item,['IsMaster'],2) == 1?<FormPicker
+                                    SentencedToEmpty(item, ['IsMaster'], 2) == 1 ? <FormPicker
                                         required={true}
                                         label='主机名称型号'
-                                        defaultCode={SentencedToEmpty(item,['EquipmentInfoID'],'')}
+                                        defaultCode={SentencedToEmpty(item, ['EquipmentInfoID'], '')}
                                         option={{
                                             codeKey: 'ID',
                                             nameKey: 'Name',
-                                            defaultCode: SentencedToEmpty(item,['EquipmentInfoID'],''),
-                                            dataArr:SentencedToEmpty(this.props.faultFeedbackParamesResult,['data','Datas','EquipmentInfoList'],[]),
+                                            defaultCode: SentencedToEmpty(item, ['EquipmentInfoID'], ''),
+                                            dataArr: SentencedToEmpty(this.props.faultFeedbackParamesResult, ['data', 'Datas', 'EquipmentInfoList'], []),
                                             onSelectListener: callBackItem => {
                                                 // let newArray = [...this.props.dataArray];
-                                                let newArray = {...this.props.dataArray};
+                                                let newArray = { ...this.props.dataArray };
                                                 newArray.selectedEquipmentInfo = callBackItem;
                                                 newArray.EquipmentInfoID = callBackItem.ID;
                                                 newArray.EquipmentNumber = callBackItem.EquipmentNumber;
                                                 newArray.EquipmentName = callBackItem.Name;
                                                 this.props.dispatch(
                                                     createAction('equipmentFailureFeedbackModel/updateState')(
-                                                        {dataArray:newArray}));
+                                                        { dataArray: newArray }));
                                             }
                                         }}
-                                        showText={SentencedToEmpty(item,['EquipmentName'],'') } 
+                                        showText={SentencedToEmpty(item, ['EquipmentName'], '')}
                                         placeHolder='请选择'
-                                    />:<FormInput 
+                                    /> : <FormInput
                                         required={true}
                                         label={'名称型号'}
                                         placeholder='请记录'
                                         keyboardType='default'
                                         value={item.EquipmentInfoID}
                                         onChangeText={
-                                            (text)=>{
-                                                this.upDateItem(0,'EquipmentInfoID',text);
+                                            (text) => {
+                                                this.upDateItem(0, 'EquipmentInfoID', text);
                                             }
                                         }
                                     />
                                 }
-                                <FormTextArea 
+                                <FormTextArea
                                     required={true}
                                     label='故障现象'
-                                    areaWidth={SCREEN_WIDTH-36}
+                                    areaWidth={SCREEN_WIDTH - 36}
                                     placeholder=''
                                     value={item.FaultPhenomenon}
-                                    onChangeText={(text)=>{
-                                        this.upDateItem(0,'FaultPhenomenon',text);
+                                    onChangeText={(text) => {
+                                        this.upDateItem(0, 'FaultPhenomenon', text);
                                     }}
                                 />
-                                <FormTextArea 
+                                <FormTextArea
                                     label='原因分析'
-                                    areaWidth={SCREEN_WIDTH-36}
+                                    areaWidth={SCREEN_WIDTH - 36}
                                     placeholder=''
                                     value={item.CauseAnalysis}
-                                    onChangeText={(text)=>{
-                                        this.upDateItem(0,'CauseAnalysis',text);
+                                    onChangeText={(text) => {
+                                        this.upDateItem(0, 'CauseAnalysis', text);
                                     }}
                                 />
-                                <FormTextArea 
+                                <FormTextArea
                                     label='处理方法'
-                                    areaWidth={SCREEN_WIDTH-36}
+                                    areaWidth={SCREEN_WIDTH - 36}
                                     placeholder=''
                                     value={item.ProcessingMethod}
-                                    onChangeText={(text)=>{
-                                        this.upDateItem(0,'ProcessingMethod',text);
+                                    onChangeText={(text) => {
+                                        this.upDateItem(0, 'ProcessingMethod', text);
                                     }}
                                 />
                             </View>
@@ -346,19 +354,19 @@ export default class EquipmentFailureFeedbackEdit extends Component {
                     </View>
                 </ScrollView>
                 {
-                    SentencedToEmpty(this.props,['navigation','state','params','item','IsWrite'],0)
-                    == 1?<FormDeleteButton 
-                        onPress={()=>{
+                    SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'IsWrite'], 0)
+                        == 1 ? <FormDeleteButton
+                        onPress={() => {
                             // this.refs.doAlert.show();
                         }}
-                    />:null
+                    /> : null
                 }
-                
-                <View style={[{height:10}]} />
-                <FormSaveButton 
-                    onPress={()=>{
-                        console.log('selectEnterprise = ',this.props.selectEnterprise);
-                        console.log('dataArray = ',this.props.dataArray);
+
+                <View style={[{ height: 10 }]} />
+                <FormSaveButton
+                    onPress={() => {
+                        console.log('selectEnterprise = ', this.props.selectEnterprise);
+                        console.log('dataArray = ', this.props.dataArray);
                         if (this.props.selectEnterprise.EntName == '请选择') {
                             ShowToast('企业/监测站不能为空');
                             return;
@@ -371,8 +379,8 @@ export default class EquipmentFailureFeedbackEdit extends Component {
                             ShowToast('故障单元不能为空');
                             return;
                         }
-                        if (SentencedToEmpty(this.props,['dataArray','EquipmentInfoID'],'') == ''){
-                            if (SentencedToEmpty(this.props,['dataArray','IsMaster'],2) == 1) {
+                        if (SentencedToEmpty(this.props, ['dataArray', 'EquipmentInfoID'], '') == '') {
+                            if (SentencedToEmpty(this.props, ['dataArray', 'IsMaster'], 2) == 1) {
                                 ShowToast('主机名称不能为空');
                             } else {
                                 ShowToast('名称型号不能为空');
@@ -383,7 +391,7 @@ export default class EquipmentFailureFeedbackEdit extends Component {
                             ShowToast('故障现象不能为空');
                             return;
                         }
-                        this.props.dispatch(createAction('equipmentFailureFeedbackModel/addFaultFeedback')({selectPointItem:this.state.selectPointItem}))
+                        this.props.dispatch(createAction('equipmentFailureFeedbackModel/addFaultFeedback')({ selectPointItem: this.state.selectPointItem }))
                     }}
                 />
             </View>

@@ -46,39 +46,12 @@ export default class HistoryDataLandscapeChart extends Component {
             option1: {
                 tooltip: {
                     trigger: 'axis',
+                    show: true,
                     formatter: function (params) {
                         'show source';
-                        var relVal = params[0].name;
-
-                        for (var i = 0; i < params.length; i++) {
-                            var v = params[i].value;
-                            if (typeof v == 'undefined') {
-                                v = '--';
-                            } //默认值
-                            if (params[i].data) {
-                                if (params[i].data.unit) v = '' + v + params[i].data.unit;
-                                if (params[i].data.direction) v = '' + v + params[i].data.direction;
-                            }
-                            relVal +=
-                                '<div class="circle" style= "font-size: 0.7rem;display:none;margin-top:-4px"><span style="background-color:' +
-                                params[i].color +
-                                ';display:inline-block;margin-right:5px;border-radius:6px;width:6px;height:6px;"></span>' +
-                                params[i].seriesName +
-                                ' : ' +
-                                v +
-                                '</div>';
-                        }
-                        var seen = [];
-                        var paramsString = JSON.stringify(params, function (key, val) {
-                            if (val != null && typeof val == 'object') {
-                                if (seen.indexOf(val) >= 0) {
-                                    return;
-                                }
-                                seen.push(val);
-                            }
-                            return val;
-                        });
-                        window.postMessage(JSON.stringify({ types: 'ON_PRESS', payload: paramsString }));
+                        var paramsString = JSON.stringify(params);
+                        if (typeof window.postMessage == 'function') window.postMessage(JSON.stringify({ types: 'ON_PRESS', payload: paramsString }));
+                        if (window.ReactNativeWebView && typeof window.ReactNativeWebView.postMessage == 'function') window.ReactNativeWebView.postMessage(JSON.stringify({ types: 'ON_PRESS', payload: paramsString }));
                         return null;
                     }
                 },
@@ -139,6 +112,7 @@ export default class HistoryDataLandscapeChart extends Component {
             },
             ...pageState
         };
+        this.props.onRef(this);
     }
 
     componentDidMount() {

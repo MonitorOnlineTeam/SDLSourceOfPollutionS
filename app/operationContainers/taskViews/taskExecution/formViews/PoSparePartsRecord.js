@@ -39,6 +39,16 @@ class SparePartsRecord extends Component {
         };
 
         _me = this;
+        this.props.navigation.setOptions({
+            headerRight: () => <TouchableOpacity
+                onPress={() => {
+                    const formItem = SentencedToEmpty(this.props.route, ['params', 'params', 'item'], {});
+                    _me.props.dispatch(NavigationActions.navigate({ routeName: 'SparePartsForm', params: { formItem } }));
+                }}
+            >
+                <Image source={require('../../../../images/jiarecord.png')} style={{ width: 24, height: 24, marginRight: 16 }} />
+            </TouchableOpacity>
+        });
     }
 
     componentDidMount() {

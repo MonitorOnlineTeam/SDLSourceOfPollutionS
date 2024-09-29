@@ -2,8 +2,8 @@
  * @Description: 督查整改单条问题编辑
  * @LastEditors: hxf
  * @Date: 2022-11-29 11:32:39
- * @LastEditTime: 2024-02-21 15:36:03
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/workbench/SupervisionItemEditor.js
+ * @LastEditTime: 2024-09-27 10:39:06
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbench/SupervisionItemEditor.js
  */
 import React, { Component } from 'react'
 import { Modal, Platform, ScrollView, Text, TouchableOpacity, View, Image, TextInput } from 'react-native'
@@ -59,6 +59,10 @@ export default class SupervisionItemEditor extends Component {
             // litimgList: SentencedToEmpty(this.props, ['editItem', 'RectificationAttachment', 'ImgList'], [])
             litimgList: SentencedToEmpty(this.props, ['editItem', 'RectificationAttachment', 'ImgNameList'], [])
         }
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(this.props.route
+                , ['params', 'params', 'title'], '填写整改内容'),
+        });
     }
 
     uploadImageCallBack = (img, isSuccess) => {

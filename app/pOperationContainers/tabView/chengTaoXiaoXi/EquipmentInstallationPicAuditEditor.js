@@ -38,7 +38,7 @@ export default class EquipmentInstallationPicAuditEditor extends Component {
     constructor(props) {
         super(props);
         const data = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'data'], {});
+            , ['route', 'params', 'params', 'data'], {});
         let ImgNameList = SentencedToEmpty(data
             , ['AuditFilesList', 'ImgNameList'], []);
         let showImageList = [];
@@ -57,6 +57,11 @@ export default class EquipmentInstallationPicAuditEditor extends Component {
             showImageView: false,
             currentPage: -1
         };
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(this.props.route
+                , ['params', 'params', 'data', 'PointName'],
+                '安装照片不合格'),
+        });
     }
 
     isEdit = () => {
@@ -65,7 +70,7 @@ export default class EquipmentInstallationPicAuditEditor extends Component {
 
     getAuditTime = () => {
         let AuditTime = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'data', 'AuditTime'], '');
+            , ['route', 'params', 'params', 'data', 'AuditTime'], '');
         if (AuditTime == '') {
             return '';
         } else {

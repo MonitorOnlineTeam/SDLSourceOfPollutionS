@@ -824,6 +824,10 @@ class Workbench extends Component {
                     selectedProject: {}
                 })
             );
+        } else if (item.numkey == 'SuperviserRectifyList') {
+            this.props.dispatch(createAction('supervision/updateState')({ listTabIndex: 0 }));
+        } else if (item.numkey == 'KeyParameterVerificationList') {
+            this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({ listTabIndex: 0 }));
         }
         console.log('routeName = ', item.numkey);
         this.props.dispatch(NavigationActions.navigate({ routeName: item.numkey, params: item.params }));

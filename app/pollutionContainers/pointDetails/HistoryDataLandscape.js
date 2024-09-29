@@ -1,9 +1,9 @@
 /*
  * @Description: 横屏 列表和图表 入口
- * @LastEditors: outman0611 jia_anbo@163.com
+ * @LastEditors: hxf
  * @Date: 2024-06-26 09:07:50
- * @LastEditTime: 2024-09-20 16:08:21
- * @FilePath: /SDLMainProject37/app/pollutionContainers/pointDetails/HistoryDataLandscape.js
+ * @LastEditTime: 2024-09-27 15:16:27
+ * @FilePath: /SDLMainProject/app/pollutionContainers/pointDetails/HistoryDataLandscape.js
  */
 import { StatusBar, Text, TouchableOpacity, View, Image, Platform } from 'react-native';
 import React, { Component } from 'react';
@@ -55,7 +55,7 @@ export default class HistoryDataLandscape extends Component {
 
     componentWillUnmount() {
         lockToPortrait();
-        const setRightButtonState = SentencedToEmpty(this.props, ['route', 'params', 'params',  'setRightButtonState'], () => { });
+        const setRightButtonState = SentencedToEmpty(this.props, ['route', 'params', 'params', 'setRightButtonState'], () => { });
         const goToPage = SentencedToEmpty(this.props, ['route', 'params', 'params', 'goToPage'], () => { });
         setRightButtonState(this.props.chartOrList);
         goToPage({
@@ -87,9 +87,11 @@ export default class HistoryDataLandscape extends Component {
             onSureClickListener: time => {
                 this.props.dispatch(createAction('pointDetails/updateState')({ selectTime: moment(time).format('YYYY-MM-DD HH:mm:ss') }));
                 if (this.props.chartOrList == 'chart') {
-                    this.refs.chart1.wrappedInstance.refreshNewOPData(moment(time).format('YYYY-MM-DD HH:mm:ss'), this.props.selectCodeArr);
+                    // this.refs.chart1.wrappedInstance.refreshNewOPData(moment(time).format('YYYY-MM-DD HH:mm:ss'), this.props.selectCodeArr);
+                    this.chart1.refreshNewOPData(moment(time).format('YYYY-MM-DD HH:mm:ss'), this.props.selectCodeArr);
                 } else {
-                    this.refs.list1.wrappedInstance.refreshNewOPData(moment(time).format('YYYY-MM-DD HH:mm:ss'), this.props.selectCodeArr);
+                    // this.refs.list1.wrappedInstance.refreshNewOPData(moment(time).format('YYYY-MM-DD HH:mm:ss'), this.props.selectCodeArr);
+                    this.list1.refreshNewOPData(moment(time).format('YYYY-MM-DD HH:mm:ss'), this.props.selectCodeArr);
                 }
                 // this.refreshNewOPData(moment(time).format('YYYY-MM-DD HH:mm:ss'), this.props.selectCodeArr);
             }
@@ -127,9 +129,11 @@ export default class HistoryDataLandscape extends Component {
                 this.props.dispatch(createAction('pointDetails/updateState')({ selectCodeArr: selectData }));
                 // this.refreshNewOPData(this.props.selectTime, selectData);
                 if (this.props.chartOrList == 'chart') {
-                    this.refs.chart1.wrappedInstance.refreshNewOPData(this.props.selectTime, selectData);
+                    // this.refs.chart1.wrappedInstance.refreshNewOPData(this.props.selectTime, selectData);
+                    this.chart1.refreshNewOPData(this.props.selectTime, selectData);
                 } else {
-                    this.refs.list1.wrappedInstance.refreshNewOPData(this.props.selectTime, selectData);
+                    // this.refs.list1.wrappedInstance.refreshNewOPData(this.props.selectTime, selectData);
+                    this.list1.refreshNewOPData(this.props.selectTime, selectData);
                 }
             }
         };
@@ -139,15 +143,17 @@ export default class HistoryDataLandscape extends Component {
         let _this = this;
         setTimeout(() => {
             if (_this.props.chartOrList == 'chart') {
-                _this.refs.chart1.wrappedInstance.refreshData();
+                // _this.refs.chart1.wrappedInstance.refreshData();
+                _this.chart1.refreshData();
             } else {
-                _this.refs.list1.wrappedInstance.refreshData();
+                // _this.refs.list1.wrappedInstance.refreshData();
+                _this.list1.refreshData();
             }
         }, 100);
     };
 
     render() {
-        console.log('WINDOW_HEIGHT - 160 = ', WINDOW_HEIGHT - 160);
+        // console.log('WINDOW_HEIGHT - 160 = ', WINDOW_HEIGHT - 160);
         const topButtonWidth = SCREEN_WIDTH / 6;
         return (
             <View
@@ -585,19 +591,21 @@ export default class HistoryDataLandscape extends Component {
                      */
                     this.props.chartOrList == 'chart' ? (
                         <HistoryDataLandscapeChart
-                            ref="chart1"
-                            pageState={SentencedToEmpty(this.props, ['route', 'params', 'params',  'pageState'], {})}
+                            // ref="chart1"
+                            onRef={ref => (this.chart1 = ref)}
+                            pageState={SentencedToEmpty(this.props, ['route', 'params', 'params', 'pageState'], {})}
                             datatype={this.props.route.params.params.datatype}
-                            setRightButtonState={SentencedToEmpty(this.props, ['route', 'params', 'params',  'setRightButtonState'], () => { })}
-                            goToPage={SentencedToEmpty(this.props, ['route', 'params', 'params',  'goToPage'], () => { })}
+                            setRightButtonState={SentencedToEmpty(this.props, ['route', 'params', 'params', 'setRightButtonState'], () => { })}
+                            goToPage={SentencedToEmpty(this.props, ['route', 'params', 'params', 'goToPage'], () => { })}
                             dgimn={this.props.route.params.params.dgimn}
                         />
                     ) : (
                         <HistoryDataLandscapeList
-                            ref="list1"
-                            pageState={SentencedToEmpty(this.props, ['route', 'params', 'params',  'pageState'], {})}
+                            // ref="list1"
+                            onRef={ref => (this.list1 = ref)}
+                            pageState={SentencedToEmpty(this.props, ['route', 'params', 'params', 'pageState'], {})}
                             datatype={this.props.route.params.params.datatype}
-                            setRightButtonState={SentencedToEmpty(this.props, ['route', 'params', 'params',  'setRightButtonState'], () => { })}
+                            setRightButtonState={SentencedToEmpty(this.props, ['route', 'params', 'params', 'setRightButtonState'], () => { })}
                             goToPage={SentencedToEmpty(this.props, ['route', 'params', 'params', 'goToPage'], () => { })}
                             dgimn={this.props.route.params.params.dgimn}
                         />

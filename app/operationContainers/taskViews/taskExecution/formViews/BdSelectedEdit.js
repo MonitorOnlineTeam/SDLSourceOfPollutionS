@@ -2,8 +2,8 @@
  * @Description: CEMS校验测试记录 标气记录/设备 编辑页面
  * @LastEditors: hxf
  * @Date: 2022-01-04 10:52:26
- * @LastEditTime: 2024-07-01 19:11:40
- * @FilePath: /SDLMainProject37_1/app/operationContainers/taskViews/taskExecution/formViews/BdSelectedEdit.js
+ * @LastEditTime: 2024-09-24 14:30:04
+ * @FilePath: /SDLMainProject/app/operationContainers/taskViews/taskExecution/formViews/BdSelectedEdit.js
  */
 import React, { Component } from 'react'
 import { Platform, Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
@@ -37,13 +37,13 @@ export default class BdSelectedEdit extends Component {
     constructor(props) {
         super(props);
         let state = {};
-        let label = SentencedToEmpty(props.navigation, ['state', 'params', 'label'], '');
-        let itemData = SentencedToEmpty(props.navigation, ['state', 'params', 'item'], '');
+        let label = SentencedToEmpty(props.route, ['params', 'params', 'label'], '');
+        let itemData = SentencedToEmpty(props.route, ['params', 'params', 'item'], '');
         let ParamsType = 1;
         if (label == '参比方法测试设备') {
             ParamsType = 2
         }
-        SentencedToEmpty(props.navigation, ['state', 'params', 'columns'], [])
+        SentencedToEmpty(props.route, ['params', 'params', 'columns'], [])
             .map((item, key) => {
                 state[item.code] = SentencedToEmpty(itemData, [item.code], '')
             })
@@ -51,15 +51,22 @@ export default class BdSelectedEdit extends Component {
         state.ParamsType = ParamsType;
         this.state = state;
 
+        let title = '添加标准气体';
+        if (label == '参比方法测试设备') {
+            title = '添加测试设备'
+        }
+        this.props.navigation.setOptions({
+            title: title,
+        });
     }
 
     deleteConfirm = () => {
-        let itemData = SentencedToEmpty(this.props.navigation, ['state', 'params', 'item'], '');
+        let itemData = SentencedToEmpty(this.props.route, ['params', 'params', 'item'], '');
         this.props.dispatch(createAction('bdRecordModel/delAdditionItem')({ params: { ID: itemData.ID } }))
     }
 
     render() {
-        let label = SentencedToEmpty(this.props.navigation, ['state', 'params', 'label'], '');
+        let label = SentencedToEmpty(this.props.route, ['params', 'params', 'label'], '');
         let msg = '确认删除该标气吗？';
         if (label == '参比方法测试设备') {
             msg = '确认删除该测试设备吗？'
@@ -83,7 +90,7 @@ export default class BdSelectedEdit extends Component {
                 }
             ]
         };
-        const columns = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'columns'], []);
+        const columns = SentencedToEmpty(this.props, ['route', 'params', 'params', 'columns'], []);
         return (
             <View style={[{
                 flex: 1,

@@ -16,7 +16,7 @@ const ic_arrows_down = require('../../images/ic_arrows_down.png');
  * 任务转移
  */
 @connect(({ taskModel, keyParameterVerificationModel }) => ({
-    unsubmitParams:keyParameterVerificationModel.unsubmitParams,
+    unsubmitParams: keyParameterVerificationModel.unsubmitParams,
     selectTransUser: taskModel.selectTransUser,
     loading: false
 }))
@@ -43,39 +43,39 @@ export default class KeyParameterTransfer extends PureComponent {
         );
     }
 
-    cancelButton = ()=>{}
-    confirm = ()=>{
+    cancelButton = () => { }
+    confirm = () => {
         const ID = SentencedToEmpty(this.props
-            ,['navigation','state','params','id'],'');
+            , ['route', 'params', 'params', 'id'], '');
         const OperationUser = SentencedToEmpty(this.props
-            ,['selectTransUser','User_ID'],'');
+            , ['selectTransUser', 'User_ID'], '');
         let params = {
             ID, //任务主键   
             OperationUser, //人员id
             // Remark: this.state.Remark
         };
-        console.log('params = ',params);
-    this.setState({ loading: true });
-    this.props.dispatch(
-        createAction('keyParameterVerificationModel/RetransmissionKeyParameter')({
-            params,
-            callback: () => {
-                this.setState({ loading: false });
-                let newParams = {...this.props.unsubmitParams};
-                newParams.index = 1;
-                this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
-                    unsubmitParams:newParams,
-                    unsubmitResult:{status:-1},
-                }));
-                this.props.dispatch(createAction('keyParameterVerificationModel/getUnsubmitList')({}));
-                this.props.dispatch(createAction('keyParameterVerificationModel/getOperationKeyParameterCount')({}));
-                this.props.dispatch(NavigationActions.back());
-            },
-            failureCallback: () => {
-                this.setState({ loading: false });
-            }
-        })
-    );
+        console.log('params = ', params);
+        this.setState({ loading: true });
+        this.props.dispatch(
+            createAction('keyParameterVerificationModel/RetransmissionKeyParameter')({
+                params,
+                callback: () => {
+                    this.setState({ loading: false });
+                    let newParams = { ...this.props.unsubmitParams };
+                    newParams.index = 1;
+                    this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
+                        unsubmitParams: newParams,
+                        unsubmitResult: { status: -1 },
+                    }));
+                    this.props.dispatch(createAction('keyParameterVerificationModel/getUnsubmitList')({}));
+                    this.props.dispatch(createAction('keyParameterVerificationModel/getOperationKeyParameterCount')({}));
+                    this.props.dispatch(NavigationActions.back());
+                },
+                failureCallback: () => {
+                    this.setState({ loading: false });
+                }
+            })
+        );
     }
 
     render() {
@@ -109,11 +109,11 @@ export default class KeyParameterTransfer extends PureComponent {
                         </View>
                         <View>
                             <Text style={[{ marginVertical: 15 }, styles.content]}>{`${SentencedToEmpty(this.props
-                                , ['navigation','state','params','pointName'], '')}`}</Text>
+                                , ['route', 'params', 'params', 'pointName'], '')}`}</Text>
                             <Text style={[{ marginBottom: 15 }, styles.content]}>{`${SentencedToEmpty(this.props
-                                , ['navigation','state','params','entName'], '')}`}</Text>
+                                , ['route', 'params', 'params', 'entName'], '')}`}</Text>
                             <Text style={[{ marginBottom: 15 }, styles.content]}>{`${SentencedToEmpty(this.props
-                                , ['navigation','state','params','createTime'], '----/--/--')}`}</Text>
+                                , ['route', 'params', 'params', 'createTime'], '----/--/--')}`}</Text>
                         </View>
                     </View>
                     <View style={[styles.card]}>
@@ -162,15 +162,15 @@ export default class KeyParameterTransfer extends PureComponent {
                         console.log(this.state);
                         // 需转发的关键参数核查信息
                         const ID = SentencedToEmpty(this.props
-                                ,['navigation','state','params','id'],'');
+                            , ['route', 'params', 'params', 'id'], '');
                         if (ID == '') {
                             ShowToast('核查信息错误，无法转发！');
                             return;
                         }
                         const OperationUser = SentencedToEmpty(this.props
-                                ,['selectTransUser','User_ID'],'');
+                            , ['selectTransUser', 'User_ID'], '');
                         const user = getToken();
-                        console.log('user = ',user);
+                        console.log('user = ', user);
                         if (OperationUser == '') {
                             ShowToast('未选择转发人，无法转发！');
                             return;

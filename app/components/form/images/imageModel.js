@@ -1,5 +1,5 @@
 import moment from 'moment';
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 import {
   EncodeUtf8,
   createAction,
@@ -12,7 +12,7 @@ import {
   delay,
 } from '../../../utils';
 import * as authService from '../../../services/auth';
-import {Model} from '../../../dvapack';
+import { Model } from '../../../dvapack';
 import {
   loadToken,
   saveRouterConfig,
@@ -20,7 +20,7 @@ import {
   getEncryptData,
 } from '../../../dvapack/storage';
 import api from '../../../config/globalapi';
-import {UrlInfo} from '../../../config/globalconst';
+import { UrlInfo } from '../../../config/globalconst';
 
 export default Model.extend({
   namespace: 'imageModel',
@@ -29,13 +29,13 @@ export default Model.extend({
     images: [],
   },
   reducers: {
-    updateState(state, {payload}) {
-      return {...state, ...payload};
+    updateState(state, { payload }) {
+      return { ...state, ...payload };
     },
   },
   effects: {
     //反馈上传图片
-    *uploadimage({payload: {image, images = [], callback, uuid}}, {call}) {
+    *uploadimage({ payload: { image, images = [], callback, uuid } }, { call }) {
       let encryData = getEncryptData();
       const user = yield loadToken();
       let formdata = new FormData();
@@ -86,7 +86,6 @@ export default Model.extend({
         .then(response => response.json())
         .then(res => {
           if (res.StatusCode == 200) {
-            //     console.log('res = ', res);
             //     console.log('typeof = ', typeof res);
             //     const response = res.json();
             //     console.log('response = ', response);
@@ -108,7 +107,7 @@ export default Model.extend({
             //     callback(res._bodyInit, false);
 
             let images = res.Datas.map(item => {
-              return {attachID: item.split('/').pop(), url: item};
+              return { attachID: item.split('/').pop(), url: item };
             });
             callback(images, true);
           } else {
@@ -122,8 +121,8 @@ export default Model.extend({
     },
     //反馈上传图片-服务端加水印
     *uploadimageWaterMask(
-      {payload: {image, images = [], callback, uuid, imageParams = {}}},
-      {call},
+      { payload: { image, images = [], callback, uuid, imageParams = {} } },
+      { call },
     ) {
       let encryData = getEncryptData();
 
@@ -172,29 +171,30 @@ export default Model.extend({
           Accept: 'application/json, text/plain, */*',
         },
       })
+        .then(response => response.json())
         .then(res => {
           console.log('res = ', res);
-          console.log('res = ', res.json());
           console.log('res.status == 200 = ', res.status == 200);
-          if (res.ok) {
-            const response = res.json();
-            // let attachIDArr = SentencedToEmpty(JSON.parse(res._bodyInit), ['Datas'], '').split(',');
-            let attachIDArr = SentencedToEmpty(
-              response,
-              ['_j', 'Datas'],
-              '',
-            ).split(',');
-            let imageName = '';
-            nameArray = [];
-            for (let index = 0; index < images.length; index++) {
-              imageName = attachIDArr[index];
-              if (imageName.indexOf('/') != -1) {
-                nameArray = attachIDArr[index].split('/');
-                imageName = nameArray[nameArray.length - 1];
-              }
-              images[index].attachID = imageName;
-            }
-            callback(images, true);
+          if (res.StatusCode == 200 && res.IsSuccess) {
+            // const response = res.json();
+            // // let attachIDArr = SentencedToEmpty(JSON.parse(res._bodyInit), ['Datas'], '').split(',');
+            // let attachIDArr = SentencedToEmpty(
+            //   response,
+            //   ['_j', 'Datas'],
+            //   '',
+            // ).split(',');
+            // let imageName = '';
+            // nameArray = [];
+            // for (let index = 0; index < images.length; index++) {
+            //   imageName = attachIDArr[index];
+            //   if (imageName.indexOf('/') != -1) {
+            //     nameArray = attachIDArr[index].split('/');
+            //     imageName = nameArray[nameArray.length - 1];
+            //   }
+            //   images[index].attachID = imageName;
+            // }
+            let imageName = res.Datas.split('/').pop()
+            callback([{ ...file, attachID: imageName }], true);
           } else {
             callback(res._bodyInit, false);
           }
@@ -204,7 +204,7 @@ export default Model.extend({
         });
     },
     //上传文件
-    *uploadFile({payload: {file, callback, uuid}}, {call}) {
+    * uploadFile({ payload: { file, callback, uuid } }, { call }) {
       if (file && file.size > 10000000) {
         callback('文件过大，上传失败', false);
         return;
@@ -254,7 +254,7 @@ export default Model.extend({
         });
     },
     //删除反馈图片
-    *DelPhotoRelation({payload: {params}}, {update, take, call, put}) {
+    * DelPhotoRelation({ payload: { params } }, { update, take, call, put }) {
       const result = yield call(
         authService.axiosAuthPost,
         api.pollutionApi.Alarm.delPhoto,

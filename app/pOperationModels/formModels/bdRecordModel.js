@@ -14,7 +14,7 @@ export default Model.extend({
     namespace: 'bdRecordModel',
     state: {
         // 标记页面初次加载状态
-        initPage:true,
+        initPage: true,
         //填写state
         editstatus: { status: 200 },
         //列表status
@@ -56,19 +56,19 @@ export default Model.extend({
         //当前选中的
         selectItem: null,
         // 校验测试所用到的标准气体
-        bdSelectedStandardGas:[],
+        bdSelectedStandardGas: [],
         // 校验测试所用到的设备
-        bdSelectedEquipment:[],
+        bdSelectedEquipment: [],
         // 增加标准气体/测试设备 保存事件的提交状态
-        additionResult:{status:200},
+        additionResult: { status: 200 },
         // 子表删除状态
-        delSubtableStatus:{status:200},
+        delSubtableStatus: { status: 200 },
         // 删除 标准气体/测试设备项目
-        delAdditionItmeStatus:{status:200},
+        delAdditionItmeStatus: { status: 200 },
         // 校验日期
-        CurrentCheckTime:moment().format('YYYY-MM-DD HH:mm:00')
+        CurrentCheckTime: moment().format('YYYY-MM-DD HH:mm:00')
     },
-    
+
     reducers: {
         /** 保存附表信息 */
         saveItem(
@@ -159,7 +159,8 @@ export default Model.extend({
                     //提交成功
                     // 本地修改任务详情表单列表状态 9 对比校验
                     yield put(createAction('taskDetailModel/updateFormStatus')({
-                        cID: 9 }));
+                        cID: 9
+                    }));
                     //刷新任务详情的信息
                     //     if (BaseInfo.ID == null || BaseInfo.ID == '') {
                     //         yield put(createAction('excuteTask/getTaskDetailWithoutTaskDescription')({ taskID: TaskDetail.ID }));
@@ -197,7 +198,7 @@ export default Model.extend({
                 ShowToast('校验日期为必填');
                 yield update({ editstatus: { status: 200 } });
                 return;
-            } 
+            }
             const { taskDetail } = yield select(state => state.taskDetailModel);
             let user = getToken();
             //修改基础信息
@@ -220,7 +221,8 @@ export default Model.extend({
                     //提交成功
                     // 本地修改任务详情表单列表状态 9 对比校验
                     yield put(createAction('taskDetailModel/updateFormStatus')({
-                        cID: 9 }));
+                        cID: 9
+                    }));
                     //刷新任务详情的信息
                     //     if (BaseInfo.ID == null || BaseInfo.ID == '') {
                     //         yield put(createAction('excuteTask/getTaskDetailWithoutTaskDescription')({ taskID: TaskDetail.ID }));
@@ -229,7 +231,7 @@ export default Model.extend({
                     //     yield put('taskDetailModel/getTaskDetail', { params: {} });
                     // }
                     //关闭等待进度
-                    yield update({editstatus: { status: 200 }, liststatus: result });
+                    yield update({ editstatus: { status: 200 }, liststatus: result });
                     yield put(createAction('getForm')({ params: {} }));
                     yield take('getForm/@@end');
                     yield put(NavigationActions.back());
@@ -270,13 +272,13 @@ export default Model.extend({
                     let Code = data.Code; //校验项目码表
                     let newList = GetBdList(RecordList, Code); //将码表数据和已经填写的项目组合成界面需要的数据
                     if (!initPage) {
-                        newList.map((nItem,nIndex)=>{
+                        newList.map((nItem, nIndex) => {
                             // console.log('nItem = ',nItem);
-                            List.map((oItem,oIndex)=>{
+                            List.map((oItem, oIndex) => {
                                 if (nItem.ItemID == oItem.ItemID
                                     && !nItem.IsComplete
                                     && nItem.EvaluateResults != 1
-                                    && oItem.EvaluateResults == 2    
+                                    && oItem.EvaluateResults == 2
                                 ) {
                                     newList[nIndex] = oItem;
                                 }
@@ -287,10 +289,11 @@ export default Model.extend({
                     let cbTestEquipment = GetBdEquipmentCode(data.cbTestEquipment);
                     let StandardGasList = data.StandardGasList;
                     let TestEquipmentList = data.TestEquipmentList;
-                    yield update({ initPage:false, BaseInfo, MainInfo, RecordList, List:newList, standardGas, cbTestEquipment, liststatus: result,
-                        bdSelectedStandardGas:StandardGasList,
-                        bdSelectedEquipment:TestEquipmentList,
-                        CurrentCheckTime:SentencedToEmpty(MainInfo,['CurrentCheckTime'],'')==''?moment().format('YYYY-MM-DD HH:mm:00'):MainInfo.CurrentCheckTime
+                    yield update({
+                        initPage: false, BaseInfo, MainInfo, RecordList, List: newList, standardGas, cbTestEquipment, liststatus: result,
+                        bdSelectedStandardGas: StandardGasList,
+                        bdSelectedEquipment: TestEquipmentList,
+                        CurrentCheckTime: SentencedToEmpty(MainInfo, ['CurrentCheckTime'], '') == '' ? moment().format('YYYY-MM-DD HH:mm:00') : MainInfo.CurrentCheckTime
                     });
                 } else {
                     //数据获取失败
@@ -318,9 +321,9 @@ export default Model.extend({
                 //已经保存 执行删除方法 并刷新上一个页面
                 // params = { TaskID: taskDetail.ID };
                 // DType=1 删除主表与子表FormMainID不能为空 
-                params = { 
-                    DType:1,
-                    FormMainID:BaseInfo.ID
+                params = {
+                    DType: 1,
+                    FormMainID: BaseInfo.ID
                     // TaskID: taskDetail.ID 
                 };
                 // const result = yield call(formSers.DeleteBdRecord, params);
@@ -332,7 +335,8 @@ export default Model.extend({
                         //删除成功
                         // 本地修改任务详情表单列表状态 9 对比校验
                         yield put(createAction('taskDetailModel/updateFormStatus')({
-                            cID: 9, isAdd: false }));
+                            cID: 9, isAdd: false
+                        }));
                         //更新相关显示内容
                         // yield put(createAction('excuteTask/getTaskDetailWithoutTaskDescription')({ taskID: TaskDetail.ID })); //删除后刷新前一个页面
                         // yield take('excuteTask/getTaskDetailWithoutTaskDescription/@@end');
@@ -376,8 +380,8 @@ export default Model.extend({
                         //更新相关显示内容
                         // yield put(createAction('excuteTask/getTaskDetailWithoutTaskDescription')({ taskID: TaskDetail.ID })); //删除后刷新前一个页面
                         // yield take('excuteTask/getTaskDetailWithoutTaskDescription/@@end');
-                        yield update({delSubtableStatus:result});
-                        yield put('getForm',{});
+                        yield update({ delSubtableStatus: result });
+                        yield put('getForm', {});
                         yield put(NavigationActions.back());
                     } else {
                         //关闭进度条
@@ -406,7 +410,7 @@ export default Model.extend({
             },
             { call, put, update, take, select }
         ) {
-            yield update({additionResult:{status:-1}})
+            yield update({ additionResult: { status: -1 } })
             /**
              *  ID 有id是修改没有id就是添加
                 Name  标识名称或者测试项目名称
@@ -419,14 +423,14 @@ export default Model.extend({
              */
 
             const {
-                ID='',
+                ID = '',
                 ParamsType,
                 Name,
-                ConcentrationValue='',
+                ConcentrationValue = '',
                 Manufacturer,
-                EquipmentModel='',
-                TestMethod='',
-                Unit='',
+                EquipmentModel = '',
+                TestMethod = '',
+                Unit = '',
             } = payload;
             const { BaseInfo } = yield select(state => state.bdRecordModel);
             let params = {
@@ -445,25 +449,25 @@ export default Model.extend({
             const result = yield call(authService.axiosAuthPost, api.pOperationApi.OperationForm.AddorUpdateCalibrationTestParams, params);
             if (result.status == 200) {
                 if (SentencedToEmpty(result, ['data', 'IsSuccess'], false)) {
-                    yield update({additionResult:result})
+                    yield update({ additionResult: result })
                     yield put('getForm', {
-                        params: { }
+                        params: {}
                     });
                     yield put(NavigationActions.back());
                 } else {
                     //数据获取失败
-                    yield update({additionResult:result})
+                    yield update({ additionResult: result })
                     ShowToast('保存失败');
                 }
             } else {
                 //网络异常
-                yield update({additionResult:result})
+                yield update({ additionResult: result })
                 ShowToast('保存失败');
             }
         },
         *delAdditionItem(
             {
-                payload:{params}
+                payload: { params }
             },
             { call, put, update, take, select }
         ) {
@@ -477,8 +481,8 @@ export default Model.extend({
                 if (SentencedToEmpty(result, ['data', 'IsSuccess'], false)) {
                     //删除成功
                     //更新相关显示内容
-                    yield update({delAdditionItmeStatus:result});
-                    yield put('getForm',{});
+                    yield update({ delAdditionItmeStatus: result });
+                    yield put('getForm', {});
                     yield put(NavigationActions.back());
                 } else {
                     //关闭进度条

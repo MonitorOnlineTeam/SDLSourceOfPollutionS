@@ -2,8 +2,8 @@
  * @Description: 标准溶液核查记录 项目编辑
  * @LastEditors: hxf
  * @Date: 2022-01-09 18:49:22
- * @LastEditTime: 2024-07-01 19:15:58
- * @FilePath: /SDLMainProject37_1/app/operationContainers/taskViews/taskExecution/formViews/StandardSolutionCheckItemEdit.js
+ * @LastEditTime: 2024-09-25 18:54:05
+ * @FilePath: /SDLMainProject/app/operationContainers/taskViews/taskExecution/formViews/StandardSolutionCheckItemEdit.js
  */
 
 
@@ -60,7 +60,7 @@ export default class StandardSolutionCheckItemEdit extends Component {
 
     confirm = () => {
         this.props.dispatch(createAction('standardSolutionCheckModel/delSubtable')({
-            params: { ID: SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'AnalyzerID'], '') }
+            params: { ID: SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'AnalyzerID'], '') }
         }))
     }
 
@@ -68,7 +68,7 @@ export default class StandardSolutionCheckItemEdit extends Component {
         let unitList = SentencedToEmpty(this.props, ['waterCheckRecordListResult', 'data', 'Datas', 'UnitList'], [])
         let options = {
             headTitle: '提示',
-            messText: `确认删除${SentencedToEmpty(this.props.navigation, ['state', 'params', 'item', 'AnalyzerName'], '')}检查记录吗？`,
+            messText: `确认删除${SentencedToEmpty(this.props.route, ['params', 'params', 'item', 'AnalyzerName'], '')}检查记录吗？`,
             headStyle: { backgroundColor: globalcolor.headerBackgroundColor, color: '#ffffff', fontSize: 18 },
             buttons: [
                 {
@@ -233,7 +233,7 @@ export default class StandardSolutionCheckItemEdit extends Component {
                     </TouchableOpacity>
                 </ScrollView>
                 {
-                    SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'IsWrite'], 0)
+                    SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'IsWrite'], 0)
                         == 1 ? <FormSuspendDelButton
                         onPress={() => {
                             this.refs.doAlert.show();

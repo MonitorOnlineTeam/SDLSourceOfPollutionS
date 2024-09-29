@@ -134,7 +134,7 @@ export default class RepairSubmitForm extends Component {
         commitData.recordId = recordId;
         commitData.serviceId = serviceId;
 
-        this.props.navigation.state.params.callback(commitData);
+        this.props.route.params.params.callback(commitData);
         this.props.navigation.goBack();
         // this.props.dispatch(createAction('CTRepair/saveRepairRecordOpr')({}));
     };
@@ -176,7 +176,7 @@ export default class RepairSubmitForm extends Component {
     delConfirm = () => {
         let commitData = { ...this.props.dataArray[0] };
 
-        this.props.navigation.state.params.callback({ index: commitData.index });
+        this.props.route.params.params.callback({ index: commitData.index });
         this.props.navigation.goBack();
     };
 
@@ -236,18 +236,18 @@ export default class RepairSubmitForm extends Component {
                     // this.onRefresh();
                 }}
             >
-                <KeyboardAwareScrollView>
-                    <ScrollView style={[{ width: SCREEN_WIDTH }]}>
-                        <View style={[{ marginTop: 8, width: SCREEN_WIDTH - 24, alignItems: 'center', backgroundColor: globalcolor.white, marginHorizontal: 12, paddingHorizontal: 6 }]}>
-                            <FormDatePicker
-                                editable={this.isEdit()}
-                                required={true} getPickerOption={this.getMaintenanceDateOption} label={'维修日期'} timeString={moment(this.props.RepairDate).format('YYYY-MM-DD')} />
-                            <FormDatePicker
-                                editable={this.isEdit()}
-                                required={true} getPickerOption={this.getDepartureTimeOption} label={'离开时间'} timeString={moment(this.props.DepartureTime).format('YYYY-MM-DD HH:00')} />
-                        </View>
-                        <View style={[{ width: SCREEN_WIDTH - 24, alignItems: 'center', marginHorizontal: 12, paddingHorizontal: 6 }]}>
-                            {/**
+                {/* <KeyboardAwareScrollView> */}
+                <ScrollView style={[{ width: SCREEN_WIDTH }]}>
+                    <View style={[{ marginTop: 8, width: SCREEN_WIDTH - 24, alignItems: 'center', backgroundColor: globalcolor.white, marginHorizontal: 12, paddingHorizontal: 6 }]}>
+                        <FormDatePicker
+                            editable={this.isEdit()}
+                            required={true} getPickerOption={this.getMaintenanceDateOption} label={'维修日期'} timeString={moment(this.props.RepairDate).format('YYYY-MM-DD')} />
+                        <FormDatePicker
+                            editable={this.isEdit()}
+                            required={true} getPickerOption={this.getDepartureTimeOption} label={'离开时间'} timeString={moment(this.props.DepartureTime).format('YYYY-MM-DD HH:00')} />
+                    </View>
+                    <View style={[{ width: SCREEN_WIDTH - 24, alignItems: 'center', marginHorizontal: 12, paddingHorizontal: 6 }]}>
+                        {/**
                                     EquipmentInfoID  主机名称型号ID 或名称型号
                                     FaultPhenomenon 故障现象
                                     FaultTime 故障时间
@@ -258,42 +258,92 @@ export default class RepairSubmitForm extends Component {
                                     Remark 备注
                                     CauseAnalysis  原因分析
                                     */
-                                this.props.dataArray.map((item, index) => {
-                                    return (
-                                        <View key={`record${index}`} style={[{ width: SCREEN_WIDTH - 24, alignItems: 'center', marginTop: 12 }]}>
-                                            <View style={[{ width: SCREEN_WIDTH - 24, height: 32, flexDirection: 'row', justifyContent: 'space-between' }]}>
-                                                <Text style={[{ fontSize: 16 }]}>{`维修记录`}</Text>
-                                                {false ? <TouchableOpacity
-                                                    onPress={() => {
+                            this.props.dataArray.map((item, index) => {
+                                return (
+                                    <View key={`record${index}`} style={[{ width: SCREEN_WIDTH - 24, alignItems: 'center', marginTop: 12 }]}>
+                                        <View style={[{ width: SCREEN_WIDTH - 24, height: 32, flexDirection: 'row', justifyContent: 'space-between' }]}>
+                                            <Text style={[{ fontSize: 16 }]}>{`维修记录`}</Text>
+                                            {false ? <TouchableOpacity
+                                                onPress={() => {
+                                                    let newArray = [...this.props.dataArray];
+                                                    newArray.splice(index, 1);
+                                                    this.props.dispatch(createAction('CTRepair/updateState')({ dataArray: newArray }));
+                                                }}
+                                                style={{ flexDirection: 'row', flex: 1, marginTop: 1, justifyContent: 'flex-end' }}
+                                            >
+                                                <SDLText style={{ color: '#4aa0ff' }}>删除</SDLText>
+                                            </TouchableOpacity> : null}
+                                        </View>
+                                        <View style={[{ width: SCREEN_WIDTH - 24, alignItems: 'center', backgroundColor: globalcolor.white, paddingHorizontal: 6 }]}>
+                                            <FormPicker
+                                                editable={this.isEdit()}
+                                                required={true}
+                                                label="企业名称"
+                                                defaultCode={SentencedToEmpty(item, ['EntId'], '')}
+                                                option={{
+                                                    codeKey: 'EntId',
+                                                    nameKey: 'EntName',
+                                                    defaultCode: SentencedToEmpty(item, ['EntId'], ''),
+                                                    dataArr: SentencedToEmpty(this.props.repairEntAndPoint, ['data', 'Datas'], []),
+                                                    onSelectListener: callBackItem => {
                                                         let newArray = [...this.props.dataArray];
-                                                        newArray.splice(index, 1);
-                                                        this.props.dispatch(createAction('CTRepair/updateState')({ dataArray: newArray }));
-                                                    }}
-                                                    style={{ flexDirection: 'row', flex: 1, marginTop: 1, justifyContent: 'flex-end' }}
-                                                >
-                                                    <SDLText style={{ color: '#4aa0ff' }}>删除</SDLText>
-                                                </TouchableOpacity> : null}
-                                            </View>
-                                            <View style={[{ width: SCREEN_WIDTH - 24, alignItems: 'center', backgroundColor: globalcolor.white, paddingHorizontal: 6 }]}>
+                                                        newArray[index].EntId = callBackItem.EntId;
+                                                        newArray[index].EntName = callBackItem.EntName;
+
+                                                        // 清除数据
+                                                        newArray[index].PointId = '';
+                                                        newArray[index].PointName = '';
+
+                                                        newArray[index].selectedFaultUnit = null;
+                                                        newArray[index].FaultUnitID = '';
+                                                        newArray[index].FaultUnitName = '';
+                                                        newArray[index].IsMaster = '';
+
+                                                        newArray[index].selectedEquipmentInfo = null;
+                                                        newArray[index].EquipmentInfoID = '';
+                                                        newArray[index].equipmentNumber = '';
+                                                        newArray[index].EquipmentName = '';
+
+                                                        newArray[index].selectEnt = callBackItem;
+                                                        this.props.dispatch(createAction('CTRepair/updateState')({ dataArray: newArray, selectEnt: callBackItem }));
+                                                    }
+                                                }}
+                                                showText={SentencedToEmpty(item, ['EntName'], '')}
+                                                placeHolder={this.isEdit() ? "请选择" : '未选择'}
+                                            />
+                                            {item.EntId ? (
                                                 <FormPicker
                                                     editable={this.isEdit()}
                                                     required={true}
-                                                    label="企业名称"
-                                                    defaultCode={SentencedToEmpty(item, ['EntId'], '')}
+                                                    label="监测点名称"
+                                                    defaultCode={SentencedToEmpty(item, ['PointId'], [])}
                                                     option={{
-                                                        codeKey: 'EntId',
-                                                        nameKey: 'EntName',
-                                                        defaultCode: SentencedToEmpty(item, ['EntId'], ''),
-                                                        dataArr: SentencedToEmpty(this.props.repairEntAndPoint, ['data', 'Datas'], []),
+                                                        codeKey: 'PointId',
+                                                        nameKey: 'PointName',
+                                                        defaultCode: SentencedToEmpty(item, ['PointId'], []),
+                                                        dataArr: SentencedToEmpty(
+                                                            this.props.repairEntAndPoint,
+                                                            [
+                                                                'data',
+                                                                'Datas',
+                                                                SentencedToEmpty(this.props.repairEntAndPoint, ['data', 'Datas'], []).findIndex((itema, indexa) => {
+                                                                    if (itema['EntId'] == SentencedToEmpty(item, ['EntId'], '')) {
+                                                                        return true;
+                                                                    } else {
+                                                                        return false;
+                                                                    }
+                                                                }),
+                                                                'PointList'
+                                                            ],
+                                                            []
+                                                        ),
                                                         onSelectListener: callBackItem => {
-                                                            let newArray = [...this.props.dataArray];
-                                                            newArray[index].EntId = callBackItem.EntId;
-                                                            newArray[index].EntName = callBackItem.EntName;
+                                                            // let newArray = [...this.props.dataArray];
+                                                            let newArray = [].concat(this.props.dataArray);
+                                                            newArray[index].PointId = callBackItem.PointId;
+                                                            newArray[index].PointName = callBackItem.PointName;
 
                                                             // 清除数据
-                                                            newArray[index].PointId = '';
-                                                            newArray[index].PointName = '';
-
                                                             newArray[index].selectedFaultUnit = null;
                                                             newArray[index].FaultUnitID = '';
                                                             newArray[index].FaultUnitName = '';
@@ -304,208 +354,158 @@ export default class RepairSubmitForm extends Component {
                                                             newArray[index].equipmentNumber = '';
                                                             newArray[index].EquipmentName = '';
 
-                                                            newArray[index].selectEnt = callBackItem;
-                                                            this.props.dispatch(createAction('CTRepair/updateState')({ dataArray: newArray, selectEnt: callBackItem }));
-                                                        }
-                                                    }}
-                                                    showText={SentencedToEmpty(item, ['EntName'], '')}
-                                                    placeHolder={this.isEdit() ? "请选择" : '未选择'}
-                                                />
-                                                {item.EntId ? (
-                                                    <FormPicker
-                                                        editable={this.isEdit()}
-                                                        required={true}
-                                                        label="监测点名称"
-                                                        defaultCode={SentencedToEmpty(item, ['PointId'], [])}
-                                                        option={{
-                                                            codeKey: 'PointId',
-                                                            nameKey: 'PointName',
-                                                            defaultCode: SentencedToEmpty(item, ['PointId'], []),
-                                                            dataArr: SentencedToEmpty(
-                                                                this.props.repairEntAndPoint,
-                                                                [
-                                                                    'data',
-                                                                    'Datas',
-                                                                    SentencedToEmpty(this.props.repairEntAndPoint, ['data', 'Datas'], []).findIndex((itema, indexa) => {
-                                                                        if (itema['EntId'] == SentencedToEmpty(item, ['EntId'], '')) {
-                                                                            return true;
-                                                                        } else {
-                                                                            return false;
-                                                                        }
-                                                                    }),
-                                                                    'PointList'
-                                                                ],
-                                                                []
-                                                            ),
-                                                            onSelectListener: callBackItem => {
-                                                                // let newArray = [...this.props.dataArray];
-                                                                let newArray = [].concat(this.props.dataArray);
-                                                                newArray[index].PointId = callBackItem.PointId;
-                                                                newArray[index].PointName = callBackItem.PointName;
-
-                                                                // 清除数据
-                                                                newArray[index].selectedFaultUnit = null;
-                                                                newArray[index].FaultUnitID = '';
-                                                                newArray[index].FaultUnitName = '';
-                                                                newArray[index].IsMaster = '';
-
-                                                                newArray[index].selectedEquipmentInfo = null;
-                                                                newArray[index].EquipmentInfoID = '';
-                                                                newArray[index].equipmentNumber = '';
-                                                                newArray[index].EquipmentName = '';
-
-
-                                                                this.props.dispatch(createAction('CTRepair/updateState')({ dataArray: newArray }));
-                                                                this.props.dispatch(createAction('CTRepair/getRepairRecordParames')({ PointId: callBackItem.PointId }));
-
-                                                            }
-                                                        }}
-                                                        showText={SentencedToEmpty(item, ['PointName'], '')}
-                                                        placeHolder={this.isEdit() ? "请选择" : '未选择'}
-                                                    />
-                                                ) : null}
-
-                                                <FormPicker
-                                                    editable={this.isEdit()}
-                                                    required={true}
-                                                    label="故障单元"
-                                                    defaultCode={SentencedToEmpty(item, ['FaultUnitID'], '')}
-                                                    option={{
-                                                        codeKey: 'ID',
-                                                        nameKey: 'FaultUnitName',
-                                                        defaultCode: SentencedToEmpty(item, ['FaultUnitID'], ''),
-                                                        dataArr: SentencedToEmpty(this.props.repairRecordParamesResult, ['data', 'Datas', 'FaultUnitList'], []),
-                                                        onSelectListener: callBackItem => {
-                                                            // let newArray = [...this.props.dataArray];
-                                                            let newArray = [].concat(this.props.dataArray);
-                                                            tempItem = { ...newArray[index] };
-                                                            tempItem.selectedFaultUnit = callBackItem;
-                                                            tempItem.FaultUnitID = callBackItem.ID;
-                                                            tempItem.FaultUnitName = callBackItem.FaultUnitName;
-                                                            tempItem.IsMaster = callBackItem.IsMaster;
-
-
-                                                            // 清除数据
-                                                            tempItem.selectedEquipmentInfo = null;
-                                                            tempItem.EquipmentInfoID = '';
-                                                            tempItem.equipmentNumber = '';
-                                                            tempItem.EquipmentName = '';
-
-                                                            newArray[0] = tempItem;
 
                                                             this.props.dispatch(createAction('CTRepair/updateState')({ dataArray: newArray }));
+                                                            this.props.dispatch(createAction('CTRepair/getRepairRecordParames')({ PointId: callBackItem.PointId }));
+
                                                         }
                                                     }}
-                                                    showText={SentencedToEmpty(item, ['FaultUnitName'], '')}
+                                                    showText={SentencedToEmpty(item, ['PointName'], '')}
                                                     placeHolder={this.isEdit() ? "请选择" : '未选择'}
                                                 />
-                                                <FormDatePicker
-                                                    editable={this.isEdit()}
-                                                    required={true}
-                                                    getPickerOption={() => {
-                                                        return {
-                                                            defaultTime: moment(item.FaultTime).format('YYYY-MM-DD HH:mm:ss'),
-                                                            type: 'hour',
-                                                            onSureClickListener: time => {
-                                                                this.upDateItem(index, 'FaultTime', time);
+                                            ) : null}
+
+                                            <FormPicker
+                                                editable={this.isEdit()}
+                                                required={true}
+                                                label="故障单元"
+                                                defaultCode={SentencedToEmpty(item, ['FaultUnitID'], '')}
+                                                option={{
+                                                    codeKey: 'ID',
+                                                    nameKey: 'FaultUnitName',
+                                                    defaultCode: SentencedToEmpty(item, ['FaultUnitID'], ''),
+                                                    dataArr: SentencedToEmpty(this.props.repairRecordParamesResult, ['data', 'Datas', 'FaultUnitList'], []),
+                                                    onSelectListener: callBackItem => {
+                                                        // let newArray = [...this.props.dataArray];
+                                                        let newArray = [].concat(this.props.dataArray);
+                                                        tempItem = { ...newArray[index] };
+                                                        tempItem.selectedFaultUnit = callBackItem;
+                                                        tempItem.FaultUnitID = callBackItem.ID;
+                                                        tempItem.FaultUnitName = callBackItem.FaultUnitName;
+                                                        tempItem.IsMaster = callBackItem.IsMaster;
+
+
+                                                        // 清除数据
+                                                        tempItem.selectedEquipmentInfo = null;
+                                                        tempItem.EquipmentInfoID = '';
+                                                        tempItem.equipmentNumber = '';
+                                                        tempItem.EquipmentName = '';
+
+                                                        newArray[0] = tempItem;
+
+                                                        this.props.dispatch(createAction('CTRepair/updateState')({ dataArray: newArray }));
+                                                    }
+                                                }}
+                                                showText={SentencedToEmpty(item, ['FaultUnitName'], '')}
+                                                placeHolder={this.isEdit() ? "请选择" : '未选择'}
+                                            />
+                                            <FormDatePicker
+                                                editable={this.isEdit()}
+                                                required={true}
+                                                getPickerOption={() => {
+                                                    return {
+                                                        defaultTime: moment(item.FaultTime).format('YYYY-MM-DD HH:mm:ss'),
+                                                        type: 'hour',
+                                                        onSureClickListener: time => {
+                                                            this.upDateItem(index, 'FaultTime', time);
+                                                        }
+                                                    };
+                                                }}
+                                                label={'故障时间'}
+                                                timeString={moment(item.FaultTime).format('YYYY-MM-DD HH:00')}
+                                            />
+                                            {// IsMaster 1 主机  2是其他吗？
+                                                SentencedToEmpty(item, ['IsMaster'], 2) == 1 ? (
+                                                    <FormPicker
+                                                        editable={this.isEdit()}
+                                                        label="主机名称型号"
+                                                        defaultCode={SentencedToEmpty(item, ['EquipmentInfoID'], '')}
+                                                        option={{
+                                                            codeKey: 'ID',
+                                                            nameKey: 'Name',
+                                                            defaultCode: SentencedToEmpty(item, ['EquipmentInfoID'], ''),
+                                                            dataArr: SentencedToEmpty(this.props.repairRecordParamesResult, ['data', 'Datas', 'EquipmentInfoList'], []),
+                                                            onSelectListener: callBackItem => {
+                                                                let newArray = [...this.props.dataArray];
+                                                                newArray[index].selectedEquipmentInfo = callBackItem;
+                                                                newArray[index].EquipmentInfoID = callBackItem.ID;
+                                                                newArray[index].equipmentNumber = callBackItem.equipmentNumber;
+                                                                newArray[index].EquipmentName = callBackItem.Name;
+                                                                this.props.dispatch(createAction('CTRepair/updateState')({ dataArray: newArray }));
                                                             }
-                                                        };
-                                                    }}
-                                                    label={'故障时间'}
-                                                    timeString={moment(item.FaultTime).format('YYYY-MM-DD HH:00')}
-                                                />
-                                                {// IsMaster 1 主机  2是其他吗？
-                                                    SentencedToEmpty(item, ['IsMaster'], 2) == 1 ? (
-                                                        <FormPicker
-                                                            editable={this.isEdit()}
-                                                            label="主机名称型号"
-                                                            defaultCode={SentencedToEmpty(item, ['EquipmentInfoID'], '')}
-                                                            option={{
-                                                                codeKey: 'ID',
-                                                                nameKey: 'Name',
-                                                                defaultCode: SentencedToEmpty(item, ['EquipmentInfoID'], ''),
-                                                                dataArr: SentencedToEmpty(this.props.repairRecordParamesResult, ['data', 'Datas', 'EquipmentInfoList'], []),
-                                                                onSelectListener: callBackItem => {
-                                                                    let newArray = [...this.props.dataArray];
-                                                                    newArray[index].selectedEquipmentInfo = callBackItem;
-                                                                    newArray[index].EquipmentInfoID = callBackItem.ID;
-                                                                    newArray[index].equipmentNumber = callBackItem.equipmentNumber;
-                                                                    newArray[index].EquipmentName = callBackItem.Name;
-                                                                    this.props.dispatch(createAction('CTRepair/updateState')({ dataArray: newArray }));
-                                                                }
-                                                            }}
-                                                            showText={SentencedToEmpty(item, ['EquipmentName'], '')}
-                                                            placeHolder={this.isEdit() ? "请选择" : '未选择'}
-                                                        />
-                                                    ) : (
-                                                        <FormInput
-                                                            editable={this.isEdit()}
-                                                            label={'名称型号'}
-                                                            placeholder="请记录"
-                                                            keyboardType="default"
-                                                            value={item.EquipmentInfoID}
-                                                            onChangeText={text => {
-                                                                this.upDateItem(index, 'EquipmentInfoID', text);
-                                                            }}
-                                                        />
-                                                    )}
-                                                <FormTextArea
-                                                    editable={this.isEdit()}
-                                                    label="故障现象"
-                                                    areaWidth={SCREEN_WIDTH - 36}
-                                                    placeholder=""
-                                                    value={item.FaultPhenomenon}
-                                                    onChangeText={text => {
-                                                        this.upDateItem(index, 'FaultPhenomenon', text);
-                                                    }}
-                                                />
-                                                <FormTextArea
-                                                    editable={this.isEdit()}
-                                                    label="原因分析"
-                                                    areaWidth={SCREEN_WIDTH - 36}
-                                                    placeholder=""
-                                                    value={item.CauseAnalysis}
-                                                    onChangeText={text => {
-                                                        this.upDateItem(index, 'CauseAnalysis', text);
-                                                    }}
-                                                />
-                                                <FormTextArea
-                                                    editable={this.isEdit()}
-                                                    label="处理方法"
-                                                    areaWidth={SCREEN_WIDTH - 36}
-                                                    placeholder=""
-                                                    value={item.ProcessingMethod}
-                                                    onChangeText={text => {
-                                                        this.upDateItem(index, 'ProcessingMethod', text);
-                                                    }}
-                                                />
-                                                <FormTextArea
-                                                    editable={this.isEdit()}
-                                                    label="处理结果"
-                                                    areaWidth={SCREEN_WIDTH - 36}
-                                                    placeholder=""
-                                                    value={item.ProcessingResults}
-                                                    onChangeText={text => {
-                                                        this.upDateItem(index, 'ProcessingResults', text);
-                                                    }}
-                                                />
-                                                <FormTextArea
-                                                    editable={this.isEdit()}
-                                                    label="备注"
-                                                    areaWidth={SCREEN_WIDTH - 36}
-                                                    placeholder=""
-                                                    value={item.Remark}
-                                                    onChangeText={text => {
-                                                        this.upDateItem(index, 'Remark', text);
-                                                    }}
-                                                />
-                                            </View>
+                                                        }}
+                                                        showText={SentencedToEmpty(item, ['EquipmentName'], '')}
+                                                        placeHolder={this.isEdit() ? "请选择" : '未选择'}
+                                                    />
+                                                ) : (
+                                                    <FormInput
+                                                        editable={this.isEdit()}
+                                                        label={'名称型号'}
+                                                        placeholder="请记录"
+                                                        keyboardType="default"
+                                                        value={item.EquipmentInfoID}
+                                                        onChangeText={text => {
+                                                            this.upDateItem(index, 'EquipmentInfoID', text);
+                                                        }}
+                                                    />
+                                                )}
+                                            <FormTextArea
+                                                editable={this.isEdit()}
+                                                label="故障现象"
+                                                areaWidth={SCREEN_WIDTH - 36}
+                                                placeholder=""
+                                                value={item.FaultPhenomenon}
+                                                onChangeText={text => {
+                                                    this.upDateItem(index, 'FaultPhenomenon', text);
+                                                }}
+                                            />
+                                            <FormTextArea
+                                                editable={this.isEdit()}
+                                                label="原因分析"
+                                                areaWidth={SCREEN_WIDTH - 36}
+                                                placeholder=""
+                                                value={item.CauseAnalysis}
+                                                onChangeText={text => {
+                                                    this.upDateItem(index, 'CauseAnalysis', text);
+                                                }}
+                                            />
+                                            <FormTextArea
+                                                editable={this.isEdit()}
+                                                label="处理方法"
+                                                areaWidth={SCREEN_WIDTH - 36}
+                                                placeholder=""
+                                                value={item.ProcessingMethod}
+                                                onChangeText={text => {
+                                                    this.upDateItem(index, 'ProcessingMethod', text);
+                                                }}
+                                            />
+                                            <FormTextArea
+                                                editable={this.isEdit()}
+                                                label="处理结果"
+                                                areaWidth={SCREEN_WIDTH - 36}
+                                                placeholder=""
+                                                value={item.ProcessingResults}
+                                                onChangeText={text => {
+                                                    this.upDateItem(index, 'ProcessingResults', text);
+                                                }}
+                                            />
+                                            <FormTextArea
+                                                editable={this.isEdit()}
+                                                label="备注"
+                                                areaWidth={SCREEN_WIDTH - 36}
+                                                placeholder=""
+                                                value={item.Remark}
+                                                onChangeText={text => {
+                                                    this.upDateItem(index, 'Remark', text);
+                                                }}
+                                            />
                                         </View>
-                                    );
-                                })}
-                        </View>
-                    </ScrollView>
-                </KeyboardAwareScrollView>
+                                    </View>
+                                );
+                            })}
+                    </View>
+                </ScrollView>
+                {/* </KeyboardAwareScrollView> */}
                 {this.isEdit() ? < Button
                     text={'添加'}
                     style={{

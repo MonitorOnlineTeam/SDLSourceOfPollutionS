@@ -2,7 +2,7 @@
  * @Description: 协议展示页
  * @LastEditors: hxf
  * @Date: 2022-06-23 12:01:04
- * @LastEditTime: 2022-06-23 15:14:10
+ * @LastEditTime: 2024-09-27 11:38:40
  * @FilePath: /SDLMainProject/app/components/page/login/AgreementView.js
  */
 import React, { Component } from 'react'
@@ -11,8 +11,8 @@ import { connect } from 'react-redux';
 import { createAction, createNavigationOptions } from '../../../utils';
 import { SCREEN_WIDTH } from '../../SDLPicker/constant/globalsize';
 
-@connect(({ login })=>({
-    IsAgree:login.IsAgree,
+@connect(({ login }) => ({
+    IsAgree: login.IsAgree,
 }))
 export default class AgreementView extends Component {
     static navigationOptions = createNavigationOptions({
@@ -23,9 +23,9 @@ export default class AgreementView extends Component {
     render() {
         return (
             <ScrollView>
-                <View style={{width:SCREEN_WIDTH,backgroundColor:'white',alignItems:'center'}}>
-                    <Text style={{fontSize:18,color:'#333',marginVertical:10}}>{'用户监测数据许可协议'}</Text>
-                    <Text style={{fontSize:15,color:'#666',width:SCREEN_WIDTH-20}}>{`甲方：用户
+                <View style={{ width: SCREEN_WIDTH, backgroundColor: 'white', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 18, color: '#333', marginVertical: 10 }}>{'用户监测数据许可协议'}</Text>
+                    <Text style={{ fontSize: 15, color: '#666', width: SCREEN_WIDTH - 20 }}>{`甲方：用户
 乙方：北京雪迪龙科技股份有限公司
 
 根据本协议，甲方同意授予乙方基于智能环境监测设备运行和服务而监测、传输与使用甲方数据信息的权利。现就具体事项约定如下：
@@ -64,21 +64,21 @@ export default class AgreementView extends Component {
                 <View style={{
                     height: 40,
                     marginVertical: 20,
-                    flexDirection:'row',
-                    width:SCREEN_WIDTH,
-                    justifyContent:'center',
-                    alignItems:'center'
+                    flexDirection: 'row',
+                    width: SCREEN_WIDTH,
+                    justifyContent: 'center',
+                    alignItems: 'center'
                 }}>
                     <TouchableOpacity
                         style={styles.checkStyleDetail}
                         onPress={() => {
                             // 动态更新组件内State记录记住我
-                            this.props.dispatch(createAction('login/updateState')({IsAgree:!this.props.IsAgree}))
+                            this.props.dispatch(createAction('login/updateState')({ IsAgree: !this.props.IsAgree }))
                         }}
                     >
                         <Image source={this.props.IsAgree ? require('../../../images/login_checkbox_on.png') : require('../../../images/login_checkbox_off.png')} style={{ width: 21, height: 21 }} />
                     </TouchableOpacity>
-                    <View style={{flexDirection:'row',}}>
+                    <View style={{ flexDirection: 'row', }}>
                         <Text style={{ fontSize: 14, color: '#666', marginLeft: 3 }}>请勾选阅读并接受</Text>
                         <View
                             style={styles.checkStyleDetail}

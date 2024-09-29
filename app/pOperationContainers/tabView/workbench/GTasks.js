@@ -36,6 +36,18 @@ export default class GTasks extends Component {
             giveUpTask: null,// 弃领任务信息
             revokeTask: null, // 撤销任务
         };
+
+        this.props.navigation.setOptions({
+            headerRight: () => <TouchableOpacity
+                onPress={() => {
+                    this.changeHeaderRight();
+                    this.setState({ editState: !this.state.editState, selectArr: [] });
+                }}
+            >
+                {/* <Image style={{ height: 20, width: 20, marginHorizontal: 16 }} source={require('../../../images/icon_transmit.png')} /> */}
+                <SDLText style={{ color: '#fff', marginHorizontal: 16 }}>{this.state.editState ? '取消' : '转发'}</SDLText>
+            </TouchableOpacity>
+        });
     }
 
     componentDidMount() {
@@ -98,7 +110,7 @@ export default class GTasks extends Component {
     excuteTask = item => {
         //代办任务没有任务单号
         this.props.dispatch(createAction('taskModel/updateState')({ TaskID: item.TaskID, DGIMN: item.DGIMN }));
-        this.props.dispatch(createAction('taskDetailModel/updateState')({ status: -1 }));
+        this.props.dispatch(createAction('taskDetailModel/updateState')({ tabIndex: 0, status: -1 }));
         this.props.dispatch(
             NavigationActions.navigate({
                 routeName: 'TaskDetail',

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Platform, ScrollView, Text, View, Image, TouchableOpacity } from 'react-native';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
+// import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { connect } from 'react-redux';
 import { AlertDialog, SimpleLoadingView, StatusPage } from '../../../components';
 import { WINDOW_HEIGHT } from '../../../components/SDLPicker/constant/globalsize';
@@ -10,9 +10,11 @@ import MyTabBar from '../../../operationContainers/taskViews/taskExecution/compo
 import { createNavigationOptions, SentencedToEmpty, NavigationActions, createAction, ShowToast } from '../../../utils';
 import { getStatusObject } from './ChengTaoGTask';
 import color from '../../../components/StatusPages/color';
+import SDLTabButton from '../../../components/SDLTabButton';
 
 @connect(({ CTModel }) => ({
-    OneServiceDispatchResult: CTModel.OneServiceDispatchResult
+    OneServiceDispatchResult: CTModel.OneServiceDispatchResult,
+    ctTaskDetailIndex: CTModel.ctTaskDetailIndex,
 }))
 export default class ChengTaoTaskDetail extends Component {
     // static navigationOptions = ({ navigation }) => {
@@ -28,7 +30,7 @@ export default class ChengTaoTaskDetail extends Component {
     }
 
     getBaseInfo = () => {
-        const content = SentencedToEmpty(this.props, ['route','params','params'], null);
+        const content = SentencedToEmpty(this.props, ['route', 'params', 'params'], null);
         if (content) {
             return content;
         } else {
@@ -62,7 +64,47 @@ export default class ChengTaoTaskDetail extends Component {
                         // this.onRefresh();
                     }}
                 >
-                    <ScrollableTabView
+                    <View style={[{
+                        flexDirection: 'row', height: 44
+                        , width: SCREEN_WIDTH, alignItems: 'center'
+                        , justifyContent: 'space-between'
+                        , backgroundColor: 'white', marginBottom: 5
+                    }]}>
+                        <SDLTabButton
+                            topButtonWidth={SCREEN_WIDTH / 3}
+                            selected={this.props.ctTaskDetailIndex == 0}
+                            label='基本信息'
+                            onPress={() => {
+                                this.props.dispatch(createAction('CTModel/updateState')({ ctTaskDetailIndex: 0 }));
+                            }}
+                        />
+                        <SDLTabButton
+                            topButtonWidth={SCREEN_WIDTH / 3}
+                            selected={this.props.ctTaskDetailIndex == 1}
+                            label='服务内容'
+                            onPress={() => {
+                                this.props.dispatch(createAction('CTModel/updateState')({ ctTaskDetailIndex: 1 }));
+                            }}
+                        />
+                        <SDLTabButton
+                            topButtonWidth={SCREEN_WIDTH / 3}
+                            selected={this.props.ctTaskDetailIndex == 2}
+                            label='服务统计'
+                            onPress={() => {
+                                this.props.dispatch(createAction('CTModel/updateState')({ ctTaskDetailIndex: 2 }));
+                            }}
+                        />
+                    </View>
+                    {
+                        this.props.ctTaskDetailIndex == 0
+                            ? <BaseInfo {...this.getBaseInfo()} tabLabel="基本信息" listKey="a" key="1" />
+                            : this.props.ctTaskDetailIndex == 1
+                                ? <ServiceContent style={[{ width: SCREEN_WIDTH, flex: 1 }]} tabLabel="服务内容" listKey="b" key="2"></ServiceContent>
+                                : this.props.ctTaskDetailIndex == 2
+                                    ? <ServiceStatistics />
+                                    : <BaseInfo {...this.getBaseInfo()} tabLabel="基本信息" listKey="a" key="1" />
+                    }
+                    {/* <ScrollableTabView
                         ref={ref => (this.scrollableTabView = ref)}
                         onChangeTab={obj => {
                             this.onChange(obj.i);
@@ -90,7 +132,7 @@ export default class ChengTaoTaskDetail extends Component {
                         <BaseInfo {...this.getBaseInfo()} tabLabel="基本信息" listKey="a" key="1" />
                         <ServiceContent style={[{ width: SCREEN_WIDTH, flex: 1 }]} tabLabel="服务内容" listKey="b" key="2"></ServiceContent>
                         <ServiceStatistics />
-                    </ScrollableTabView>
+                    </ScrollableTabView> */}
                 </StatusPage>
             </View>
         );

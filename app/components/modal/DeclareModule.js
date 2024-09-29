@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-11-17 13:47:49
- * @LastEditTime: 2024-09-05 09:22:54
+ * @LastEditTime: 2024-09-25 14:41:33
  * @FilePath: /SDLMainProject/app/components/modal/DeclareModule.js
  */
 import React, { Component } from 'react';
@@ -57,7 +57,7 @@ export default class DeclareModule extends Component {
         } else {
             return <Image
                 source={require('../../images/xinxi.png')}
-                style={[{ width: 20, height: 20 }]}
+                style={[{ width: 20, height: 20, tintColor: typeof this.props.iconColor != 'undefined' && this.props.iconColor ? this.props.iconColor : 'white' }]}
             />
             // return (
             //     <Icon

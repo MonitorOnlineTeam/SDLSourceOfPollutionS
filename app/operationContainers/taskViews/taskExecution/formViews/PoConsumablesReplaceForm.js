@@ -36,19 +36,19 @@ class PoConsumablesReplaceForm extends Component {
         super(props);
         const user = getToken();
         this.state = {
-            PartType: SentencedToEmpty(this, ['props', 'navigation', 'state', 'params', 'item', 'PartType'], SentencedToEmpty(user, ['IsShowTask'], false) ? 2 : 1),// 供货类型 字段名称PartType   下拉列表 1 我公司供货 2 甲方供货  默认1
-            PartName: this.getPartName(SentencedToEmpty(this, ['props', 'navigation', 'state', 'params', 'item', 'PartType'], 1)),// 供货类型显示字段
-            chooseTime: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.ReplaceDate : moment().format('YYYY-MM-DD'),
-            AnotherTimeOfChange: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.AnotherTimeOfChange : moment().format('YYYY-MM-DD'), //下一次更换时间
-            consumablesName: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.ConsumablesName : '', //易耗品名称
-            modelH: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.Model : '', //型号规格
-            unit: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.Unit : '', //单位
-            num: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.Num : '', //数量
-            CisNum: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.CisNum : '', //CIS申请单据号
-            reason: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.Remark : '', //更换原因
+            PartType: SentencedToEmpty(this, ['props', 'route', 'params', 'params', 'item', 'PartType'], SentencedToEmpty(user, ['IsShowTask'], false) ? 2 : 1),// 供货类型 字段名称PartType   下拉列表 1 我公司供货 2 甲方供货  默认1
+            PartName: this.getPartName(SentencedToEmpty(this, ['props', 'route', 'params', 'params', 'item', 'PartType'], 1)),// 供货类型显示字段
+            chooseTime: this.props.route.params.params.item ? this.props.route.params.params.item.ReplaceDate : moment().format('YYYY-MM-DD'),
+            AnotherTimeOfChange: this.props.route.params.params.item ? this.props.route.params.params.item.AnotherTimeOfChange : moment().format('YYYY-MM-DD'), //下一次更换时间
+            consumablesName: this.props.route.params.params.item ? this.props.route.params.params.item.ConsumablesName : '', //易耗品名称
+            modelH: this.props.route.params.params.item ? this.props.route.params.params.item.Model : '', //型号规格
+            unit: this.props.route.params.params.item ? this.props.route.params.params.item.Unit : '', //单位
+            num: this.props.route.params.params.item ? this.props.route.params.params.item.Num : '', //数量
+            CisNum: this.props.route.params.params.item ? this.props.route.params.params.item.CisNum : '', //CIS申请单据号
+            reason: this.props.route.params.params.item ? this.props.route.params.params.item.Remark : '', //更换原因
             // selectedStorehouse: this.props.navigation.state.params.item ? { StorehouseName: this.props.navigation.state.params.item.StorehouseName, ID: this.props.navigation.state.params.item.StorehouseId } : null, // 选中的仓库
-            selectedStorehouse: this.props.navigation.state.params.item ? { 'dbo.T_Bas_Storehouse.StorehouseName': this.props.navigation.state.params.item.StorehouseName, 'dbo.T_Bas_Storehouse.ID': this.props.navigation.state.params.item.StorehouseId } : null, // 选中的仓库
-            PartCode: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.PartCode : '' // 存货编码
+            selectedStorehouse: this.props.route.params.params.item ? { 'dbo.T_Bas_Storehouse.StorehouseName': this.props.route.params.params.item.StorehouseName, 'dbo.T_Bas_Storehouse.ID': this.props.route.params.params.item.StorehouseId } : null, // 选中的仓库
+            PartCode: this.props.route.params.params.item ? this.props.route.params.params.item.PartCode : '' // 存货编码
         };
         _me = this;
     }
@@ -168,9 +168,10 @@ class PoConsumablesReplaceForm extends Component {
 
     getSelectOption = () => {
         let defaultCode = '';
-        if (this.props.navigation.state.params.item) {
+        if (this.props.route.params.params.item) {
             this.props.nameCode.map((item, key) => {
-                if (item.PartName == this.props.navigation.state.params.item.ConsumablesName && item.Code == this.props.navigation.state.params.item.Model) {
+                if (item.PartName == this.props.route.params.params.item.ConsumablesName
+                    && item.Code == this.props.route.params.params.item.Model) {
                     defaultCode = item.ID;
                 }
             });
@@ -526,15 +527,15 @@ class PoConsumablesReplaceForm extends Component {
 
                         <View style={[{ flex: 1 }]} />
                     </ScrollView>
-                    {this.props.navigation.state.params.item ? (
+                    {this.props.route.params.params.item ? (
                         <TouchableOpacity
                             style={[styles.button, { backgroundColor: globalcolor.orange }, { marginTop: 10 }]}
                             onPress={() => {
                                 this.props.dispatch(createAction('taskModel/updateState')({ editstatus: { status: -1 } }));
                                 let lst = this.props.Record.RecordList;
                                 const user = getToken();
-                                lst.splice(this.props.navigation.state.params.key, 1);
-                                const { ID } = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'formItem'], {});
+                                lst.splice(this.props.route.params.params.key, 1);
+                                const { ID } = SentencedToEmpty(this.props, ['route', 'params', 'params', 'formItem'], {});
                                 _me.props.dispatch(
                                     createAction('taskModel/commitConsumablesReplace')({
                                         params: {
@@ -592,8 +593,8 @@ class PoConsumablesReplaceForm extends Component {
                                 }
                                 let lst = this.props.Record.RecordList;
                                 const user = getToken();
-                                this.props.navigation.state.params.item
-                                    ? (lst[this.props.navigation.state.params.key] = {
+                                this.props.route.params.params.item
+                                    ? (lst[this.props.route.params.params.key] = {
                                         PartType: this.state.PartType,
                                         StorehouseId: this.state.PartType == 1 ? this.state.selectedStorehouse['dbo.T_Bas_Storehouse.ID'] : '',
                                         StorehouseName: this.state.PartType == 1 ? this.state.selectedStorehouse['dbo.T_Bas_Storehouse.StorehouseName'] : '',
@@ -621,7 +622,7 @@ class PoConsumablesReplaceForm extends Component {
                                         Remark: this.state.reason,
                                         AnotherTimeOfChange: moment(this.state.AnotherTimeOfChange).format('YYYY-MM-DD 00:00:00')
                                     });
-                                const { ID } = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'formItem'], {});
+                                const { ID } = SentencedToEmpty(this.props, ['route', 'params', 'params', 'formItem'], {});
                                 this.props.dispatch(createAction('taskModel/updateState')({ editstatus: { status: -2 } }));
                                 this.props.dispatch(
                                     createAction('taskModel/commitConsumablesReplace')({

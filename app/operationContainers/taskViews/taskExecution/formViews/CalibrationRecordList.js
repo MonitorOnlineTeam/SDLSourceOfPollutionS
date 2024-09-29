@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Platform, FlatList, TouchableOpacity, Image, DeviceEventEmitter } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 import globalcolor from '../../../../config/globalcolor';
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../../../../config/globalsize';
@@ -53,7 +52,7 @@ class CalibrationRecordList extends Component {
     }
 
     _deleteForm = () => {
-        if (this.props.navigation.state.params.TypeName == 'JzHistoryList') {
+        if (this.props.route.params.params.TypeName == 'JzHistoryList') {
             this.props.dispatch(
                 createAction('calibrationRecord/checkDelForm')({
                     callback: () => {
@@ -70,15 +69,21 @@ class CalibrationRecordList extends Component {
     };
 
     _renderItem = ({ item, index }) => {
-        if (this.props.navigation.state.params.TypeName == 'JzHistoryList') {
+        if (this.props.route.params.params.TypeName == 'JzHistoryList') {
             // } else if (this.props.navigation.state.params.ID == 4) {
             // if ((item.LdCalibrationIsOk&&item.LdCalibrationIsOk != '')||(item.LcCalibrationIsOk&&item.LcCalibrationIsOk != '')) {
             return (
                 <TouchableOpacity
                     onPress={() => {
                         // this.props.dispatch(NavigationActions.navigate({routeName:'StandardGasReplacementRecord',params:{index}}));
+                        // this.props.dispatch(
+                        //     StackActions.push({
+                        //         routeName: 'CalibrationRecordEdit',
+                        //         params: { index, item }
+                        //     })
+                        // );
                         this.props.dispatch(
-                            StackActions.push({
+                            NavigationActions.navigate({
                                 routeName: 'CalibrationRecordEdit',
                                 params: { index, item }
                             })
@@ -204,6 +209,8 @@ class CalibrationRecordList extends Component {
     };
 
     getPageStatus = () => {
+        console.log('JzConfigItemResult = ', this.props.JzConfigItemResult);
+        console.log('liststatus = ', this.props.liststatus);
         let configItemsStatus = SentencedToEmpty(this.props, ['JzConfigItemResult', 'status'], 1000);
         if (configItemsStatus != 200) {
             return configItemsStatus;
@@ -427,22 +434,6 @@ class CalibrationRecordList extends Component {
                             </View>
                         </MoreSelectTouchable>
                     )}
-
-                    {/* <TouchableOpacity 
-                    style={[{ marginBottom: 8 }]}
-                >
-                    <View
-                        style={{width:SCREEN_WIDTH-16
-                            , justifyContent:'center'
-                            , alignItems:'center', height:45
-                            , backgroundColor:'white', borderRadius:4
-                        }}
-                    >
-                        <Text 
-                            style={{fontSize: 15, color: globalcolor.taskImfoLabel}}
-                        >{'配置分析仪'}</Text>
-                    </View>
-                </TouchableOpacity> */}
                     <FlatList data={this.props.calibrationRecordList} keyExtractor={this._keyExtractor} renderItem={this._renderItem} />
                     <TouchableOpacity
                         style={[{ position: 'absolute', right: 18, bottom: 128 }]}

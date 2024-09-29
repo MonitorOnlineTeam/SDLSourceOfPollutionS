@@ -2,8 +2,8 @@
  * @Description: 废水 校准记录表 子表编辑器
  * @LastEditors: hxf
  * @Date: 2022-01-06 16:50:22
- * @LastEditTime: 2023-07-17 14:21:38
- * @FilePath: /SDLMainProject36/app/operationContainers/taskViews/taskExecution/formViews/WaterCalibrationItemEdit.js
+ * @LastEditTime: 2024-09-25 18:37:38
+ * @FilePath: /SDLMainProject/app/operationContainers/taskViews/taskExecution/formViews/WaterCalibrationItemEdit.js
  */
 
 import moment from 'moment';
@@ -40,7 +40,10 @@ export default class WaterCalibrationItemEdit extends Component {
     };
 
     componentDidMount() {
-        const TypeID = SentencedToEmpty(this.props.navigation, ['state', 'params', 'item', 'AnalyzerID'], '');
+        this.props.navigation.setOptions({
+            title: `${SentencedToEmpty(this.props.route, ['params', 'params', 'item', 'AnalyzerName'], '')}校准记录表`
+        });
+        const TypeID = SentencedToEmpty(this.props.route, ['params', 'params', 'item', 'AnalyzerID'], '');
         this.props.dispatch(
             createAction('waterCalibrationFormModel/getWaterCheckRecordList')({
                 TypeID
@@ -67,7 +70,7 @@ export default class WaterCalibrationItemEdit extends Component {
     confirm = () => {
         this.props.dispatch(
             createAction('waterCalibrationFormModel/delSubtable')({
-                params: { ID: SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'AnalyzerID'], '') }
+                params: { ID: SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'AnalyzerID'], '') }
             })
         );
     };
@@ -75,7 +78,7 @@ export default class WaterCalibrationItemEdit extends Component {
     render() {
         let options = {
             headTitle: '提示',
-            messText: `确认删除${SentencedToEmpty(this.props.navigation, ['state', 'params', 'item', 'AnalyzerName'], '')}校准记录表吗？`,
+            messText: `确认删除${SentencedToEmpty(this.props.route, ['params', 'params', 'item', 'AnalyzerName'], '')}校准记录表吗？`,
             headStyle: { backgroundColor: globalcolor.headerBackgroundColor, color: '#ffffff', fontSize: 18 },
             buttons: [
                 {
@@ -270,7 +273,7 @@ export default class WaterCalibrationItemEdit extends Component {
                         </View>
                     </TouchableOpacity>
                 </ScrollView>
-                {SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'IsWrite'], 0) == 1 ? (
+                {SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'IsWrite'], 0) == 1 ? (
                     <FormSuspendDelButton
                         onPress={() => {
                             this.refs.doAlert.show();

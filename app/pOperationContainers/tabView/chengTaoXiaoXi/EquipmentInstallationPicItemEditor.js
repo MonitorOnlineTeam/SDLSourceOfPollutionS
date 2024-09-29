@@ -2,8 +2,8 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-09-20 14:55:47
- * @LastEditTime: 2024-07-10 10:11:25
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/EquipmentInstallationPicItemEditor.js
+ * @LastEditTime: 2024-09-26 13:42:35
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/EquipmentInstallationPicItemEditor.js
  */
 import React, { Component } from 'react';
 import { Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -28,7 +28,7 @@ export default class EquipmentInstallationPicItemEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            InstallationPhoto: SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'InstallationPhoto'], new Date().getTime()),
+            InstallationPhoto: SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'InstallationPhoto'], new Date().getTime()),
             // InstallationPhoto: this.getImageUUid(),
             Remark: '',
             images: [],
@@ -36,6 +36,9 @@ export default class EquipmentInstallationPicItemEditor extends Component {
             // normal  delete
             callbackType: 'normal',
         };
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(this.props.route, ['params', 'params', 'title'], '跳转时未提供标题信息')
+        });
     }
 
     // getImageUUid = () => {
@@ -48,7 +51,7 @@ export default class EquipmentInstallationPicItemEditor extends Component {
     // }
 
     componentDidMount() {
-        let params = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], {});
+        let params = SentencedToEmpty(this.props, ['route', 'params', 'params'], {});
         let newImages = [];
         SentencedToEmpty(params, ['item', 'InstallationPhotoList', 'ImgList'], []).map(Image => {
             newImages.push({
@@ -61,7 +64,7 @@ export default class EquipmentInstallationPicItemEditor extends Component {
 
     canDelete = () => {
         // 1 已上传     2 待上传    其他 未上传
-        let item = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item'], {});
+        let item = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
         if (item.uploadStatus == 1) {
             return { able: true, _type: 1 };
         } else if (item.uploadStatus == 2) {
@@ -72,7 +75,7 @@ export default class EquipmentInstallationPicItemEditor extends Component {
     }
 
     componentWillUnmount() {
-        let params = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], {});
+        let params = SentencedToEmpty(this.props, ['route', 'params', 'params'], {});
         let callbackData = { ...params.item };
         callbackData.InstallationPhoto = this.state.InstallationPhoto;
         if (SentencedToEmpty(this.state, ['callbackImages'], []).length > 0) {
@@ -105,7 +108,7 @@ export default class EquipmentInstallationPicItemEditor extends Component {
 
     isEdit = () => {
         const TaskStatus = SentencedToEmpty(this.props, ['chengTaoTaskDetailData', 'TaskStatus'], -1);
-        const params = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], {});
+        const params = SentencedToEmpty(this.props, ['route', 'params', 'params'], {});
         const { origin = 'task' } = params;
         if (origin == 'audit') {
             return true;
@@ -123,7 +126,7 @@ export default class EquipmentInstallationPicItemEditor extends Component {
                     ShowToast('照片是必传信息！');
                     return;
                 }
-                let params = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], {});
+                let params = SentencedToEmpty(this.props, ['route', 'params', 'params'], {});
                 // 0 未上传 1 已上传 2 待上传
                 // params.callback({ ...params.item, Remark: this.state.Remark, uploadStatus: 0 });
                 let callbackData = { ...params.item };
@@ -183,7 +186,7 @@ export default class EquipmentInstallationPicItemEditor extends Component {
             <TouchableOpacity
                 onPress={() => {
                     const deleteState = this.canDelete();
-                    let params = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], {});
+                    let params = SentencedToEmpty(this.props, ['route', 'params', 'params'], {});
 
                     if (deleteState._type == 1
                         || (deleteState._type == 2 && !SentencedToEmpty(params, ['item', 'newImageItem'], false))
@@ -255,7 +258,7 @@ export default class EquipmentInstallationPicItemEditor extends Component {
                         ShowToast('照片是必传信息！');
                         return;
                     }
-                    let params = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], {});
+                    let params = SentencedToEmpty(this.props, ['route', 'params', 'params'], {});
                     // 0 未上传 1 已上传 2 待上传
                     // params.callback({ ...params.item, Remark: this.state.Remark, uploadStatus: 0 });
                     let callbackData = { ...params.item };

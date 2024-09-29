@@ -2,8 +2,8 @@
  * @Description: 成套待办
  * @LastEditors: hxf
  * @Date: 2023-09-14 13:55:06
- * @LastEditTime: 2024-07-11 10:33:05
- * @FilePath: /SDLMainProject37/app/pOperationModels/CTModel.js
+ * @LastEditTime: 2024-09-26 09:57:20
+ * @FilePath: /SDLMainProject/app/pOperationModels/CTModel.js
  */
 import { SentencedToEmpty, ShowToast, NavigationActions, EncodeUtf8, createAction, CloseToast } from '../utils';
 import * as authService from '../services/auth';
@@ -18,6 +18,7 @@ import { Alert } from 'react-native';
 export default Model.extend({
     namespace: 'CTModel',
     state: {
+        ctTaskDetailIndex: 0, // 成套详情tab索引
         dispatchId: '',
         ProjectID: '',
         serviceDispatchData: [],

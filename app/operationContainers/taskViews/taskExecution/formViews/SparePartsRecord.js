@@ -37,6 +37,15 @@ class SparePartsRecord extends Component {
         };
 
         _me = this;
+        this.props.navigation.setOptions({
+            headerRight: () => <TouchableOpacity
+                onPress={() => {
+                    _me.props.dispatch(NavigationActions.navigate({ routeName: 'SparePartsForm' }));
+                }}
+            >
+                <Image source={require('../../../../images/jiarecord.png')} style={{ width: 24, height: 24, marginRight: 16 }} />
+            </TouchableOpacity>
+        });
     }
 
     componentDidMount() {
@@ -177,7 +186,7 @@ class SparePartsRecord extends Component {
             </View>
         );
     };
-    cancelButton = () => {};
+    cancelButton = () => { };
     confirm = () => {
         // this.refs.doAlert2.hideModal()
         // Alert.alert(

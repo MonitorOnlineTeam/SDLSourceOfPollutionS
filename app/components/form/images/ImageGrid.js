@@ -9,7 +9,7 @@ import ImageUploadTouchNetCore from './ImageUploadTouchNetCore';
 import ImageDeleteTouch from './ImageDeleteTouch';
 import { getEncryptData, getRootUrl } from '../../../dvapack/storage';
 import { IMAGE_DEBUG, ImageUrlPrefix, UrlInfo } from '../../../config';
-// import ImageViewer from 'react-native-image-zoom-viewer';
+import ImageViewer from 'react-native-image-zoom-viewer';
 import { SDLText } from '../..';
 import ImageDeleteTouchNetCore from './ImageDeleteTouchNetCore';
 import { SentencedToEmpty } from '../../../utils';
@@ -423,7 +423,7 @@ export default class ImageGrid extends PureComponent {
                 <View style={[{ flexDirection: 'row', width: '100%', backgroundColor: '#ffffff', alignItems: 'center', flexWrap: 'wrap' }, style, {}]}>
                     {rtnVal}
                     <Modal visible={this.state.modalVisible} transparent={true} onRequestClose={() => this.setState({ modalVisible: false })}>
-                        {/* <ImageViewer
+                        <ImageViewer
                             saveToLocalByLongPress={false}
                             menuContext={{ saveToLocal: '保存图片', cancel: '取消' }}
                             onClick={() => {
@@ -439,7 +439,7 @@ export default class ImageGrid extends PureComponent {
                             imageUrls={isMultiplePictures ? this.state.largImage : this.state.showUrls}
                             // index={0}
                             index={isMultiplePictures ? this.state.index : 0}
-                        /> */}
+                        />
                     </Modal>
                 </View>
             );

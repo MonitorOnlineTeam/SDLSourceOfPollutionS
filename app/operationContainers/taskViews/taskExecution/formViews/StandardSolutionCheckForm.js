@@ -35,7 +35,7 @@ export default class StandardSolutionCheckForm extends Component {
     }
 
     onRefresh = () => {
-        const { ID } = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item'], {});
+        const { ID } = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
         this.props.dispatch(createAction('standardSolutionCheckModel/updateState')({
             waterCheckRecordListResult: { status: -1 },
             innerList: [],

@@ -2,8 +2,8 @@
  * @Description: 验收服务报告
  * @LastEditors: hxf
  * @Date: 2023-09-18 09:27:53
- * @LastEditTime: 2024-05-07 15:52:30
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/AcceptanceServiceReportSingle.js
+ * @LastEditTime: 2024-09-26 10:19:49
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/AcceptanceServiceReportSingle.js
  */
 import React, { Component } from 'react'
 import { Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -35,7 +35,7 @@ export default class AcceptanceServiceReportSingle extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TimeS: SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'AttachmentId'], new Date().getTime()),
+            TimeS: SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'AttachmentId'], new Date().getTime()),
             remark: '',
             images: [],
             nativeStatus: 200

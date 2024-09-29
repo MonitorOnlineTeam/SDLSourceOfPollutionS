@@ -1,8 +1,8 @@
 /*
  * @Description: 
- * @LastEditors: outman0611 jia_anbo@163.com
+ * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2024-09-20 16:11:48
+ * @LastEditTime: 2024-09-27 17:20:46
  * @FilePath: /SDLMainProject/app/Router.js
  */
 import { View, Text, TouchableOpacity } from 'react-native'
@@ -76,6 +76,77 @@ import DownLoadAPP from './components/page/account/DownLoadAPP';
 import OperaStaffInfo from './pollutionContainers/pointDetails/OperaStaffInfo';
 import AccountSecurity from './components/page/account/AccountSecurity';
 import PushSetting from './components/page/account/PushSetting';
+import RepairRecordForm from './operationContainers/taskViews/taskExecution/formViews/RepairRecordForm';
+import CalibrationRecordList from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordList';
+import CalibrationRecordEdit from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordEdit';
+import SparePartsRecord from './operationContainers/taskViews/taskExecution/formViews/PoSparePartsRecord';
+import BdRecordList from './operationContainers/taskViews/taskExecution/formViews/BdRecordList';
+import BdRecordEdit from './operationContainers/taskViews/taskExecution/formViews/BdRecordEdit';
+import SparePartsForm from './operationContainers/taskViews/taskExecution/formViews/PoSparePartsForm';
+import BdSelectedEdit from './operationContainers/taskViews/taskExecution/formViews/BdSelectedEdit';
+import BdItemSetting from './operationContainers/taskViews/taskExecution/formViews/BdItemSetting';
+import SelectSearchList from './pOperationContainers/taskDetail/SelectSearchList';
+import PoConsumablesReplaceRecord from './operationContainers/taskViews/taskExecution/formViews/PoConsumablesReplaceRecord';
+import PoConsumablesReplaceForm from './operationContainers/taskViews/taskExecution/formViews/PoConsumablesReplaceForm';
+import PoStandardGasRepalceForm from './operationContainers/taskViews/taskExecution/formViews/PoStandardGasRepalceForm';
+import PoStandardGasReplacementRecord from './operationContainers/taskViews/taskExecution/formViews/PoStandardGasReplacementRecord';
+import PoPeihejianchaJilu from './operationContainers/taskViews/taskExecution/formViews/PoPeihejianchaJilu';
+import PerformApproval from './operationContainers/approval/PerformApproval';
+import CalibrationRecordTime from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordTime';
+import ImageForm from './pOperationContainers/taskDetail/ImageForm';
+import EquipmentFaultForm from './pOperationContainers/taskDetail/EquipmentFaultForm';
+import WaterCalibrationForm from './operationContainers/taskViews/taskExecution/formViews/WaterCalibrationForm';
+import WaterCalibrationItemEdit from './operationContainers/taskViews/taskExecution/formViews/WaterCalibrationItemEdit';
+import StandardSolutionCheckForm from './operationContainers/taskViews/taskExecution/formViews/StandardSolutionCheckForm';
+import StandardSolutionCheckItemEdit from './operationContainers/taskViews/taskExecution/formViews/StandardSolutionCheckItemEdit';
+import WaterSampleComparisonTestForm from './operationContainers/taskViews/taskExecution/formViews/WaterSampleComparisonTestForm';
+import WaterSampleComparisonTestItemEdit from './operationContainers/taskViews/taskExecution/formViews/WaterSampleComparisonTestItemEdit';
+import PoStandardLiquidReplaceRecord from './operationContainers/taskViews/taskExecution/formViews/PoStandardLiquidReplaceRecord';
+import PoStandardLiquidReplaceForm from './operationContainers/taskViews/taskExecution/formViews/PoStandardLiquidReplaceForm';
+import ChengTaoGTask from './pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoGTask';
+import ChengTaoTaskRecord from './pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoTaskRecord';
+import ChengTaoTaskDetail from './pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoTaskDetail';
+import AcceptanceServiceReportSingle from './pOperationContainers/tabView/chengTaoXiaoXi/AcceptanceServiceReportSingle';
+import SevenFormViewSingle from './pOperationContainers/tabView/chengTaoXiaoXi/SevenFormViewSingle';
+import WorkRecordSingle from './pOperationContainers/tabView/chengTaoXiaoXi/WorkRecordSingle';
+import AcceptanceServiceReportMultiple from './pOperationContainers/tabView/chengTaoXiaoXi/AcceptanceServiceReportMultiple';
+import WorkRecord72 from './pOperationContainers/tabView/chengTaoXiaoXi/WorkRecord72';
+import SevenFormViewMultiple from './pOperationContainers/tabView/chengTaoXiaoXi/SevenFormViewMultiple';
+import EquipmentInstallationPic from './pOperationContainers/tabView/chengTaoXiaoXi/EquipmentInstallationPic';
+import DebuggingDetection72 from './pOperationContainers/tabView/chengTaoXiaoXi/DebuggingDetection72';
+import ParameterSettingPic from './pOperationContainers/tabView/chengTaoXiaoXi/ParameterSettingPic';
+import CTPeiHeJianChaList from './pOperationContainers/tabView/chengTaoXiaoXi/CTPeiHeJianChaList';
+import RepairRecords from './pOperationContainers/tabView/chengTaoXiaoXi/RepairRecords';
+import EquipmentInstallationPicItemEditor from './pOperationContainers/tabView/chengTaoXiaoXi/EquipmentInstallationPicItemEditor';
+import CTPeiHeJianChaSubmitForm from './pOperationContainers/tabView/chengTaoXiaoXi/CTPeiHeJianChaSubmitForm';
+import RepairSubmitForm from './pOperationContainers/tabView/chengTaoXiaoXi/RepairSubmitForm';
+import EquipmentInstallationPicAudit from './pOperationContainers/tabView/chengTaoXiaoXi/EquipmentInstallationPicAudit';
+import EquipmentInstallationPicAuditEditor from './pOperationContainers/tabView/chengTaoXiaoXi/EquipmentInstallationPicAuditEditor';
+import ServiceUnderWarranty from './pOperationContainers/tabView/chengTaoXiaoXi/ServiceUnderWarranty';
+import TimeoutService from './pOperationContainers/tabView/chengTaoXiaoXi/TimeoutService';
+import DuplicateService from './pOperationContainers/tabView/chengTaoXiaoXi/DuplicateService';
+import LeftoverProblem from './pOperationContainers/tabView/chengTaoXiaoXi/LeftoverProblem';
+import ServiceReportRectificationList from './pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationList';
+import ServiceReportRectificationDetail from './pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationDetail';
+import ServiceReminderCalendar from './pOperationContainers/ServiceReminder/ServiceReminderCalendar';
+import ServiceReminderDetailEditor from './pOperationContainers/ServiceReminder/ServiceReminderDetailEditor';
+import ContractNumberLocalSearchList from './pOperationContainers/ServiceReminder/ContractNumberLocalSearchList';
+import KeyParameterVerificationList from './pOperationContainers/KeyParameterVerification/KeyParameterVerificationList';
+import KeyParameterVerificationCompleted from './pOperationContainers/KeyParameterVerification/KeyParameterVerificationCompleted';
+import KeyParameterVerificationEditView from './pOperationContainers/KeyParameterVerification/KeyParameterVerificationEditView';
+import KeyParameterTransfer from './pOperationContainers/KeyParameterVerification/KeyParameterTransfer';
+import VerificationProblem from './pOperationContainers/KeyParameterVerification/VerificationProblem';
+import KeyParameterVerificationProblemDetail from './pOperationContainers/KeyParameterVerification/KeyParameterVerificationProblemDetail';
+import SuperviserRectifyList from './pOperationContainers/SuperviserRectify/SuperviserRectifyList';
+import CorrectedSupervisionRecords from './pOperationContainers/tabView/workbench/CorrectedSupervisionRecords';
+import SupervisionDetail from './pOperationContainers/SuperviserRectify/SupervisionDetail';
+import SupervisionItemEditor from './pOperationContainers/tabView/workbench/SupervisionItemEditor';
+import SupervisionItemAppeal from './pOperationContainers/SuperviserRectify/SupervisionItemAppeal';
+import AgreementView from './components/page/login/AgreementView';
+import EquipmentFailureFeedbackList from './pOperationContainers/tabView/workbench/EquipmentFailureFeedbackList';
+import EquipmentFailureFeedbackEdit from './pOperationContainers/tabView/workbench/EquipmentFailureFeedbackEdit';
+import EquipmentFailureFeedbackDetail from './pOperationContainers/tabView/workbench/EquipmentFailureFeedbackDetail';
+import AdvertisingPage from './components/page/login/AdvertisingPage';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
 function Test() {
     return (
@@ -86,7 +157,9 @@ function Test() {
 }
 Actions.pushViewWithName(BootPage, 'BootPage', { headerShown: false });
 Actions.pushViewWithName(AdvertBootPage, 'AdvertBootPage', { headerShown: false });
+Actions.pushViewWithName(AdvertisingPage, 'AdvertisingPage', { title: '公告' });
 Actions.pushViewWithName(Login, 'Login', { headerShown: false });
+Actions.pushViewWithName(AgreementView, 'AgreementView', { title: '用户协议' });
 Actions.pushViewWithName(SetEnterpriseInformation, 'SetEnterpriseInformation', { headerShown: false });
 Actions.pushViewWithName(MyTabView, 'MyTab', { headerShown: false });
 Actions.pushViewWithName(SearchList, 'SearchList', { headerShown: false });
@@ -125,6 +198,39 @@ Actions.pushViewWithName(TaskRecord, 'TaskRecord', {
     )
 });
 Actions.pushViewWithName(CreateTask, 'CreateTask', { title: '创建任务' });
+Actions.pushViewWithName(RepairRecordForm, 'RepairRecordForm', { title: '设备维修记录' });
+Actions.pushViewWithName(CalibrationRecordList, 'CalibrationRecordList', { title: '零点量程漂移校准' });
+Actions.pushViewWithName(CalibrationRecordEdit, 'CalibrationRecordEdit', { title: '校准记录表' });
+Actions.pushViewWithName(SparePartsRecord, 'SparePartsRecord', { title: '备件更换记录表' });
+Actions.pushViewWithName(SparePartsForm, 'SparePartsForm', { title: '备件更换记录' });
+Actions.pushViewWithName(SelectSearchList, 'SelectSearchList', { title: '备件更换记录' });
+Actions.pushViewWithName(BdRecordList, 'BdRecordList', { title: '校验测试记录' });
+Actions.pushViewWithName(BdRecordEdit, 'BdRecordEdit', { title: '校验测试记录' });
+Actions.pushViewWithName(BdSelectedEdit, 'BdSelectedEdit', { title: '校验测试记录' });
+Actions.pushViewWithName(BdItemSetting, 'BdItemSetting', { title: '校验测试配置' });
+Actions.pushViewWithName(PoConsumablesReplaceRecord, 'PoConsumablesReplaceRecord', { title: '易耗品更换记录' });
+Actions.pushViewWithName(PoConsumablesReplaceForm, 'PoConsumablesReplaceForm', { title: '易耗品更换记录表' });
+Actions.pushViewWithName(PoStandardGasRepalceForm, 'PoStandardGasRepalceForm', { title: '标准物质更换记录表' });
+Actions.pushViewWithName(PoStandardGasReplacementRecord, 'PoStandardGasReplacementRecord', { title: '标准物质更换记录表' });
+Actions.pushViewWithName(PoPeihejianchaJilu, 'PoPeihejianchaJilu', { title: '配合检查记录表' });
+Actions.pushViewWithName(CalibrationRecordTime, 'CalibrationRecordTime', { title: '校准执行时间' });
+Actions.pushViewWithName(ImageForm, 'ImageForm', { title: '校准执行时间' });
+Actions.pushViewWithName(EquipmentFaultForm, 'EquipmentFaultForm', { title: '异常小时数记录' });
+// 污水运维单据
+Actions.pushViewWithName(WaterCalibrationForm, 'WaterCalibrationForm', { title: '水质校准记录表' });
+Actions.pushViewWithName(WaterCalibrationItemEdit, 'WaterCalibrationItemEdit', { title: '水质校准记录表' });
+Actions.pushViewWithName(StandardSolutionCheckForm, 'StandardSolutionCheckForm', { title: '标液检查记录' });
+Actions.pushViewWithName(StandardSolutionCheckItemEdit, 'StandardSolutionCheckItemEdit', { title: '标液检查记录' });
+Actions.pushViewWithName(WaterSampleComparisonTestForm, 'WaterSampleComparisonTestForm', { title: '水样比对试验记录' });
+Actions.pushViewWithName(WaterSampleComparisonTestItemEdit, 'WaterSampleComparisonTestItemEdit', { title: '水样比对试验记录' });
+Actions.pushViewWithName(PoStandardLiquidReplaceRecord, 'PoStandardLiquidReplaceRecord', { title: '试剂更换记录表' });
+Actions.pushViewWithName(PoStandardLiquidReplaceForm, 'PoStandardLiquidReplaceForm', { title: '试剂更换记录表' });
+
+
+// 待我审批
+Actions.pushViewWithName(PerformApproval, 'PerformApproval', { title: '审批' });
+
+
 Actions.pushViewWithName(AnnouncementsList, 'AnnouncementsList', { title: '通知公告' });
 Actions.pushViewWithName(CusWebView, 'CusWebView', { title: '公告详情' });
 Actions.pushViewWithName(PointDetail, 'PointDetail', { title: '站点详情' });
@@ -195,6 +301,66 @@ Actions.pushViewWithName(OperaStaffInfo, 'OperaStaffInfo', { title: '我的证�
 Actions.pushViewWithName(AccountSecurity, 'AccountSecurity', { title: '账户与安全' }); //下载应用
 Actions.pushViewWithName(PushSetting, 'PushSetting', { title: '推送设置' }); //推送设置
 // Actions.pushViewWithName(OfflineImageUploadList, 'OfflineImageUploadList', { title: '离线图片上传' }); //离线图片上传
+
+// 成套任务
+Actions.pushViewWithName(ChengTaoGTask, 'ChengTaoGTask', { title: '待办任务' }); //待办任务
+Actions.pushViewWithName(ChengTaoTaskRecord, 'ChengTaoTaskRecord', { title: '派单记录' }); //派单记录
+Actions.pushViewWithName(ChengTaoTaskDetail, 'ChengTaoTaskDetail', { title: '派单详情' }); //派单详情
+Actions.pushViewWithName(AcceptanceServiceReportSingle, 'AcceptanceServiceReportSingle', { title: '验收服务报告' }); //验收服务报告 单
+
+Actions.pushViewWithName(SevenFormViewSingle, 'SevenFormViewSingle', { title: 'SevenFormViewSingle' }); // 七表单 单
+Actions.pushViewWithName(WorkRecordSingle, 'WorkRecordSingle', { title: '工作记录' }); //工作记录 单
+Actions.pushViewWithName(AcceptanceServiceReportMultiple, 'AcceptanceServiceReportMultiple', { title: '验收服务报告' }); //验收服务报告 多
+Actions.pushViewWithName(WorkRecord72, 'WorkRecord72', { title: '工作记录' }); //工作记录 多
+Actions.pushViewWithName(SevenFormViewMultiple, 'SevenFormViewMultiple', { title: 'SevenFormViewMultiple' }); //七表单 多
+Actions.pushViewWithName(EquipmentInstallationPic, 'EquipmentInstallationPic', { title: '安装照片' }); //安装照片
+Actions.pushViewWithName(EquipmentInstallationPicItemEditor, 'EquipmentInstallationPicItemEditor', { title: '安装照片' }); //安装照片
+
+Actions.pushViewWithName(DebuggingDetection72, 'DebuggingDetection72', { title: '72小时调试检测' }); //72小时调试检测
+Actions.pushViewWithName(ParameterSettingPic, 'ParameterSettingPic', { title: '参数设置照片' }); //参数设置照片
+Actions.pushViewWithName(CTPeiHeJianChaList, 'CTPeiHeJianChaList', { title: '第三方检查汇报' }); //第三方检查汇报
+Actions.pushViewWithName(CTPeiHeJianChaSubmitForm, 'CTPeiHeJianChaSubmitForm', { title: '第三方检查汇报' }); //第三方检查汇报
+Actions.pushViewWithName(RepairRecords, 'RepairRecords', { title: '维修记录' }); //维修记录
+Actions.pushViewWithName(RepairSubmitForm, 'RepairSubmitForm', { title: '设备维修记录' }); //设备维修记录
+// 安装照片整改
+Actions.pushViewWithName(EquipmentInstallationPicAudit, 'EquipmentInstallationPicAudit', { title: '安装照片不合格' }); //安装照片不合格
+Actions.pushViewWithName(EquipmentInstallationPicAuditEditor, 'EquipmentInstallationPicAuditEditor', { title: '安装照片不合格' }); //安装照片不合格
+
+// 质保内服务填报
+Actions.pushViewWithName(ServiceUnderWarranty, 'ServiceUnderWarranty', { title: '质保内服务填报' }); //质保内服务填报
+// 超时服务填报
+Actions.pushViewWithName(TimeoutService, 'TimeoutService', { title: '超时服务填报' }); //超时服务填报
+// 重复服务填报
+Actions.pushViewWithName(DuplicateService, 'DuplicateService', { title: '重复服务填报' }); //重复服务填报
+// 遗留问题填报
+Actions.pushViewWithName(LeftoverProblem, 'LeftoverProblem', { title: '遗留问题填报' }); //遗留问题填报
+// 服务报告整改
+Actions.pushViewWithName(ServiceReportRectificationList, 'ServiceReportRectificationList', { title: '服务报告整改' }); //服务报告整改
+Actions.pushViewWithName(ServiceReportRectificationDetail, 'ServiceReportRectificationDetail', { title: '验收服务报告整改' }); //验收服务报告整改
+// 服务提醒
+Actions.pushViewWithName(ServiceReminderCalendar, 'ServiceReminderCalendar', { title: '服务提醒' }); //服务提醒
+Actions.pushViewWithName(ServiceReminderDetailEditor, 'ServiceReminderDetailEditor', { title: '添加服务提醒' }); //添加服务提醒
+Actions.pushViewWithName(ContractNumberLocalSearchList, 'ContractNumberLocalSearchList', { title: '合同信息' }); //合同信息
+// 关键参数核查(当前版本废弃)
+Actions.pushViewWithName(KeyParameterVerificationList, 'KeyParameterVerificationList', { title: '关键参数核查' }); //关键参数核查
+Actions.pushViewWithName(KeyParameterVerificationCompleted, 'KeyParameterVerificationCompleted', { title: '已完成核查记录' }); //已完成核查记录
+Actions.pushViewWithName(KeyParameterVerificationEditView, 'KeyParameterVerificationEditView', { title: '修改核查信息' }); //修改核查信息
+Actions.pushViewWithName(KeyParameterTransfer, 'KeyParameterTransfer', { title: '关键参数核查转移' }); //关键参数核查转移
+Actions.pushViewWithName(VerificationProblem, 'VerificationProblem', { title: '核查问题' }); //核查问题
+Actions.pushViewWithName(KeyParameterVerificationProblemDetail, 'KeyParameterVerificationProblemDetail', { title: '问题详情' }); //问题详情
+// 设施核查整改
+Actions.pushViewWithName(SuperviserRectifyList, 'SuperviserRectifyList', { title: '设施核查' }); //设施核查
+Actions.pushViewWithName(CorrectedSupervisionRecords, 'CorrectedSupervisionRecords', { title: '督查已整改记录' }); //督查已整改记录
+Actions.pushViewWithName(SupervisionDetail, 'SupervisionDetail', { title: '督查整改详情' }); //督查整改详情
+Actions.pushViewWithName(SupervisionItemEditor, 'SupervisionItemEditor', { title: '督查整改详情' }); //督查整改详情
+Actions.pushViewWithName(SupervisionItemAppeal, 'SupervisionItemAppeal', { title: '督查整改详情' }); //督查整改详情
+// 故障反馈
+Actions.pushViewWithName(EquipmentFailureFeedbackList, 'EquipmentFailureFeedbackList', { title: '设备故障反馈' }); //设备故障反馈
+Actions.pushViewWithName(EquipmentFailureFeedbackEdit, 'EquipmentFailureFeedbackEdit', { title: '故障反馈记录' }); //故障反馈记录
+Actions.pushViewWithName(EquipmentFailureFeedbackDetail, 'EquipmentFailureFeedbackDetail', { title: '故障反馈记录' }); //故障反馈记录
+
+
+
 
 
 

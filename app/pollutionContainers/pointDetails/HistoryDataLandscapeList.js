@@ -2,8 +2,8 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2024-06-14 14:02:27
- * @LastEditTime: 2024-07-10 10:05:01
- * @FilePath: /SDLMainProject37/app/pollutionContainers/pointDetails/HistoryDataLandscapeList.js
+ * @LastEditTime: 2024-09-27 15:15:02
+ * @FilePath: /SDLMainProject/app/pollutionContainers/pointDetails/HistoryDataLandscapeList.js
  */
 /*
  * @Description: 横评 数据查询列表
@@ -57,6 +57,7 @@ export default class HistoryDataLandscapeList extends Component {
             datatype: this.props.datatype,
             ...pageState
         };
+        this.props.onRef(this);
     }
 
     getSignInTypeCode = () => {

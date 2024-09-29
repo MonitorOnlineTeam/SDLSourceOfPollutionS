@@ -30,7 +30,7 @@ class SelectSearchList extends Component {
     }
     _renderItemList = item => {
         // 仓库
-        if (this.props.navigation.state.params.tableType == 'Storehouse') {
+        if (this.props.route.params.params.tableType == 'Storehouse') {
             return (
                 <TouchableOpacity
                     style={{
@@ -42,8 +42,9 @@ class SelectSearchList extends Component {
                         justifyContent: 'center'
                     }}
                     onPress={() => {
-                        if (this.props.navigation.state.params.callback && typeof this.props.navigation.state.params.callback != 'undefined') {
-                            this.props.navigation.state.params.callback(item.item);
+                        if (this.props.route.params.params.callback
+                            && typeof this.props.route.params.params.callback != 'undefined') {
+                            this.props.route.params.params.callback(item.item);
                         }
                         this.props.dispatch(NavigationActions.back());
                     }}
@@ -55,7 +56,7 @@ class SelectSearchList extends Component {
             );
         }
 
-        if (this.props.navigation.state.params.tableType == 'StandardGas') {
+        if (this.props.route.params.params.tableType == 'StandardGas') {
             return (
                 <TouchableOpacity
                     style={{
@@ -67,8 +68,9 @@ class SelectSearchList extends Component {
                         justifyContent: 'center'
                     }}
                     onPress={() => {
-                        if (this.props.navigation.state.params.callback && typeof this.props.navigation.state.params.callback != 'undefined') {
-                            this.props.navigation.state.params.callback(item.item);
+                        if (this.props.route.params.params.callback
+                            && typeof this.props.route.params.params.callback != 'undefined') {
+                            this.props.route.params.params.callback(item.item);
                         }
                         this.props.dispatch(NavigationActions.back());
                     }}
@@ -78,7 +80,7 @@ class SelectSearchList extends Component {
                 </TouchableOpacity>
             );
         }
-        if (this.props.navigation.state.params.tableType == 'StandardLiquid') {
+        if (this.props.route.params.params.tableType == 'StandardLiquid') {
             return (
                 <TouchableOpacity
                     style={{
@@ -90,8 +92,9 @@ class SelectSearchList extends Component {
                         justifyContent: 'center'
                     }}
                     onPress={() => {
-                        if (this.props.navigation.state.params.callback && typeof this.props.navigation.state.params.callback != 'undefined') {
-                            this.props.navigation.state.params.callback(item.item);
+                        if (this.props.route.params.params.callback
+                            && typeof this.props.route.params.params.callback != 'undefined') {
+                            this.props.route.params.params.callback(item.item);
                         }
                         this.props.dispatch(NavigationActions.back());
                     }}
@@ -102,7 +105,7 @@ class SelectSearchList extends Component {
             );
         }
 
-        if (this.props.navigation.state.params.tableType == 'MachineryMaintenance') {
+        if (this.props.route.params.params.tableType == 'MachineryMaintenance') {
             return (
                 <TouchableOpacity
                     style={{
@@ -114,8 +117,9 @@ class SelectSearchList extends Component {
                         justifyContent: 'center'
                     }}
                     onPress={() => {
-                        if (this.props.navigation.state.params.callback && typeof this.props.navigation.state.params.callback != 'undefined') {
-                            this.props.navigation.state.params.callback(item.item);
+                        if (this.props.route.params.params.callback
+                            && typeof this.props.route.params.params.callback != 'undefined') {
+                            this.props.route.params.params.callback(item.item);
                         }
                         this.props.dispatch(NavigationActions.back());
                     }}
@@ -125,8 +129,8 @@ class SelectSearchList extends Component {
             );
         }
         // 备件 SparePart 易耗品 Consumables
-        if (this.props.navigation.state.params.tableType == 'SparePart'
-            || this.props.navigation.state.params.tableType == 'Consumables') {
+        if (this.props.route.params.params.tableType == 'SparePart'
+            || this.props.route.params.params.tableType == 'Consumables') {
             return (
                 <TouchableOpacity
                     style={{
@@ -138,8 +142,9 @@ class SelectSearchList extends Component {
                         justifyContent: 'center'
                     }}
                     onPress={() => {
-                        if (this.props.navigation.state.params.callback && typeof this.props.navigation.state.params.callback != 'undefined') {
-                            this.props.navigation.state.params.callback(item.item);
+                        if (this.props.route.params.params.callback
+                            && typeof this.props.route.params.params.callback != 'undefined') {
+                            this.props.route.params.params.callback(item.item);
                         }
                         this.props.dispatch(NavigationActions.back());
                     }}
@@ -161,8 +166,9 @@ class SelectSearchList extends Component {
                     justifyContent: 'center'
                 }}
                 onPress={() => {
-                    if (this.props.navigation.state.params.callback && typeof this.props.navigation.state.params.callback != 'undefined') {
-                        this.props.navigation.state.params.callback(item.item);
+                    if (this.props.route.params.params.callback
+                        && typeof this.props.route.params.params.callback != 'undefined') {
+                        this.props.route.params.params.callback(item.item);
                     }
                     this.props.dispatch(NavigationActions.back());
                 }}
@@ -175,7 +181,7 @@ class SelectSearchList extends Component {
 
     _renderSearchItem = item => {
 
-        if (this.props.navigation.state.params.tableType == 'Storehouse') {
+        if (this.props.route.params.params.tableType == 'Storehouse') {
             return (
                 <TouchableOpacity
                     style={{
@@ -187,8 +193,9 @@ class SelectSearchList extends Component {
                         justifyContent: 'center'
                     }}
                     onPress={() => {
-                        if (this.props.navigation.state.params.callback && typeof this.props.navigation.state.params.callback != 'undefined') {
-                            this.props.navigation.state.params.callback(item.item);
+                        if (this.props.route.params.params.callback
+                            && typeof this.props.route.params.params.callback != 'undefined') {
+                            this.props.route.params.params.callback(item.item);
                         }
                         this.props.dispatch(NavigationActions.back());
                     }}
@@ -200,8 +207,8 @@ class SelectSearchList extends Component {
             );
         }
 
-        if (this.props.navigation.state.params.tableType == 'SparePart'
-            || this.props.navigation.state.params.tableType == 'Consumables') {
+        if (this.props.route.params.params.tableType == 'SparePart'
+            || this.props.route.params.params.tableType == 'Consumables') {
             return (
                 <TouchableOpacity
                     style={{
@@ -213,8 +220,9 @@ class SelectSearchList extends Component {
                         justifyContent: 'center'
                     }}
                     onPress={() => {
-                        if (this.props.navigation.state.params.callback && typeof this.props.navigation.state.params.callback != 'undefined') {
-                            this.props.navigation.state.params.callback(item.item);
+                        if (this.props.route.params.params.callback
+                            && typeof this.props.route.params.params.callback != 'undefined') {
+                            this.props.route.params.params.callback(item.item);
                         }
                         this.props.dispatch(NavigationActions.back());
                     }}
@@ -224,7 +232,7 @@ class SelectSearchList extends Component {
                 </TouchableOpacity>
             );
         }
-        if (this.props.navigation.state.params.tableType == 'StandardGas') {
+        if (this.props.route.params.params.tableType == 'StandardGas') {
             return (
                 <TouchableOpacity
                     style={{
@@ -236,8 +244,9 @@ class SelectSearchList extends Component {
                         justifyContent: 'center'
                     }}
                     onPress={() => {
-                        if (this.props.navigation.state.params.callback && typeof this.props.navigation.state.params.callback != 'undefined') {
-                            this.props.navigation.state.params.callback(item.item);
+                        if (this.props.route.params.params.callback
+                            && typeof this.props.route.params.params.callback != 'undefined') {
+                            this.props.route.params.params.callback(item.item);
                         }
                         this.props.dispatch(NavigationActions.back());
                     }}
@@ -247,7 +256,7 @@ class SelectSearchList extends Component {
                 </TouchableOpacity>
             );
         }
-        if (this.props.navigation.state.params.tableType == 'StandardLiquid') {
+        if (this.props.route.params.params.tableType == 'StandardLiquid') {
             return (
                 <TouchableOpacity
                     style={{
@@ -259,8 +268,9 @@ class SelectSearchList extends Component {
                         justifyContent: 'center'
                     }}
                     onPress={() => {
-                        if (this.props.navigation.state.params.callback && typeof this.props.navigation.state.params.callback != 'undefined') {
-                            this.props.navigation.state.params.callback(item.item);
+                        if (this.props.route.params.params.callback
+                            && typeof this.props.route.params.params.callback != 'undefined') {
+                            this.props.route.params.params.callback(item.item);
                         }
                         this.props.dispatch(NavigationActions.back());
                     }}
@@ -270,7 +280,7 @@ class SelectSearchList extends Component {
                 </TouchableOpacity>
             );
         }
-        if (this.props.navigation.state.params.tableType == 'MachineryMaintenance') {
+        if (this.props.route.params.params.tableType == 'MachineryMaintenance') {
             return (
                 <TouchableOpacity
                     style={{
@@ -282,8 +292,9 @@ class SelectSearchList extends Component {
                         justifyContent: 'center'
                     }}
                     onPress={() => {
-                        if (this.props.navigation.state.params.callback && typeof this.props.navigation.state.params.callback != 'undefined') {
-                            this.props.navigation.state.params.callback(item.item);
+                        if (this.props.route.params.params.callback
+                            && typeof this.props.route.params.params.callback != 'undefined') {
+                            this.props.route.params.params.callback(item.item);
                         }
                         this.props.dispatch(NavigationActions.back());
                     }}
@@ -303,8 +314,9 @@ class SelectSearchList extends Component {
                     justifyContent: 'center'
                 }}
                 onPress={() => {
-                    if (this.props.navigation.state.params.callback && typeof this.props.navigation.state.params.callback != 'undefined') {
-                        this.props.navigation.state.params.callback(item.item);
+                    if (this.props.route.params.params.callback
+                        && typeof this.props.route.params.params.callback != 'undefined') {
+                        this.props.route.params.params.callback(item.item);
                     }
                     this.props.dispatch(NavigationActions.back());
                 }}
@@ -319,7 +331,7 @@ class SelectSearchList extends Component {
         this.onFreshData();
     }
     onFreshData = () => {
-        switch (this.props.navigation.state.params.tableType) {
+        switch (this.props.route.params.params.tableType) {
             case 'Storehouse': // 获取仓库列表
                 this.props.dispatch(createAction('taskModel/updateState')({ 'selectablePart': { status: -1 } }));
                 this.props.dispatch(
@@ -421,7 +433,7 @@ class SelectSearchList extends Component {
         console.log('searchData');
         let jsonValue = {};
         let ConfigId = '';
-        switch (this.props.navigation.state.params.tableType) {
+        switch (this.props.route.params.params.tableType) {
             case 'Storehouse':
                 let arr = SentencedToEmpty(this.props.selectablePart, ['data', 'data'], []).filter(record => {
                     return record['dbo.T_Bas_Storehouse.StorehouseName'].indexOf(item) != -1;
@@ -447,14 +459,14 @@ class SelectSearchList extends Component {
                 break;
         }
         // SparePart 备件 Consumables 易耗品
-        if (this.props.navigation.state.params.tableType == 'Storehouse') {
+        if (this.props.route.params.params.tableType == 'Storehouse') {
 
-        } else if (this.props.navigation.state.params.tableType == 'SparePart') {
+        } else if (this.props.route.params.params.tableType == 'SparePart') {
             if (typeof item == 'string' && item.length > 0) {
                 this.props.dispatch(
                     createAction('taskModel/getSparePartsList')({
                         params: {
-                            SparePartsStationCode: this.props.navigation.state.params.selectedStorehouseCode,
+                            SparePartsStationCode: this.props.route.params.params.selectedStorehouseCode,
                             // PartName: item,
                             TextKey: item,
                             isUsed: 1,
@@ -467,18 +479,18 @@ class SelectSearchList extends Component {
                     selectablePart: { status: 200, data: { data: [] } }
                 }));
             }
-        } else if (this.props.navigation.state.params.tableType == 'Consumables') {
+        } else if (this.props.route.params.params.tableType == 'Consumables') {
             this.props.dispatch(
                 createAction('taskModel/getSparePartsList')({
                     params: {
-                        SparePartsStationCode: this.props.navigation.state.params.selectedStorehouseCode,
+                        SparePartsStationCode: this.props.route.params.params.selectedStorehouseCode,
                         // PartName: item,
                         TextKey: item,
                         isUsed: 1,
                     }
                 })
             );
-        } else if (this.props.navigation.state.params.tableType == 'StandardGas') {
+        } else if (this.props.route.params.params.tableType == 'StandardGas') {
             //标准气体
             // PartType  1.标气2.标液  ，PartName 存货编码或名称
             this.props.dispatch(createAction('taskModel/updateState')({
@@ -492,7 +504,7 @@ class SelectSearchList extends Component {
                     }
                 })
             );
-        } else if (this.props.navigation.state.params.tableType == 'StandardLiquid') {
+        } else if (this.props.route.params.params.tableType == 'StandardLiquid') {
             // 污水 标准物质
             // PartType  1.标气2.标液  ，PartName 存货编码或名称
             this.props.dispatch(createAction('taskModel/updateState')({
@@ -540,13 +552,13 @@ class SelectSearchList extends Component {
                 {this.props.selectablePart.status == 200 ? (
                     <Contact
                         searchPlaceholder={
-                            this.props.navigation.state.params.tableType == 'StandardGas'
-                                || this.props.navigation.state.params.tableType == 'StandardLiquid'
+                            this.props.route.params.params.tableType == 'StandardGas'
+                                || this.props.route.params.params.tableType == 'StandardLiquid'
                                 ? '请输入物料编码、物料名称搜索'
                                 : '请输入关键字搜索'
                         }
                         // secType={'enterprise'} //查询页面的类型，默认不传是带右侧索引的带分组的，如不需要索引和分组传任意字符
-                        secType={this.props.navigation.state.params.tableType} //查询页面的类型，默认不传是带右侧索引的带分组的，如不需要索引和分组传任意字符
+                        secType={this.props.route.params.params.tableType} //查询页面的类型，默认不传是带右侧索引的带分组的，如不需要索引和分组传任意字符
                         flatData={SentencedToEmpty(this.props, ['selectablePart', 'data', 'data'], [])} //FlatList数据
                         renderItem={this._renderItemList}
                         searchResult={this.props.searchtablePart.data ? this.props.searchtablePart.data.data : []}

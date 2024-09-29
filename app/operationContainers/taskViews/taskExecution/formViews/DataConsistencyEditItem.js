@@ -2,7 +2,7 @@
  * @Description: 数据一致性（实时数据）记录 编辑页面
  * @LastEditors: hxf
  * @Date: 2021-12-13 17:00:21
- * @LastEditTime: 2022-04-28 10:16:55
+ * @LastEditTime: 2024-09-25 18:39:05
  * @FilePath: /SDLMainProject/app/operationContainers/taskViews/taskExecution/formViews/DataConsistencyEditItem.js
  */
 import React, { Component } from 'react';
@@ -32,22 +32,22 @@ export default class DataConsistencyEditItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ...SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item'], {})
+            ...SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {})
         };
     }
 
-    cancelButton = () => {};
+    cancelButton = () => { };
 
     confirm = () => {
         this.props.dispatch(
             createAction('dataConsistencyModel/deleteDataConsistencyRecord')({
-                params: { ZiID: SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'ID'], '') }
+                params: { ZiID: SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ID'], '') }
             })
         );
     };
 
     render() {
-        const { item, columnList = [], unitList = [], platformTypeList = [] } = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], {});
+        const { item, columnList = [], unitList = [], platformTypeList = [] } = SentencedToEmpty(this.props, ['route', 'params', 'params'], {});
         let options = {
             headTitle: '提示',
             messText: '确认删除该数据一致性记录吗？',
@@ -157,7 +157,7 @@ export default class DataConsistencyEditItem extends Component {
                     </ScrollView>
                 </KeyboardAwareScrollView>
                 <View style={[{ width: SCREEN_WIDTH - 24, alignItems: 'center' }]}>
-                    {SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'ID'], '') != '' ? (
+                    {SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ID'], '') != '' ? (
                         <TouchableOpacity
                             style={[styles.button, { backgroundColor: globalcolor.orange }, { marginVertical: 10 }]}
                             onPress={() => {
@@ -227,7 +227,7 @@ export class FormInputWidthUnit extends Component {
             keyboardType = 'default',
             textPlaceHolder = '请输入',
             textValue = '',
-            onChangeText = () => {}
+            onChangeText = () => { }
         } = this.props;
         return (
             <View style={[styles.layoutStyle, styles.bottomBorder]}>
@@ -297,7 +297,7 @@ class SystemPlatformData extends Component {
             keyboardType = 'default',
             textPlaceHolder = '请输入',
             textValue = '',
-            onChangeText = () => {}
+            onChangeText = () => { }
         } = this.props;
         // return(<View style={[styles.layoutStyle,last?{}:styles.bottomBorder]}>
         //     {required?<Text style={[styles.labelStyle,{color:'red'} ]}>*</Text>:null}
@@ -393,7 +393,7 @@ export class SystemPlatformDataWidthUnit extends Component {
             keyboardType = 'default',
             textPlaceHolder = '请输入',
             textValue = '',
-            onChangeText = () => {}
+            onChangeText = () => { }
         } = this.props;
         // return(<View key style={[{width:'100%'}]}>
         //     <View style={[{flexDirection:'row'}]}>
@@ -436,7 +436,7 @@ export class SystemPlatformDataWidthUnit extends Component {
         //     </View>
         // </View>)
         return (
-            <View key style={[{ width: '100%' }]}>
+            <View style={[{ width: '100%' }]}>
                 <View style={[styles.layoutStyle, styles.bottomBorder, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}>
                     {required ? <Text style={[styles.labelStyle, { color: 'red' }]}>*</Text> : null}
                     <Text style={[styles.labelStyle]}>{`${label}：`}</Text>

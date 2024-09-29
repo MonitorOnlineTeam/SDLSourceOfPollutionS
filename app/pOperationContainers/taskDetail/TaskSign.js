@@ -2,7 +2,7 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2022-11-30 09:14:10
- * @LastEditTime: 2024-09-12 11:57:17
+ * @LastEditTime: 2024-09-24 16:21:16
  * @FilePath: /SDLMainProject/app/pOperationContainers/taskDetail/TaskSign.js
  */
 import React, { Component } from 'react';
@@ -145,7 +145,7 @@ export default class TaskSign extends Component {
         distanceResult
             .then(result => {
                 if (result.distance <= SentencedToEmpty(this.props, ['taskDetail', 'OperationRadius'], 0)) {
-                    ShowLoadingToast('打卡信息上传中');
+                    // ShowLoadingToast('打卡信息上传中');
                     this.props.dispatch(
                         createAction('taskDetailModel/taskSignIn')({
                             params: {
@@ -371,7 +371,7 @@ export default class TaskSign extends Component {
                                 style={{}}
                                 onPress={() => {
                                     this.iconDialog.hide();
-                                    ShowLoadingToast('打卡信息上传中');
+                                    // ShowLoadingToast('打卡信息上传中');
                                     this.props.dispatch(
                                         createAction('taskDetailModel/taskSignIn')({
                                             params: {

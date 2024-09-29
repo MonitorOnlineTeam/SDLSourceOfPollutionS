@@ -2,8 +2,8 @@
  * @Description: 实际水样比对试验结果记录表 水污染源校验记录
  * @LastEditors: hxf
  * @Date: 2022-01-25 11:50:11
- * @LastEditTime: 2024-07-01 19:16:29
- * @FilePath: /SDLMainProject37_1/app/operationContainers/taskViews/taskExecution/formViews/WaterSampleComparisonTestForm.js
+ * @LastEditTime: 2024-09-25 19:40:09
+ * @FilePath: /SDLMainProject/app/operationContainers/taskViews/taskExecution/formViews/WaterSampleComparisonTestForm.js
  */
 
 import moment from 'moment';
@@ -36,7 +36,7 @@ export default class WaterSampleComparisonTestForm extends Component {
         });
 
     componentDidMount() {
-        const { ID } = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item'], {});
+        const { ID } = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
         this.props.dispatch(createAction('waterSampleComparisonTestModel/updateState')({
             waterComparisonTestRecordListResult: { status: -1 },
             innerList: [],

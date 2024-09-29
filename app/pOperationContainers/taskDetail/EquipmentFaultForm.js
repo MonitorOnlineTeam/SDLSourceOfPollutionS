@@ -11,10 +11,8 @@ import {
 import { SCREEN_WIDTH } from '../../config/globalsize';
 import moment from 'moment';
 import globalcolor from '../../config/globalcolor';
-import NavigationActions from 'react-navigation/src/NavigationActions';
 import DeclareModule from '../../components/modal/DeclareModule';
 import { getToken } from '../../dvapack/storage';
-import FormPicker from '../../operationContainers/taskViews/taskExecution/components/FormPicker';
 const HeaderStart = 'headerStart';
 const HeaderEnd = 'headerEnd';
 const SelectItemStart = 'selectItemStart';
@@ -62,7 +60,7 @@ export default class EquipmentFaultForm extends PureComponent {
         super(props);
         this.state = {
             StartTime: '',
-            FormMainID: this.props.navigation.state.params.FormMainID,
+            FormMainID: this.props.route.params.params.FormMainID,
             aa: '',
             Flag: '0',
             MaintenanceManagementUnit: '',
@@ -83,6 +81,30 @@ export default class EquipmentFaultForm extends PureComponent {
             ]
         };
         _me = this;
+
+        this.props.navigation.setOptions({
+            headerRight: () => (
+                <DeclareModule
+                    options={{
+                        headTitle: '说明',
+                        innersHeight: 280,
+                        messText: `1、通过异常小时数记录表统计上次填报至今由于各种原因导致的现场异常小时数据的个数。
+2、填报说明：如6月1日【2点、3点】由于各种原因导致小时数据异常，则填写06-01 02:00至06-01 03:00，异常小时数为2小时（自动计算）。
+3、填报方式为连续时间段填报，即一条记录内的异常小时数据必须是连续的，否则填写多条记录。
+4、若一个时间段内的异常小时数据只有一条，如6月1日【2点】，则填写06-01 02:00至06-01 02:00，异常小时数为1小时（自动计算）。`,
+                        headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
+                        buttons: [
+                            {
+                                txt: '知道了',
+                                btnStyle: { backgroundColor: '#fff' },
+                                txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
+                                onpress: () => { }
+                            }
+                        ]
+                    }}
+                />
+            )
+        });
     }
     componentDidMount() {
         this.refreshData();
@@ -93,7 +115,7 @@ export default class EquipmentFaultForm extends PureComponent {
             createAction('equipmentFautModel/getFaultRecordparames')({}))
         this.props.dispatch(
             createAction('equipmentFautModel/getForm')({
-                params: { TypeID: this.props.navigation.state.params.ID },
+                params: { TypeID: this.props.route.params.params.ID },
                 callback: (item, liststatus) => {
                     this.setState({
                         StartTime: item.Content.BeginTime,
@@ -492,7 +514,7 @@ export default class EquipmentFaultForm extends PureComponent {
             createAction('equipmentFautModel/delForm')({
                 params: {},
                 callback: item => {
-                    this.props.dispatch(createAction('taskDetailModel/updateFormStatus')({ cID: this.props.navigation.state.params.ID, isAdd: false }))
+                    this.props.dispatch(createAction('taskDetailModel/updateFormStatus')({ cID: this.props.route.params.params.ID, isAdd: false }))
                     // 提交时没有返回信息无法进行更新所以去掉此段代码
                     // this.setState({
                     //     StartTime: item.Content.StartTime,
@@ -563,47 +585,47 @@ export default class EquipmentFaultForm extends PureComponent {
                     this.refreshData();
                 }}
             >
-                <KeyboardAwareScrollView>
-                    <ScrollView>
-                        {this.creatHeader()}
+                {/* <KeyboardAwareScrollView> */}
+                <ScrollView>
+                    {this.creatHeader()}
 
-                        {this.state.recordLst.map((item, key) => {
-                            return this.addRecord(key, item);
-                        })}
-                        {this.state.Flag == '1' ? (
-                            <Touchable
-                                onPress={() => {
-                                    let recordLst = this.state.recordLst;
-                                    let beginStr = moment(this.state.StartTime).format('YYYY-MM-DD HH:00:00')
-                                    let endStr = moment(this.state.EndTime).format('YYYY-MM-DD HH:00:00')
-                                    recordLst = [
-                                        ...recordLst,
-                                        {
-                                            // ID: 'd9d4c956-90a6-4253-a7e8-c8993a4a3a4j',
-                                            FormMainID: this.state.FormMainID,
-                                            BeginTime: beginStr,
-                                            EndTime: endStr,
-                                            Hour: moment(endStr).diff(moment(beginStr), 'hours') + 1,
-                                            Remark: '',
-                                            PollutantCode: '',//设备参数类别编号
-                                            PollutantName: '',//设备参数类别名称                                
-                                            ExceptionTypeId: '', //异常类别编码
-                                            ExceptionTypeName: '', //异常类别名称
-                                        }
-                                    ];
-                                    this.setState({
-                                        recordLst: recordLst
-                                    });
-                                }}
-                                style={{ backgroundColor: 'white', height: 44, alignItems: 'center', justifyContent: 'center', marginTop: 1 }}
-                            >
-                                <SDLText aa={this.state.aa} fontType="large" style={{ color: '#4aa0ff' }}>
-                                    {`添加异常信息`}
-                                </SDLText>
-                            </Touchable>
-                        ) : null}
-                    </ScrollView>
-                </KeyboardAwareScrollView>
+                    {this.state.recordLst.map((item, key) => {
+                        return this.addRecord(key, item);
+                    })}
+                    {this.state.Flag == '1' ? (
+                        <Touchable
+                            onPress={() => {
+                                let recordLst = this.state.recordLst;
+                                let beginStr = moment(this.state.StartTime).format('YYYY-MM-DD HH:00:00')
+                                let endStr = moment(this.state.EndTime).format('YYYY-MM-DD HH:00:00')
+                                recordLst = [
+                                    ...recordLst,
+                                    {
+                                        // ID: 'd9d4c956-90a6-4253-a7e8-c8993a4a3a4j',
+                                        FormMainID: this.state.FormMainID,
+                                        BeginTime: beginStr,
+                                        EndTime: endStr,
+                                        Hour: moment(endStr).diff(moment(beginStr), 'hours') + 1,
+                                        Remark: '',
+                                        PollutantCode: '',//设备参数类别编号
+                                        PollutantName: '',//设备参数类别名称                                
+                                        ExceptionTypeId: '', //异常类别编码
+                                        ExceptionTypeName: '', //异常类别名称
+                                    }
+                                ];
+                                this.setState({
+                                    recordLst: recordLst
+                                });
+                            }}
+                            style={{ backgroundColor: 'white', height: 44, alignItems: 'center', justifyContent: 'center', marginTop: 1 }}
+                        >
+                            <SDLText aa={this.state.aa} fontType="large" style={{ color: '#4aa0ff' }}>
+                                {`添加异常信息`}
+                            </SDLText>
+                        </Touchable>
+                    ) : null}
+                </ScrollView>
+                {/* </KeyboardAwareScrollView> */}
 
                 <Button
                     text={'保存'}
@@ -626,7 +648,7 @@ export default class EquipmentFaultForm extends PureComponent {
                         this.deleteALL();
                     }}
                 >
-                    {SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'isEdit'], 'edit') == 'edit' ? (
+                    {SentencedToEmpty(this.props, ['route', 'params', 'params', 'isEdit'], 'edit') == 'edit' ? (
                         <View style={[{ height: 60, width: 60, borderRadius: 30, backgroundColor: 'red', justifyContent: 'center', alignItems: 'center' }]}>
                             <SDLText style={[{ color: globalcolor.whiteFont }]}>{'删除'}</SDLText>
                             <SDLText style={[{ color: globalcolor.whiteFont }]}>{'表单'}</SDLText>
@@ -684,10 +706,10 @@ export default class EquipmentFaultForm extends PureComponent {
                         },
                         CreateUserID: user.UserId,
                         RecordList: this.state.Flag == '0' ? [] : this.state.recordLst,
-                        TypeID: this.props.navigation.state.params.ID
+                        TypeID: this.props.route.params.params.ID
                     },
                     callback: item => {
-                        this.props.dispatch(createAction('taskDetailModel/updateFormStatus')({ cID: this.props.navigation.state.params.ID }))
+                        this.props.dispatch(createAction('taskDetailModel/updateFormStatus')({ cID: this.props.route.params.params.ID }))
                         // 提交时没有返回信息无法进行更新所以去掉此段代码
                         // this.setState({
                         //     StartTime: item.Content.BeginTime,

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, Text, Platform, ScrollView, DeviceEventEmitter, ActivityIndicator, Modal, Alert } from 'react-native';
 import { connect } from 'react-redux';
-import { createStackNavigator, NavigationActions } from 'react-navigation';
 import { SCREEN_WIDTH } from '../../config/globalsize';
 import { ShowToast, createNavigationOptions, createAction, SentencedToEmpty } from '../../utils';
 import { StatusPage, SimpleLoadingComponent, Touchable, ModalParent, SDLText, AlertDialog, DeclareModule } from '../../components';
@@ -13,7 +12,6 @@ import ImageDeleteTouch from '../../components/form/images/ImageDeleteTouch';
 import globalcolor from '../../config/globalcolor';
 import { getEncryptData, getRootUrl } from '../../dvapack/storage';
 import { IMAGE_DEBUG, ImageUrlPrefix, UrlInfo } from '../../config';
-import Item from 'antd-mobile-rn/lib/list/ListItem.native';
 import { SCREEN_HEIGHT } from '../../components/SDLPicker/constant/globalsize';
 
 /**
@@ -39,7 +37,7 @@ export default class ImageForm extends Component {
         super(props);
         this.state = {
             currentPage: 0,
-            FormMainID: SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'FormMainID'], ''),
+            FormMainID: SentencedToEmpty(this.props, ['route', 'params', 'params', 'FormMainID'], ''),
             imagelist: [],
             multipleImagesUploadState: false,
             showImageView: false,
@@ -47,6 +45,9 @@ export default class ImageForm extends Component {
             showDelete: false
         };
         _me = this;
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(this.props.route, ['params', 'params', 'viewTitle'], '图片表单')
+        });
     }
 
     componentWillUnmount() {
@@ -82,11 +83,11 @@ export default class ImageForm extends Component {
                         });
                     });
                     this.setState({ imagelist: imagelist });
-                    if (SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'isEdit'], 'edit') == 'edit') {
-                        _me.props.navigation.setParams({
-                            headerRight: (
+                    if (SentencedToEmpty(this.props, ['route', 'params', 'params', 'isEdit'], 'edit') == 'edit') {
+                        this.props.navigation.setOptions({
+                            headerRight: () => (
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    {SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'ID'], 'edit') == 67 ? (
+                                    {SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 67 ? (
                                         <DeclareModule
                                             contentRender={() => {
                                                 return <Text style={[{ fontSize: 15, color: 'white', marginHorizontal: 16 }]}>{'说明'}</Text>;
@@ -107,10 +108,85 @@ export default class ImageForm extends Component {
                                             }}
                                         />
                                     ) : null}
-                                    {SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'ID'], 'edit') == 5 ||
-                                        SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'ID'], 'edit') == 6 ||
-                                        SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'ID'], 'edit') == 7 ||
-                                        SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'ID'], 'edit') == 11 ? (
+                                    {SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 5 ||
+                                        SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 6 ||
+                                        SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 7 ||
+                                        SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 11 ? (
+                                        <DeclareModule
+                                            contentRender={() => {
+                                                return <Text style={[{ fontSize: 15, color: 'white', marginHorizontal: 16 }]}>{'说明'}</Text>;
+                                            }}
+                                            options={{
+                                                headTitle: '说明',
+                                                innersHeight: 180,
+                                                messText: `如果当天在现场填写了纸质巡检台账，则拍照上传，否则不要拍照上传。`,
+                                                headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
+                                                buttons: [
+                                                    {
+                                                        txt: '知道了',
+                                                        btnStyle: { backgroundColor: '#fff' },
+                                                        txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
+                                                        onpress: () => { }
+                                                    }
+                                                ]
+                                            }}
+                                        />
+                                    ) : null}
+                                    <ImageUploadTouch
+                                        callback={images => {
+                                            images.map(img => {
+                                                imagelist.push({
+                                                    loadError: false,
+                                                    url: 'data:image/jpg;base64,' + img.base64,
+                                                    uri: 'data:image/jpg;base64,' + img.base64,
+                                                    attachID: img.attachID
+                                                    // props: { source: { uri: img.uri } }
+                                                });
+                                            });
+
+                                            _me.setState({ imagelist: imagelist }, () => {
+                                                this.refreshData();
+                                                this.props.dispatch(createAction('imageFormModel/updateState')({ imageStatus: { status: 200 } }));
+                                            });
+                                        }}
+                                        style={{ width: 40, height: 24 }}
+                                        uploadMethods={['alarm', 'uploadimage']}
+                                        uuid={_me.props.ImageForm.AttachID}
+                                    >
+                                        <Image source={require('../../images/jiarecord.png')} style={{ width: 24, height: 24, marginRight: 16 }} />
+                                    </ImageUploadTouch>
+                                </View>
+                            )
+                        });
+
+                        _me.props.navigation.setParams({
+                            headerRight: (
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    {SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 67 ? (
+                                        <DeclareModule
+                                            contentRender={() => {
+                                                return <Text style={[{ fontSize: 15, color: 'white', marginHorizontal: 16 }]}>{'说明'}</Text>;
+                                            }}
+                                            options={{
+                                                headTitle: '说明',
+                                                innersHeight: 180,
+                                                messText: `上传铭牌范围：皮托管铭牌（含皮托管系数），粉尘仪铭牌（含量程），温度变送器铭牌（含量程）`,
+                                                headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
+                                                buttons: [
+                                                    {
+                                                        txt: '知道了',
+                                                        btnStyle: { backgroundColor: '#fff' },
+                                                        txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
+                                                        onpress: () => { }
+                                                    }
+                                                ]
+                                            }}
+                                        />
+                                    ) : null}
+                                    {SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 5 ||
+                                        SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 6 ||
+                                        SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 7 ||
+                                        SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 11 ? (
                                         <DeclareModule
                                             contentRender={() => {
                                                 return <Text style={[{ fontSize: 15, color: 'white', marginHorizontal: 16 }]}>{'说明'}</Text>;
@@ -163,31 +239,6 @@ export default class ImageForm extends Component {
         );
     }
     componentDidMount() {
-        // if (this.props.navigation.state.params.createForm == false) {
-        //     this.props.dispatch(
-        //         createAction('imageFormModel/addImageForm')({
-        //             params: { TaskID: this.props.navigation.state.params.TaskID, TypeID: this.props.navigation.state.params.ID },
-        //             callback: FormMainID => {
-        //                 let newTaskFormList = [].concat(this.props.taskDetail.TaskFormList);
-        //                 let newTaskDetail = { ...this.props.taskDetail };
-        //                 let cID = this.props.navigation.state.params.ID;
-        //                 newTaskFormList.map((item, index) => {
-        //                     if (item.ID == cID) {
-        //                         item.FormMainID = FormMainID;
-        //                     }
-        //                 });
-        //                 newTaskDetail.TaskFormList = newTaskFormList;
-        //                 this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
-        //                 this.setState({ FormMainID: FormMainID }, () => {
-        //                     this.refreshData();
-        //                 });
-        //             }
-        //         })
-        //     );
-        // } else {
-        //     this.refreshData();
-        // }
-
         /**
          * 如果需要创建表单createForm == false
          * 生成uuid
@@ -195,7 +246,7 @@ export default class ImageForm extends Component {
          * 设置第一次上传的按钮逻辑
          * 上传
          */
-        if (this.props.navigation.state.params.createForm == false) {
+        if (this.props.route.params.params.createForm == false) {
             let imageUUID = new Date().getTime();
             this.props.dispatch(
                 createAction('imageFormModel/updateState')({
@@ -209,10 +260,11 @@ export default class ImageForm extends Component {
                     imageStatus: { status: 200 }
                 })
             );
-            _me.props.navigation.setParams({
-                headerRight: (
+
+            _me.props.navigation.setOptions({
+                headerRight: () => (
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        {SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'ID'], 'edit') == 67 ? (
+                        {SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 67 ? (
                             <DeclareModule
                                 contentRender={() => {
                                     return <Text style={[{ fontSize: 15, color: 'white', marginHorizontal: 16 }]}>{'说明'}</Text>;
@@ -233,10 +285,10 @@ export default class ImageForm extends Component {
                                 }}
                             />
                         ) : null}
-                        {SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'ID'], 'edit') == 5 ||
-                            SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'ID'], 'edit') == 6 ||
-                            SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'ID'], 'edit') == 7 ||
-                            SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'ID'], 'edit') == 11 ? (
+                        {SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 5 ||
+                            SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 6 ||
+                            SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 7 ||
+                            SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 11 ? (
                             <DeclareModule
                                 contentRender={() => {
                                     return <Text style={[{ fontSize: 15, color: 'white', marginHorizontal: 16 }]}>{'说明'}</Text>;
@@ -274,14 +326,114 @@ export default class ImageForm extends Component {
                                     this.props.dispatch(
                                         createAction('imageFormModel/addImageForm')({
                                             params: {
-                                                TaskID: this.props.navigation.state.params.TaskID,
-                                                TypeID: this.props.navigation.state.params.ID,
+                                                TaskID: this.props.route.params.params.TaskID,
+                                                TypeID: this.props.route.params.params.ID,
                                                 attachID: imageUUID
                                             },
                                             callback: FormMainID => {
                                                 let newTaskFormList = [].concat(this.props.taskDetail.TaskFormList);
                                                 let newTaskDetail = { ...this.props.taskDetail };
-                                                let cID = this.props.navigation.state.params.ID;
+                                                let cID = this.props.route.params.params.ID;
+                                                newTaskFormList.map((item, index) => {
+                                                    if (item.ID == cID) {
+                                                        item.FormMainID = FormMainID;
+                                                    }
+                                                });
+                                                newTaskDetail.TaskFormList = newTaskFormList;
+                                                this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
+                                                this.setState({ FormMainID: FormMainID }, () => {
+                                                    this.refreshData();
+                                                });
+                                            }
+                                        })
+                                    );
+                                    // this.refreshData();
+                                    // this.props.dispatch(createAction('imageFormModel/updateState')({ imageStatus: { status: 200 } }));
+                                });
+                            }}
+                            style={{ width: 40, height: 24 }}
+                            uploadMethods={['alarm', 'uploadimage']}
+                            uuid={imageUUID}
+                        >
+                            <Image source={require('../../images/jiarecord.png')} style={{ width: 24, height: 24, marginRight: 16 }} />
+                        </ImageUploadTouch>
+                    </View>
+                )
+            });
+
+            _me.props.navigation.setParams({
+                headerRight: (
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        {SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 67 ? (
+                            <DeclareModule
+                                contentRender={() => {
+                                    return <Text style={[{ fontSize: 15, color: 'white', marginHorizontal: 16 }]}>{'说明'}</Text>;
+                                }}
+                                options={{
+                                    headTitle: '说明',
+                                    innersHeight: 180,
+                                    messText: `上传铭牌范围：皮托管铭牌（含皮托管系数），粉尘仪铭牌（含量程），温度变送器铭牌（含量程）`,
+                                    headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
+                                    buttons: [
+                                        {
+                                            txt: '知道了',
+                                            btnStyle: { backgroundColor: '#fff' },
+                                            txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
+                                            onpress: () => { }
+                                        }
+                                    ]
+                                }}
+                            />
+                        ) : null}
+                        {SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 5 ||
+                            SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 6 ||
+                            SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 7 ||
+                            SentencedToEmpty(this.props, ['route', 'params', 'params', 'ID'], 'edit') == 11 ? (
+                            <DeclareModule
+                                contentRender={() => {
+                                    return <Text style={[{ fontSize: 15, color: 'white', marginHorizontal: 16 }]}>{'说明'}</Text>;
+                                }}
+                                options={{
+                                    headTitle: '说明',
+                                    innersHeight: 180,
+                                    messText: `如果当天在现场填写了纸质巡检台账，则拍照上传，否则不要拍照上传。`,
+                                    headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
+                                    buttons: [
+                                        {
+                                            txt: '知道了',
+                                            btnStyle: { backgroundColor: '#fff' },
+                                            txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
+                                            onpress: () => { }
+                                        }
+                                    ]
+                                }}
+                            />
+                        ) : null}
+                        <ImageUploadTouch
+                            callback={images => {
+                                let imagelist = [];
+                                images.map(img => {
+                                    imagelist.push({
+                                        loadError: false,
+                                        url: 'data:image/jpg;base64,' + img.base64,
+                                        uri: 'data:image/jpg;base64,' + img.base64,
+                                        attachID: img.attachID
+                                        // props: { source: { uri: img.uri } }
+                                    });
+                                });
+
+                                _me.setState({ imagelist: imagelist }, () => {
+                                    this.props.dispatch(
+                                        createAction('imageFormModel/addImageForm')({
+                                            params: {
+                                                TaskID: this.props.route.params.params.TaskID,
+                                                TypeID: this.props.route.params.params.ID,
+                                                attachID: imageUUID
+                                            },
+                                            callback: FormMainID => {
+                                                let newTaskFormList = [].concat(this.props.taskDetail.TaskFormList);
+                                                let newTaskDetail = { ...this.props.taskDetail };
+                                                let cID = this.props.route.params.params.ID;
                                                 newTaskFormList.map((item, index) => {
                                                     if (item.ID == cID) {
                                                         item.FormMainID = FormMainID;
@@ -336,7 +488,7 @@ export default class ImageForm extends Component {
                             this.setState({ imagelist: imagelst, currentPage: newPage });
                         }}
                         AttachID={attachID}
-                        deleType={SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'isEdit'], 'edit') == 'edit' ? 'LongPress' : 'noDelete'}
+                        deleType={SentencedToEmpty(this.props, ['route', 'params', 'params', 'isEdit'], 'edit') == 'edit' ? 'LongPress' : 'noDelete'}
                         onPress={() => {
                             let arr = this.state.selectImages;
 
@@ -408,7 +560,7 @@ export default class ImageForm extends Component {
                 callback: () => {
                     let newTaskFormList = [].concat(this.props.taskDetail.TaskFormList);
                     let newTaskDetail = { ...this.props.taskDetail };
-                    let cID = this.props.navigation.state.params.ID;
+                    let cID = this.props.route.params.params.ID;
                     newTaskFormList.map((item, index) => {
                         if (item.ID == cID) {
                             item.FormMainID = '';
@@ -421,6 +573,7 @@ export default class ImageForm extends Component {
         );
     };
     render() {
+        console.log('ImageForm = ', this.props.ImageForm);
         var options = {
             headTitle: '提示',
             messText: '是否确定要删除此表单',
@@ -460,7 +613,7 @@ export default class ImageForm extends Component {
                 <ScrollView style={{ width: '100%', backgroundColor: '#F5F6F9' }}>
                     <View style={{ marginTop: 10, flexDirection: 'row', width: SCREEN_WIDTH, backgroundColor: '#F5F6F9', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-start' }}>{this.renderPickedImage()}</View>
                 </ScrollView>
-                {SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'isEdit'], 'edit') == 'edit' && this.state.FormMainID != '' ? (
+                {SentencedToEmpty(this.props, ['route', 'params', 'params', 'isEdit'], 'edit') == 'edit' && this.state.FormMainID != '' ? (
                     <TouchableOpacity
                         style={[{ position: 'absolute', right: 18, bottom: 128 }]}
                         onPress={() => {
@@ -486,7 +639,7 @@ export default class ImageForm extends Component {
                         index={this.state.currentPage}
                     />
                 </Modal>
-                {SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'isEdit'], 'edit') == 'edit' && this.state.showDelete == true ? (
+                {SentencedToEmpty(this.props, ['route', 'params', 'params', 'isEdit'], 'edit') == 'edit' && this.state.showDelete == true ? (
                     <View style={[{ height: 60, width: SCREEN_WIDTH, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }]}>
                         <TouchableOpacity
                             onPress={() => {

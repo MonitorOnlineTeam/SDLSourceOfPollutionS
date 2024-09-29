@@ -2,8 +2,8 @@
  * @Description: 质保内服务填报 
  * @LastEditors: hxf
  * @Date: 2024-03-22 17:03:40
- * @LastEditTime: 2024-07-10 10:19:04
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceUnderWarranty.js
+ * @LastEditTime: 2024-09-26 19:00:19
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceUnderWarranty.js
  */
 import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
@@ -66,6 +66,29 @@ export default class ServiceUnderWarranty extends Component {
             // pointList:[],// 监测点列表
             // systemModleList:[], // 设备型号列表
         }
+
+        this.props.navigation.setOptions({
+            headerRight: () => <DeclareModule
+                contentRender={() => {
+                    return <Text style={[{ fontSize: 13, color: 'white', marginHorizontal: 16 }]}>{'说明'}</Text>;
+                }}
+                options={{
+                    headTitle: '说明',
+                    innersHeight: 180,
+                    // messText: `文字未提供`,
+                    messText: ` `,
+                    headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
+                    buttons: [
+                        {
+                            txt: '知道了',
+                            btnStyle: { backgroundColor: '#fff' },
+                            txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
+                            onpress: () => { }
+                        }
+                    ]
+                }}
+            />
+        });
     }
 
     componentDidMount() {

@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-03-28 09:53:04
- * @LastEditTime: 2024-06-11 17:27:32
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/EquipmentInstallationPicAudit.js
+ * @LastEditTime: 2024-09-26 14:17:10
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/EquipmentInstallationPicAudit.js
  */
 import { Platform, Text, TouchableOpacity, View, Image } from 'react-native'
 import React, { Component } from 'react'

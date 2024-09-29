@@ -2,8 +2,8 @@
  * @Description: 试剂更换记录表
  * @LastEditors: hxf
  * @Date: 2021-11-22 16:18:03
- * @LastEditTime: 2023-08-31 13:40:03
- * @FilePath: /SDLMainProject36/app/operationContainers/taskViews/taskExecution/formViews/PoStandardLiquidReplaceRecord.js
+ * @LastEditTime: 2024-09-25 20:50:24
+ * @FilePath: /SDLMainProject/app/operationContainers/taskViews/taskExecution/formViews/PoStandardLiquidReplaceRecord.js
  */
 //import liraries
 import React, { Component } from 'react';
@@ -20,8 +20,8 @@ import { AlertDialog, SimpleLoadingComponent, StatusPage } from '../../../../com
  */
 @connect(({ taskModel }) => ({
     standardLiquidRepalceRecordListResult: taskModel.standardLiquidRepalceRecordListResult,
-    standardLiquidRepalceRecordList:taskModel.standardLiquidRepalceRecordList,
-    editstatus:taskModel.editstatus,
+    standardLiquidRepalceRecordList: taskModel.standardLiquidRepalceRecordList,
+    editstatus: taskModel.editstatus,
 }))
 class PoStandardLiquidReplaceRecord extends Component {
     static navigationOptions = ({ navigation }) =>
@@ -67,6 +67,23 @@ class PoStandardLiquidReplaceRecord extends Component {
             ]
         };
         _me = this;
+        this.props.navigation.setOptions({
+            headerRight: () => {
+                if (this.props.route.params.params.TypeName
+                    == 'StandardLiquidReplaceHistoryList') {
+                    return (<TouchableOpacity
+                        style={{ width: 44, height: 40, justifyContent: 'center', alignItems: 'flex-end' }}
+                        onPress={() => {
+                            _me._addForm();
+                        }}
+                    >
+                        <Image source={require('../../../../images/jiarecord.png')} style={{ marginRight: 16, height: 24, width: 24 }} />
+                    </TouchableOpacity>);
+                } else {
+                    return <View />
+                }
+            }
+        });
     }
     componentWillUnmount() {
         DeviceEventEmitter.emit('refreshTask', {
@@ -78,7 +95,7 @@ class PoStandardLiquidReplaceRecord extends Component {
     };
 
     _addForm = () => {
-        if (this.props.navigation.state.params.TypeName == 'StandardLiquidReplaceHistoryList') {
+        if (this.props.route.params.params.TypeName == 'StandardLiquidReplaceHistoryList') {
             this.props.dispatch(NavigationActions.navigate({ routeName: 'PoStandardLiquidReplaceForm', params: { index: -1 } }));
         }
     };
@@ -107,13 +124,13 @@ class PoStandardLiquidReplaceRecord extends Component {
                         <View style={[{ flexDirection: 'row', width: SCREEN_WIDTH - 24, height: 28, alignItems: 'center' }]}>
                             <View style={[{ flexDirection: 'row', flex: 1 }]}>
                                 <Text style={[{ fontSize: 14, color: globalcolor.taskImfoLabel }]}>物质名称：</Text>
-                                <Text numberOfLines={1} style={[{ fontSize: 14, color: globalcolor.taskFormLabel, flex:1 }]}>{item.StandardLiquidName}</Text>
+                                <Text numberOfLines={1} style={[{ fontSize: 14, color: globalcolor.taskFormLabel, flex: 1 }]}>{item.StandardLiquidName}</Text>
                             </View>
                             {
-                                SentencedToEmpty(item,['PartType'],1) == 1?<View style={[{ flexDirection: 'row', flex: 1 }]}>
+                                SentencedToEmpty(item, ['PartType'], 1) == 1 ? <View style={[{ flexDirection: 'row', flex: 1 }]}>
                                     <Text style={[{ fontSize: 14, color: globalcolor.taskImfoLabel }]}>存货编码：</Text>
-                                    <Text numberOfLines={1} style={[{ fontSize: 14, color: globalcolor.taskFormLabel, flex:1 }]}>{item.InventoryCode}</Text>
-                                </View>:null
+                                    <Text numberOfLines={1} style={[{ fontSize: 14, color: globalcolor.taskFormLabel, flex: 1 }]}>{item.InventoryCode}</Text>
+                                </View> : null
                             }
                         </View>
                         {/* <View style={[{ flexDirection: 'row', width: SCREEN_WIDTH - 24, height: 28, alignItems: 'center' }]}>
@@ -123,11 +140,11 @@ class PoStandardLiquidReplaceRecord extends Component {
                         <View style={[{ flexDirection: 'row', width: SCREEN_WIDTH - 24, height: 28, alignItems: 'center' }]}>
                             <View style={[{ flexDirection: 'row', flex: 1 }]}>
                                 <Text style={[{ fontSize: 14, color: globalcolor.taskImfoLabel }]}>生产商：</Text>
-                                <Text numberOfLines={1} style={[{ fontSize: 14, color: globalcolor.taskFormLabel, flex:1 }]}>{item.Supplier}</Text>
+                                <Text numberOfLines={1} style={[{ fontSize: 14, color: globalcolor.taskFormLabel, flex: 1 }]}>{item.Supplier}</Text>
                             </View>
                             <View style={[{ flexDirection: 'row', flex: 1 }]}>
                                 <Text style={[{ fontSize: 14, color: globalcolor.taskImfoLabel }]}>单位：</Text>
-                                <Text numberOfLines={1} style={[{ fontSize: 14, color: globalcolor.taskFormLabel, flex:1 }]}>{item.Unit}</Text>
+                                <Text numberOfLines={1} style={[{ fontSize: 14, color: globalcolor.taskFormLabel, flex: 1 }]}>{item.Unit}</Text>
                             </View>
                         </View>
                         <View style={[{ flexDirection: 'row', width: SCREEN_WIDTH - 24, height: 28, alignItems: 'center' }]}>
@@ -166,7 +183,7 @@ class PoStandardLiquidReplaceRecord extends Component {
             </TouchableOpacity>
         );
     };
-    cancelButton = () => {};
+    cancelButton = () => { };
     confirm = () => {
         this.props.dispatch(
             createAction('taskModel/delFormStandardLiquidRepalce')({
@@ -179,7 +196,7 @@ class PoStandardLiquidReplaceRecord extends Component {
         );
     };
     onRefresh = () => {
-        this.props.dispatch(createAction('taskModel/updateState')({standardLiquidRepalceRecordListResult:{status:-1}}));
+        this.props.dispatch(createAction('taskModel/updateState')({ standardLiquidRepalceRecordListResult: { status: -1 } }));
         this.props.dispatch(createAction('taskModel/getStandardLiquidRepalceRecordList')({}));
     };
 
@@ -246,7 +263,7 @@ class PoStandardLiquidReplaceRecord extends Component {
                     </View>
                 </TouchableOpacity>
                 <AlertDialog options={options} ref="doAlert" />
-                {this.props.editstatus.status == -1?<SimpleLoadingComponent message={'删除中'} />:null}
+                {this.props.editstatus.status == -1 ? <SimpleLoadingComponent message={'删除中'} /> : null}
             </StatusPage>
         );
     }

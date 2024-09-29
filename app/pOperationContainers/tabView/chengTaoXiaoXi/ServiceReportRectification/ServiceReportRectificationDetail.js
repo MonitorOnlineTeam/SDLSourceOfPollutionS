@@ -48,7 +48,7 @@ export default class ServiceReportRectificationDetail extends Component {
     constructor(props) {
         super(props);
         const data = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'data'], {});
+            , ['route', 'params', 'params', 'data'], {});
         let ImgNameList = SentencedToEmpty(data
             , ['AuditFilesList', 'ImgNameList'], []);
         let showImageList = [];
@@ -71,6 +71,11 @@ export default class ServiceReportRectificationDetail extends Component {
 
             // firstLevelSelectedIndex: 0,
         };
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(this.props.route
+                , ['params', 'params', 'data', 'Num'],
+                '验收服务报告整改'),
+        });
     }
 
     isEdit = () => {
@@ -79,7 +84,7 @@ export default class ServiceReportRectificationDetail extends Component {
 
     getAuditTime = () => {
         let AuditTime = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'data', 'AuditDate'], '');
+            , ['route', 'params', 'params', 'data', 'AuditDate'], '');
         return AuditTime;
     }
 
@@ -234,7 +239,7 @@ export default class ServiceReportRectificationDetail extends Component {
     }
 
     onRefreshWithLoading = () => {
-        const item = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'data'], {});
+        const item = SentencedToEmpty(this.props, ['route', 'params', 'params', 'data'], {});
         this.props.dispatch(createAction('CTServiceReportRectificationModel/getServiceDesc')({
             params: {
                 ID: item.ID
@@ -245,10 +250,10 @@ export default class ServiceReportRectificationDetail extends Component {
     cancelButton = () => { }
     confirm = () => {
         const ID = SentencedToEmpty(this.props
-            , ['navigation', 'state'
+            , ['route', 'params'
                 , 'params', 'data', 'ID'], '')
         const CheckStatus = SentencedToEmpty(this.props
-            , ['navigation', 'state'
+            , ['route', 'params'
                 , 'params', 'data', 'CheckStatus'], '')
         if (ID == '' || CheckStatus == '') {
             ShowToast('数据错误');
@@ -306,7 +311,7 @@ export default class ServiceReportRectificationDetail extends Component {
         const data = SentencedToEmpty(this.props
             , ['serviceDescResult', 'data', 'Datas', 'CheckDesc'], {});
         const listItem = SentencedToEmpty(this.props,
-            ['navigation', 'state', 'params', 'data'], {});
+            ['route', 'params', 'params', 'data'], {});
         console.log('listItem = ', listItem);
         const AuditImages = SentencedToEmpty(data, ['FileList', 'ImgNameList'], []);
         let Images = [];
@@ -692,10 +697,10 @@ export default class ServiceReportRectificationDetail extends Component {
                             <TouchableOpacity
                                 onPress={() => {
                                     const ID = SentencedToEmpty(this.props
-                                        , ['navigation', 'state'
+                                        , ['route', 'params'
                                             , 'params', 'data', 'ID'], '')
                                     const CheckStatus = SentencedToEmpty(this.props
-                                        , ['navigation', 'state'
+                                        , ['route', 'params'
                                             , 'params', 'data', 'CheckStatus'], '')
                                     if (ID == '' || CheckStatus == '') {
                                         ShowToast('数据错误');

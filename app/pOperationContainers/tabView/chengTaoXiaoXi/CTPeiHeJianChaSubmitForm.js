@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Image, Platform, StyleSheet, TextInput, DeviceEventEmitter } from 'react-native';
+import { Text, View, TouchableOpacity, Image, Platform, StyleSheet, TextInput, DeviceEventEmitter, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -125,7 +125,7 @@ export default class CTPeiHeJianChaSubmitForm extends Component {
     }
 
     onRefresh = () => {
-        const record = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'currentItem'], {});
+        const record = SentencedToEmpty(this.props, ['route', 'params', 'params', 'currentItem'], {});
 
         this.fileId = record.EnclosureFiles ? record.EnclosureFiles : getDefinedId(); // localId
         this.imageId = record.PictureFiles ? record.PictureFiles : getDefinedId();
@@ -268,7 +268,7 @@ export default class CTPeiHeJianChaSubmitForm extends Component {
     commitForm = () => {
         const recordId = SentencedToEmpty(this.props, ['secondItem', 'RecordId'], '');
         const serviceId = SentencedToEmpty(this.props, ['firstItem', 'ItemId'], '');
-        let currentItem = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'currentItem'], {});
+        let currentItem = SentencedToEmpty(this.props, ['route', 'params', 'params', 'currentItem'], {});
         let commitData = {
             CooperationDate: this.state.CooperationDate, //核查日期,
             CooperationCompany: SentencedToEmpty(this.state.organizer, ['ChildID'], ''), // 核查单位,
@@ -301,7 +301,7 @@ export default class CTPeiHeJianChaSubmitForm extends Component {
         commitData.PointId = this.props.selectPoint.PointId;
         commitData.PointName = this.props.selectPoint.PointName;
         commitData.index = currentItem.index;
-        this.props.navigation.state.params.callback(commitData);
+        this.props.route.params.params.callback(commitData);
         this.props.navigation.goBack();
     };
 
@@ -309,9 +309,9 @@ export default class CTPeiHeJianChaSubmitForm extends Component {
      * 确认删除配合检查表单
      */
     confirm = () => {
-        let commitData = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'currentItem'], {});
+        let commitData = SentencedToEmpty(this.props, ['route', 'params', 'params', 'currentItem'], {});
 
-        this.props.navigation.state.params.callback({ index: commitData.index });
+        this.props.navigation.params.params.callback({ index: commitData.index });
         this.props.navigation.goBack();
     };
 
@@ -362,7 +362,11 @@ export default class CTPeiHeJianChaSubmitForm extends Component {
                     this.onRefresh();
                 }}
             >
-                <KeyboardAwareScrollView behavior={Platform.OS == 'ios' ? 'padding' : ''} style={styles.container}>
+                {/* <KeyboardAwareScrollView behavior={Platform.OS == 'ios' ? 'padding' : ''} style={styles.container}>
+                </KeyboardAwareScrollView> */}
+                <ScrollView
+                    style={[{ width: SCREEN_WIDTH, flex: 1 }]}
+                >
                     <View style={[{ width: SCREEN_WIDTH, alignItems: 'center', marginVertical: 22, justifyContent: 'center' }]}>
                         <View
                             style={[
@@ -640,7 +644,7 @@ export default class CTPeiHeJianChaSubmitForm extends Component {
                             />
                         </View>
                     </View>
-                </KeyboardAwareScrollView>
+                </ScrollView>
 
                 {this.isEdit() && SentencedToEmpty(this.props.selectPoint, ['PointId'], '').length > 0 ? (
                     <TouchableOpacity

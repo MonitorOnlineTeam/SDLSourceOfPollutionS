@@ -2,8 +2,8 @@
  * @Description: 超时服务填报 
  * @LastEditors: hxf
  * @Date: 2024-03-18 15:50:31
- * @LastEditTime: 2024-07-10 10:12:56
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/TimeoutService.js
+ * @LastEditTime: 2024-09-26 19:04:36
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/TimeoutService.js
  */
 import { Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
@@ -53,6 +53,28 @@ export default class TimeoutService extends Component {
 
     componentDidMount() {
         this.onRefreshWithLoading();
+        this.props.navigation.setOptions({
+            headerRight: () => <DeclareModule
+                contentRender={() => {
+                    return <Text style={[{ fontSize: 13, color: 'white', marginHorizontal: 16 }]}>{'说明'}</Text>;
+                }}
+                options={{
+                    headTitle: '说明',
+                    innersHeight: 180,
+                    // messText: `文字未提供`,
+                    messText: ` `,
+                    headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
+                    buttons: [
+                        {
+                            txt: '知道了',
+                            btnStyle: { backgroundColor: '#fff' },
+                            txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
+                            onpress: () => { }
+                        }
+                    ]
+                }}
+            />
+        });
     }
 
     onRefreshWithLoading = () => {

@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-09-18 09:27:53
- * @LastEditTime: 2023-10-20 09:53:56
- * @FilePath: /SDLMainProject36/app/pOperationContainers/tabView/chengTaoXiaoXi/SevenFormViewSingle.js
+ * @LastEditTime: 2024-09-26 10:36:27
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/SevenFormViewSingle.js
  */
 import React, { Component } from 'react'
 import { Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -35,11 +35,14 @@ export default class SevenFormViewSingle extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TimeS: SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'AttachmentId'], new Date().getTime()),
+            TimeS: SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'AttachmentId'], new Date().getTime()),
             remark: '',
             images: [],
             nativeStatus: 200
         };
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(this.props.route, ['params', 'params', 'secondItem', 'RecordName'], '跳转时未提供标题信息')
+        });
     }
 
     componentDidMount() {

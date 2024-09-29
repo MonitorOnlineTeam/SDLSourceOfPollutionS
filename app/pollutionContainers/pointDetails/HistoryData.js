@@ -1,8 +1,8 @@
 /*
  * @Description: 
- * @LastEditors: outman0611 jia_anbo@163.com
+ * @LastEditors: hxf
  * @Date: 2024-04-25 09:20:10
- * @LastEditTime: 2024-09-20 17:59:54
+ * @LastEditTime: 2024-09-27 15:13:52
  * @FilePath: /SDLMainProject/app/pollutionContainers/pointDetails/HistoryData.js
  */
 import React, { PureComponent } from 'react';
@@ -112,7 +112,7 @@ export default class HistoryData extends PureComponent {
     }
 
     goToPage = ({ signInType, datatype }) => {
-        this.refs.tabView.goToPage(signInType);
+        // this.refs.tabView.goToPage(signInType);
         this.props.dispatch(createAction('historyDataModel/updateState')({
             showIndex: signInType,
         }));

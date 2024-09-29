@@ -30,23 +30,23 @@ class SparePartsForm extends Component {
         // SentencedToEmpty(user,['IsShowTask'],false)
         // console.log('IsShowTask = ',SentencedToEmpty(user,['IsShowTask'],false));
         this.state = {
-            PartType: SentencedToEmpty(this, ['props', 'navigation', 'state', 'params', 'item', 'PartType'], SentencedToEmpty(user, ['IsShowTask'], false) ? 2 : 1),// 供货类型 字段名称PartType   下拉列表 1 我公司供货 2 甲方供货  默认1
-            PartName: this.getPartName(SentencedToEmpty(this, ['props', 'navigation', 'state', 'params', 'item', 'PartType'], 1)),// 供货类型显示字段
-            chooseTime: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.ReplaceDate : moment().format('YYYY-MM-DD'),
-            consumablesName: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.ConsumablesName : '', //易耗品名称
-            modelH: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.Model : '', //型号规格
-            unit: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.Unit : '', //单位
-            num: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.Num : '', //数量
-            CisNum: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.CisNum : '', //CIS申请单据号
-            AnotherTimeOfChange: this.props.navigation.state.params.item
-                ? this.props.navigation.state.params.item.AnotherTimeOfChange + ''
+            PartType: SentencedToEmpty(this, ['props', 'route', 'params', 'params', 'item', 'PartType'], SentencedToEmpty(user, ['IsShowTask'], false) ? 2 : 1),// 供货类型 字段名称PartType   下拉列表 1 我公司供货 2 甲方供货  默认1
+            PartName: this.getPartName(SentencedToEmpty(this, ['props', 'route', 'params', 'params', 'item', 'PartType'], 1)),// 供货类型显示字段
+            chooseTime: this.props.route.params.params.item ? this.props.route.params.params.item.ReplaceDate : moment().format('YYYY-MM-DD'),
+            consumablesName: this.props.route.params.params.item ? this.props.route.params.params.item.ConsumablesName : '', //易耗品名称
+            modelH: this.props.route.params.params.item ? this.props.route.params.params.item.Model : '', //型号规格
+            unit: this.props.route.params.params.item ? this.props.route.params.params.item.Unit : '', //单位
+            num: this.props.route.params.params.item ? this.props.route.params.params.item.Num : '', //数量
+            CisNum: this.props.route.params.params.item ? this.props.route.params.params.item.CisNum : '', //CIS申请单据号
+            AnotherTimeOfChange: this.props.route.params.params.item
+                ? this.props.route.params.params.item.AnotherTimeOfChange + ''
                 : moment()
                     .add(1, 'month')
                     .format('YYYY-MM-DD HH:mm:ss'), //下次更换时间
-            reason: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.Remark : '', //更换原因
+            reason: this.props.route.params.params.item ? this.props.route.params.params.item.Remark : '', //更换原因
             // selectedStorehouse: this.props.navigation.state.params.item ? { StorehouseName: this.props.navigation.state.params.item.StorehouseName, ID: this.props.navigation.state.params.item.StorehouseId } : null, // 选中的仓库
-            selectedStorehouse: this.props.navigation.state.params.item ? { 'dbo.T_Bas_Storehouse.StorehouseName': this.props.navigation.state.params.item.StorehouseName, 'dbo.T_Bas_Storehouse.ID': this.props.navigation.state.params.item.StorehouseId } : null, // 选中的仓库
-            PartCode: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.PartCode : '' // 存货编码
+            selectedStorehouse: this.props.route.params.params.item ? { 'dbo.T_Bas_Storehouse.StorehouseName': this.props.route.params.params.item.StorehouseName, 'dbo.T_Bas_Storehouse.ID': this.props.route.params.params.item.StorehouseId } : null, // 选中的仓库
+            PartCode: this.props.route.params.params.item ? this.props.route.params.params.item.PartCode : '' // 存货编码
         };
         _me = this;
     }
@@ -68,7 +68,7 @@ class SparePartsForm extends Component {
         let type = 'day';
 
         return {
-            defaultTime: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.ReplaceDate : moment().format('YYYY-MM-DD HH:mm:ss'),
+            defaultTime: this.props.route.params.params.item ? this.props.route.params.params.item.ReplaceDate : moment().format('YYYY-MM-DD HH:mm:ss'),
             type: type,
             onSureClickListener: time => {
                 this.setState({
@@ -82,7 +82,7 @@ class SparePartsForm extends Component {
         let type = 'day';
 
         return {
-            defaultTime: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.AnotherTimeOfChange : moment().format('YYYY-MM-DD HH:mm:ss'),
+            defaultTime: this.props.route.params.params.item ? this.props.route.params.params.item.AnotherTimeOfChange : moment().format('YYYY-MM-DD HH:mm:ss'),
             type: type,
             onSureClickListener: time => {
                 this.setState({
@@ -98,7 +98,7 @@ class SparePartsForm extends Component {
             showName: 'PartName',
             nameKey: 'PartNameShow',
             placeHolder: '请选择',
-            defaultCode: this.props.navigation.state.params.item ? this.props.navigation.state.params.item.Model : '',
+            defaultCode: this.props.route.params.params.item ? this.props.route.params.params.item.Model : '',
             dataArr: SentencedToEmpty(this.props.sparePartsReplace, ['data', 'Datas', 'Code'], []),
             onSelectListener: item => {
                 this.setState({
@@ -483,14 +483,14 @@ class SparePartsForm extends Component {
 
                         <View style={[{ flex: 1 }]} />
                     </ScrollView>
-                    {this.props.navigation.state.params.item ? (
+                    {this.props.route.params.params.item ? (
                         <TouchableOpacity
                             style={[styles.button, { backgroundColor: globalcolor.orange }, { marginTop: 10 }]}
                             onPress={() => {
                                 let lst = this.props.Record.RecordList;
                                 const user = getToken();
-                                const { ID } = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'formItem'], {});
-                                lst.splice(this.props.navigation.state.params.key, 1);
+                                const { ID } = SentencedToEmpty(this.props, ['route', 'params', 'params', 'formItem'], {});
+                                lst.splice(this.props.route.params.params.key, 1);
                                 _me.props.dispatch(createAction('taskModel/updateState')({ editstatus: { status: -1 } }));
                                 _me.props.dispatch(
                                     createAction('taskModel/commitSpareParts')({
@@ -571,8 +571,8 @@ class SparePartsForm extends Component {
                                     ShowToast('您还未设置备件的下次更换时间！');
                                     return;
                                 }
-                                this.props.navigation.state.params.item
-                                    ? (lst[this.props.navigation.state.params.key] = {
+                                this.props.route.params.params.item
+                                    ? (lst[this.props.route.params.params.key] = {
                                         PartType: this.state.PartType,
                                         StorehouseId: this.state.PartType == 1 ? this.state.selectedStorehouse['dbo.T_Bas_Storehouse.ID'] : '',
                                         StorehouseName: this.state.PartType == 1 ? this.state.selectedStorehouse['dbo.T_Bas_Storehouse.StorehouseName'] : '',
@@ -607,7 +607,7 @@ class SparePartsForm extends Component {
                                 //     CreateTime: moment().format('YYYY-MM-DD HH:mm:ss'),
                                 //     RecordList: lst
                                 // });
-                                const { ID } = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'formItem'], {});
+                                const { ID } = SentencedToEmpty(this.props, ['route', 'params', 'params', 'formItem'], {});
                                 _me.props.dispatch(createAction('taskModel/updateState')({ editstatus: { status: -2 } }));
                                 this.props.dispatch(
                                     createAction('taskModel/commitSpareParts')({

@@ -2,29 +2,31 @@
  * @Description: 设施核查 列表
  * @LastEditors: hxf
  * @Date: 2023-02-06 09:22:09
- * @LastEditTime: 2023-04-19 10:37:59
- * @FilePath: /SDLMainProject34/app/pOperationContainers/SuperviserRectify/SuperviserRectifyList.js
+ * @LastEditTime: 2024-09-27 09:51:38
+ * @FilePath: /SDLMainProject/app/pOperationContainers/SuperviserRectify/SuperviserRectifyList.js
  */
 import React, { Component, PureComponent } from 'react'
 import { Text, TouchableOpacity, View, Image } from 'react-native'
-import ScrollableTabView from 'react-native-scrollable-tab-view';
+// import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { connect } from 'react-redux';
 import MyTabBarWithCount from '../../operationContainers/taskViews/taskExecution/components/MyTabBarWithCount';
 import { SCREEN_WIDTH } from '../../config/globalsize';
 import { createNavigationOptions, SentencedToEmpty, NavigationActions, createAction } from '../../utils';
 import { AlertDialog, FlatListWithHeaderAndFooter, SimpleLoadingComponent, StatusPage } from '../../components';
 import globalcolor from '../../config/globalcolor';
+import SDLTabButton from '../../components/SDLTabButton';
 
 let _me;
-@connect(({ supervision })=>({
-    OperationKeyParameterCountResult:supervision.OperationKeyParameterCountResult,
-    unsubmitParams:supervision.unsubmitParams,
-    submittedParams:supervision.submittedParams,
-    toBeCorrectedParams:supervision.toBeCorrectedParams,
-    alreadyCorrectedParams:supervision.alreadyCorrectedParams,
-    underAppealParams:supervision.underAppealParams,
-    deleteOperationKeyResult:supervision.deleteOperationKeyResult,
-    rectificationNumResult:supervision.rectificationNumResult,// 设施核查整改 计数
+@connect(({ supervision }) => ({
+    listTabIndex: supervision.listTabIndex, // 当前tab索引
+    OperationKeyParameterCountResult: supervision.OperationKeyParameterCountResult,
+    unsubmitParams: supervision.unsubmitParams,
+    submittedParams: supervision.submittedParams,
+    toBeCorrectedParams: supervision.toBeCorrectedParams,
+    alreadyCorrectedParams: supervision.alreadyCorrectedParams,
+    underAppealParams: supervision.underAppealParams,
+    deleteOperationKeyResult: supervision.deleteOperationKeyResult,
+    rectificationNumResult: supervision.rectificationNumResult,// 设施核查整改 计数
 }))
 export default class SuperviserRectifyList extends Component {
 
@@ -34,19 +36,19 @@ export default class SuperviserRectifyList extends Component {
         headerRight: (<TouchableOpacity
             onPress={() => {
                 _me.props.dispatch(createAction('supervision/updateState')({
-                    currentList:3,
-                    Status:3, // Status 已整改1 未整改2 整改通过3 整改驳回4 申诉中5 申诉通过6
+                    currentList: 3,
+                    Status: 3, // Status 已整改1 未整改2 整改通过3 整改驳回4 申诉中5 申诉通过6
                 }));
                 // _me.props.dispatch(NavigationActions.navigate({ routeName: 'KeyParameterVerificationCompleted' }));
                 _me.props.dispatch(NavigationActions.navigate({
                     routeName: 'CorrectedSupervisionRecords',
                 }));
             }}>
-            <Text style = {{color:'#fff',marginRight:5}}>已完成核查记录</Text>
+            <Text style={{ color: '#fff', marginRight: 5 }}>已完成核查记录</Text>
         </TouchableOpacity>)
     });
 
-    constructor(props){
+    constructor(props) {
         super(props);
         _me = this;
     }
@@ -68,12 +70,12 @@ export default class SuperviserRectifyList extends Component {
          */
         this.props.dispatch(createAction('supervision/updateState')({
             toBeCorrectedParams: {
-                Rectification:0,
-                Status:2,
+                Rectification: 0,
+                Status: 2,
                 inspectorRectificationListIndex: 1,
                 "pageSize": 20
             },
-            Status:2,
+            Status: 2,
             toBeCorrectedResult: { status: -1 },
             toBeCorrectedDataList: [],
         }));
@@ -85,38 +87,38 @@ export default class SuperviserRectifyList extends Component {
         let newParams;
         // 计数接口
         this.props.dispatch(createAction('supervision/GetInspectorRectificationNum')({}));
-        switch(index) {
+        switch (index) {
             case 0:
                 // 未整改2
-                newParams = {...this.props.toBeCorrectedParams};
+                newParams = { ...this.props.toBeCorrectedParams };
                 newParams.index = 1;
                 this.props.dispatch(createAction('supervision/updateState')({
-                    currentList:0,
-                    toBeCorrectedParams:newParams,
-                    toBeCorrectedResult:{status:-1},
+                    currentList: 0,
+                    toBeCorrectedParams: newParams,
+                    toBeCorrectedResult: { status: -1 },
                     Status: 2, // 已整改1 未整改2 整改通过3 整改驳回4 申诉中5 申诉通过6
                 }));
                 this.props.dispatch(createAction('supervision/getToBeCorrectedList')({}));
                 break;
             case 1:
                 // 已整改1
-                newParams = {...this.props.alreadyCorrectedParams};
+                newParams = { ...this.props.alreadyCorrectedParams };
                 newParams.index = 1;
                 this.props.dispatch(createAction('supervision/updateState')({
-                    currentList:1,
-                    alreadyCorrectedParams:newParams,
-                    alreadyCorrectedResult:{status:-1},
+                    currentList: 1,
+                    alreadyCorrectedParams: newParams,
+                    alreadyCorrectedResult: { status: -1 },
                     Status: 1, // 已整改1 未整改2 整改通过3 整改驳回4 申诉中5 申诉通过6
                 }));
                 this.props.dispatch(createAction('supervision/getAlreadyCorrectedList')({}));
                 break;
             case 2:
-                newParams = {...this.props.underAppealParams};
+                newParams = { ...this.props.underAppealParams };
                 newParams.index = 1;
                 this.props.dispatch(createAction('supervision/updateState')({
-                    currentList:2,
-                    underAppealParams:newParams,
-                    underAppealResult:{status:-1},
+                    currentList: 2,
+                    underAppealParams: newParams,
+                    underAppealResult: { status: -1 },
                     Status: 5, // 已整改1 未整改2 整改通过3 整改驳回4 申诉中5 申诉通过6
                 }));
                 this.props.dispatch(createAction('supervision/getUnderAppealList')({}));
@@ -127,26 +129,80 @@ export default class SuperviserRectifyList extends Component {
     render() {
         let tabs = [];
         let couts = SentencedToEmpty(this.props.rectificationNumResult
-            ,['data','Datas'],{});
-        if (SentencedToEmpty(couts,['DaiZG'],0)==0) {
+            , ['data', 'Datas'], {});
+        if (SentencedToEmpty(couts, ['DaiZG'], 0) == 0) {
             tabs.push('待整改');
         } else {
-            tabs.push({label:'待整改',count:couts.DaiZG});
+            tabs.push({ label: '待整改', count: couts.DaiZG });
         }
 
-        if (SentencedToEmpty(couts,['YiZG'],0)==0) {
+        if (SentencedToEmpty(couts, ['YiZG'], 0) == 0) {
             tabs.push('已整改');
         } else {
-            tabs.push({label:'已整改',count:couts.YiZG});
+            tabs.push({ label: '已整改', count: couts.YiZG });
         }
 
-        if (SentencedToEmpty(couts,['ShenSZ'],0)==0) {
+        if (SentencedToEmpty(couts, ['ShenSZ'], 0) == 0) {
             tabs.push('申诉中');
         } else {
-            tabs.push({label:'申诉中',count:couts.ShenSZ});
+            tabs.push({ label: '申诉中', count: couts.ShenSZ });
         }
-        return (<View style={{width:SCREEN_WIDTH,flex:1}}>
-            <ScrollableTabView
+        return (<View style={{ width: SCREEN_WIDTH, flex: 1 }}>
+            <View style={[{
+                flexDirection: 'row', height: 44
+                , width: SCREEN_WIDTH, alignItems: 'center'
+                , justifyContent: 'space-between'
+                , backgroundColor: 'white', marginBottom: 5
+            }]}>
+                {
+                    tabs.map((item, index) => {
+                        let label = '';
+                        if (index == 0) {
+                            if (SentencedToEmpty(couts, ['DaiZG'], 0) == 0) {
+                                label = '待整改';
+                            } else {
+                                label = `待整改(${couts.DaiZG})`;
+                            }
+                        }
+
+                        if (index == 1) {
+                            if (SentencedToEmpty(couts, ['YiZG'], 0) == 0) {
+                                label = '已整改';
+                            } else {
+                                label = `已整改(${couts.YiZG})`;
+                            }
+                        }
+
+                        if (index == 2) {
+                            if (SentencedToEmpty(couts, ['ShenSZ'], 0) == 0) {
+                                label = '申诉中';
+                            } else {
+                                label = `申诉中(${couts.ShenSZ})`;
+                            }
+                        }
+
+                        return (<SDLTabButton
+                            topButtonWidth={SCREEN_WIDTH / (tabs.length)}
+                            selected={this.props.listTabIndex == index}
+                            label={label}
+                            onPress={() => {
+                                this.props.dispatch(createAction('supervision/updateState')({ listTabIndex: index }));
+                                this.onChange(index);
+                            }}
+                        />);
+                    })
+                }
+            </View>
+            {
+                this.props.listTabIndex == 0
+                    ? <KeyParameterVerificationToBeCorrectedList />
+                    : this.props.listTabIndex == 1
+                        ? <KeyParameterVerificationAlreadyCorrectedList />
+                        : this.props.listTabIndex == 2
+                            ? <KeyParameterVerificationUnderAppealList />
+                            : null
+            }
+            {/* <ScrollableTabView
                 ref={ref => (this.scrollableTabView = ref)}
                 onChangeTab={obj => {
                     this.onChange(obj.i);
@@ -172,60 +228,60 @@ export default class SuperviserRectifyList extends Component {
                 <KeyParameterVerificationToBeCorrectedList />
                 <KeyParameterVerificationAlreadyCorrectedList />
                 <KeyParameterVerificationUnderAppealList />
-            </ScrollableTabView>
-            {SentencedToEmpty(this.props,['deleteOperationKeyResult','status'],200) == -1?<SimpleLoadingComponent message={'正在撤销'} />:null}
+            </ScrollableTabView> */}
+            {SentencedToEmpty(this.props, ['deleteOperationKeyResult', 'status'], 200) == -1 ? <SimpleLoadingComponent message={'正在撤销'} /> : null}
         </View>)
     }
 }
 
 // 待整改
-@connect(({ supervision })=>({
-    toBeCorrectedParams:supervision.toBeCorrectedParams,
-    toBeCorrectedResult:supervision.toBeCorrectedResult,
-    toBeCorrectedDataList:supervision.toBeCorrectedDataList
+@connect(({ supervision }) => ({
+    toBeCorrectedParams: supervision.toBeCorrectedParams,
+    toBeCorrectedResult: supervision.toBeCorrectedResult,
+    toBeCorrectedDataList: supervision.toBeCorrectedDataList
 }))
 class KeyParameterVerificationToBeCorrectedList extends PureComponent {
-    
+
     statusPageOnRefresh = () => {
-        let newParams = {...this.props.toBeCorrectedParams};
+        let newParams = { ...this.props.toBeCorrectedParams };
         newParams.index = 1;
         this.props.dispatch(createAction('supervision/updateState')({
-            toBeCorrectedParams:newParams,
-            toBeCorrectedResult:{status:-1},
+            toBeCorrectedParams: newParams,
+            toBeCorrectedResult: { status: -1 },
         }));
         this.props.dispatch(createAction('supervision/getToBeCorrectedList')({}));
         this.props.dispatch(createAction('supervision/getOperationKeyParameterCount')({}));
     }
 
     onRefresh = () => {
-        let newParams = {...this.props.toBeCorrectedParams};
+        let newParams = { ...this.props.toBeCorrectedParams };
         newParams.index = 1;
         this.props.dispatch(createAction('supervision/updateState')({
-            toBeCorrectedParams:newParams,
+            toBeCorrectedParams: newParams,
         }));
         this.props.dispatch(createAction('supervision/getToBeCorrectedList')({
-            setListData:this.list.setListData
+            setListData: this.list.setListData
         }));
         this.props.dispatch(createAction('supervision/getOperationKeyParameterCount')({}));
     }
 
     nextPage = (index) => {
-        let newParams = {...this.props.toBeCorrectedParams};
+        let newParams = { ...this.props.toBeCorrectedParams };
         newParams.index = index;
         this.props.dispatch(createAction('supervision/updateState')({
-            toBeCorrectedParams:newParams,
+            toBeCorrectedParams: newParams,
         }));
         this.props.dispatch(createAction('supervision/getToBeCorrectedList')({
-            setListData:this.list.setListData
+            setListData: this.list.setListData
         }));
     }
 
     renderItem = ({ item, index }) => {
-        return(<TouchableOpacity
-            onPress={()=>{
+        return (<TouchableOpacity
+            onPress={() => {
                 this.props.dispatch(createAction('supervision/updateState')({
                     rectificationID: item.ID,
-                    Status:2,
+                    Status: 2,
                 }));
                 this.props.dispatch(NavigationActions.navigate({
                     routeName: 'SupervisionDetail',
@@ -234,28 +290,32 @@ class KeyParameterVerificationToBeCorrectedList extends PureComponent {
         >
             <View
                 key={`ToBeCorrected${index}`}
-                style={[{width:SCREEN_WIDTH, height:89
-                    , backgroundColor:'#ffffff', paddingLeft:20.5
+                style={[{
+                    width: SCREEN_WIDTH, height: 89
+                    , backgroundColor: '#ffffff', paddingLeft: 20.5
                 }]}
             >
                 <View style={[{
-                    marginTop:4.5, height: 34
-                    , flexDirection:'row', alignItems:'center'
+                    marginTop: 4.5, height: 34
+                    , flexDirection: 'row', alignItems: 'center'
                 }]}>
-                    <Text style={{color:'#333333'
-                        , fontSize:15, marginRight:12
-                    }}>{SentencedToEmpty(item,['PointName'],'--')}</Text>
-                    <View style={{width:43, height:14
-                        , justifyContent:'center', alignItems:'center'
-                        , backgroundColor:'#FFC2874D', 
+                    <Text style={{
+                        color: '#333333'
+                        , fontSize: 15, marginRight: 12
+                    }}>{SentencedToEmpty(item, ['PointName'], '--')}</Text>
+                    <View style={{
+                        width: 43, height: 14
+                        , justifyContent: 'center', alignItems: 'center'
+                        , backgroundColor: '#FFC2874D',
                     }}>
-                        <Text style={{fontSize:10,color:'#F5993F'}}>{'待整改'}</Text>
+                        <Text style={{ fontSize: 10, color: '#F5993F' }}>{'待整改'}</Text>
                     </View>
                 </View>
-                <View style={{height:22.5}}>
-                    <Text style={{color:'#666666'
-                        , fontSize:14, marginRight:12
-                    }}>{`企业名称：${SentencedToEmpty(item,['EntName'],'--')}`}</Text>
+                <View style={{ height: 22.5 }}>
+                    <Text style={{
+                        color: '#666666'
+                        , fontSize: 14, marginRight: 12
+                    }}>{`企业名称：${SentencedToEmpty(item, ['EntName'], '--')}`}</Text>
                 </View>
                 {/* 
                 彭宇说不展示督查人，需要多查一个表，没必要
@@ -264,18 +324,19 @@ class KeyParameterVerificationToBeCorrectedList extends PureComponent {
                         , fontSize:14, marginRight:12
                     }}>{`督查人：${SentencedToEmpty(item,['operationUserName'],'--')}`}</Text>
                 </View> */}
-                <View style={{height:28}}>
-                    <Text style={{color:'#666666'
-                        , fontSize:14, marginRight:12
-                    }}>{`督查日期：${SentencedToEmpty(item,['Time'],'--')}`}</Text>
+                <View style={{ height: 28 }}>
+                    <Text style={{
+                        color: '#666666'
+                        , fontSize: 14, marginRight: 12
+                    }}>{`督查日期：${SentencedToEmpty(item, ['Time'], '--')}`}</Text>
                 </View>
             </View>
         </TouchableOpacity>);
     }
     render() {
-        return (<View style={{ width:SCREEN_WIDTH, flex:1, paddingTop:9.5,}}>
+        return (<View style={{ width: SCREEN_WIDTH, flex: 1, paddingTop: 9.5, }}>
             <StatusPage
-                status={SentencedToEmpty(this.props,['toBeCorrectedResult','status'],1000)}
+                status={SentencedToEmpty(this.props, ['toBeCorrectedResult', 'status'], 1000)}
                 //页面是否有回调按钮，如果不传，没有按钮，
                 emptyBtnText={'重新请求'}
                 errorBtnText={'点击重试'}
@@ -306,7 +367,7 @@ class KeyParameterVerificationToBeCorrectedList extends PureComponent {
                         this.nextPage(index);
                     }}
                     renderItem={this.renderItem}
-                    data={SentencedToEmpty(this.props,['toBeCorrectedDataList'],[])}
+                    data={SentencedToEmpty(this.props, ['toBeCorrectedDataList'], [])}
                 />
             </StatusPage>
         </View>)
@@ -314,54 +375,54 @@ class KeyParameterVerificationToBeCorrectedList extends PureComponent {
 }
 
 // 已整改
-@connect(({ supervision })=>({
-    alreadyCorrectedParams:supervision.alreadyCorrectedParams,
-    alreadyCorrectedResult:supervision.alreadyCorrectedResult,
-    alreadyCorrectedDataList:supervision.alreadyCorrectedDataList
+@connect(({ supervision }) => ({
+    alreadyCorrectedParams: supervision.alreadyCorrectedParams,
+    alreadyCorrectedResult: supervision.alreadyCorrectedResult,
+    alreadyCorrectedDataList: supervision.alreadyCorrectedDataList
 }))
 class KeyParameterVerificationAlreadyCorrectedList extends PureComponent {
-    
+
 
     statusPageOnRefresh = () => {
-        let newParams = {...this.props.alreadyCorrectedParams};
+        let newParams = { ...this.props.alreadyCorrectedParams };
         newParams.index = 1;
         this.props.dispatch(createAction('supervision/updateState')({
-            alreadyCorrectedParams:newParams,
-            alreadyCorrectedResult:{status:-1},
+            alreadyCorrectedParams: newParams,
+            alreadyCorrectedResult: { status: -1 },
         }));
         this.props.dispatch(createAction('supervision/getAlreadyCorrectedList')({}));
         this.props.dispatch(createAction('supervision/getOperationKeyParameterCount')({}));
     }
 
     onRefresh = () => {
-        let newParams = {...this.props.alreadyCorrectedParams};
+        let newParams = { ...this.props.alreadyCorrectedParams };
         newParams.index = 1;
         this.props.dispatch(createAction('supervision/updateState')({
-            alreadyCorrectedParams:newParams,
+            alreadyCorrectedParams: newParams,
         }));
         this.props.dispatch(createAction('supervision/getAlreadyCorrectedList')({
-            setListData:this.list.setListData
+            setListData: this.list.setListData
         }));
         this.props.dispatch(createAction('supervision/getOperationKeyParameterCount')({}));
     }
 
     nextPage = (index) => {
-        let newParams = {...this.props.alreadyCorrectedParams};
+        let newParams = { ...this.props.alreadyCorrectedParams };
         newParams.index = index;
         this.props.dispatch(createAction('supervision/updateState')({
-            alreadyCorrectedParams:newParams,
+            alreadyCorrectedParams: newParams,
         }));
         this.props.dispatch(createAction('supervision/getAlreadyCorrectedList')({
-            setListData:this.list.setListData
+            setListData: this.list.setListData
         }));
     }
 
     renderItem = ({ item, index }) => {
-        return(<TouchableOpacity
-            onPress={()=>{
+        return (<TouchableOpacity
+            onPress={() => {
                 this.props.dispatch(createAction('supervision/updateState')({
                     rectificationID: item.ID,
-                    Status:1,
+                    Status: 1,
                 }));
                 this.props.dispatch(NavigationActions.navigate({
                     routeName: 'SupervisionDetail',
@@ -370,38 +431,43 @@ class KeyParameterVerificationAlreadyCorrectedList extends PureComponent {
         >
             <View
                 key={`AlreadySubmit${index}`}
-                style={[{width:SCREEN_WIDTH, height:89
-                    , backgroundColor:'#ffffff', paddingLeft:20.5
+                style={[{
+                    width: SCREEN_WIDTH, height: 89
+                    , backgroundColor: '#ffffff', paddingLeft: 20.5
                 }]}
             >
                 <View style={[{
-                    marginTop:4.5, height: 34
-                    , flexDirection:'row', alignItems:'center'
+                    marginTop: 4.5, height: 34
+                    , flexDirection: 'row', alignItems: 'center'
                 }]}>
-                    <Text style={{color:'#333333'
-                        , fontSize:15, marginRight:12
-                    }}>{SentencedToEmpty(item,['PointName'],'--')}</Text>
-                    <View style={{width:43, height:14
-                        , justifyContent:'center', alignItems:'center'
-                        , backgroundColor:'#94C4FB4D', 
+                    <Text style={{
+                        color: '#333333'
+                        , fontSize: 15, marginRight: 12
+                    }}>{SentencedToEmpty(item, ['PointName'], '--')}</Text>
+                    <View style={{
+                        width: 43, height: 14
+                        , justifyContent: 'center', alignItems: 'center'
+                        , backgroundColor: '#94C4FB4D',
                     }}>
-                        <Text style={{fontSize:10,color:'#66ADFF'}}>{'已整改'}</Text>
+                        <Text style={{ fontSize: 10, color: '#66ADFF' }}>{'已整改'}</Text>
                     </View>
                 </View>
-                <View style={{height:22.5}}>
-                    <Text style={{color:'#666666'
-                        , fontSize:14, marginRight:12
-                    }}>{`企业名称：${SentencedToEmpty(item,['EntName'],'--')}`}</Text>
+                <View style={{ height: 22.5 }}>
+                    <Text style={{
+                        color: '#666666'
+                        , fontSize: 14, marginRight: 12
+                    }}>{`企业名称：${SentencedToEmpty(item, ['EntName'], '--')}`}</Text>
                 </View>
                 {/* <View style={{height:23}}>
                     <Text style={{color:'#666666'
                         , fontSize:14, marginRight:12
                     }}>{`运维人员：${SentencedToEmpty(item,['operationUserName'],'--')}`}</Text>
                 </View> */}
-                <View style={{height:28}}>
-                    <Text style={{color:'#666666'
-                        , fontSize:14, marginRight:12
-                    }}>{`督查日期：${SentencedToEmpty(item,['Time'],'--')}`}</Text>
+                <View style={{ height: 28 }}>
+                    <Text style={{
+                        color: '#666666'
+                        , fontSize: 14, marginRight: 12
+                    }}>{`督查日期：${SentencedToEmpty(item, ['Time'], '--')}`}</Text>
                 </View>
                 {/* <View style={{height:38, flexDirection:'row' }}>
                     <TouchableOpacity
@@ -430,9 +496,9 @@ class KeyParameterVerificationAlreadyCorrectedList extends PureComponent {
         </TouchableOpacity>);
     }
     render() {
-        return (<View style={{ width:SCREEN_WIDTH, flex:1, paddingTop:9.5,}}>
+        return (<View style={{ width: SCREEN_WIDTH, flex: 1, paddingTop: 9.5, }}>
             <StatusPage
-                status={SentencedToEmpty(this.props,['alreadyCorrectedResult','status'],1000)}
+                status={SentencedToEmpty(this.props, ['alreadyCorrectedResult', 'status'], 1000)}
                 //页面是否有回调按钮，如果不传，没有按钮，
                 emptyBtnText={'重新请求'}
                 errorBtnText={'点击重试'}
@@ -463,7 +529,7 @@ class KeyParameterVerificationAlreadyCorrectedList extends PureComponent {
                         this.nextPage(index);
                     }}
                     renderItem={this.renderItem}
-                    data={SentencedToEmpty(this.props,['alreadyCorrectedDataList'],[])}
+                    data={SentencedToEmpty(this.props, ['alreadyCorrectedDataList'], [])}
                 />
             </StatusPage>
         </View>)
@@ -471,53 +537,53 @@ class KeyParameterVerificationAlreadyCorrectedList extends PureComponent {
 }
 
 // 申诉中 
-@connect(({ supervision })=>({
-    underAppealParams:supervision.underAppealParams,
-    underAppealResult:supervision.underAppealResult,
-    underAppealDataList:supervision.underAppealDataList
+@connect(({ supervision }) => ({
+    underAppealParams: supervision.underAppealParams,
+    underAppealResult: supervision.underAppealResult,
+    underAppealDataList: supervision.underAppealDataList
 }))
 class KeyParameterVerificationUnderAppealList extends PureComponent {
-    
+
     statusPageOnRefresh = () => {
-        let newParams = {...this.props.underAppealParams};
+        let newParams = { ...this.props.underAppealParams };
         newParams.index = 1;
         this.props.dispatch(createAction('supervision/updateState')({
-            underAppealParams:newParams,
-            underAppealResult:{status:-1},
+            underAppealParams: newParams,
+            underAppealResult: { status: -1 },
         }));
         this.props.dispatch(createAction('supervision/getUnderAppealList')({}));
         this.props.dispatch(createAction('supervision/getOperationKeyParameterCount')({}));
     }
 
     onRefresh = () => {
-        let newParams = {...this.props.underAppealParams};
+        let newParams = { ...this.props.underAppealParams };
         newParams.index = 1;
         this.props.dispatch(createAction('supervision/updateState')({
-            underAppealParams:newParams,
+            underAppealParams: newParams,
         }));
         this.props.dispatch(createAction('supervision/getUnderAppealList')({
-            setListData:this.list.setListData
+            setListData: this.list.setListData
         }));
         this.props.dispatch(createAction('supervision/getOperationKeyParameterCount')({}));
     }
 
     nextPage = (index) => {
-        let newParams = {...this.props.underAppealParams};
+        let newParams = { ...this.props.underAppealParams };
         newParams.index = index;
         this.props.dispatch(createAction('supervision/updateState')({
-            underAppealParams:newParams,
+            underAppealParams: newParams,
         }));
         this.props.dispatch(createAction('supervision/getUnderAppealList')({
-            setListData:this.list.setListData
+            setListData: this.list.setListData
         }));
     }
 
     renderItem = ({ item, index }) => {
-        return(<TouchableOpacity
-            onPress={()=>{
+        return (<TouchableOpacity
+            onPress={() => {
                 this.props.dispatch(createAction('supervision/updateState')({
                     rectificationID: item.ID,
-                    Status:5,
+                    Status: 5,
                 }));
                 this.props.dispatch(NavigationActions.navigate({
                     routeName: 'SupervisionDetail',
@@ -526,38 +592,43 @@ class KeyParameterVerificationUnderAppealList extends PureComponent {
         >
             <View
                 key={`AlreadySubmit${index}`}
-                style={[{width:SCREEN_WIDTH, height:90
-                    , backgroundColor:'#ffffff', paddingLeft:20.5
+                style={[{
+                    width: SCREEN_WIDTH, height: 90
+                    , backgroundColor: '#ffffff', paddingLeft: 20.5
                 }]}
             >
                 <View style={[{
-                    marginTop:4.5, height: 34
-                    , flexDirection:'row', alignItems:'center'
+                    marginTop: 4.5, height: 34
+                    , flexDirection: 'row', alignItems: 'center'
                 }]}>
-                    <Text style={{color:'#333333'
-                        , fontSize:15, marginRight:12
-                    }}>{SentencedToEmpty(item,['PointName'],'--')}</Text>
-                    <View style={{width:43, height:14
-                        , justifyContent:'center', alignItems:'center'
-                        , backgroundColor:'#98F8D34D', 
+                    <Text style={{
+                        color: '#333333'
+                        , fontSize: 15, marginRight: 12
+                    }}>{SentencedToEmpty(item, ['PointName'], '--')}</Text>
+                    <View style={{
+                        width: 43, height: 14
+                        , justifyContent: 'center', alignItems: 'center'
+                        , backgroundColor: '#98F8D34D',
                     }}>
-                        <Text style={{fontSize:10,color:'#48C594'}}>{'申诉中'}</Text>
+                        <Text style={{ fontSize: 10, color: '#48C594' }}>{'申诉中'}</Text>
                     </View>
                 </View>
-                <View style={{height:22.5}}>
-                    <Text style={{color:'#666666'
-                        , fontSize:14, marginRight:12
-                    }}>{`企业名称：${SentencedToEmpty(item,['EntName'],'--')}`}</Text>
+                <View style={{ height: 22.5 }}>
+                    <Text style={{
+                        color: '#666666'
+                        , fontSize: 14, marginRight: 12
+                    }}>{`企业名称：${SentencedToEmpty(item, ['EntName'], '--')}`}</Text>
                 </View>
                 {/* <View style={{height:23}}>
                     <Text style={{color:'#666666'
                         , fontSize:14, marginRight:12
                     }}>{`运维人员：${SentencedToEmpty(item,['operationUserName'],'--')}`}</Text>
                 </View> */}
-                <View style={{height:28}}>
-                    <Text style={{color:'#666666'
-                        , fontSize:14, marginRight:12
-                    }}>{`督查日期：${SentencedToEmpty(item,['Time'],'--')}`}</Text>
+                <View style={{ height: 28 }}>
+                    <Text style={{
+                        color: '#666666'
+                        , fontSize: 14, marginRight: 12
+                    }}>{`督查日期：${SentencedToEmpty(item, ['Time'], '--')}`}</Text>
                 </View>
                 {/* <View style={{height:38, flexDirection:'row' }}>
                     <TouchableOpacity
@@ -586,9 +657,9 @@ class KeyParameterVerificationUnderAppealList extends PureComponent {
         </TouchableOpacity>);
     }
     render() {
-        return (<View style={{ width:SCREEN_WIDTH, flex:1, paddingTop:9.5,}}>
+        return (<View style={{ width: SCREEN_WIDTH, flex: 1, paddingTop: 9.5, }}>
             <StatusPage
-                status={SentencedToEmpty(this.props,['underAppealResult','status'],1000)}
+                status={SentencedToEmpty(this.props, ['underAppealResult', 'status'], 1000)}
                 //页面是否有回调按钮，如果不传，没有按钮，
                 emptyBtnText={'重新请求'}
                 errorBtnText={'点击重试'}
@@ -619,7 +690,7 @@ class KeyParameterVerificationUnderAppealList extends PureComponent {
                         this.nextPage(index);
                     }}
                     renderItem={this.renderItem}
-                    data={SentencedToEmpty(this.props,['underAppealDataList'],[])}
+                    data={SentencedToEmpty(this.props, ['underAppealDataList'], [])}
                 />
             </StatusPage>
         </View>)

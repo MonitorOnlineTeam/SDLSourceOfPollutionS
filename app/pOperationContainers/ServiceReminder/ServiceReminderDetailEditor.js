@@ -2,8 +2,8 @@
  * @Description: 服务记录详情和提醒
  * @LastEditors: hxf
  * @Date: 2024-04-11 18:59:17
- * @LastEditTime: 2024-04-18 11:12:45
- * @FilePath: /SDLMainProject37/app/pOperationContainers/ServiceReminder/ServiceReminderDetailEditor.js
+ * @LastEditTime: 2024-09-26 19:41:05
+ * @FilePath: /SDLMainProject/app/pOperationContainers/ServiceReminder/ServiceReminderDetailEditor.js
  */
 import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'

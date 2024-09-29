@@ -36,7 +36,7 @@ import Actions from './RouterUtils';
 
 // export * from './strutil';
 export * from './logutil';
-// export * from './numutil';
+export * from './numutil';
 export * from './colorutil';
 // export * from './coordinate';
 export * from './webSocketUtil';
@@ -69,8 +69,12 @@ export const ShowToast = msgOption => {
     //     message: '请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空请输入完整的授权码,当前授权码为空',
     //     alertType: 'error',
     // })
-    console.log('ShowToast 被调用');
+    // console.log('ShowToast 被调用');
+    console.log('ShowToast 被调用', msgOption);
     // Toast.info(msg, 1);
+    if (typeof msgOption == 'string') {
+        msgOption = { message: msgOption, alertType: 'info' };
+    }
     MessageBarManager.showAlert(msgOption);
 };
 
@@ -879,7 +883,8 @@ export const getCommonHeaderStyle = () => {
             backgroundColor: globalcolor.headerBackgroundColor,
         },
         headerTitleStyle: {
-            color: 'white'
+            color: 'white',
+            fontSize: 16
         },
         headerTitleAlign: 'center',
         headerLeft: () => {

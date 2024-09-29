@@ -2,8 +2,8 @@
  * @Description: 成套待办列表
  * @LastEditors: hxf
  * @Date: 2023-09-14 13:47:52
- * @LastEditTime: 2023-10-20 11:45:46
- * @FilePath: /SDLMainProject36/app/pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoGTask.js
+ * @LastEditTime: 2024-09-26 09:45:31
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoGTask.js
  */
 import React, { Component } from 'react'
 import { Platform, Text, TouchableOpacity, View } from 'react-native'
@@ -31,6 +31,16 @@ export default class ChengTaoGTask extends Component {
     };
 
     componentDidMount() {
+        this.props.navigation.setOptions({
+            headerRight: () => <TouchableOpacity
+                onPress={() => {
+                    this.props.dispatch(NavigationActions.navigate({ routeName: 'ChengTaoTaskRecord' }));
+                }}
+            >
+                <SDLText style={{ color: '#fff', marginHorizontal: 16 }}>{'派单记录'}</SDLText>
+            </TouchableOpacity>
+        });
+
         this.props.navigation.setParams({
             headerRight: (
                 <TouchableOpacity

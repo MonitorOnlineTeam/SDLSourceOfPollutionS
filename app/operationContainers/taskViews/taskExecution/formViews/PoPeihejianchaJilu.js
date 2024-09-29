@@ -2,14 +2,15 @@
  * @Description: 配合检查记录表
  * @LastEditors: hxf
  * @Date: 2021-11-24 15:50:19
- * @LastEditTime: 2024-08-07 17:28:22
- * @FilePath: /SDLMainProject37/app/operationContainers/taskViews/taskExecution/formViews/PoPeihejianchaJilu.js
+ * @LastEditTime: 2024-09-24 18:51:53
+ * @FilePath: /SDLMainProject/app/operationContainers/taskViews/taskExecution/formViews/PoPeihejianchaJilu.js
  */
 
 import React, { Component } from 'react'
 import {
     Text, View, TouchableOpacity, Image, Platform, StyleSheet
-    , TextInput, DeviceEventEmitter
+    , TextInput, DeviceEventEmitter,
+    ScrollView
 } from 'react-native'
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -147,7 +148,7 @@ export default class PoPeihejianchaJilu extends Component {
     }
 
     onRefresh = () => {
-        const { ID } = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item'], {});
+        const { ID } = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
         this.props.dispatch(createAction('peiHeJianChaModel/getCooperationInspectionRecordList')({
             TypeID: `${ID}`,
             callback: (result) => {
@@ -294,7 +295,7 @@ export default class PoPeihejianchaJilu extends Component {
     }
 
     commitForm = () => {
-        const { ID } = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item'], {});
+        const { ID } = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
         let params = {
             InspectionUnit: this.state.InspectionUnit, // 检查单位
             CooperationDate: this.state.CooperationDate, //检查日期,
@@ -334,7 +335,7 @@ export default class PoPeihejianchaJilu extends Component {
      * 确认删除配合检查表单
      */
     confirm = () => {
-        const { ID } = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item'], {});
+        const { ID } = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
         this.props.dispatch(
             createAction('peiHeJianChaModel/deleteCooperationInspectionRecord')({
                 TypeID: ID,
@@ -381,7 +382,10 @@ export default class PoPeihejianchaJilu extends Component {
                     this.onRefresh();
                 }}
             >
-                <KeyboardAwareScrollView behavior={Platform.OS == 'ios' ? 'padding' : ''} style={styles.container}>
+                {/* <KeyboardAwareScrollView behavior={Platform.OS == 'ios' ? 'padding' : ''} style={styles.container}> */}
+                <ScrollView
+                    style={[{ width: SCREEN_WIDTH, flex: 1 }]}
+                >
                     <View style={[{ width: SCREEN_WIDTH, alignItems: 'center', marginVertical: 22, justifyContent: 'center' }]}>
                         <View
                             style={[
@@ -576,8 +580,9 @@ export default class PoPeihejianchaJilu extends Component {
                                 label='附件' localId={this.fileId} /> */}
                         </View>
                     </View>
-                </KeyboardAwareScrollView>
-                {SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'FormMainID'], '') != '' ? (
+                </ScrollView>
+                {/* </KeyboardAwareScrollView> */}
+                {SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'FormMainID'], '') != '' ? (
                     <TouchableOpacity
                         style={[styles.button, { backgroundColor: globalcolor.orange }, { marginVertical: 10 }]}
                         onPress={() => {

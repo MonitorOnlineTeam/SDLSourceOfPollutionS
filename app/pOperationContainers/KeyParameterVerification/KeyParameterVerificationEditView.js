@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-02-07 09:08:10
- * @LastEditTime: 2023-06-16 11:32:48
- * @FilePath: /SDLMainProject36/app/pOperationContainers/KeyParameterVerification/KeyParameterVerificationEditView.js
+ * @LastEditTime: 2024-09-27 09:12:32
+ * @FilePath: /SDLMainProject/app/pOperationContainers/KeyParameterVerification/KeyParameterVerificationEditView.js
  */
 import React, { Component } from 'react'
 import { Platform, Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native'
@@ -17,20 +17,20 @@ import FormLabel from '../../operationContainers/taskViews/taskExecution/compone
 import FormTextArea from '../../operationContainers/taskViews/taskExecution/components/FormTextArea';
 import { createNavigationOptions, NavigationActions, SentencedToEmpty, createAction, ShowToast } from '../../utils';
 
-@connect(({ keyParameterVerificationModel, app })=>({
+@connect(({ keyParameterVerificationModel, app }) => ({
     selectEnterprise: app.selectEnterprise,
-    KeyParameterCodeListResult:keyParameterVerificationModel.KeyParameterCodeListResult,
-    keyParameterVerificationEditData:keyParameterVerificationModel.keyParameterVerificationEditData,
-    addOrUpdOperationKeyParameterResult:keyParameterVerificationModel.addOrUpdOperationKeyParameterResult,
-    operationKeyParameterDetailResult:keyParameterVerificationModel.operationKeyParameterDetailResult
+    KeyParameterCodeListResult: keyParameterVerificationModel.KeyParameterCodeListResult,
+    keyParameterVerificationEditData: keyParameterVerificationModel.keyParameterVerificationEditData,
+    addOrUpdOperationKeyParameterResult: keyParameterVerificationModel.addOrUpdOperationKeyParameterResult,
+    operationKeyParameterDetailResult: keyParameterVerificationModel.operationKeyParameterDetailResult
 }))
 export default class KeyParameterVerificationEditView extends Component {
-    
-    static navigationOptions =({navigation}) =>  createNavigationOptions({
-        title: SentencedToEmpty(navigation,['state','params','type'])=='update'
-        ||SentencedToEmpty(navigation,['state','params','type'])=='create'?'新增核查信息'
-        :SentencedToEmpty(navigation,['state','params','type'])=='submitted_update'?'修改核查信息'
-        :SentencedToEmpty(navigation,['state','params','type'])=='show_completed_records'?'核查详情':'新增核查信息',
+
+    static navigationOptions = ({ navigation }) => createNavigationOptions({
+        title: SentencedToEmpty(navigation, ['state', 'params', 'type']) == 'update'
+            || SentencedToEmpty(navigation, ['state', 'params', 'type']) == 'create' ? '新增核查信息'
+            : SentencedToEmpty(navigation, ['state', 'params', 'type']) == 'submitted_update' ? '修改核查信息'
+                : SentencedToEmpty(navigation, ['state', 'params', 'type']) == 'show_completed_records' ? '核查详情' : '新增核查信息',
         headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
     });
 
@@ -38,21 +38,27 @@ export default class KeyParameterVerificationEditView extends Component {
         super(props);
         this.state = {
         }
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(this.props.route, ['params', 'params', 'type']) == 'update'
+                || SentencedToEmpty(this.props.route, ['params', 'params', 'type']) == 'create' ? '新增核查信息'
+                : SentencedToEmpty(this.props.route, ['params', 'params', 'type']) == 'submitted_update' ? '修改核查信息'
+                    : SentencedToEmpty(this.props.route, ['params', 'params', 'type']) == 'show_completed_records' ? '核查详情' : '新增核查信息',
+        });
     }
 
     componentDidMount() {
-        const type = SentencedToEmpty(this.props,['navigation','state','params','type'],'');
+        const type = SentencedToEmpty(this.props, ['route', 'params', 'params', 'type'], '');
         this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
-            KeyParameterCodeListResult:{status:-1},
-            operationKeyParameterDetailResult:{status:-1},
+            KeyParameterCodeListResult: { status: -1 },
+            operationKeyParameterDetailResult: { status: -1 },
         }))
         this.props.dispatch(createAction('keyParameterVerificationModel/getKeyParameterCodeList')({
-            callback:()=>{
-                if (type == 'update'||type == 'submitted_update'||type == 'show_completed_records') {
+            callback: () => {
+                if (type == 'update' || type == 'submitted_update' || type == 'show_completed_records') {
                     this.props.dispatch(createAction('keyParameterVerificationModel/getOperationKeyParameterDetailList')(
                         {
-                            params:SentencedToEmpty(this.props,['navigation','state','params',],{}),
-                            dispatch:this.props.dispatch,
+                            params: SentencedToEmpty(this.props, ['route', 'params', 'params',], {}),
+                            dispatch: this.props.dispatch,
                             // setDataToPointPicker:item=>{
                             //     SentencedToEmpty(this,['pointPicker','wrappedInstance','setSelectItem'],()=>{})(item);
                             // }
@@ -62,33 +68,33 @@ export default class KeyParameterVerificationEditView extends Component {
             }
         }))
     }
-    
+
     componentWillUnmount() {
         this.props.dispatch(createAction('keyParameterVerificationModel/getOperationKeyParameterCount')({}));
         // 在父组件中清除数据保证数据状态一致
-        this.props.dispatch(createAction('app/updateState')({selectEnterprise: { EntName: '请选择' }}))
+        this.props.dispatch(createAction('app/updateState')({ selectEnterprise: { EntName: '请选择' } }))
     }
 
-    onFreshData = ()=>{
+    onFreshData = () => {
         this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
-            KeyParameterCodeListResult:{status:-1}
+            KeyParameterCodeListResult: { status: -1 }
         }))
         this.props.dispatch(createAction('keyParameterVerificationModel/getKeyParameterCodeList')({}))
     }
 
     isEdit = () => {
-        const type = SentencedToEmpty(this.props,['navigation','state','params','type'],'');
-        let params = SentencedToEmpty(this.props,['navigation','state','params'],null);
+        const type = SentencedToEmpty(this.props, ['route', 'params', 'params', 'type'], '');
+        let params = SentencedToEmpty(this.props, ['route', 'params', 'params'], null);
         let formId = SentencedToEmpty(this.props.keyParameterVerificationEditData
-            ,['id'],'');
-        if (formId=='') {
+            , ['id'], '');
+        if (formId == '') {
             return true
         }
         let editable = true;
-        if (params!=null&&params.editable == false) {
+        if (params != null && params.editable == false) {
             editable = false;
         }
-        if (type == 'show_completed_records'||!editable) {
+        if (type == 'show_completed_records' || !editable) {
             console.log('isEdit false');
             return false
         } else {
@@ -97,86 +103,87 @@ export default class KeyParameterVerificationEditView extends Component {
         }
     }
 
-    renderItem = (item,key) => {
-        const type = SentencedToEmpty(this.props,['navigation','state','params','type'],'');
+    renderItem = (item, key) => {
+        const type = SentencedToEmpty(this.props, ['route', 'params', 'params', 'type'], '');
         let data = SentencedToEmpty(this.props.keyParameterVerificationEditData
-            ,['list',key],{});
+            , ['list', key], {});
         let isEditAble = this.isEdit();
-        return(<View 
+        return (<View
             key={`item${key}`}
-            style={{width:SCREEN_WIDTH, backgroundColor:'white'
-            , alignItems:'center', marginTop:7.5
-        }}>
-            <View style={{width:SCREEN_WIDTH-38}}>
+            style={{
+                width: SCREEN_WIDTH, backgroundColor: 'white'
+                , alignItems: 'center', marginTop: 7.5
+            }}>
+            <View style={{ width: SCREEN_WIDTH - 38 }}>
                 <FormLabel label={`${item.sort}、${item.name}`} />
             </View>
             <View
-                style={{width:SCREEN_WIDTH-38}}
+                style={{ width: SCREEN_WIDTH - 38 }}
             >
-                <Text style={{marginTop:10, fontSize:14,color:'#666666'}}>{'照片附件：'}</Text>
+                <Text style={{ marginTop: 10, fontSize: 14, color: '#666666' }}>{'照片附件：'}</Text>
             </View>
-            <ImageGrid 
-                uploadCallback={(imageItems)=>{
-                    let newDataUpdateImage = {...this.props.keyParameterVerificationEditData};
-                    let imageList = SentencedToEmpty(newDataUpdateImage,['list',key,'fileList'],[]);
+            <ImageGrid
+                uploadCallback={(imageItems) => {
+                    let newDataUpdateImage = { ...this.props.keyParameterVerificationEditData };
+                    let imageList = SentencedToEmpty(newDataUpdateImage, ['list', key, 'fileList'], []);
                     let newImageList = imageList.concat(imageItems);
                     newDataUpdateImage.list[key].fileList = newImageList;
                     this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
-                        keyParameterVerificationEditData:newDataUpdateImage
+                        keyParameterVerificationEditData: newDataUpdateImage
                     }));
                 }}
-                delCallback={(imageIndex)=>{
-                    let newDataUpdateImage = {...this.props.keyParameterVerificationEditData};
-                    let imageList = SentencedToEmpty(newDataUpdateImage,['list',key,'fileList'],[]);
+                delCallback={(imageIndex) => {
+                    let newDataUpdateImage = { ...this.props.keyParameterVerificationEditData };
+                    let imageList = SentencedToEmpty(newDataUpdateImage, ['list', key, 'fileList'], []);
                     imageList.splice(imageIndex, 1);
                     newDataUpdateImage.list[key].fileList = imageList;
                     this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
-                        keyParameterVerificationEditData:newDataUpdateImage
+                        keyParameterVerificationEditData: newDataUpdateImage
                     }));
                 }}
-                style={{ paddingHorizontal:9, paddingBottom: 10, backgroundColor: '#fff' }} 
-                Imgs={SentencedToEmpty(data,['fileList'],[])} 
-                isUpload={isEditAble} 
-                isDel={isEditAble} 
-                UUID={`${SentencedToEmpty(data,['File'],'empty_id')}`} />
+                style={{ paddingHorizontal: 9, paddingBottom: 10, backgroundColor: '#fff' }}
+                Imgs={SentencedToEmpty(data, ['fileList'], [])}
+                isUpload={isEditAble}
+                isDel={isEditAble}
+                UUID={`${SentencedToEmpty(data, ['File'], 'empty_id')}`} />
             <View
-                style={{width:SCREEN_WIDTH-38}}
+                style={{ width: SCREEN_WIDTH - 38 }}
             >
-                <FormTextArea 
+                <FormTextArea
                     editable={isEditAble}
                     areaHeight={58}
                     required={false}
                     label='备注：'
                     placeholder=''
-                    value={SentencedToEmpty(data,[`Remark`],'')}
-                    onChangeText={(text)=>{
+                    value={SentencedToEmpty(data, [`Remark`], '')}
+                    onChangeText={(text) => {
                         // let paramKey = `remark${key}`;
                         // let newData = {};
                         // newData[paramKey] = text;
                         // this.setState(newData);
 
-                        let newDataUpdateText = {...this.props.keyParameterVerificationEditData};
+                        let newDataUpdateText = { ...this.props.keyParameterVerificationEditData };
                         newDataUpdateText.list[key].Remark = text;
                         this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
-                            keyParameterVerificationEditData:newDataUpdateText
+                            keyParameterVerificationEditData: newDataUpdateText
                         }));
                     }}
                 />
-                <View style={{height:15,width:SCREEN_WIDTH-38}} />
+                <View style={{ height: 15, width: SCREEN_WIDTH - 38 }} />
             </View>
         </View>);
     }
 
     render() {
-        const type = SentencedToEmpty(this.props,['navigation','state','params','type'],'');
-        const formType = SentencedToEmpty(this.props,['navigation','state','params','type'],'');
+        const type = SentencedToEmpty(this.props, ['route', 'params', 'params', 'type'], '');
+        const formType = SentencedToEmpty(this.props, ['route', 'params', 'params', 'type'], '');
         let isEditAble = this.isEdit();
         return (
             <StatusPage
-                status={ 
-                    type == 'update'||type == 'submitted_update'||type == 'show_completed_records'
-                    ?SentencedToEmpty(this.props,['operationKeyParameterDetailResult','status'],1000):
-                    SentencedToEmpty(this.props,['KeyParameterCodeListResult','status'],1000) }
+                status={
+                    type == 'update' || type == 'submitted_update' || type == 'show_completed_records'
+                        ? SentencedToEmpty(this.props, ['operationKeyParameterDetailResult', 'status'], 1000) :
+                        SentencedToEmpty(this.props, ['KeyParameterCodeListResult', 'status'], 1000)}
                 //页面是否有回调按钮，如果不传，没有按钮，
                 emptyBtnText={'重新请求'}
                 errorBtnText={'点击重试'}
@@ -191,34 +198,36 @@ export default class KeyParameterVerificationEditView extends Component {
             >
                 <KeyboardAwareScrollView ref="scroll" style={{ flex: 1, width: SCREEN_WIDTH }}>
                     <View
-                        style={{width:SCREEN_WIDTH, backgroundColor:'white'
+                        style={{
+                            width: SCREEN_WIDTH, backgroundColor: 'white'
                         }}
                     >
-                        <View style={{width:SCREEN_WIDTH-34
-                            , marginLeft:13.5
+                        <View style={{
+                            width: SCREEN_WIDTH - 34
+                            , marginLeft: 13.5
                         }}>
-                            <FormEnterprisePicker 
+                            <FormEnterprisePicker
                                 editable={isEditAble}
                                 label={'企业'}
                                 required={false}
-                                selectCallback={(item)=>{
+                                selectCallback={(item) => {
                                     // console.log('item = ',item);
                                 }}
                             />
                             <FormPointPicker
                                 ref={ref => (this.pointPicker = ref)}
-                                editable={isEditAble} 
+                                editable={isEditAble}
                                 label={'监测点'}
                                 required={false}
-                                selectPointItem={SentencedToEmpty(this.props,[
-                                        'keyParameterVerificationEditData','selectPointItem'
-                                    ],{ PointName: '请选择监测点' })}
-                                callback={(item)=>{
-                                    let newData = {...this.props.keyParameterVerificationEditData};
+                                selectPointItem={SentencedToEmpty(this.props, [
+                                    'keyParameterVerificationEditData', 'selectPointItem'
+                                ], { PointName: '请选择监测点' })}
+                                callback={(item) => {
+                                    let newData = { ...this.props.keyParameterVerificationEditData };
                                     newData.DGIMN = item.DGIMN;
                                     newData.selectPointItem = item;
                                     this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
-                                        keyParameterVerificationEditData:newData
+                                        keyParameterVerificationEditData: newData
                                     }));
                                 }}
                             />
@@ -237,105 +246,109 @@ export default class KeyParameterVerificationEditView extends Component {
                         })
                     */}
                     {
-                        SentencedToEmpty(this.props,['KeyParameterCodeListResult','data','Datas'],[]).map((item,index)=>{
-                            return this.renderItem(item,index)
+                        SentencedToEmpty(this.props, ['KeyParameterCodeListResult', 'data', 'Datas'], []).map((item, index) => {
+                            return this.renderItem(item, index)
                         })
                     }
                 </KeyboardAwareScrollView>
                 {
-                    isEditAble?type == 'submitted_update'
-                    ?<View style={{height:82, width:SCREEN_WIDTH
-                        , flexDirection:'row', alignItems:'center'
-                        , justifyContent:'space-around'}}>
+                    isEditAble ? type == 'submitted_update'
+                        ? <View style={{
+                            height: 82, width: SCREEN_WIDTH
+                            , flexDirection: 'row', alignItems: 'center'
+                            , justifyContent: 'space-around'
+                        }}>
                             <TouchableOpacity
-                            onPress={()=>{
-                                // submitStatus 1暂存 2提交
-                                let newData = {...this.props.keyParameterVerificationEditData};
-                                newData.submitStatus = 2;
-                                // 列表类型 typeID 1、待提交 2、已提交 3、待整改 4、已整改 5、申诉中 6、已完成
-                                // newData.typeID = 1;
-                                this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
-                                    keyParameterVerificationEditData:newData,
-                                }));
-                                this.props.dispatch(createAction('keyParameterVerificationModel/addOrUpdOperationKeyParameter')({}));
-                            }}
-                        >
-                            <View style={{
-                                width:SCREEN_WIDTH-64, height:44
-                                , justifyContent:'center'
-                                , alignItems:'center', borderRadius:5
-                                , backgroundColor:'#4DA9FF'
-                            }}>
-                                <Text style={{fontSize:17, color:'white'}}>{'提交'}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                    :<View style={{height:82, width:SCREEN_WIDTH
-                        , flexDirection:'row', alignItems:'center'
-                        , justifyContent:'space-around'}}>
-                        <TouchableOpacity
-                            onPress={()=>{
-                                // submitStatus 1暂存 2提交
-                                let newData = {...this.props.keyParameterVerificationEditData};
-                                newData.submitStatus = 1;
-                                // 列表类型 typeID 1、待提交 2、已提交 3、待整改 4、已整改 5、申诉中 6、已完成
-                                // newData.typeID = 1;
-                                console.log('keyParameterVerificationEditData = ',newData);
-                                this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
-                                    keyParameterVerificationEditData:newData,
-                                }));
-                                this.props.dispatch(createAction('keyParameterVerificationModel/addOrUpdOperationKeyParameter')({}));
-                            }}
-                        >
-                            <View style={{
-                                width:135, height:44
-                                , justifyContent:'center'
-                                , alignItems:'center', borderRadius:5
-                                , backgroundColor:'#FFB64D'
-                            }}>
-                                <Text style={{fontSize:17, color:'white'}}>{'暂存'}</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={()=>{
-                                // submitStatus 1暂存 2提交
-                                let newData = {...this.props.keyParameterVerificationEditData};
-                                newData.submitStatus = 2;
-                                // 列表类型 typeID 1、待提交 2、已提交 3、待整改 4、已整改 5、申诉中 6、已完成
-                                // newData.typeID = 1;
-                                this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
-                                    keyParameterVerificationEditData:newData,
-                                }));
-                                this.props.dispatch(createAction('keyParameterVerificationModel/addOrUpdOperationKeyParameter')({}));
-                            }}
-                        >
-                            <View style={{
-                                width:135, height:44
-                                , justifyContent:'center'
-                                , alignItems:'center', borderRadius:5
-                                , backgroundColor:'#4DA9FF'
-                            }}>
-                                <Text style={{fontSize:17, color:'white'}}>{'提交'}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>:null
+                                onPress={() => {
+                                    // submitStatus 1暂存 2提交
+                                    let newData = { ...this.props.keyParameterVerificationEditData };
+                                    newData.submitStatus = 2;
+                                    // 列表类型 typeID 1、待提交 2、已提交 3、待整改 4、已整改 5、申诉中 6、已完成
+                                    // newData.typeID = 1;
+                                    this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
+                                        keyParameterVerificationEditData: newData,
+                                    }));
+                                    this.props.dispatch(createAction('keyParameterVerificationModel/addOrUpdOperationKeyParameter')({}));
+                                }}
+                            >
+                                <View style={{
+                                    width: SCREEN_WIDTH - 64, height: 44
+                                    , justifyContent: 'center'
+                                    , alignItems: 'center', borderRadius: 5
+                                    , backgroundColor: '#4DA9FF'
+                                }}>
+                                    <Text style={{ fontSize: 17, color: 'white' }}>{'提交'}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        : <View style={{
+                            height: 82, width: SCREEN_WIDTH
+                            , flexDirection: 'row', alignItems: 'center'
+                            , justifyContent: 'space-around'
+                        }}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    // submitStatus 1暂存 2提交
+                                    let newData = { ...this.props.keyParameterVerificationEditData };
+                                    newData.submitStatus = 1;
+                                    // 列表类型 typeID 1、待提交 2、已提交 3、待整改 4、已整改 5、申诉中 6、已完成
+                                    // newData.typeID = 1;
+                                    console.log('keyParameterVerificationEditData = ', newData);
+                                    this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
+                                        keyParameterVerificationEditData: newData,
+                                    }));
+                                    this.props.dispatch(createAction('keyParameterVerificationModel/addOrUpdOperationKeyParameter')({}));
+                                }}
+                            >
+                                <View style={{
+                                    width: 135, height: 44
+                                    , justifyContent: 'center'
+                                    , alignItems: 'center', borderRadius: 5
+                                    , backgroundColor: '#FFB64D'
+                                }}>
+                                    <Text style={{ fontSize: 17, color: 'white' }}>{'暂存'}</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    // submitStatus 1暂存 2提交
+                                    let newData = { ...this.props.keyParameterVerificationEditData };
+                                    newData.submitStatus = 2;
+                                    // 列表类型 typeID 1、待提交 2、已提交 3、待整改 4、已整改 5、申诉中 6、已完成
+                                    // newData.typeID = 1;
+                                    this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
+                                        keyParameterVerificationEditData: newData,
+                                    }));
+                                    this.props.dispatch(createAction('keyParameterVerificationModel/addOrUpdOperationKeyParameter')({}));
+                                }}
+                            >
+                                <View style={{
+                                    width: 135, height: 44
+                                    , justifyContent: 'center'
+                                    , alignItems: 'center', borderRadius: 5
+                                    , backgroundColor: '#4DA9FF'
+                                }}>
+                                    <Text style={{ fontSize: 17, color: 'white' }}>{'提交'}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View> : null
                 }
-                {SentencedToEmpty(this.props,['keyParameterVerificationEditData','submitStatus'],-1)==2
-                    &&SentencedToEmpty(this.props,['addOrUpdOperationKeyParameterResult','status'],200) == -1?<SimpleLoadingComponent message={'提交中'} />:null}
-                {SentencedToEmpty(this.props,['keyParameterVerificationEditData','submitStatus'],-1)==1
-                    &&SentencedToEmpty(this.props,['addOrUpdOperationKeyParameterResult','status'],200) == -1?<SimpleLoadingComponent message={'暂存中'} />:null}
+                {SentencedToEmpty(this.props, ['keyParameterVerificationEditData', 'submitStatus'], -1) == 2
+                    && SentencedToEmpty(this.props, ['addOrUpdOperationKeyParameterResult', 'status'], 200) == -1 ? <SimpleLoadingComponent message={'提交中'} /> : null}
+                {SentencedToEmpty(this.props, ['keyParameterVerificationEditData', 'submitStatus'], -1) == 1
+                    && SentencedToEmpty(this.props, ['addOrUpdOperationKeyParameterResult', 'status'], 200) == -1 ? <SimpleLoadingComponent message={'暂存中'} /> : null}
             </StatusPage>
         )
     }
 }
 
-@connect(({ app })=>({
+@connect(({ app }) => ({
     selectEnterprise: app.selectEnterprise,
 }))
 class FormEnterprisePicker extends Component {
 
     enterpriseCallback = item => {
-        const { selectCallback=() =>{} } = this.props;
+        const { selectCallback = () => { } } = this.props;
         selectCallback(item);
         // this.setState({ selectPointItem: { PointName: '请选择监测点位' } });
         this.props.dispatch(
@@ -348,10 +361,10 @@ class FormEnterprisePicker extends Component {
                 params: {
                     entCode: item.Id,
                     callback: pointItem => {
-                        let newData = {...item};
+                        let newData = { ...item };
                         newData.PointList = pointItem
                         this.props.dispatch(createAction('app/updateState')({
-                            selectEnterprise:newData
+                            selectEnterprise: newData
                         }));
                     }
                 }
@@ -368,23 +381,23 @@ class FormEnterprisePicker extends Component {
     }
 
     render() {
-        const { 
-            last=false,
-            label='标题',
+        const {
+            last = false,
+            label = '标题',
             showString,
-            itemHeight=44,
-            value='',
-            onChangeText=()=>{},
-            required=false
-            , propsLabelStyle={}, propsTextStyle={}, propsHolderStyle={}
-            , hasColon=true, requireIconPosition='left'
-            , editable=true
+            itemHeight = 44,
+            value = '',
+            onChangeText = () => { },
+            required = false
+            , propsLabelStyle = {}, propsTextStyle = {}, propsHolderStyle = {}
+            , hasColon = true, requireIconPosition = 'left'
+            , editable = true
         } = this.props;
         // 业务修改 核查为服务端派发，不需要修改
         // if (editable) {
-        if(false) {
+        if (false) {
             return (<TouchableOpacity
-                onPress={()=>{
+                onPress={() => {
                     this.props.dispatch(
                         NavigationActions.navigate({
                             routeName: 'ContactOperation',
@@ -397,43 +410,43 @@ class FormEnterprisePicker extends Component {
                     );
                 }}
             >
-                <View style={[styles.layout,last?{}:styles.bottomBorder,{height:itemHeight}]}>
-                    <View style={{ flexDirection: 'row', height: 44, alignItems: 'center', flex: 1, height:itemHeight }}>
-                        {required&&requireIconPosition == 'left'?<Text style={[styles.labelStyle,propsLabelStyle,{color:'red'} ]}>*</Text>:null}
-                        <Text numberOfLines={1} style={[styles.labelStyle,propsLabelStyle,]}>{`${label}${hasColon?'：':''}`}</Text>
-                        {required&&requireIconPosition == 'right'?<Text style={[{marginLeft: 10,fontSize: 15,},propsLabelStyle,{color:'red'} ]}>*</Text>:null}
+                <View style={[styles.layout, last ? {} : styles.bottomBorder, { height: itemHeight }]}>
+                    <View style={{ flexDirection: 'row', height: 44, alignItems: 'center', flex: 1, height: itemHeight }}>
+                        {required && requireIconPosition == 'left' ? <Text style={[styles.labelStyle, propsLabelStyle, { color: 'red' }]}>*</Text> : null}
+                        <Text numberOfLines={1} style={[styles.labelStyle, propsLabelStyle,]}>{`${label}${hasColon ? '：' : ''}`}</Text>
+                        {required && requireIconPosition == 'right' ? <Text style={[{ marginLeft: 10, fontSize: 15, }, propsLabelStyle, { color: 'red' }]}>*</Text> : null}
                         <View style={[styles.innerlayout]}>
                             {
-                                SentencedToEmpty(this.props,['selectEnterprise','EntName'],'') == ''
-                                || SentencedToEmpty(this.props,['selectEnterprise','EntName'],'') == '请选择'
-                                ? <Text style={[styles.textStyle,{marginLeft: 16}]}>{'请选择企业'}</Text>
-                                : <Text style={[styles.textStyle,{marginLeft: 16}]}>{SentencedToEmpty(this.props,['selectEnterprise','EntName'],'') }</Text>
+                                SentencedToEmpty(this.props, ['selectEnterprise', 'EntName'], '') == ''
+                                    || SentencedToEmpty(this.props, ['selectEnterprise', 'EntName'], '') == '请选择'
+                                    ? <Text style={[styles.textStyle, { marginLeft: 16 }]}>{'请选择企业'}</Text>
+                                    : <Text style={[styles.textStyle, { marginLeft: 16 }]}>{SentencedToEmpty(this.props, ['selectEnterprise', 'EntName'], '')}</Text>
                             }
                         </View>
-                        <Image 
-                            style={{width:15, height:15}}
+                        <Image
+                            style={{ width: 15, height: 15 }}
                             source={require('../../images/calendarRight.png')}
                         />
                     </View>
                 </View>
             </TouchableOpacity>)
         } else {
-            return(<View>
-                <View style={[styles.layout,last?{}:styles.bottomBorder,{height:itemHeight}]}>
-                    <View style={{ flexDirection: 'row', height: 44, alignItems: 'center', flex: 1, height:itemHeight }}>
-                        {required&&requireIconPosition == 'left'?<Text style={[styles.labelStyle,propsLabelStyle,{color:'red'} ]}>*</Text>:null}
-                        <Text numberOfLines={1} style={[styles.labelStyle,propsLabelStyle,]}>{`${label}${hasColon?'：':''}`}</Text>
-                        {required&&requireIconPosition == 'right'?<Text style={[{marginLeft: 10,fontSize: 15,},propsLabelStyle,{color:'red'} ]}>*</Text>:null}
+            return (<View>
+                <View style={[styles.layout, last ? {} : styles.bottomBorder, { height: itemHeight }]}>
+                    <View style={{ flexDirection: 'row', height: 44, alignItems: 'center', flex: 1, height: itemHeight }}>
+                        {required && requireIconPosition == 'left' ? <Text style={[styles.labelStyle, propsLabelStyle, { color: 'red' }]}>*</Text> : null}
+                        <Text numberOfLines={1} style={[styles.labelStyle, propsLabelStyle,]}>{`${label}${hasColon ? '：' : ''}`}</Text>
+                        {required && requireIconPosition == 'right' ? <Text style={[{ marginLeft: 10, fontSize: 15, }, propsLabelStyle, { color: 'red' }]}>*</Text> : null}
                         <View style={[styles.innerlayout]}>
                             {
-                                SentencedToEmpty(this.props,['selectEnterprise','EntName'],'') == ''
-                                || SentencedToEmpty(this.props,['selectEnterprise','EntName'],'') == '请选择'
-                                ? <Text style={[styles.textStyle,{marginLeft: 16}]}>{'请选择企业'}</Text>
-                                : <Text style={[styles.textStyle,{marginLeft: 16}]}>{SentencedToEmpty(this.props,['selectEnterprise','EntName'],'') }</Text>
+                                SentencedToEmpty(this.props, ['selectEnterprise', 'EntName'], '') == ''
+                                    || SentencedToEmpty(this.props, ['selectEnterprise', 'EntName'], '') == '请选择'
+                                    ? <Text style={[styles.textStyle, { marginLeft: 16 }]}>{'请选择企业'}</Text>
+                                    : <Text style={[styles.textStyle, { marginLeft: 16 }]}>{SentencedToEmpty(this.props, ['selectEnterprise', 'EntName'], '')}</Text>
                             }
                         </View>
-                        <Image 
-                            style={{width:15, height:15}}
+                        <Image
+                            style={{ width: 15, height: 15 }}
                             source={require('../../images/calendarRight.png')}
                         />
                     </View>
@@ -443,11 +456,11 @@ class FormEnterprisePicker extends Component {
     }
 }
 
-@connect(({ app })=>({
+@connect(({ app }) => ({
     selectEnterprise: app.selectEnterprise,
-}),null,
-null,
-{ withRef: true })
+}), null,
+    null,
+    { withRef: true })
 class FormPointPicker extends Component {
 
     judgeEnterprise = () => {
@@ -456,7 +469,7 @@ class FormPointPicker extends Component {
 
     // 排口选择器配置
     getPointSelect = () => {
-        const { callback=()=>{} } = this.props;
+        const { callback = () => { } } = this.props;
         return {
             codeKey: 'DGIMN',
             nameKey: 'PointName',
@@ -474,67 +487,67 @@ class FormPointPicker extends Component {
     }
 
     render() {
-        const { 
-            last=false,
-            label='标题',
+        const {
+            last = false,
+            label = '标题',
             showString,
-            itemHeight=44,
-            value='',
-            onChangeText=()=>{},
-            required=false
-            , propsLabelStyle={}, propsTextStyle={}, propsHolderStyle={}
-            , hasColon=true, requireIconPosition='left',
-              selectPointItem 
-            , editable=true
-         } = this.props;
+            itemHeight = 44,
+            value = '',
+            onChangeText = () => { },
+            required = false
+            , propsLabelStyle = {}, propsTextStyle = {}, propsHolderStyle = {}
+            , hasColon = true, requireIconPosition = 'left',
+            selectPointItem
+            , editable = true
+        } = this.props;
         // 业务修改 核查为服务端派发，不需要修改
         // if (editable) {
         if (false) {
-            return(<PickerTouchable
+            return (<PickerTouchable
                 ref={ref => (this.pointS = ref)}
                 option={this.getPointSelect()}
-                onPress={(this.props.selectEnterprise.PointList || []).length == 0 ? ()=>{ShowToast('监测点数据加载中，请稍后！')} : null}
+                onPress={(this.props.selectEnterprise.PointList || []).length == 0 ? () => { ShowToast('监测点数据加载中，请稍后！') } : null}
                 style={[styles.row, { justifyContent: 'space-between' }]}
             >
-                <View style={[styles.layout,last?{}:styles.bottomBorder,{height:itemHeight}]}>
-                    <View style={{ flexDirection: 'row', height: 44, alignItems: 'center', flex: 1, height:itemHeight }}>
-                        {required&&requireIconPosition == 'left'?<Text style={[styles.labelStyle,propsLabelStyle,{color:'red'} ]}>*</Text>:null}
-                        <Text numberOfLines={1} style={[styles.labelStyle,propsLabelStyle,]}>{`${label}${hasColon?'：':''}`}</Text>
-                        {required&&requireIconPosition == 'right'?<Text style={[{marginLeft: 10,fontSize: 15,},propsLabelStyle,{color:'red'} ]}>*</Text>:null}
+                <View style={[styles.layout, last ? {} : styles.bottomBorder, { height: itemHeight }]}>
+                    <View style={{ flexDirection: 'row', height: 44, alignItems: 'center', flex: 1, height: itemHeight }}>
+                        {required && requireIconPosition == 'left' ? <Text style={[styles.labelStyle, propsLabelStyle, { color: 'red' }]}>*</Text> : null}
+                        <Text numberOfLines={1} style={[styles.labelStyle, propsLabelStyle,]}>{`${label}${hasColon ? '：' : ''}`}</Text>
+                        {required && requireIconPosition == 'right' ? <Text style={[{ marginLeft: 10, fontSize: 15, }, propsLabelStyle, { color: 'red' }]}>*</Text> : null}
                         <View style={[styles.innerlayout]}>
                             {
-                                SentencedToEmpty(this.props,['selectEnterprise','EntName'],'') == ''
-                                || SentencedToEmpty(this.props,['selectEnterprise','EntName'],'') == '请选择'
-                                ? <Text style={[styles.textStyle,{marginLeft: 16}]}>{'请选择监测点'}</Text>
-                                : <Text style={[styles.textStyle,{marginLeft: 16}]}>{SentencedToEmpty(this.props,['selectPointItem','PointName'],'') }</Text>
+                                SentencedToEmpty(this.props, ['selectEnterprise', 'EntName'], '') == ''
+                                    || SentencedToEmpty(this.props, ['selectEnterprise', 'EntName'], '') == '请选择'
+                                    ? <Text style={[styles.textStyle, { marginLeft: 16 }]}>{'请选择监测点'}</Text>
+                                    : <Text style={[styles.textStyle, { marginLeft: 16 }]}>{SentencedToEmpty(this.props, ['selectPointItem', 'PointName'], '')}</Text>
                             }
                         </View>
-                        <Image 
-                            style={{width:15, height:15}}
+                        <Image
+                            style={{ width: 15, height: 15 }}
                             source={require('../../images/calendarRight.png')}
                         />
                     </View>
                 </View>
             </PickerTouchable>);
         } else {
-            console.log('EntName = ',SentencedToEmpty(this.props,['selectEnterprise','EntName'],''));
-            console.log('PointName = ',SentencedToEmpty(this.props,['selectPointItem','PointName'],''));
-            return(<View>
-                <View style={[styles.layout,last?{}:styles.bottomBorder,{height:itemHeight}]}>
-                    <View style={{ flexDirection: 'row', height: 44, alignItems: 'center', flex: 1, height:itemHeight }}>
-                        {required&&requireIconPosition == 'left'?<Text style={[styles.labelStyle,propsLabelStyle,{color:'red'} ]}>*</Text>:null}
-                        <Text numberOfLines={1} style={[styles.labelStyle,propsLabelStyle,]}>{`${label}${hasColon?'：':''}`}</Text>
-                        {required&&requireIconPosition == 'right'?<Text style={[{marginLeft: 10,fontSize: 15,},propsLabelStyle,{color:'red'} ]}>*</Text>:null}
+            console.log('EntName = ', SentencedToEmpty(this.props, ['selectEnterprise', 'EntName'], ''));
+            console.log('PointName = ', SentencedToEmpty(this.props, ['selectPointItem', 'PointName'], ''));
+            return (<View>
+                <View style={[styles.layout, last ? {} : styles.bottomBorder, { height: itemHeight }]}>
+                    <View style={{ flexDirection: 'row', height: 44, alignItems: 'center', flex: 1, height: itemHeight }}>
+                        {required && requireIconPosition == 'left' ? <Text style={[styles.labelStyle, propsLabelStyle, { color: 'red' }]}>*</Text> : null}
+                        <Text numberOfLines={1} style={[styles.labelStyle, propsLabelStyle,]}>{`${label}${hasColon ? '：' : ''}`}</Text>
+                        {required && requireIconPosition == 'right' ? <Text style={[{ marginLeft: 10, fontSize: 15, }, propsLabelStyle, { color: 'red' }]}>*</Text> : null}
                         <View style={[styles.innerlayout]}>
                             {
-                                SentencedToEmpty(this.props,['selectEnterprise','EntName'],'') == ''
-                                || SentencedToEmpty(this.props,['selectEnterprise','EntName'],'') == '请选择'
-                                ? <Text style={[styles.textStyle,{marginLeft: 16}]}>{'请选择监测点'}</Text>
-                                : <Text style={[styles.textStyle,{marginLeft: 16}]}>{SentencedToEmpty(this.props,['selectPointItem','PointName'],'') }</Text>
+                                SentencedToEmpty(this.props, ['selectEnterprise', 'EntName'], '') == ''
+                                    || SentencedToEmpty(this.props, ['selectEnterprise', 'EntName'], '') == '请选择'
+                                    ? <Text style={[styles.textStyle, { marginLeft: 16 }]}>{'请选择监测点'}</Text>
+                                    : <Text style={[styles.textStyle, { marginLeft: 16 }]}>{SentencedToEmpty(this.props, ['selectPointItem', 'PointName'], '')}</Text>
                             }
                         </View>
-                        <Image 
-                            style={{width:15, height:15}}
+                        <Image
+                            style={{ width: 15, height: 15 }}
                             source={require('../../images/calendarRight.png')}
                         />
                     </View>
@@ -552,9 +565,9 @@ const styles = StyleSheet.create({
         height: 44,
         alignItems: 'center'
     },
-    bottomBorder:{
+    bottomBorder: {
         borderBottomWidth: 1,
-        borderBottomColor: globalcolor.borderBottomColor, 
+        borderBottomColor: globalcolor.borderBottomColor,
     },
     labelStyle: {
         fontSize: 14,

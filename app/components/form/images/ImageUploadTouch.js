@@ -43,7 +43,9 @@ export default class ImageUploadTouch extends Component {
     uploadImageCallBack = (img, isSuccess, type = 'online') => {
         console.log('上传图片回调', img, isSuccess);
         CloseToast();
+        console.log('isSuccess = ', isSuccess);
         if (isSuccess) {
+            console.log('isSuccess2 = ', isSuccess);
             this.props.callback(img, type);
             if (type == 'online') {
                 ShowToast({
@@ -360,70 +362,70 @@ export default class ImageUploadTouch extends Component {
                     txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
                     onpress: () => {
                         {
-                            this.requestCameraPermission();
                             // const _this = this;
-                            // if (componentType == 'taskhandle' || componentType == 'signIn') {
-                            //     CameraWaterMaskModule.checkPermission(function (args) {
-                            //         console.log('checkPermission:', args);
-                            //         if (args) {
-                            //             // setShowState(true);
-                            //             if (componentType == 'taskhandle') {
-                            //                 _this.props.dispatch(
-                            //                     NavigationActions.navigate({
-                            //                         routeName: 'WaterMaskCamera',
-                            //                         params: {
-                            //                             // uuid
-                            //                             uuid: _this.props.uuid,
-                            //                         }
-                            //                     })
-                            //                 );
-                            //             } else if (componentType == 'signIn') {
-                            //                 _this.props.dispatch(
-                            //                     createAction('taskDetailModel/updateState')({
-                            //                         taskDetail: { EnterpriseName: _this.props.extraInfo.EnterpriseName }
-                            //                     })
-                            //                 );
-                            //                 _this.props.dispatch(
-                            //                     NavigationActions.navigate({
-                            //                         routeName: 'WaterMaskCamera',
-                            //                         params: {
-                            //                             // uuid
-                            //                             uuid: _this.props.uuid,
-                            //                             callback: _this.uploadImageCallBack
-                            //                         }
-                            //                     })
-                            //                 );
-                            //             }
+                            if (componentType == 'taskhandle' || componentType == 'signIn') {
+                                this.requestCameraPermission();
+                                //     CameraWaterMaskModule.checkPermission(function (args) {
+                                //         console.log('checkPermission:', args);
+                                //         if (args) {
+                                //             // setShowState(true);
+                                //             if (componentType == 'taskhandle') {
+                                //                 _this.props.dispatch(
+                                //                     NavigationActions.navigate({
+                                //                         routeName: 'WaterMaskCamera',
+                                //                         params: {
+                                //                             // uuid
+                                //                             uuid: _this.props.uuid,
+                                //                         }
+                                //                     })
+                                //                 );
+                                //             } else if (componentType == 'signIn') {
+                                //                 _this.props.dispatch(
+                                //                     createAction('taskDetailModel/updateState')({
+                                //                         taskDetail: { EnterpriseName: _this.props.extraInfo.EnterpriseName }
+                                //                     })
+                                //                 );
+                                //                 _this.props.dispatch(
+                                //                     NavigationActions.navigate({
+                                //                         routeName: 'WaterMaskCamera',
+                                //                         params: {
+                                //                             // uuid
+                                //                             uuid: _this.props.uuid,
+                                //                             callback: _this.uploadImageCallBack
+                                //                         }
+                                //                     })
+                                //                 );
+                                //             }
 
-                            //         } else {
-                            //             // ToastAndroid.show('请先开启相机权限', ToastAndroid.SHORT);
-                            //             console.log('请先开启相机权限');
-                            //         }
-                            //     });
+                                //         } else {
+                                //             // ToastAndroid.show('请先开启相机权限', ToastAndroid.SHORT);
+                                //             console.log('请先开启相机权限');
+                                //         }
+                                //     });
 
-                            //     // this.props.dispatch(NavigationActions.navigate({ routeName: 'WaterMaskCamera' }));
-                            // } else {
-                            //     launchCamera(options, response => {
-                            //         const { assets = [] } = response;
-                            //         let imageObj = null;
-                            //         if (assets.length <= 0) {
-                            //             return;
-                            //         } else {
-                            //             imageObj = assets[0];
-                            //             ShowLoadingToast('正在上传图片');
-                            //             // this.props.dispatch(createAction('imageFormModel/updateState')({ imageStatus: { status: -1 } }));
-                            //             that.props.dispatch(
-                            //                 createAction('imageModel/uploadimage')({
-                            //                     image: imageObj,
-                            //                     images: assets,
-                            //                     // uuid: uuid,
-                            //                     uuid: this.props.uuid,
-                            //                     callback: this.uploadImageCallBack
-                            //                 })
-                            //             );
-                            //         }
-                            //     });
-                            // }
+                                //     // this.props.dispatch(NavigationActions.navigate({ routeName: 'WaterMaskCamera' }));
+                            } else {
+                                launchCamera(options, response => {
+                                    const { assets = [] } = response;
+                                    let imageObj = null;
+                                    if (assets.length <= 0) {
+                                        return;
+                                    } else {
+                                        imageObj = assets[0];
+                                        ShowLoadingToast('正在上传图片');
+                                        // this.props.dispatch(createAction('imageFormModel/updateState')({ imageStatus: { status: -1 } }));
+                                        that.props.dispatch(
+                                            createAction('imageModel/uploadimage')({
+                                                image: imageObj,
+                                                images: assets,
+                                                // uuid: uuid,
+                                                uuid: this.props.uuid,
+                                                callback: this.uploadImageCallBack
+                                            })
+                                        );
+                                    }
+                                });
+                            }
                         }
                     }
                 },

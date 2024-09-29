@@ -22,7 +22,7 @@ const ic_filt_arrows = require('../../../../images/ic_filt_arrows.png');
 // create a component
 @connect(({ calibrationRecord }) => ({
     MainInfo: calibrationRecord.MainInfo,
-    editstatus:calibrationRecord.editstatus,
+    editstatus: calibrationRecord.editstatus,
 }))
 // @connect()
 class CalibrationRecordTime extends Component {
@@ -124,7 +124,7 @@ class CalibrationRecordTime extends Component {
                         this.props.dispatch(createAction('calibrationRecord/updateState')({ MainInfo: newMainInfo }));
                         this.props.dispatch(
                             createAction('calibrationRecord/saveItem')({
-                                index: this.props.navigation.state.params.index,
+                                index: this.props.route.params.params.index,
                                 record: null,
                                 callback: () => {
                                     this.props.dispatch(createAction('calibrationRecord/getInfo')({ createForm: false }));
@@ -139,7 +139,7 @@ class CalibrationRecordTime extends Component {
                         <Text style={[{ color: globalcolor.whiteFont, fontSize: 15, marginLeft: 8 }]}>确定提交</Text>
                     </View>
                 </TouchableOpacity>
-                {this.props.editstatus.status == -2?<SimpleLoadingComponent message={'提交中'} />:null}
+                {this.props.editstatus.status == -2 ? <SimpleLoadingComponent message={'提交中'} /> : null}
             </View>
         );
     }

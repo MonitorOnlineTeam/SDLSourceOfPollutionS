@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2022-08-25 09:44:43
- * @LastEditTime: 2024-01-16 10:30:08
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/workbench/GTaskOfEnterprise.js
+ * @LastEditTime: 2024-09-20 16:12:48
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbench/GTaskOfEnterprise.js
  */
 import React, { Component } from 'react'
 import { Text, TouchableOpacity, View, Image } from 'react-native'
@@ -84,6 +84,7 @@ export default class GTaskOfEnterprise extends Component {
                                     , flexDirection: 'row', backgroundColor: '#F7F8FA'
                                     , borderRadius: 5, justifyContent: 'space-between'
                                     , alignItems: 'center', paddingHorizontal: 5
+                                    , marginBottom: 10
                                 }}>
                                     <Text style={{ fontSize: 12, color: '#666666' }}>{SentencedToEmpty(typeItem, ['recordTypeName'], '--')}</Text>
                                     <Text style={{ fontSize: 12, color: '#4AA0FF' }}>{`${SentencedToEmpty(typeItem, ['count'], '0')}个`}</Text>

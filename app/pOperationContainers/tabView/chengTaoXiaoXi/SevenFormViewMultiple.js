@@ -55,6 +55,9 @@ export default class SevenFormViewMultiple extends Component {
             entList: [],
             deleteItemIndex: 0
         }
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(this.props.route, ['params', 'params', 'secondItem', 'RecordName'], '跳转时未提供标题信息')
+        });
     }
 
     componentDidMount() {

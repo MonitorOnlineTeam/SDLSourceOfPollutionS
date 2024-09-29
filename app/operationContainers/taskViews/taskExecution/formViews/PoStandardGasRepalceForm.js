@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Platform, FlatList, TouchableOpacity, Image, DeviceEventEmitter } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 import globalcolor from '../../../../config/globalcolor';
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../../../../config/globalsize';
@@ -15,7 +14,7 @@ import { AlertDialog, SimpleLoadingComponent, StatusPage } from '../../../../com
  * 标准气体更换记录表
  */
 @connect(({ taskModel }) => ({
-    editstatus:taskModel.editstatus,
+    editstatus: taskModel.editstatus,
     gasRecordList: taskModel.gasRecordList,
     gasRecordListStatus: taskModel.gasRecordListStatus
 }))
@@ -63,6 +62,22 @@ class PoStandardGasRepalceForm extends Component {
             ]
         };
         _me = this;
+        this.props.navigation.setOptions({
+            headerRight: () => {
+                if (this.props.route.params.params.TypeName == 'StandardGasRepalceHistoryList') {
+                    return (<TouchableOpacity
+                        style={{ width: 44, height: 40, justifyContent: 'center', alignItems: 'flex-end' }}
+                        onPress={() => {
+                            _me._addForm();
+                        }}
+                    >
+                        <Image source={require('../../../../images/jiarecord.png')} style={{ marginRight: 16, height: 24, width: 24 }} />
+                    </TouchableOpacity>);
+                } else {
+                    return <View />
+                }
+            }
+        });
     }
     componentWillUnmount() {
         DeviceEventEmitter.emit('refreshTask', {
@@ -74,7 +89,7 @@ class PoStandardGasRepalceForm extends Component {
     };
 
     _addForm = () => {
-        if (this.props.navigation.state.params.TypeName == 'StandardGasRepalceHistoryList') {
+        if (this.props.route.params.params.TypeName == 'StandardGasRepalceHistoryList') {
             this.props.dispatch(NavigationActions.navigate({ routeName: 'PoStandardGasReplacementRecord', params: { index: -1 } }));
         }
     };
@@ -84,7 +99,7 @@ class PoStandardGasRepalceForm extends Component {
     };
 
     _renderItem = ({ item, index }) => {
-        if (this.props.navigation.state.params.TypeName == 'StandardGasRepalceHistoryList') {
+        if (this.props.route.params.params.TypeName == 'StandardGasRepalceHistoryList') {
             return (
                 <TouchableOpacity
                     onPress={() => {
@@ -106,20 +121,20 @@ class PoStandardGasRepalceForm extends Component {
                                 <Text style={[{ fontSize: 14, color: globalcolor.taskFormLabel }]}>{item.Supplier}</Text>
                             </View>
                             {
-                                SentencedToEmpty(item,['PartType'],1) == 1?<View style={[{ flexDirection: 'row', width: SCREEN_WIDTH - 24, height: 28, alignItems: 'center' }]}>
+                                SentencedToEmpty(item, ['PartType'], 1) == 1 ? <View style={[{ flexDirection: 'row', width: SCREEN_WIDTH - 24, height: 28, alignItems: 'center' }]}>
                                     <Text style={[{ fontSize: 14, color: globalcolor.taskImfoLabel }]}>存货编码：</Text>
                                     <Text style={[{ fontSize: 14, color: globalcolor.taskFormLabel }]}>{item.StandardGasBottleCode}</Text>
                                 </View>
-                                :null
+                                    : null
                             }
                             <View style={[{ flexDirection: 'row', width: SCREEN_WIDTH - 24, height: 28, alignItems: 'center' }]}>
-                                <View style={[{ flexDirection: 'row', width: (SCREEN_WIDTH - 24)/2, }]}>
+                                <View style={[{ flexDirection: 'row', width: (SCREEN_WIDTH - 24) / 2, }]}>
                                     <Text numberOfLines={1} style={[{ fontSize: 14, color: globalcolor.taskImfoLabel }]}>标准物质名称：</Text>
-                                    <Text numberOfLines={1} style={[{ fontSize: 14, color: globalcolor.taskFormLabel, flex:1  }]}>{item.StandardGasName}</Text>
+                                    <Text numberOfLines={1} style={[{ fontSize: 14, color: globalcolor.taskFormLabel, flex: 1 }]}>{item.StandardGasName}</Text>
                                 </View>
-                                <View style={[{ flexDirection: 'row', width: (SCREEN_WIDTH - 24)/2}]}>
+                                <View style={[{ flexDirection: 'row', width: (SCREEN_WIDTH - 24) / 2 }]}>
                                     <Text numberOfLines={1} style={[{ fontSize: 14, color: globalcolor.taskImfoLabel }]}>单位：</Text>
-                                    <Text numberOfLines={1} style={[{ fontSize: 14, color: globalcolor.taskFormLabel, flex:1 }]}>{item.Unit}</Text>
+                                    <Text numberOfLines={1} style={[{ fontSize: 14, color: globalcolor.taskFormLabel, flex: 1 }]}>{item.Unit}</Text>
                                 </View>
                             </View>
                             <View style={[{ flexDirection: 'row', width: SCREEN_WIDTH - 24, height: 28, alignItems: 'center' }]}>
@@ -163,12 +178,12 @@ class PoStandardGasRepalceForm extends Component {
             );
         }
     };
-    cancelButton = () => {};
+    cancelButton = () => { };
     confirm = () => {
         this.props.dispatch(
             createAction('taskModel/delFormGas')({
                 callback: ID => {
-                    
+
                     //返回任务执行，刷新数据
                     this.props.dispatch(createAction('taskModel/getTaskDetailWithoutTaskDescription')({}));
                     this.props.dispatch(NavigationActions.back());
@@ -243,7 +258,7 @@ class PoStandardGasRepalceForm extends Component {
                         <Text style={[{ color: globalcolor.whiteFont }]}>{'表单'}</Text>
                     </View>
                 </TouchableOpacity>
-                {this.props.editstatus.status == -1?<SimpleLoadingComponent message={'删除中'} />:null}
+                {this.props.editstatus.status == -1 ? <SimpleLoadingComponent message={'删除中'} /> : null}
                 <AlertDialog options={options} ref="doAlert" />
             </StatusPage>
         );

@@ -2,8 +2,8 @@
  * @Description: 工作记录 单条
  * @LastEditors: hxf
  * @Date: 2023-09-24 09:16:27
- * @LastEditTime: 2023-11-06 17:25:33
- * @FilePath: /SDLMainProject36/app/pOperationContainers/tabView/chengTaoXiaoXi/WorkRecordSingle.js
+ * @LastEditTime: 2024-09-26 10:48:32
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/WorkRecordSingle.js
  */
 import moment from 'moment';
 import React, { Component } from 'react';

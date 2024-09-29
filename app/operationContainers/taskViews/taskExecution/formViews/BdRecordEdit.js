@@ -85,10 +85,32 @@ class BdRecordEdit extends PureComponent {
                 this.refs.doAlert.show();
             }
         });
+
+        this.props.navigation.setOptions({
+            headerRight: () => {
+                if (SentencedToEmpty(this.props.route, ['params', 'params', 'ItemData', 'ID'], '') != '') {
+                    return (<TouchableOpacity
+                        onPress={() => {
+                            this.refs.doAlert.show();
+                        }}
+                    >
+                        <Text style={{ color: 'white', marginRight: 16 }}>删除</Text>
+                    </TouchableOpacity>);
+                } else {
+                    return (<View />);
+                }
+            }
+        });
+
+
+        this.props.navigation.setOptions({
+            title: this.props.route.params.params.ItemData.Name + '校验测试记录',
+        });
     }
 
     componentWillMount() {
-        let ItemData = this.props.navigation.state.params.ItemData;
+        // let ItemData = this.props.navigation.state.params.ItemData;
+        let ItemData = this.props.route.params.params.ItemData;
         /**
          * 如果数据为空，增加一条空记录
          */
@@ -107,7 +129,8 @@ class BdRecordEdit extends PureComponent {
     }
 
     deleteConfirm = () => {
-        const { ItemID } = this.props.navigation.state.params.ItemData;
+        // const { ItemID } = this.props.navigation.state.params.ItemData;
+        const { ItemID } = this.props.route.params.params.ItemData;
         this.props.dispatch(
             createAction('bdRecordModel/delSubtable')({
                 params: { ID: ItemID }
@@ -118,14 +141,15 @@ class BdRecordEdit extends PureComponent {
     render() {
         let options = {
             headTitle: '提示',
-            messText: `确认删除${this.props.navigation.state.params.ItemData.Name}校验测试记录吗？`,
+            // messText: `确认删除${this.props.navigation.state.params.ItemData.Name}校验测试记录吗？`,
+            messText: `确认删除${this.props.route.params.params.ItemData.Name}校验测试记录吗？`,
             headStyle: { backgroundColor: globalcolor.headerBackgroundColor, color: '#ffffff', fontSize: 18 },
             buttons: [
                 {
                     txt: '取消',
                     btnStyle: { backgroundColor: 'transparent' },
                     txtStyle: { color: globalcolor.headerBackgroundColor },
-                    onpress: () => {}
+                    onpress: () => { }
                 },
                 {
                     txt: '确定',
@@ -136,7 +160,8 @@ class BdRecordEdit extends PureComponent {
             ]
         };
         //不为空时候 最后一个给出标识
-        let params = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], '-');
+        // let params = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], '-');
+        let params = SentencedToEmpty(this.props, ['route', 'params', 'params'], '-');
         return (
             <StatusPage style={styles.container} status={200}>
                 <KeyboardAvoidingView style={{ alignItems: 'center' }} behavior={Platform.OS == 'ios' ? 'padding' : ''} keyboardVerticalOffset={100}>
@@ -160,7 +185,8 @@ class BdRecordEdit extends PureComponent {
                             >
                                 <Text style={[styles.textlabel, { flex: 1 }]}>{'评价标准:'}</Text>
                                 <Text style={{ fontSize: 14, color: '#666666', maxWidth: SCREEN_WIDTH - 100 }}>
-                                    {SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'ItemData', 'EvaluateStadard'], '提交保存后系统生成').replace(/\r\n/g, '')}
+                                    {/* {SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'ItemData', 'EvaluateStadard'], '提交保存后系统生成').replace(/\r\n/g, '')} */}
+                                    {SentencedToEmpty(this.props, ['route', 'params', 'params', 'ItemData', 'EvaluateStadard'], '提交保存后系统生成').replace(/\r\n/g, '')}
                                 </Text>
                             </View>
                             <Text style={styles.line} />
@@ -170,11 +196,12 @@ class BdRecordEdit extends PureComponent {
                                     label="评价结果"
                                     itemHeight={40}
                                     showString={
-                                        SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'ItemData', 'EvaluateResults'], '0') == 1
+                                        // SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'ItemData', 'EvaluateResults'], '0') == 1
+                                        SentencedToEmpty(this.props, ['route', 'params', 'params', 'ItemData', 'EvaluateResults'], '0') == 1
                                             ? '合格'
-                                            : SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'ItemData', 'EvaluateResults'], '') == ''
-                                            ? '提交保存后系统生成'
-                                            : '不合格'
+                                            : SentencedToEmpty(this.props, ['route', 'params', 'params', 'ItemData', 'EvaluateResults'], '') == ''
+                                                ? '提交保存后系统生成'
+                                                : '不合格'
                                     }
                                 />
                             </View>
@@ -440,7 +467,7 @@ class BdRecordEdit extends PureComponent {
          * mg/m3、ppm、%
          */
         if (UnitList.length == 0) {
-            UnitList = ['mg/m3','ppm','%'];
+            UnitList = ['mg/m3', 'ppm', '%'];
         }
         this.setState({ UnitList });
         this.initPicker(UnitList);

@@ -44,63 +44,64 @@ class CalibrationRecordEdit extends Component {
             headerStyle: {
                 backgroundColor: globalcolor.headerBackgroundColor,
                 height: 45
-                //elevation: 0//去掉header下方的阴影
-                //borderBottomWidth: 0,//去掉ios下的分割线
             }
         };
     };
 
     constructor(props) {
         super(props);
-        if (props.navigation.state.params.index == -1) {
+        if (props.route.params.params.index == -1) {
             this.state = {
-                ID: props.navigation.state.params.item.ID,
-                ItemID: props.navigation.state.params.item.ItemID,
+                ID: props.route.params.params.item.ID,
+                ItemID: props.route.params.params.item.ItemID,
                 LqNdz: '', //零气浓度值
-                LdLastCalibrationValue: props.navigation.state.params.item.LdLastCalibrationValue, //上一次校准值
+                LdLastCalibrationValue: props.route.params.params.item.LdLastCalibrationValue, //上一次校准值
                 LdCalibrationPreValue: '', //校准前
                 LdPy: '', //零点漂移%F.S.
                 zhenshiLDPY: '',
                 LdCalibrationIsOk: '', //是否正常
                 LdCalibrationSufValue: '', //校准后
                 BqNdz: '', //标气浓度值
-                LcLastCalibrationValue: props.navigation.state.params.item.LcLastCalibrationValue, //量程 上一次校准值
+                LcLastCalibrationValue: props.route.params.params.item.LcLastCalibrationValue, //量程 上一次校准值
                 LcCalibrationPreValue: '', //校准前
                 LcPy: '', //量程漂移%F.S.
                 zhenshiLCPY: '',
                 LcCalibrationIsOk: '', //是否正常
                 LcCalibrationSufValue: '', //校准后
                 FormMainID: '', //主表ID
-                FxyYl: SentencedToEmpty(props, ['navigation', 'state', 'params', 'item', 'FxyYl'], ''), //分析仪原理
-                FxyLc: SentencedToEmpty(props, ['navigation', 'state', 'params', 'item', 'FxyLc'], ''), //分析仪量程
-                JlUnit: SentencedToEmpty(props, ['navigation', 'state', 'params', 'item', 'JlUnit'], ''), //计量单位
+                FxyYl: SentencedToEmpty(props, ['route', 'params', 'params', 'item', 'FxyYl'], ''), //分析仪原理
+                FxyLc: SentencedToEmpty(props, ['route', 'params', 'params', 'item', 'FxyLc'], ''), //分析仪量程
+                JlUnit: SentencedToEmpty(props, ['route', 'params', 'params', 'item', 'JlUnit'], ''), //计量单位
 
                 dialogType: saveItem
             };
         } else {
             this.state = {
-                ID: props.navigation.state.params.item.ID,
-                ItemID: props.navigation.state.params.item.ItemID,
-                LqNdz: props.navigation.state.params.item.LqNdz, //零气浓度值
-                LdLastCalibrationValue: props.navigation.state.params.item.LdLastCalibrationValue, //上一次校准值
-                LdCalibrationPreValue: props.navigation.state.params.item.LdCalibrationPreValue, //校准前
-                LdPy: props.navigation.state.params.item.LdPy, //零点漂移%F.S.
-                LdCalibrationIsOk: props.navigation.state.params.item.LdCalibrationIsOk, //是否正常
-                LdCalibrationSufValue: props.navigation.state.params.item.LdCalibrationSufValue, //校准后
-                BqNdz: props.navigation.state.params.item.BqNdz, //标气浓度值
-                LcLastCalibrationValue: props.navigation.state.params.item.LcLastCalibrationValue, //量程 上一次校准值
-                LcCalibrationPreValue: props.navigation.state.params.item.LcCalibrationPreValue, //校准前
-                LcPy: props.navigation.state.params.item.LcPy, //量程漂移%F.S.
-                LcCalibrationIsOk: props.navigation.state.params.item.LcCalibrationIsOk, //是否正常
-                LcCalibrationSufValue: props.navigation.state.params.item.LcCalibrationSufValue, //校准后
-                FormMainID: props.navigation.state.params.item.FormMainID, //主表ID
-                FxyYl: SentencedToEmpty(props, ['navigation', 'state', 'params', 'item', 'FxyYl'], ''), //分析仪原理
-                FxyLc: SentencedToEmpty(props, ['navigation', 'state', 'params', 'item', 'FxyLc'], ''), //分析仪量程
-                JlUnit: SentencedToEmpty(props, ['navigation', 'state', 'params', 'item', 'JlUnit'], ''), //计量单位
+                ID: props.route.params.params.item.ID,
+                ItemID: props.route.params.params.item.ItemID,
+                LqNdz: props.route.params.params.item.LqNdz, //零气浓度值
+                LdLastCalibrationValue: props.route.params.params.item.LdLastCalibrationValue, //上一次校准值
+                LdCalibrationPreValue: props.route.params.params.item.LdCalibrationPreValue, //校准前
+                LdPy: props.route.params.params.item.LdPy, //零点漂移%F.S.
+                LdCalibrationIsOk: props.route.params.params.item.LdCalibrationIsOk, //是否正常
+                LdCalibrationSufValue: props.route.params.params.item.LdCalibrationSufValue, //校准后
+                BqNdz: props.route.params.params.item.BqNdz, //标气浓度值
+                LcLastCalibrationValue: props.route.params.params.item.LcLastCalibrationValue, //量程 上一次校准值
+                LcCalibrationPreValue: props.route.params.params.item.LcCalibrationPreValue, //校准前
+                LcPy: props.route.params.params.item.LcPy, //量程漂移%F.S.
+                LcCalibrationIsOk: props.route.params.params.item.LcCalibrationIsOk, //是否正常
+                LcCalibrationSufValue: props.route.params.params.item.LcCalibrationSufValue, //校准后
+                FormMainID: props.route.params.params.item.FormMainID, //主表ID
+                FxyYl: SentencedToEmpty(props, ['route', 'params', 'params', 'item', 'FxyYl'], ''), //分析仪原理
+                FxyLc: SentencedToEmpty(props, ['route', 'params', 'params', 'item', 'FxyLc'], ''), //分析仪量程
+                JlUnit: SentencedToEmpty(props, ['route', 'params', 'params', 'item', 'JlUnit'], ''), //计量单位
 
                 dialogType: saveItem
             };
         }
+        this.props.navigation.setOptions({
+            title: this.props.route.params.params.item.ItemID + '校准记录表',
+        });
     }
 
     _renderModal = () => {
@@ -115,32 +116,21 @@ class CalibrationRecordEdit extends Component {
                 >
                     <ConfirmDialog
                         title={'确认'}
-                        description={this.state.dialogType == deleteItem ? '确认删除该校准记录吗？' : '确认提交' + this.props.navigation.state.params.item.ItemID + '校准记录吗？'}
+                        description={this.state.dialogType == deleteItem ? '确认删除该校准记录吗？' : '确认提交' + this.props.route.params.params.item.ItemID + '校准记录吗？'}
                         doPositive={() => {
                             //dialog确定
                             if (this.state.dialogType == deleteItem) {
                                 //删除记录
-                                // this.props.dispatch(
-                                //     createAction('calibrationRecord/delItem')({
-                                //         index: this.props.navigation.state.params.index,
-                                //         record: this.props.navigation.state.params.item,
-                                //         callback: () => {
-                                //             this.props.dispatch(createAction('calibrationRecord/getInfo')({ createForm: false }));
-                                //             this._modalParent.hideModal();
-                                //             this.props.dispatch(NavigationActions.back());
-                                //         }
-                                //     })
-                                // );
                                 this.props.dispatch(createAction('calibrationRecord/updateState')({
                                     jzDeleteResult: { status: -1 }
                                 }));
                                 this.props.dispatch(createAction('calibrationRecord/deleteJzItem')({
-                                    params: { ID: SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'ID'], 'empty') },
+                                    params: { ID: SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ID'], 'empty') },
                                     callback: () => {
                                         let index = this.props.JzConfigItemSelectedList.findIndex((seletedItem, selectedIndex) => {
                                             if (seletedItem.ItemID
                                                 == SentencedToEmpty(this.props
-                                                    , ['navigation', 'state', 'params', 'item', 'ItemID'], '')) {
+                                                    , ['route', 'params', 'params', 'item', 'ItemID'], '')) {
                                                 return true;
                                             }
                                         });
@@ -158,7 +148,7 @@ class CalibrationRecordEdit extends Component {
                             } else {
                                 this.props.dispatch(
                                     createAction('calibrationRecord/saveItem')({
-                                        index: this.props.navigation.state.params.index,
+                                        index: this.props.route.params.params.index,
                                         record: this.state,
                                         callback: () => {
                                             this.props.dispatch(createAction('calibrationRecord/getInfo')({ createForm: false }));
@@ -280,7 +270,7 @@ class CalibrationRecordEdit extends Component {
         let suffix = (resultAbs + '').substr(strLength - 2, strLength);
         let suffixLength = suffix.length;
         let zhenshiLDPY = result;
-        let ItemId = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'ItemId'], '');
+        let ItemId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ItemId'], '');
         if (ItemId == '160') {
             //ItemID: "颗粒物"  ItemId: "160"
             if (Math.abs(zhenshiLDPY) <= 0.02) {
@@ -367,7 +357,7 @@ class CalibrationRecordEdit extends Component {
         let suffixLength = suffix.length;
         // let zhenshiLCPY = result / 10000;
         let zhenshiLCPY = result;
-        let ItemId = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'ItemId'], '');
+        let ItemId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ItemId'], '');
         if (ItemId == '160') {
             //ItemID: "颗粒物"  ItemId: "160"
             if (Math.abs(zhenshiLCPY) <= 0.02) {
@@ -408,7 +398,7 @@ class CalibrationRecordEdit extends Component {
     };
 
     render() {
-        let ItemID = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'ItemId'], '');
+        let ItemID = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ItemId'], '');
         /**
          * ItemID == 543
          * 流速不需要填写量程校准
@@ -419,97 +409,229 @@ class CalibrationRecordEdit extends Component {
          */
         return (
             <View style={styles.container}>
-                <KeyboardAwareScrollView>
-                    <ScrollView style={[{ width: SCREEN_WIDTH, flex: 1 }]} showsVerticalScrollIndicator={false}>
-                        <View style={[{ width: SCREEN_WIDTH, alignItems: 'center' }]}>
+                {/* <KeyboardAwareScrollView> */}
+                <ScrollView style={[{ width: SCREEN_WIDTH, flex: 1 }]} showsVerticalScrollIndicator={false}>
+                    <View style={[{ width: SCREEN_WIDTH, alignItems: 'center' }]}>
+                        <Text
+                            style={[
+                                {
+                                    width: SCREEN_WIDTH - 28,
+                                    marginVertical: 12
+                                }
+                            ]}
+                        >
+                            分析仪校准原理
+                        </Text>
+                        <View
+                            style={[
+                                {
+                                    width: SCREEN_WIDTH - 24,
+                                    paddingHorizontal: 24,
+                                    borderRadius: 2,
+                                    backgroundColor: globalcolor.white
+                                }
+                            ]}
+                        >
+                            <View
+                                style={[
+                                    {
+                                        width: SCREEN_WIDTH - 72
+                                    }
+                                ]}
+                            >
+                                <FormInput
+                                    label="分析仪原理"
+                                    placeholder="请输入"
+                                    keyboardType="default"
+                                    value={this.state.FxyYl}
+                                    onChangeText={text => {
+                                        this.setState({
+                                            FxyYl: text
+                                        });
+                                    }}
+                                />
+                            </View>
+                            <View style={[styles.layoutWithBottomBorder, { flexDirection: 'column', justifyContent: 'center' }]}>
+                                <FormRangInput
+                                    label={'分析仪量程'}
+                                    rangSeparator={rangSeparator}
+                                    upperLimitValue={this.getUpperLimitValue(SentencedToEmpty(this.state, ['FxyLc'], ''))}
+                                    lowerLimitValue={this.getLowerLimitValue(SentencedToEmpty(this.state, ['FxyLc'], ''))}
+                                    onChangeText={arr => {
+                                        this.setState({ FxyLc: `${arr[0]}${rangSeparator}${arr[1]}` });
+                                    }}
+                                />
+                            </View>
+                            <View
+                                style={[
+                                    {
+                                        width: SCREEN_WIDTH - 72
+                                    }
+                                ]}
+                            >
+                                <FormPicker
+                                    last={true}
+                                    label="计量单位"
+                                    defaultCode={this.state.JlUnit}
+                                    option={{
+                                        codeKey: 'Name',
+                                        nameKey: 'Name',
+                                        defaultCode: this.state.JlUnit,
+                                        dataArr: this.props.unitsList,
+                                        onSelectListener: item => {
+                                            this.setState({
+                                                JlUnit: item.Name
+                                            });
+                                        }
+                                    }}
+                                    showText={this.state.JlUnit}
+                                    placeHolder="请选择"
+                                />
+                            </View>
+                        </View>
+                        <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 28 }]}>
                             <Text
                                 style={[
                                     {
-                                        width: SCREEN_WIDTH - 28,
+                                        flex: 1,
                                         marginVertical: 12
                                     }
                                 ]}
                             >
-                                分析仪校准原理
+                                零点漂移校准
                             </Text>
-                            <View
+                        </View>
+                        <View
+                            style={[
+                                {
+                                    width: SCREEN_WIDTH - 24,
+                                    paddingHorizontal: 24,
+                                    borderRadius: 2,
+                                    backgroundColor: globalcolor.white,
+                                    alignItems: 'center'
+                                }
+                            ]}
+                        >
+                            <View style={[styles.layoutWithBottomBorder]}>
+                                <Text style={[styles.labelStyle]}>零气浓度值：</Text>
+                                <MyTextInput
+                                    keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
+                                    value={this.state.LqNdz}
+                                    ref={ref => (this._inputMachineHaltReason = ref)}
+                                    style={[styles.textStyle, { flex: 1 }]}
+                                    placeholder={'请填写零气浓度值'}
+                                    onChangeText={text => {
+                                        // 动态更新组件内State记录
+                                        this.setState({
+                                            LqNdz: text
+                                        });
+                                    }}
+                                />
+                            </View>
+                            <View style={[styles.layoutWithBottomBorder]}>
+                                <Text style={[styles.labelStyle]}>上次校准后测试值：</Text>
+                                <MyTextInput
+                                    keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
+                                    value={this.state.LdLastCalibrationValue}
+                                    ref={ref => (this._inputMachineHaltReason = ref)}
+                                    style={[styles.textStyle, { flex: 1 }]}
+                                    placeholder={'需要补充数据'}
+                                    onChangeText={text => {
+                                        // 动态更新组件内State记录
+                                        this.setState({
+                                            LdLastCalibrationValue: text
+                                        });
+                                    }}
+                                />
+                            </View>
+                            <View style={[styles.layoutWithBottomBorder]}>
+                                <Text style={[styles.labelStyle]}>校前测试值：</Text>
+                                <TextInput
+                                    editable={true}
+                                    keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
+                                    value={this.state.LdCalibrationPreValue}
+                                    ref={ref => (this._inputMachineHaltReason = ref)}
+                                    placeholder={'请填写校前测试值'}
+                                    onChangeText={text => {
+                                        // 动态更新组件内State记录
+                                        this.setState({
+                                            LdCalibrationPreValue: text
+                                        });
+                                    }}
+                                    underlineColorAndroid={'transparent'}
+                                    style={[styles.textStyle, { flex: 1 }]}
+                                />
+                            </View>
+                            <TouchableOpacity
                                 style={[
                                     {
-                                        width: SCREEN_WIDTH - 24,
-                                        paddingHorizontal: 24,
-                                        borderRadius: 2,
-                                        backgroundColor: globalcolor.white
+                                        marginTop: 8,
+                                        marginBottom: 9
                                     }
                                 ]}
+                                onPress={() => {
+                                    this._zeroTest();
+                                }}
                             >
-                                {/* <View style={[styles.layoutWithBottomBorder]}> */}
                                 <View
                                     style={[
                                         {
-                                            width: SCREEN_WIDTH - 72
+                                            width: 116,
+                                            height: 30,
+                                            backgroundColor: globalcolor.blue,
+                                            borderRadius: 2,
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
                                         }
                                     ]}
                                 >
-                                    {/* <Text style={[styles.labelStyle]}>分析仪原理：</Text>
-                                    <View style={[styles.innerlayout]}>
-                                        <Text style={[styles.textStyle]}>{this.state.FxyYl}</Text>
-                                    </View> */}
-                                    <FormInput
-                                        label="分析仪原理"
-                                        placeholder="请输入"
-                                        keyboardType="default"
-                                        value={this.state.FxyYl}
-                                        onChangeText={text => {
-                                            this.setState({
-                                                FxyYl: text
-                                            });
-                                        }}
-                                    />
+                                    <Text style={[{ fontSize: 15, color: globalcolor.white }]}>{'计算'}</Text>
                                 </View>
-                                <View style={[styles.layoutWithBottomBorder, { flexDirection: 'column', justifyContent: 'center' }]}>
-                                    <FormRangInput
-                                        label={'分析仪量程'}
-                                        rangSeparator={rangSeparator}
-                                        upperLimitValue={this.getUpperLimitValue(SentencedToEmpty(this.state, ['FxyLc'], ''))}
-                                        lowerLimitValue={this.getLowerLimitValue(SentencedToEmpty(this.state, ['FxyLc'], ''))}
-                                        onChangeText={arr => {
-                                            this.setState({ FxyLc: `${arr[0]}${rangSeparator}${arr[1]}` });
-                                        }}
-                                    />
-                                </View>
-                                {/* <View style={[styles.lastItem]}> */}
-                                <View
-                                    style={[
-                                        {
-                                            width: SCREEN_WIDTH - 72
-                                        }
-                                    ]}
-                                >
-                                    {/* <Text style={[styles.labelStyle]}>计量单位：</Text>
-                                    <View style={[styles.innerlayout]}>
-                                        <Text style={[styles.textStyle]}>{this.state.JlUnit}</Text>
-                                    </View> */}
-                                    <FormPicker
-                                        last={true}
-                                        label="计量单位"
-                                        defaultCode={this.state.JlUnit}
-                                        option={{
-                                            codeKey: 'Name',
-                                            nameKey: 'Name',
-                                            defaultCode: this.state.JlUnit,
-                                            dataArr: this.props.unitsList,
-                                            onSelectListener: item => {
-                                                this.setState({
-                                                    JlUnit: item.Name
-                                                });
-                                            }
-                                        }}
-                                        showText={this.state.JlUnit}
-                                        placeHolder="请选择"
-                                    />
+                            </TouchableOpacity>
+                        </View>
+                        <View
+                            style={[
+                                {
+                                    width: SCREEN_WIDTH - 24,
+                                    paddingHorizontal: 24,
+                                    borderRadius: 2,
+                                    backgroundColor: globalcolor.white,
+                                    marginTop: 10
+                                }
+                            ]}
+                        >
+                            <View style={[styles.layoutWithBottomBorder]}>
+                                <Text style={[styles.labelStyle]}>零点漂移%F.S.：</Text>
+                                <View style={[styles.innerlayout]}>
+                                    <Text style={[styles.textStyle]}>{this.state.LdPy && this.state.LdPy != '' ? this.state.LdPy : '条件不足'}</Text>
                                 </View>
                             </View>
-                            <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 28 }]}>
+                            <View style={[styles.layoutWithBottomBorder]}>
+                                <Text style={[styles.labelStyle]}>仪器校准是否正常：</Text>
+                                <View style={[styles.innerlayout]}>
+                                    <Text style={[styles.textStyle]}>{this.state.LdCalibrationIsOk && this.state.LdCalibrationIsOk != '' ? this.state.LdCalibrationIsOk : '条件不足'}</Text>
+                                </View>
+                            </View>
+                            <View style={[styles.lastItem]}>
+                                <Text style={[styles.labelStyle]}>校准后测试值：</Text>
+                                <TextInput
+                                    keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
+                                    value={this.state.LdCalibrationSufValue}
+                                    ref={ref => (this._inputMachineHaltReason = ref)}
+                                    style={[styles.textStyle, { flex: 1 }]}
+                                    placeholder={'请填写测试值'}
+                                    onChangeText={text => {
+                                        // 动态更新组件内State记录
+                                        this.setState({
+                                            LdCalibrationSufValue: text
+                                        });
+                                    }}
+                                />
+                            </View>
+                        </View>
+                        {
+                            // ItemID: "流速"   ItemId: "543"
+                            ItemID != 543 ? <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 28 }]}>
                                 <Text
                                     style={[
                                         {
@@ -518,17 +640,12 @@ class CalibrationRecordEdit extends Component {
                                         }
                                     ]}
                                 >
-                                    零点漂移校准
+                                    量程漂移校准
                                 </Text>
-                                {/* <TouchableOpacity onPress={()=>{
-                                    this._zeroTest();
-                                }}>
-                                    <View style={[{height:40,width:64,justifyContent:'center',alignItems:'flex-end'}]}>
-                                        <Text>测试</Text>
-                                    </View>
-                                </TouchableOpacity> */}
-                            </View>
-                            <View
+                            </View> : null
+                        }
+                        {   // ItemID: "流速"   ItemId: "543"
+                            ItemID != 543 ? <View
                                 style={[
                                     {
                                         width: SCREEN_WIDTH - 24,
@@ -540,17 +657,17 @@ class CalibrationRecordEdit extends Component {
                                 ]}
                             >
                                 <View style={[styles.layoutWithBottomBorder]}>
-                                    <Text style={[styles.labelStyle]}>零气浓度值：</Text>
+                                    <Text style={[styles.labelStyle]}>标气浓度值：</Text>
                                     <MyTextInput
                                         keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                                        value={this.state.LqNdz}
+                                        value={this.state.BqNdz}
                                         ref={ref => (this._inputMachineHaltReason = ref)}
                                         style={[styles.textStyle, { flex: 1 }]}
-                                        placeholder={'请填写零气浓度值'}
+                                        placeholder={'请填写标气浓度值'}
                                         onChangeText={text => {
                                             // 动态更新组件内State记录
                                             this.setState({
-                                                LqNdz: text
+                                                BqNdz: text
                                             });
                                         }}
                                     />
@@ -559,34 +676,32 @@ class CalibrationRecordEdit extends Component {
                                     <Text style={[styles.labelStyle]}>上次校准后测试值：</Text>
                                     <MyTextInput
                                         keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                                        value={this.state.LdLastCalibrationValue}
+                                        value={this.state.LcLastCalibrationValue}
                                         ref={ref => (this._inputMachineHaltReason = ref)}
                                         style={[styles.textStyle, { flex: 1 }]}
-                                        placeholder={'需要补充数据'}
+                                        placeholder={'请填写上次校准后测试值'}
                                         onChangeText={text => {
-                                            // 动态更新组件内State记录
+                                            // 动态更新组件内State记录用户名
                                             this.setState({
-                                                LdLastCalibrationValue: text
+                                                LcLastCalibrationValue: text
                                             });
                                         }}
                                     />
                                 </View>
                                 <View style={[styles.layoutWithBottomBorder]}>
                                     <Text style={[styles.labelStyle]}>校前测试值：</Text>
-                                    <TextInput
-                                        editable={true}
+                                    <MyTextInput
                                         keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                                        value={this.state.LdCalibrationPreValue}
+                                        value={this.state.LcCalibrationPreValue}
                                         ref={ref => (this._inputMachineHaltReason = ref)}
+                                        style={[styles.textStyle, { flex: 1 }]}
                                         placeholder={'请填写校前测试值'}
                                         onChangeText={text => {
-                                            // 动态更新组件内State记录
+                                            // 动态更新组件内State记录用户名
                                             this.setState({
-                                                LdCalibrationPreValue: text
+                                                LcCalibrationPreValue: text
                                             });
                                         }}
-                                        underlineColorAndroid={'transparent'}
-                                        style={[styles.textStyle, { flex: 1 }]}
                                     />
                                 </View>
                                 <TouchableOpacity
@@ -597,7 +712,7 @@ class CalibrationRecordEdit extends Component {
                                         }
                                     ]}
                                     onPress={() => {
-                                        this._zeroTest();
+                                        this._rangeTest();
                                     }}
                                 >
                                     <View
@@ -615,8 +730,11 @@ class CalibrationRecordEdit extends Component {
                                         <Text style={[{ fontSize: 15, color: globalcolor.white }]}>{'计算'}</Text>
                                     </View>
                                 </TouchableOpacity>
-                            </View>
-                            <View
+                            </View> : null
+                        }
+                        {
+                            // ItemID: "流速"   ItemId: "543"
+                            ItemID != 543 ? <View
                                 style={[
                                     {
                                         width: SCREEN_WIDTH - 24,
@@ -628,194 +746,42 @@ class CalibrationRecordEdit extends Component {
                                 ]}
                             >
                                 <View style={[styles.layoutWithBottomBorder]}>
-                                    <Text style={[styles.labelStyle]}>零点漂移%F.S.：</Text>
+                                    <Text style={[styles.labelStyle]}>量程漂移%F.S.：</Text>
                                     <View style={[styles.innerlayout]}>
-                                        <Text style={[styles.textStyle]}>{this.state.LdPy && this.state.LdPy != '' ? this.state.LdPy : '条件不足'}</Text>
+                                        <Text style={[styles.textStyle]}>{this.state.LcPy && this.state.LcPy != '' ? this.state.LcPy : '条件不足'}</Text>
                                     </View>
                                 </View>
                                 <View style={[styles.layoutWithBottomBorder]}>
                                     <Text style={[styles.labelStyle]}>仪器校准是否正常：</Text>
                                     <View style={[styles.innerlayout]}>
-                                        <Text style={[styles.textStyle]}>{this.state.LdCalibrationIsOk && this.state.LdCalibrationIsOk != '' ? this.state.LdCalibrationIsOk : '条件不足'}</Text>
+                                        <Text style={[styles.textStyle]}>{this.state.LcCalibrationIsOk && this.state.LcCalibrationIsOk != '' ? this.state.LcCalibrationIsOk : '条件不足'}</Text>
                                     </View>
                                 </View>
                                 <View style={[styles.lastItem]}>
                                     <Text style={[styles.labelStyle]}>校准后测试值：</Text>
-                                    <TextInput
+                                    <MyTextInput
                                         keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                                        value={this.state.LdCalibrationSufValue}
+                                        value={this.state.LcCalibrationSufValue}
                                         ref={ref => (this._inputMachineHaltReason = ref)}
                                         style={[styles.textStyle, { flex: 1 }]}
                                         placeholder={'请填写测试值'}
                                         onChangeText={text => {
                                             // 动态更新组件内State记录
                                             this.setState({
-                                                LdCalibrationSufValue: text
+                                                LcCalibrationSufValue: text
                                             });
                                         }}
                                     />
                                 </View>
-                            </View>
-                            {
-                                // ItemID: "流速"   ItemId: "543"
-                                ItemID != 543 ? <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 28 }]}>
-                                    <Text
-                                        style={[
-                                            {
-                                                flex: 1,
-                                                marginVertical: 12
-                                            }
-                                        ]}
-                                    >
-                                        量程漂移校准
-                                    </Text>
-                                    {/* <TouchableOpacity onPress={()=>{
-                                        this._rangeTest();
-                                    }}>
-                                        <View style={[{height:40,width:64,justifyContent:'center',alignItems:'flex-end'}]}>
-                                            <Text>测试</Text>
-                                        </View>
-                                    </TouchableOpacity> */}
-                                </View> : null
-                            }
-                            {   // ItemID: "流速"   ItemId: "543"
-                                ItemID != 543 ? <View
-                                    style={[
-                                        {
-                                            width: SCREEN_WIDTH - 24,
-                                            paddingHorizontal: 24,
-                                            borderRadius: 2,
-                                            backgroundColor: globalcolor.white,
-                                            alignItems: 'center'
-                                        }
-                                    ]}
-                                >
-                                    <View style={[styles.layoutWithBottomBorder]}>
-                                        <Text style={[styles.labelStyle]}>标气浓度值：</Text>
-                                        <MyTextInput
-                                            keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                                            value={this.state.BqNdz}
-                                            ref={ref => (this._inputMachineHaltReason = ref)}
-                                            style={[styles.textStyle, { flex: 1 }]}
-                                            placeholder={'请填写标气浓度值'}
-                                            onChangeText={text => {
-                                                // 动态更新组件内State记录
-                                                this.setState({
-                                                    BqNdz: text
-                                                });
-                                            }}
-                                        />
-                                    </View>
-                                    <View style={[styles.layoutWithBottomBorder]}>
-                                        <Text style={[styles.labelStyle]}>上次校准后测试值：</Text>
-                                        <MyTextInput
-                                            keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                                            value={this.state.LcLastCalibrationValue}
-                                            ref={ref => (this._inputMachineHaltReason = ref)}
-                                            style={[styles.textStyle, { flex: 1 }]}
-                                            placeholder={'请填写上次校准后测试值'}
-                                            onChangeText={text => {
-                                                // 动态更新组件内State记录用户名
-                                                this.setState({
-                                                    LcLastCalibrationValue: text
-                                                });
-                                            }}
-                                        />
-                                    </View>
-                                    <View style={[styles.layoutWithBottomBorder]}>
-                                        <Text style={[styles.labelStyle]}>校前测试值：</Text>
-                                        <MyTextInput
-                                            keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                                            value={this.state.LcCalibrationPreValue}
-                                            ref={ref => (this._inputMachineHaltReason = ref)}
-                                            style={[styles.textStyle, { flex: 1 }]}
-                                            placeholder={'请填写校前测试值'}
-                                            onChangeText={text => {
-                                                // 动态更新组件内State记录用户名
-                                                this.setState({
-                                                    LcCalibrationPreValue: text
-                                                });
-                                            }}
-                                        />
-                                    </View>
-                                    <TouchableOpacity
-                                        style={[
-                                            {
-                                                marginTop: 8,
-                                                marginBottom: 9
-                                            }
-                                        ]}
-                                        onPress={() => {
-                                            this._rangeTest();
-                                        }}
-                                    >
-                                        <View
-                                            style={[
-                                                {
-                                                    width: 116,
-                                                    height: 30,
-                                                    backgroundColor: globalcolor.blue,
-                                                    borderRadius: 2,
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center'
-                                                }
-                                            ]}
-                                        >
-                                            <Text style={[{ fontSize: 15, color: globalcolor.white }]}>{'计算'}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View> : null
-                            }
-                            {
-                                // ItemID: "流速"   ItemId: "543"
-                                ItemID != 543 ? <View
-                                    style={[
-                                        {
-                                            width: SCREEN_WIDTH - 24,
-                                            paddingHorizontal: 24,
-                                            borderRadius: 2,
-                                            backgroundColor: globalcolor.white,
-                                            marginTop: 10
-                                        }
-                                    ]}
-                                >
-                                    <View style={[styles.layoutWithBottomBorder]}>
-                                        <Text style={[styles.labelStyle]}>量程漂移%F.S.：</Text>
-                                        <View style={[styles.innerlayout]}>
-                                            <Text style={[styles.textStyle]}>{this.state.LcPy && this.state.LcPy != '' ? this.state.LcPy : '条件不足'}</Text>
-                                        </View>
-                                    </View>
-                                    <View style={[styles.layoutWithBottomBorder]}>
-                                        <Text style={[styles.labelStyle]}>仪器校准是否正常：</Text>
-                                        <View style={[styles.innerlayout]}>
-                                            <Text style={[styles.textStyle]}>{this.state.LcCalibrationIsOk && this.state.LcCalibrationIsOk != '' ? this.state.LcCalibrationIsOk : '条件不足'}</Text>
-                                        </View>
-                                    </View>
-                                    <View style={[styles.lastItem]}>
-                                        <Text style={[styles.labelStyle]}>校准后测试值：</Text>
-                                        <MyTextInput
-                                            keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                                            value={this.state.LcCalibrationSufValue}
-                                            ref={ref => (this._inputMachineHaltReason = ref)}
-                                            style={[styles.textStyle, { flex: 1 }]}
-                                            placeholder={'请填写测试值'}
-                                            onChangeText={text => {
-                                                // 动态更新组件内State记录
-                                                this.setState({
-                                                    LcCalibrationSufValue: text
-                                                });
-                                            }}
-                                        />
-                                    </View>
-                                </View> : null
-                            }
-                        </View>
-                    </ScrollView>
-                </KeyboardAwareScrollView>
-                {this.props.navigation.state.params.index != -1 &&
-                    this.props.navigation.state.params.item.FormMainID &&
-                    ((this.props.navigation.state.params.item.LdCalibrationIsOk && this.props.navigation.state.params.item.LdCalibrationIsOk != '') ||
-                        (this.props.navigation.state.params.item.LcCalibrationIsOk && this.props.navigation.state.params.item.LcCalibrationIsOk != '')) ? (
+                            </View> : null
+                        }
+                    </View>
+                </ScrollView>
+                {/* </KeyboardAwareScrollView> */}
+                {this.props.route.params.params.index != -1 &&
+                    this.props.route.params.params.item.FormMainID &&
+                    ((this.props.route.params.params.item.LdCalibrationIsOk && this.props.route.params.params.item.LdCalibrationIsOk != '') ||
+                        (this.props.route.params.params.item.LcCalibrationIsOk && this.props.route.params.params.item.LcCalibrationIsOk != '')) ? (
                     <TouchableOpacity
                         style={[styles.button, { backgroundColor: globalcolor.orange }, { marginVertical: 10 }]}
                         onPress={() => {
@@ -862,8 +828,8 @@ class CalibrationRecordEdit extends Component {
                          * IsLiangCheng
                          * 1表示必填
                          */
-                        const IsPiaoYi = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'IsPiaoYi'], -1);
-                        const IsLiangCheng = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'IsLiangCheng'], -1);
+                        const IsPiaoYi = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'IsPiaoYi'], -1);
+                        const IsLiangCheng = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'IsLiangCheng'], -1);
                         let up = this.getUpperLimitValue(SentencedToEmpty(this.state, ['FxyLc'], ''));
                         let lower = this.getLowerLimitValue(SentencedToEmpty(this.state, ['FxyLc'], ''));
                         if (SentencedToEmpty(this.state, ['FxyYl'], '') == '') {
@@ -895,7 +861,7 @@ class CalibrationRecordEdit extends Component {
                                 return;
                             }
                         }
-                        let ItemId = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'ItemId'], '');
+                        let ItemId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ItemId'], '');
                         // ItemID: "流速"   ItemId: "543"
                         if (IsLiangCheng == 1 && ItemId != '543') {
                             if (SentencedToEmpty(this.state, ['BqNdz'], '') == '') {
@@ -918,7 +884,7 @@ class CalibrationRecordEdit extends Component {
                         }
                         this.props.dispatch(
                             createAction('calibrationRecord/saveItem')({
-                                index: this.props.navigation.state.params.index,
+                                index: this.props.route.params.params.index,
                                 record: this.state,
                                 callback: () => {
                                     this.props.dispatch(createAction('calibrationRecord/updateState')({

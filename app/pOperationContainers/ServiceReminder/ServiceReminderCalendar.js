@@ -2,8 +2,8 @@
  * @Description: 服务提醒日历
  * @LastEditors: hxf
  * @Date: 2024-04-11 14:36:33
- * @LastEditTime: 2024-06-03 14:16:50
- * @FilePath: /SDLMainProject37/app/pOperationContainers/ServiceReminder/ServiceReminderCalendar.js
+ * @LastEditTime: 2024-09-26 19:40:24
+ * @FilePath: /SDLMainProject/app/pOperationContainers/ServiceReminder/ServiceReminderCalendar.js
  */
 import { Animated, Image, PanResponder, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
@@ -70,6 +70,69 @@ export default class ServiceReminderCalendar extends Component {
             selectedDate: moment().format('YYYY-MM-DD HH:mm:ss'),
             listType: 0,
         };
+        this.props.navigation.setOptions({
+            headerRight: () => <TouchableOpacity
+                style={{ width: 44, height: 40, justifyContent: 'center' }}
+                onPress={() => {
+                    this.props.dispatch(createAction('CTServiceReminderModel/updateState')({
+                        addServiceReminderParams: {
+                            // "id": "", // 主表ID  如果是修改一定要传
+                            // "ID": "cba5bf52-3f4f-4944-93dc-2bedb18dcd66",
+                            "ProjectID": "", // 项目ID
+                            "PointId": "", // 监测点ID
+                            "ServiceId": "", // 服务内容ID 1  72小时调试检测    2 验收
+                            "RemindMsg": "", // 服务提醒说明
+                            "ExpectedTime": "", // 预计开始时间
+                            "serviceReminderInfoList": [//  子表
+
+                                {
+                                    "MType": "1", // 1 日提醒1 2 日提醒2 3开始提醒1 4开始提醒2
+                                    // "reminderTime": "2024-04-13 14:30", // 提醒时间一定要传 计算好
+                                    "EModel": "-2"  // 开始提醒枚举
+                                }
+                                , {
+                                    "MType": "2", // 1 日提醒1 2 日提醒2 3开始提醒1 4开始提醒2
+                                    // "ReminderTime": "2024-04-14 14:30", // 提醒时间一定要传 计算好
+                                    "EModel": "-2"  // 开始提醒枚举
+                                }
+                                , {
+                                    "MType": "3", // 1 日提醒1 2 日提醒2 3开始提醒1 4开始提醒2
+                                    // "ReminderTime": "2024-04-18 14:15", // 提醒时间一定要传 计算好
+                                    "EModel": "-1"  // 开始提醒枚举 1: 15分钟 2: 30分钟    3: 1小时 4: 2小时
+                                }
+                                , {
+                                    "MType": "4", // 1 日提醒1 2 日提醒2 3开始提醒1 4开始提醒2
+                                    // "ReminderTime": "2024-04-18 12:30", // 提醒时间一定要传 计算好
+                                    "EModel": "-1"  // 开始提醒枚举
+                                }
+                            ]
+                        }
+                    }));
+                    this.props.dispatch(NavigationActions.navigate({
+                        routeName: 'ServiceReminderDetailEditor'
+                        , params: {
+
+                        }
+                    }));
+                }}
+            >
+                <View
+                    style={[{
+                        width: 44, height: 40,
+                        alignItems: 'flex-end', justifyContent: 'center',
+                    }]}
+                >
+                    <Image
+                        style={[{
+                            width: 13, height: 13
+                            , marginRight: 15
+                        }]}
+                        source={require('../../images/jiarecord.png')}
+                    />
+                </View>
+            </TouchableOpacity>
+        });
+
         props.navigation.setParams({
             navigatePress: () => {
                 this.props.dispatch(createAction('CTServiceReminderModel/updateState')({
