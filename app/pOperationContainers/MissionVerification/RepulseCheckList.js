@@ -9,14 +9,6 @@ import { getEncryptData } from '../../dvapack/storage';
 import { ImageUrlPrefix } from '../../config';
 
 export default class RepulseCheckList extends Component {
-
-    static navigationOptions = ({ navigation }) => {
-        return createNavigationOptions({
-            title: '打回记录',
-            headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-        });
-    };
-
     constructor(props) {
         super(props);
         this.state = {
@@ -25,6 +17,10 @@ export default class RepulseCheckList extends Component {
             showImages: [],
             showImageIndex: 0,
         };
+
+        props.navigation.setOptions({
+            title: '打回记录',
+        });
     }
 
     renderCheckStep = (si, idx) => {
@@ -107,7 +103,7 @@ export default class RepulseCheckList extends Component {
     render() {
         console.log('props = ', this.props);
         const oldPlanItems = SentencedToEmpty(this.props
-            , ['navigation', 'state',
+            , ['route', 'params',
                 'params', 'data', 'oldPlanItems'], []);
         return (
             <ScrollView

@@ -21,15 +21,11 @@ import { getStatusObject } from './MissionVerificationRectificationList';
     checkedRectificationCompleteListResult: abnormalTask.checkedRectificationCompleteListResult
 }))
 export default class MissionAnalysisModelAbnormalRectificationRecords extends Component {
-
-    static navigationOptions = ({ navigation }) => {
-        return createNavigationOptions({
-            title: '整改记录',
-            headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-        });
-    }
-
     componentDidMount() {
+        this.props.navigation.setOptions({
+            title: '整改记录',
+        });
+
         this.props.dispatch(createAction('abnormalTask/updateState')({
             checkedRectificationCompleteListResult: { status: -1 },
             completeIndex: 1,

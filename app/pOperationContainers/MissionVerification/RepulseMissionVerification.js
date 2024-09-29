@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-08-27 09:36:16
  * @FilePath: /SDLMainProject37/app/pOperationContainers/MissionVerification/repulseMissionVerification.js
  */
-import { Image, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, Platform, Text, TextInput, TouchableOpacity, View, ScrollView } from 'react-native'
 import React, { Component } from 'react'
 import SyanImagePicker from 'react-native-syan-image-picker';
 
@@ -15,7 +15,6 @@ import { SCREEN_WIDTH } from '../../config/globalsize';
 import { ImageUrlPrefix } from '../../config';
 import { getEncryptData } from '../../dvapack/storage';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
 import { generateRdStr } from '../../gridModels/mathUtils';
 import globalcolor from '../../config/globalcolor';
@@ -35,17 +34,9 @@ let editSiIndex = 0;
 
 @connect()
 export default class RepulseMissionVerification extends Component {
-
     static defaultProps = {
         editCommitEnable: true
     }
-
-    static navigationOptions = ({ navigation }) => {
-        return createNavigationOptions({
-            title: '打回',
-            headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-        });
-    };
 
     constructor(props) {
         super(props);
@@ -54,11 +45,15 @@ export default class RepulseMissionVerification extends Component {
             FileUuidArray: [], //方案步骤图片uuid数组
             planItems: [], //方案执行步骤
         }
+
+        props.navigation.setOptions({
+            title: '打回',
+        });
     }
 
     componentDidMount() {
         console.log('props = ', this.props);
-        const oPlanItem = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'PlanItem'], []);
+        const oPlanItem = SentencedToEmpty(this.props, ['route', 'params', 'params', 'PlanItem'], []);
         let newPlanItem = []
             , imageList = [];
         let uuidArr = [];
@@ -302,7 +297,7 @@ export default class RepulseMissionVerification extends Component {
         });
         this.props.dispatch(createAction('abnormalTask/RepulseCheck')({
             params: {
-                "modelCheckedGuid": this.props.navigation.state.params.ModelCheckedGuid,
+                "modelCheckedGuid": this.props.route.params.params.ModelCheckedGuid,
                 "planItems": submitPlanItem
             },
             callback: () => {
@@ -403,7 +398,7 @@ export default class RepulseMissionVerification extends Component {
                 , alignItems: 'center'
             }]}
         >
-            <KeyboardAwareScrollView
+            <ScrollView
                 nestedScrollEnabled={true}
                 style={[{ flex: 1, paddingTop: 0 }]} showsVerticalScrollIndicator={false}>
                 <View style={{ marginTop: 10, backgroundColor: '#fff' }}>
@@ -426,7 +421,7 @@ export default class RepulseMissionVerification extends Component {
                     <OperationAlertDialog options={dialogOptions} ref="doAlert" />
                     <AlertDialog options={alertOptions} ref="submitAlert" />
                 </View>
-            </KeyboardAwareScrollView>
+            </ScrollView>
             <TouchableOpacity
                 onPress={() => {
                     this.refs.submitAlert.show();

@@ -19,18 +19,10 @@ import moment from 'moment';
     updateCheckedRectificationResult: abnormalTask.updateCheckedRectificationResult
 }))
 export default class MissionAbnormalRectification extends Component {
-
-    static navigationOptions = ({ navigation }) => {
-        return createNavigationOptions({
-            title: '异常整改',
-            headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 },
-        });
-    };
-
     constructor(props) {
         super(props);
         this.state = {
-            ID: SentencedToEmpty(props, ['navigation', 'state', 'params', 'ID'], ''),
+            ID: SentencedToEmpty(props, ['route', 'params', 'params', 'ID'], ''),
             // TimeS: SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'AttachmentId'], new Date().getTime()),
             TimeS: `mxzg_${new Date().getTime()}`,
             // CompletionTime: moment().format('YYYY-MM-DD HH:00'),
@@ -39,6 +31,9 @@ export default class MissionAbnormalRectification extends Component {
             images: [],
             nativeStatus: 200
         };
+        props.navigation.setOptions({
+            title: '异常整改',
+        });
     }
 
     componentDidMount() {

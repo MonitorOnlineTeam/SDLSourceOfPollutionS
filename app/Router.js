@@ -103,6 +103,8 @@ import RectificationReviewExecution from './pOperationContainers/AnalysisModelMo
  * 异常数据识别2.0
  */
 import AbnormalEnterpriseList from './pOperationContainers/MissionVerification/AbnormalEnterpriseList'
+import AbnormalOneETypeList from './pOperationContainers/MissionVerification/AbnormalOneETypeList'
+import TaskProduce from './pOperationContainers/MissionVerification/TaskProduce'
 import TaskToBeVerifiedList from './pOperationContainers/MissionVerification/TaskToBeVerifiedList'
 import ClueDetail from './pOperationContainers/MissionVerification/ClueDetail'
 import CheckDetails from './pOperationContainers/MissionVerification/CheckDetails'
@@ -110,6 +112,14 @@ import StopRange from './components/page/account/AlarmAnalyze/StopRange'
 import DataPhenomenon from './components/page/account/AlarmAnalyze/DataPhenomenon'
 
 import MissionVerificationRectificationList from './pOperationContainers/MissionVerification/MissionVerificationRectificationList'
+import MissionAnalysisModelAbnormalRectificationRecords from './pOperationContainers/MissionVerification/MissionAnalysisModelAbnormalRectificationRecords'
+import CheckRoleList from './pOperationContainers/MissionVerification/CheckRoleList'
+import RepulseMissionVerification from './pOperationContainers/MissionVerification/RepulseMissionVerification'
+import RepulseCheckList from './pOperationContainers/MissionVerification/RepulseCheckList'
+import MissionAbnormalVerifyDetails from './pOperationContainers/MissionVerification/MissionAbnormalVerifyDetails'
+import MissionAbnormalRectification from './pOperationContainers/MissionVerification/MissionAbnormalRectification'
+import MissionRectificationReviewDetails from './pOperationContainers/MissionVerification/MissionRectificationReviewDetails'
+import MissionRectificationReviewExecution from './pOperationContainers/MissionVerification/MissionRectificationReviewExecution'
 
 /* jab */
 import ServiceDispatchMessage from './pOperationContainers/tabView/chengTaoXiaoXi/ServiceDispatchMessage';
@@ -353,6 +363,8 @@ Actions.pushViewWithName(RectificationReviewExecution, 'RectificationReviewExecu
 
 // 模型2.0
 Actions.pushViewWithName(AbnormalEnterpriseList, 'AbnormalEnterpriseList', { title: '异常识别线索' }); 
+Actions.pushViewWithName(AbnormalOneETypeList, 'AbnormalOneETypeList', { title: '异常识别线索' }); 
+Actions.pushViewWithName(TaskProduce, 'TaskProduce', { title: '任务生成' }); 
 Actions.pushViewWithName(AlarmDataChart2, 'AlarmDataChart2', { title: '数据列表' });
 Actions.pushViewWithName(TaskToBeVerifiedList, 'TaskToBeVerifiedList', { title: '核查任务' }); 
 Actions.pushViewWithName(ClueDetail, 'ClueDetail', { title: '线索详情' }); 
@@ -362,6 +374,14 @@ Actions.pushViewWithName(DataPhenomenon, 'DataPhenomenon', { title: '数据现�
 
 
 Actions.pushViewWithName(MissionVerificationRectificationList, 'MissionVerificationRectificationList', { title: '异常整改' }); 
+Actions.pushViewWithName(MissionAnalysisModelAbnormalRectificationRecords, 'MissionAnalysisModelAbnormalRectificationRecords', { title: '整改记录' }); 
+Actions.pushViewWithName(CheckRoleList, 'CheckRoleList', { title: '用户名册' }); 
+Actions.pushViewWithName(RepulseMissionVerification, 'RepulseMissionVerification', { title: '打回' }); 
+Actions.pushViewWithName(RepulseCheckList, 'RepulseCheckList', { title: '打回记录' }); 
+Actions.pushViewWithName(MissionAbnormalVerifyDetails, 'MissionAbnormalVerifyDetails', { title: '核实详情' }); 
+Actions.pushViewWithName(MissionAbnormalRectification, 'MissionAbnormalRectification', { title: '异常整改' }); 
+Actions.pushViewWithName(MissionRectificationReviewDetails, 'MissionRectificationReviewDetails', { title: '整改复核' }); 
+Actions.pushViewWithName(MissionRectificationReviewExecution, 'MissionRectificationReviewExecution', { title: '整改复核' }); 
 
 
 

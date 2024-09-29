@@ -5,10 +5,9 @@
  * @LastEditTime: 2024-08-29 09:57:46
  * @FilePath: /SDLMainProject37/app/pOperationContainers/MissionVerification/MissionRectificationReviewDetails.js
  */
-import { Text, View, Platform, StyleSheet, TouchableOpacity, Image, Modal } from 'react-native'
+import { Text, View, Platform, StyleSheet, TouchableOpacity, Image, Modal, ScrollView } from 'react-native'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
 import { NavigationActions, SentencedToEmpty, createAction, createNavigationOptions } from '../../utils';
@@ -23,14 +22,6 @@ import { getEncryptData } from '../../dvapack/storage';
     checkedRectificationApprovalsResult: abnormalTask.checkedRectificationApprovalsResult
 }))
 export default class MissionRectificationReviewDetails extends Component {
-
-    static navigationOptions = ({ navigation }) => {
-        return createNavigationOptions({
-            title: SentencedToEmpty(navigation, ['state', 'params', 'RectificationStatus'], '') == 1 ? '驳回详情' : '整改复核',
-            headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-        });
-    }
-
     constructor(props) {
         super(props);
         this.state = {
@@ -40,6 +31,10 @@ export default class MissionRectificationReviewDetails extends Component {
             appResultLargeImages: [],
             checkedRectificationListLargeImages: [],
         };
+
+        props.navigation.setOptions({
+            title: SentencedToEmpty(props.route, ['params', 'params', 'RectificationStatus'], '') == 1 ? '驳回详情' : '整改复核',
+        });
     }
 
     showModal = () => {
@@ -60,7 +55,8 @@ export default class MissionRectificationReviewDetails extends Component {
                 const ProxyCode = getEncryptData();
                 const Datas = SentencedToEmpty(result, ['data', 'Datas'], {});
                 let checkedRectificationListLargeImages = [];
-                SentencedToEmpty(Datas, ['CheckedRectificationList', 0, 'FileList'], [])
+                console.log('111',     SentencedToEmpty(Datas, ['CheckedRectificationList', 0, 'FileList'], []));
+                SentencedToEmpty(Datas, ['CheckedRectificationList', 0, 'FileList', 'ImgList'], [])
                     .map((item, index) => {
                         const nameArray = item.split('/');
                         checkedRectificationListLargeImages.push({
@@ -73,7 +69,7 @@ export default class MissionRectificationReviewDetails extends Component {
                 SentencedToEmpty(Datas, ['appResult'], []).
                     map((item, index) => {
                         tempArray = [];
-                        SentencedToEmpty(item, ['FileList'], [])
+                        SentencedToEmpty(item, ['FileList', 'ImgList'], [])
                             .map((imageItem, imageIndex) => {
                                 const nameArray = imageItem.split('/');
                                 tempArray.push({
@@ -93,7 +89,7 @@ export default class MissionRectificationReviewDetails extends Component {
     renderPickedImage = () => {
         const ProxyCode = getEncryptData();
         const rtnVal = [];
-        let FileList = SentencedToEmpty(this.props.checkedRectificationApprovalsResult, ['data', 'Datas', 'CheckedRectificationList', 0, 'FileList'], []);
+        let FileList = SentencedToEmpty(this.props.checkedRectificationApprovalsResult, ['data', 'Datas', 'CheckedRectificationList', 0, 'FileList', 'ImgList'], []);
         FileList.map((item, key) => {
             const nameArray = item.split('/');
             // const source = { uri: `${UrlInfo.DataAnalyze}/${item}` };
@@ -165,7 +161,7 @@ export default class MissionRectificationReviewDetails extends Component {
                     this.statusPageOnRefresh();
                 }}
             >
-                <KeyboardAwareScrollView showsVerticalScrollIndicator={false} ref="scroll" style={{ flex: 1, width: SCREEN_WIDTH, padding: 13 }}>
+                <ScrollView showsVerticalScrollIndicator={false} ref="scroll" style={{ flex: 1, width: SCREEN_WIDTH, padding: 13 }}>
                     <View style={[styles.card, { marginTop: 5 }]}>
 
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: -13, justifyContent: 'space-between' }}>
@@ -241,7 +237,7 @@ export default class MissionRectificationReviewDetails extends Component {
                                                 <SDLText style={[{ color: '#333333', fontSize: 15, lineHeight: 18 }]}>{item.ApproverUserName}</SDLText>
                                                 <SDLText style={[{ color: '#666666', fontSize: 15, lineHeight: 18, marginTop: 10 }]}>{item.ApprovalDate}</SDLText>
                                                 <SDLText style={[{ color: '#666666', fontSize: 15, lineHeight: 18, marginTop: 10 }]}>{item.ApprovalRemarks}</SDLText>
-                                                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{this.renderTimeLinePickedImage(item.FileList, idx)}</View>
+                                                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{this.renderTimeLinePickedImage(item.FileList.ImgList, idx)}</View>
                                             </View>
                                         </View>
                                         <SDLText style={[{ color: '#666666', fontSize: 15, lineHeight: 18 }]}>{item.ApprovalStatusName}</SDLText>
@@ -263,7 +259,7 @@ export default class MissionRectificationReviewDetails extends Component {
                             index={this.state.largeImageIndex}
                         />
                     </Modal>
-                </KeyboardAwareScrollView>
+                </ScrollView>
                 {
                     SentencedToEmpty(this.props
                         , ['checkedRectificationApprovalsResult'

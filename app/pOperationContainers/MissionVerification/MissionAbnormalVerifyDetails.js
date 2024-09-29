@@ -6,9 +6,8 @@
  * @FilePath: /SDLMainProject/app/pOperationContainers/MissionVerification/MissionAbnormalVerifyDetails.js
  */
 import React, { PureComponent, Component } from 'react';
-import { View, Platform, StyleSheet, TouchableOpacity, Text, Alert, Image, Modal, DeviceEventEmitter } from 'react-native';
+import { View, Platform, StyleSheet, TouchableOpacity, Text, Alert, Image, Modal, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Echarts, echarts } from 'react-native-secharts';
 import globalcolor from '../../config/globalcolor';
 import { SCREEN_WIDTH } from '../../config/globalsize';
@@ -28,23 +27,21 @@ const multipleImage = true;
     proFlag: abnormalTask.proFlag,
 }))
 class MissionAbnormalVerifyDetails extends PureComponent {
-    static navigationOptions = ({ navigation }) =>
-        createNavigationOptions({
-            title: '核实详情',
-            headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-        });
     constructor(props) {
         super(props);
         console.log('props = ', props)
         this.state = {
             modalVisible: false,
-            selectItems: SentencedToEmpty(props, ['navigation', 'state', 'params'], []),
-            alarmObj: SentencedToEmpty(props, ['navigation', 'state', 'params'], {}),
+            selectItems: SentencedToEmpty(props, ['route', 'params', 'params'], []),
+            alarmObj: SentencedToEmpty(props, ['route', 'params', 'params'], {}),
             showImage: [],
             largeImageIndex: 0,
             appResultLargeImages: [],
             checkInfoLargeImages: [],
         };
+        props.navigation.setOptions({
+            title: '核实详情',
+        });
     }
     componentDidMount() {
         this.statusPageOnRefresh();
@@ -168,7 +165,7 @@ class MissionAbnormalVerifyDetails extends PureComponent {
                     this.statusPageOnRefresh();
                 }}
             >
-                <KeyboardAwareScrollView showsVerticalScrollIndicator={false} ref="scroll" style={{ flex: 1, width: SCREEN_WIDTH, padding: 13 }}>
+                <ScrollView showsVerticalScrollIndicator={false} ref="scroll" style={{ flex: 1, width: SCREEN_WIDTH, padding: 13 }}>
                     <View style={[styles.card, { marginTop: 5 }]}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: -13 }}>
                             <View style={{ backgroundColor: '#4AA0FF', width: 3, height: 14 }}></View>
@@ -279,7 +276,7 @@ class MissionAbnormalVerifyDetails extends PureComponent {
                             index={multipleImage ? this.state.largeImageIndex : 0}
                         />
                     </Modal>
-                </KeyboardAwareScrollView>
+                </ScrollView>
                 {/**
                  * 待整改       1
                  * 待复核       2
@@ -292,7 +289,7 @@ class MissionAbnormalVerifyDetails extends PureComponent {
                                 this.props.dispatch(NavigationActions.navigate({
                                     routeName: 'MissionAbnormalRectification',
                                     params: {
-                                        ID: SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'commitID'], ''),
+                                        ID: SentencedToEmpty(this.props, ['route', 'params', 'params', 'commitID'], ''),
                                         // alarmTime: map.extras.alarm_time
                                     }
                                 }));

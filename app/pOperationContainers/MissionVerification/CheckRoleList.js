@@ -24,16 +24,15 @@ if (Platform.OS === 'ios') {
     checkUserList: abnormalTask.checkUserList
 }))
 class CheckRoleList extends Component {
-    static navigationOptions = ({ navigation }) =>
-        createNavigationOptions({
-            title: '用户名册',
-            headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-        });
     constructor(props) {
         super(props);
         this.state = {
             searchResult: []
         };
+
+        props.navigation.setOptions({
+            title: '用户名册',
+        });
     }
     _renderItemList = item => {
         return (
@@ -52,8 +51,8 @@ class CheckRoleList extends Component {
                             selectEnterprise: item.item
                         })
                     );
-                    if (this.props.navigation.state.params.callback && typeof this.props.navigation.state.params.callback != 'undefined') {
-                        this.props.navigation.state.params.callback(item.item);
+                    if (this.props.route.params.params.callback && typeof this.props.route.params.params.callback != 'undefined') {
+                        this.props.route.params.params.callback(item.item);
                     }
                     this.props.dispatch(NavigationActions.back());
                 }}

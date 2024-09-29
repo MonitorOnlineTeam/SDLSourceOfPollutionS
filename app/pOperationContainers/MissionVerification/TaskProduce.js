@@ -9,7 +9,6 @@ import { StatusPage, SelectButton, SimplePickerSingleTime, SDLText, SimplePicker
 import { createNavigationOptions, NavigationActions, createAction, ShowLoadingToast, CloseToast, ShowToast, SentencedToEmpty } from '../../utils';
 import { SCREEN_WIDTH } from '../../config/globalsize';
 import { IMAGE_DEBUG, ImageUrlPrefix, UrlInfo } from '../../config/globalconst';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { SCREEN_HEIGHT } from '../../components/SDLPicker/constant/globalsize';
 import globalcolor from '../../config/globalcolor';
 import { getEncryptData, getRootUrl, getToken } from '../../dvapack/storage';
@@ -41,16 +40,10 @@ let editSiIndex = 0;
     editCommitEnable: abnormalTask.editCommitEnable
 }))
 export default class TaskProduce extends PureComponent {
-    static navigationOptions = ({ navigation }) =>
-        createNavigationOptions({
-            title: '任务生成',
-            headerRight: navigation.state.params.headerRight,
-            headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-        });
     constructor(props) {
         super(props);
         that = this;
-        this.alarmObj = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], {});
+        this.alarmObj = SentencedToEmpty(this.props, ['route', 'params', 'params'], {});
         this.state = {
             //选择需要生成任务
             selectPlan: null, //选中的核查方案
@@ -87,6 +80,12 @@ export default class TaskProduce extends PureComponent {
             selectUntruthReason: '',
             modalVisible: false
         };
+
+
+        props.navigation.setOptions({
+            title: '任务生成',
+            headerRight: () => props.route.params.params.headerRight
+        });
     }
 
     renderPickedImage = (si, idx) => {
@@ -527,7 +526,7 @@ export default class TaskProduce extends PureComponent {
                     this.statusPageOnRefresh();
                 }}
             >
-                <KeyboardAwareScrollView
+                <ScrollView
                     nestedScrollEnabled={true}
                     // scrollEnabled={this.state.scrollEnabled}
                     // scrollEnabled={scrollEnabled}
@@ -916,7 +915,7 @@ export default class TaskProduce extends PureComponent {
                     </View>
 
                     {this.props.commitVerifyResult.status == -1 ? <SimpleLoadingComponent message={'提交中'} /> : null}
-                </KeyboardAwareScrollView>
+                </ScrollView>
 
                 <OperationAlertDialog options={dialogOptions} ref="doAlert" />
                 <Modal visible={this.state.modalVisible} transparent={true} onRequestClose={() => this.setState({ modalVisible: false })}>

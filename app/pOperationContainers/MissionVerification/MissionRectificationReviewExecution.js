@@ -1,11 +1,10 @@
 
-import { Text, View, Platform, TextInput, Modal, TouchableOpacity, Image } from 'react-native'
+import { Text, View, Platform, TextInput, Modal, TouchableOpacity, Image, ScrollView } from 'react-native'
 import React, { Component } from 'react'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import SyanImagePicker from 'react-native-syan-image-picker';
 import { NavigationActions, CloseToast, SentencedToEmpty, ShowLoadingToast, ShowToast, createAction, createNavigationOptions } from '../../utils';
 import { AlertDialog, OperationAlertDialog, SDLText, SelectButton, SimpleLoadingComponent, StatusPage } from '../../components';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../config/globalsize';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { IMAGE_DEBUG, ImageUrlPrefix, UrlInfo } from '../../config';
@@ -28,14 +27,6 @@ const options = {
     checkedRectificationResult: abnormalTask.checkedRectificationResult
 }))
 export default class MissionRectificationReviewExecution extends Component {
-
-    static navigationOptions = ({ navigation }) =>
-        createNavigationOptions({
-            title: '整改复核',
-            // headerRight: navigation.state.params.headerRight,
-            headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-        });
-
     static defaultProps = {
         editCommitEnable: true,
         approvalStatus: '',
@@ -63,10 +54,14 @@ export default class MissionRectificationReviewExecution extends Component {
             selectUntruthReason: '',
             modalVisible: false,
 
-            TimeS: SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'AttachmentId'], `yczgfh_${new Date().getTime()}`),
+            TimeS: SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'AttachmentId'], `yczgfh_${new Date().getTime()}`),
             approvalRemarks: '',
             approvalStatus: '',  // 复核状态 1 通过 2 驳回
         };
+
+        props.navigation.setOptions({
+            title: '整改复核',
+        });
     }
 
     renderPickedImage = () => {
@@ -280,7 +275,7 @@ export default class MissionRectificationReviewExecution extends Component {
                     // this.statusPageOnRefresh();
                 }}
             >
-                <KeyboardAwareScrollView style={[{ flex: 1, paddingTop: 13 }]} showsVerticalScrollIndicator={false}>
+                <ScrollView style={[{ flex: 1, paddingTop: 13 }]} showsVerticalScrollIndicator={false}>
                     <View style={{ flexDirection: 'row', width: SCREEN_WIDTH, height: 50, alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'white', padding: 13 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                             <SDLText style={{ color: 'red' }}>*</SDLText>
@@ -416,7 +411,7 @@ export default class MissionRectificationReviewExecution extends Component {
                         />
                     </Modal>
                     {SentencedToEmpty(this.props, ['checkedRectificationResult', 'status'], 200) == -1 ? <SimpleLoadingComponent message={'提交中'} /> : null}
-                </KeyboardAwareScrollView>
+                </ScrollView>
                 <AlertDialog options={alertOptions} ref="doCommitAlert" />
                 <OperationAlertDialog options={dialogOptions} ref="doAlert" />
             </StatusPage >
