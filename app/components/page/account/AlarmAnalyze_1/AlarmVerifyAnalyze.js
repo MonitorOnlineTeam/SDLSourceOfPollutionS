@@ -32,7 +32,7 @@ let that;
     alarmVerifyDetail: alarmAnaly.alarmVerifyDetail,
     editCommitEnable: alarmAnaly.editCommitEnable
 }))
-export default class AlarmVerifyAnalyze extends PureComponent {
+export default class AlarmVerifyAnalyze1 extends PureComponent {
     static navigationOptions = ({ navigation }) =>
         createNavigationOptions({
             title: '报警核实',

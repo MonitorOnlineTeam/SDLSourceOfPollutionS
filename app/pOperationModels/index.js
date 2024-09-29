@@ -20,7 +20,7 @@ import account from './account'; //个人中心
 import websocket from './websocket'; //websocket
 import map from '../pollutionModels/map';
 import pointDetails from '../pollutionModels/pointDetails';
-// import abnormalTask from './abnormalTask';
+import abnormalTask from './abnormalTask';
 import alarm from '../pollutionModels/alarm';
 import taskModel, { detectionTimesModel, repairRecordNewModel } from './taskModel';
 // import exceptionModel from './exceptionModel';
@@ -53,8 +53,8 @@ import equipmentFailureFeedbackModel from './equipmentFailureFeedbackModel';
 import supervision from './supervision';
 import keyParameterVerificationModel from './keyParameterVerificationModel';
 // import BWModel from './BWModel';
-// // import alarmAnaly from './alarmAnaly';
-// import alarmAnaly from './alarmAnaly_1';
+// import alarmAnaly from './alarmAnaly';
+import alarmAnaly from './alarmAnaly_1';
 import CTModel from './CTModel';
 import CTRepair from './CTRepair';
 import CTPeiHeJianCha from './CTPeiHeJianCha';
@@ -81,8 +81,8 @@ export function registerModels(app) {
     app.model(appModel);
     app.model(sdlNavigateModel);
     app.model(baseModel);
-    // app.model(alarmAnaly);
-    // app.model(abnormalTask);
+    app.model(alarmAnaly);
+    app.model(abnormalTask);
     app.model(CTPeiHeJianCha);
     app.model(helpCenter);
     app.model(login);
@@ -126,15 +126,15 @@ export function registerModels(app) {
     // app.model(BWModel); // 宝武 上海环保接口
     app.model(CTModel); // 成套相关功能
     app.model(CTRepair);
-    app.model(CT7FormModel); // 成套 七张表单 
-    app.model(CTWorkRecordModel); // 成套 工作记录   
-    app.model(CTParameterSettingPicModel); // 成套 参数设置照片 
-    app.model(CTInstallationPhotosModel); // 成套 安装照片 
+    app.model(CT7FormModel); // 成套 七张表单
+    app.model(CTWorkRecordModel); // 成套 工作记录
+    app.model(CTParameterSettingPicModel); // 成套 参数设置照片
+    app.model(CTInstallationPhotosModel); // 成套 安装照片
     app.model(CTServiceStatisticsModel); // 成套 派单详情 服务统计
     // app.model(modelAnalysisAectificationModel); // 模型报警整改
-    app.model(signInModel); // 签到相关 
-    app.model(CTEquipmentPicAuditModel); // 签到相关 
-    app.model(CTServiceReminderModel); // 服务提醒 
+    app.model(signInModel); // 签到相关
+    app.model(CTEquipmentPicAuditModel); // 签到相关
+    app.model(CTServiceReminderModel); // 服务提醒
     app.model(CTServiceReportRectificationModel); // 服务报告整改
     // app.model(operationPlanModel); // 运维计划
     app.model(CTSparePartsChangeModel); // 成套 备件更换

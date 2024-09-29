@@ -12,14 +12,13 @@ import { PickerRangeDayTouchable, StatusPage, FlatListWithHeaderAndFooter } from
     AlarmChartPollutant: alarmAnaly.AlarmChartPollutant
 }))
 export default class StopRange extends Component {
-    static navigationOptions = createNavigationOptions({
-        title: '停运范围',
-        headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-    });
-
     constructor(props) {
         super(props);
         this.state = {};
+
+        props.navigation.setOptions({
+            title: '停运范围',
+        });
     }
 
     componentDidMount() {
@@ -29,7 +28,7 @@ export default class StopRange extends Component {
     getData = () => {
         this.props.dispatch(
             createAction('alarmAnaly/GetPointParamsRange')({
-                DGIMN: this.props.navigation.state.params.DGIMN
+                DGIMN: this.props.route.params.params.DGIMN
             })
         );
     };

@@ -1,7 +1,6 @@
 import React, { PureComponent, Component } from 'react';
 import { View, Platform, StyleSheet, TouchableOpacity, Text, Alert, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Echarts, echarts } from 'react-native-secharts';
 
 import globalcolor from '../../config/globalcolor';
@@ -18,19 +17,19 @@ let alertContent = [];
     AlarmDataChartValue: abnormalTask.AlarmDataChartValue
 }))
 class ClueDetail extends PureComponent {
-    static navigationOptions = ({ navigation }) =>
-        createNavigationOptions({
-            title: '线索详情',
-            headerRight: navigation.state.params.headerRight,
-            headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-        });
     constructor(props) {
         super(props);
         console.log('线索详情2.0');
         this.state = {
             colors: ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc']
         };
-        this.alarmObj = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], {});
+        this.alarmObj = SentencedToEmpty(this.props, ['route', 'params', 'params'], {});
+
+
+        props.navigation.setOptions({
+            title: '线索详情',
+            headerRight: () => props.route.params.params.headerRight,
+        });
     }
 
     componentDidMount() {
@@ -779,7 +778,7 @@ class ClueDetail extends PureComponent {
                     this.statusPageOnRefresh();
                 }}
             >
-                <KeyboardAwareScrollView showsVerticalScrollIndicator={false} ref="scroll" style={{ flex: 1, width: SCREEN_WIDTH, padding: 13 }}>
+                <ScrollView style={{ flex: 1, width: SCREEN_WIDTH, padding: 13 }}>
                     <View style={[styles.card]}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: -13, justifyContent: 'space-between' }}>
                             <View style={{ flexDirection: 'row' }}>
@@ -842,7 +841,7 @@ class ClueDetail extends PureComponent {
                         {showChart == true ? this.renderChart() : this.renderTable()}
                     </View>
                     <View style={{ flex: 1, height: 100 }}></View>
-                </KeyboardAwareScrollView>
+                </ScrollView>
                 <AlertDialog components={<MyView />} options={options} ref="doAlert3" />
             </StatusPage>
         );

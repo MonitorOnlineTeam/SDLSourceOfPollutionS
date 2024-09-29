@@ -19,13 +19,13 @@ import { getEncryptData, getRootUrl } from '../../dvapack/storage';
     equipmentInfoListResult: pointDetails.equipmentInfoListResult
 }))
 export default class InformationBankOfEquipment extends PureComponent {
-    static navigationOptions = ({ navigation }) => {
-        let pageType = SentencedToEmpty(navigation, ['state', 'params', 'pageType'], 'InformationBankOfEquipment');
-        return createNavigationOptions({
-            title: 'InformationBankOfEquipment' == pageType ? '设备资料库' : '运维知识库',
-            headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-        });
-    };
+    // static navigationOptions = ({ navigation }) => {
+    //     let pageType = SentencedToEmpty(navigation, ['state', 'params', 'pageType'], 'InformationBankOfEquipment');
+    //     return createNavigationOptions({
+    //         title: 'InformationBankOfEquipment' == pageType ? '设备资料库' : '运维知识库',
+    //         headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
+    //     });
+    // };
 
     constructor(props) {
         super(props);
@@ -37,13 +37,21 @@ export default class InformationBankOfEquipment extends PureComponent {
     }
 
     componentDidMount() {
+        this.setNavigationOptions();
         this.props.dispatch(createAction('pointDetails/updateState')({ equipmentInfoFileName: '' }));
         // this.list.onRefresh();
         this.statusPageOnRefresh();
     }
 
+    setNavigationOptions = () => {
+        let pageType = SentencedToEmpty(this.props, ['route', 'params', 'params', 'pageType'], 'InformationBankOfEquipment');
+        this.props.navigation.setOptions({
+            title: 'InformationBankOfEquipment' == pageType ? '设备资料库' : '运维知识库',
+          });
+    }
+
     onRefresh = index => {
-        let pageType = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'pageType'], 'InformationBankOfEquipment');
+        let pageType = SentencedToEmpty(this.props, ['route', 'params', 'params', 'pageType'], 'InformationBankOfEquipment');
         this.props.dispatch(createAction('pointDetails/updateState')({ equipmentInfoListResult: { status: -1 } }));
         if ('InformationBankOfEquipment' == pageType) {
             this.props.dispatch(createAction('pointDetails/getEquipmentInfo')({ setListData: this.list.setListData, apiParam: api.pollutionApi.PointDetails.GetEquipmentInfo }));
@@ -53,8 +61,7 @@ export default class InformationBankOfEquipment extends PureComponent {
     };
 
     statusPageOnRefresh = () => {
-        console.log(this.props.navigation.state.params);
-        let pageType = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'pageType'], 'InformationBankOfEquipment');
+        let pageType = SentencedToEmpty(this.props, ['route', 'params', 'params', 'pageType'], 'InformationBankOfEquipment');
         this.props.dispatch(createAction('pointDetails/updateState')({ equipmentInfoListResult: { status: -1 } }));
         if ('InformationBankOfEquipment' == pageType) {
             this.props.dispatch(createAction('pointDetails/getEquipmentInfo')({ apiParam: api.pollutionApi.PointDetails.GetEquipmentInfo }));

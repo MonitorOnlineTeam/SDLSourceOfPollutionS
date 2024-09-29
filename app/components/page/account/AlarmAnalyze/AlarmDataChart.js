@@ -20,9 +20,9 @@ import globalcolor from '../../../../config/globalcolor';
     alarmChartData: abnormalTask.alarmChartData
 }))
 export default class AlarmDataChart extends React.Component {
-    static navigationOptions = {
-        header: null
-    };
+    // static navigationOptions = {
+    //     header: null
+    // };
     static propTypes = {};
 
     static defaultProps = {};
@@ -31,7 +31,7 @@ export default class AlarmDataChart extends React.Component {
         super(props);
         console.log('数据列表2.0');
         this.state = {
-            selectDGIMN: props.navigation.state.params.DGIMN || '',
+            selectDGIMN: props.route.params.params.DGIMN || '',
             hideEchart: false,
             selectDateRange: '两周',
             colors: ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
@@ -47,6 +47,10 @@ export default class AlarmDataChart extends React.Component {
         };
 
         this.echart1 = React.createRef();
+
+        props.navigation.setOptions({
+            headerShown: false,
+          });
     }
 
     componentDidMount() {
@@ -81,8 +85,8 @@ export default class AlarmDataChart extends React.Component {
         return {
             codeKey: 'DGIMN',
             nameKey: 'PointName',
-            placeHolder: this.props.navigation.state.params.PointName,
-            dataArr: PointArr.length > 0 && PointArr[0].DGIMN ? PointArr : [{ PointName: this.props.navigation.state.params.PointName, DGIMN: this.props.navigation.state.params.DGIMN }],
+            placeHolder: this.props.route.params.params.PointName,
+            dataArr: PointArr.length > 0 && PointArr[0].DGIMN ? PointArr : [{ PointName: this.props.route.params.params.PointName, DGIMN: this.props.route.params.params.DGIMN }],
             defaultCode: '',
             onSelectListener: item => {
                 this.setState({ selectDGIMN: item.DGIMN }, () => {

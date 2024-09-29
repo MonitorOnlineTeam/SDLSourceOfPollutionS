@@ -47,6 +47,8 @@
     "react-native-syan-image-picker": "0.5.3",
     "react-native-webview": "^13.12.1",
     "react-native-ys-video": "^1.0.0",
+    "react-native-doc-viewer": "^2.7.8",
+    "react-native-android-intent": "0.1.0",
     "react-redux": "^9.1.2",
     "redux": "^5.0.1",
     "urijs": "^1.19.1"

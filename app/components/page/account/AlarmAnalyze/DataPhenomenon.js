@@ -13,17 +13,12 @@ import { Echarts, echarts } from 'react-native-secharts';
     phenomenonChart: abnormalTask.phenomenonChart
 }))
 export default class DataPhenomenon extends Component {
-    static navigationOptions = createNavigationOptions({
-        title: '数据现象',
-        headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-    });
-
     constructor(props) {
         super(props);
         this.state = {
             optionArray: [],
             selectPhenomenonType: '1', // 1：零值 2：恒值 3：陡变
-            selectDGIMN: props.navigation.state.params.DGIMN || '',
+            selectDGIMN: props.route.params.params.DGIMN || '',
             colors: ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
             selectTime: [
                 moment(SentencedToEmpty(props.alarmChartData, ['data', 'Datas', 'BeginTime'], null))
@@ -36,7 +31,10 @@ export default class DataPhenomenon extends Component {
         };
     }
     componentWillUnmount() {
-        this.props.navigation.state.params.callback();
+        this.props.navigation.setOptions({
+            title: '数据现象',
+          });
+        this.props.route.params.params.callback();
     }
     componentDidMount() {
         this.getData();

@@ -36,17 +36,11 @@ const androidPicOptions = {
     takeFlagList: abnormalTask.takeFlagList
 }))
 export default class CheckDetails extends Component {
-    static navigationOptions = ({ navigation }) =>
-        createNavigationOptions({
-            title: '核查详情',
-            headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 },
-            headerRight: navigation.state.params ? navigation.state.params.headerRight : <View style={{ lineHeight: 20, width: 20, marginHorizontal: 16 }} />
-        });
     constructor(props) {
         super(props);
         that = this;
         this.state = {
-            editCommitEnable: props.navigation.state.params.editCommitEnable,
+            editCommitEnable: props.route.params.params.editCommitEnable,
             showError: false,
             showImages: [],
             showImageIndex: 0,
@@ -88,6 +82,11 @@ export default class CheckDetails extends Component {
             currentPlanItems: [], // 当前核查动作记录
             IsRectificationRecord: -1, // 是否生成核查任务
         };
+
+
+        props.navigation.setOptions({
+            title: '核查详情',
+          });
     }
     componentDidMount() {
         this.statusPageOnRefresh();
@@ -95,7 +94,7 @@ export default class CheckDetails extends Component {
     statusPageOnRefresh() {
         this.props.dispatch(
             createAction('abnormalTask/GetCheckedView')({
-                id: this.props.navigation.state.params.item.ID
+                id: this.props.route.params.params.item.ID
             })
         );
         this.props.dispatch(createAction('abnormalTask/GetPreTakeFlagDatas')({}));
@@ -321,13 +320,13 @@ export default class CheckDetails extends Component {
             createAction('abnormalTask/UpdatePlanItem')({
                 params: {
                     stype: stype,
-                    modelCheckedGuid: this.props.navigation.state.params.item.ModelCheckedGuid,
+                    modelCheckedGuid: this.props.route.params.params.item.ModelCheckedGuid,
                     planItems: newplanItems
                 },
                 callback: () => {
                     if (stype == '2') {
                         this.props.dispatch(NavigationActions.back());
-                        this.props.navigation.state.params.onRefresh();
+                        this.props.route.params.params.onRefresh();
                     }
                 }
             })
@@ -345,7 +344,7 @@ export default class CheckDetails extends Component {
         }
 
         let _params = {
-            modelCheckedGuid: that.props.navigation.state.params.item.ModelCheckedGuid,
+            modelCheckedGuid: that.props.route.params.params.item.ModelCheckedGuid,
             // flag: that.state.selectSubPreTakeFlag.FlagCode,
             flag: SentencedToEmpty(that.state, ['selectSubPreTakeFlag', 'FlagCode'], ''),
             checkedResult: that.state.selectCheckResult,
@@ -383,7 +382,7 @@ export default class CheckDetails extends Component {
                 params: _params,
                 callback: () => {
                     that.props.dispatch(NavigationActions.back());
-                    that.props.navigation.state.params.onRefresh();
+                    that.props.route.params.params.onRefresh();
                 }
             })
         );
@@ -680,7 +679,7 @@ export default class CheckDetails extends Component {
                         <View style={{ height: 50 }}></View>
                     </ScrollView>
                 )}
-                {this.props.navigation.state.params.item.Status == 1 && (
+                {this.props.route.params.params.item.Status == 1 && (
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', bottom: 5, position: 'absolute', width: SCREEN_WIDTH }}>
                         <TouchableOpacity
                             onPress={() => {
@@ -700,7 +699,7 @@ export default class CheckDetails extends Component {
                         </TouchableOpacity>
                     </View>
                 )}
-                {this.props.navigation.state.params.item.Status == 2 && (
+                {this.props.route.params.params.item.Status == 2 && (
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', bottom: 5, position: 'absolute', width: SCREEN_WIDTH }}>
                         <TouchableOpacity
                             onPress={() => {
@@ -716,7 +715,7 @@ export default class CheckDetails extends Component {
                                     params: {
                                         // PlanItem: Plan.PlanItem,
                                         PlanItem: this.state.currentPlanItems,
-                                        ModelCheckedGuid: this.props.navigation.state.params.item.ModelCheckedGuid,
+                                        ModelCheckedGuid: this.props.route.params.params.item.ModelCheckedGuid,
                                     }
                                 }));
                             }}

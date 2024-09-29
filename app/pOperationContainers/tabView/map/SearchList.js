@@ -71,12 +71,12 @@ export default class SearchList extends Component {
 
     /** 点击企业获取站点信息 */
     clickEnt = ({ Name, Id: entCode }) => {
-        // let source = 'mapList'; //判断是地图页面还是列表页面
-        // if (getSwitchToken() && getSwitchToken().mapPageDefSwitch == 'map') {
-        //     source = 'map';
-        // }
-        // this.props.dispatch(createAction('map/getPointListByEntCode')({ params: { entCode, source } })); //获取站点列表
-        // this.props.dispatch(createAction('map/insertSearchText')({ params: { SearchContent: Name } })); //插入搜索记录
+        let source = 'mapList'; //判断是地图页面还是列表页面
+        if (getSwitchToken() && getSwitchToken().mapPageDefSwitch == 'map') {
+            source = 'map';
+        }
+        this.props.dispatch(createAction('map/getPointListByEntCode')({ params: { entCode, source } })); //获取站点列表
+        this.props.dispatch(createAction('map/insertSearchText')({ params: { SearchContent: Name } })); //插入搜索记录
         this.props.dispatch(NavigationActions.back()); //返回地图页
     };
 

@@ -34,6 +34,20 @@ import HistoryData from './pollutionContainers/pointDetails/HistoryData';
 import HistoryDataLandscape from './pollutionContainers/pointDetails/HistoryDataLandscape';
 import HistoryDataLandscapeChart from './pollutionContainers/pointDetails/HistoryDataLandscapeChart';
 import HistoryDataLandscapeList from './pollutionContainers/pointDetails/HistoryDataLandscapeList';
+import SuspendProductionList from './pollutionContainers/pointDetails/SuspendProductionList';
+import SuspendReport from './xinjiangBranch/containers/SuspendReport';
+
+import AbnormalityReportLst from './pollutionContainers/pointDetails/AbnormalityReportLst';
+import AbnormalityReportDetails from './pollutionContainers/pointDetails/AbnormalityReportDetails';
+import AbnormalityReport from './xinjiangBranch/containers/AbnormalityReport';
+
+import OperationLog from './pollutionContainers/pointDetails/OperationLog';
+import PointTaskRecord from './pollutionContainers/pointDetails/PointTaskRecord';
+import OverLimits from './pollutionContainers/pointDetails/OverLimits';
+import InformationBankOfEquipment from './pollutionContainers/pointDetails/InformationBankOfEquipment';
+
+
+import SuspendProductionDetail from './pollutionContainers/pointDetails/SuspendProductionDetail';
 import TestView from './pOperationContainers/TestView';
 import ContactOperation from './pOperationContainers/components/ContactOperation';
 import SearchListWithoutLoad from './components/page/SearchListWithoutLoad';
@@ -62,6 +76,40 @@ import AlarmRecords from './pollutionContainers/pointDetails/AlarmRecords';
 // import RemoteAlarmHandleEditer from './pOperationContainers/tabView/alarm/RemoteAlarmHandleEditer';
 // import Login from './components/page/login/Login';
 // const dispatch = useDispatch();
+
+/**
+ * 异常数据识别1.0
+ */
+import AlarmSectionList from './components/page/account/AlarmSectionList'
+import AlarmAnalyList from './components/page/account/AlarmAnalyList'
+import VerifyProgress from './components/page/account/AlarmAnalyze_1/VerifyProgress'
+import AlarmDetails from './components/page/account/AlarmAnalyze/AlarmDetails'
+import AlarmDataChart from './components/page/account/AlarmAnalyze_1/AlarmDataChart'
+import AlarmDataChart2 from './components/page/account/AlarmAnalyze/AlarmDataChart'
+import StatisPolValueNumsByDGIMN from './components/page/account/AlarmAnalyze/StatisPolValueNumsByDGIMN'
+import FluctuationRange from './components/page/account/AlarmAnalyze_1/FluctuationRange'
+import StatisLinearCoefficient from './components/page/account/AlarmAnalyze/StatisLinearCoefficient'
+import AlarmVerifyAnalyze from './components/page/account/AlarmAnalyze/AlarmVerifyAnalyze'
+import AlarmReview from './components/page/account/AlarmAnalyze/AlarmReview'
+
+import AnalysisModelAbnormalRectificationList from './pOperationContainers/AnalysisModelModification/AnalysisModelAbnormalRectificationList'
+import RectificationReviewDetails from './pOperationContainers/AnalysisModelModification/RectificationReviewDetails'
+import AnalysisModelAbnormalRectificationRecords from './pOperationContainers/AnalysisModelModification/AnalysisModelAbnormalRectificationRecords'
+import AbnormalVerifyDetails from './pOperationContainers/AnalysisModelModification/AbnormalVerifyDetails'
+import AbnormalRectification from './pOperationContainers/AnalysisModelModification/AbnormalRectification'
+import RectificationReviewExecution from './pOperationContainers/AnalysisModelModification/RectificationReviewExecution'
+
+/**
+ * 异常数据识别2.0
+ */
+import AbnormalEnterpriseList from './pOperationContainers/MissionVerification/AbnormalEnterpriseList'
+import TaskToBeVerifiedList from './pOperationContainers/MissionVerification/TaskToBeVerifiedList'
+import ClueDetail from './pOperationContainers/MissionVerification/ClueDetail'
+import CheckDetails from './pOperationContainers/MissionVerification/CheckDetails'
+import StopRange from './components/page/account/AlarmAnalyze/StopRange'
+import DataPhenomenon from './components/page/account/AlarmAnalyze/DataPhenomenon'
+
+import MissionVerificationRectificationList from './pOperationContainers/MissionVerification/MissionVerificationRectificationList'
 
 /* jab */
 import ServiceDispatchMessage from './pOperationContainers/tabView/chengTaoXiaoXi/ServiceDispatchMessage';
@@ -238,6 +286,21 @@ Actions.pushViewWithName(HistoryData, 'HistoryData', { title: '数据查询' });
 Actions.pushViewWithName(HistoryDataLandscape, 'HistoryDataLandscape', { headerShown: false }); //  切换横评 数据查询
 Actions.pushViewWithName(HistoryDataLandscapeChart, 'HistoryDataLandscapeChart');//横评 数据查询 图表
 Actions.pushViewWithName(HistoryDataLandscapeList, 'HistoryDataLandscapeList'); //横评 数据查询 列表
+
+Actions.pushViewWithName(SuspendProductionList, 'SuspendProductionList', { title: '停运上报' }); //停运上报
+Actions.pushViewWithName(SuspendProductionDetail, 'SuspendProductionDetail', { title: '停运详情' }); //停运详情
+Actions.pushViewWithName(SuspendReport, 'SuspendReport', { title: '停运上报' }); //停运上报界面
+
+Actions.pushViewWithName(AbnormalityReportLst, 'AbnormalityReportLst', { title: '异常报告上报' }); //异常报告上报列表
+Actions.pushViewWithName(AbnormalityReport, 'AbnormalityReport', { title: '异常报告上报' }); //异常上报页面
+Actions.pushViewWithName(AbnormalityReportDetails, 'AbnormalityReportDetails', { title: '异常上报详情' }); //异常上报详情
+
+Actions.pushViewWithName(PointTaskRecord, 'PointTaskRecord', { title: '运维工单' }); //运维工单
+
+Actions.pushViewWithName(OperationLog, 'OperationLog', { title: '运维日志' }); //运维日志
+Actions.pushViewWithName(OverLimits, 'OverLimits', { title: '排放限值' }); //排放限值
+Actions.pushViewWithName(InformationBankOfEquipment, 'InformationBankOfEquipment', { title: '设备资料库' }); //设备资料库
+
 Actions.pushViewWithName(TestView, 'TestView', { title: '测试页面' });
 Actions.pushViewWithName(ContactOperation, 'ContactOperation', { title: '监测目标' });
 Actions.pushViewWithName(SearchListWithoutLoad, 'SearchListWithoutLoad', { title: '监测点选择' });
@@ -267,6 +330,41 @@ Actions.pushViewWithName(SupplementarySignIn, 'SupplementarySignIn', {
 Actions.pushViewWithName(SignInStatistics, 'SignInStatistics', { title: '统计' });
 Actions.pushViewWithName(SupplementarySignInRecord, 'SupplementarySignInRecord', { title: '补签记录' });
 Actions.pushViewWithName(SupplementarySignInApprove, 'SupplementarySignInApprove', { title: '补签记录' });
+
+// 模型1.0
+Actions.pushViewWithName(AlarmSectionList, 'AlarmSectionList', { title: '异常识别线索' });
+Actions.pushViewWithName(AlarmAnalyList, 'AlarmAnalyList', { title: '异常识别线索' });
+Actions.pushViewWithName(VerifyProgress, 'VerifyProgress', { title: '线索核实' });
+Actions.pushViewWithName(AlarmDetails, 'AlarmDetails', { title: '报警信息' });
+Actions.pushViewWithName(AlarmDataChart, 'AlarmDataChart', { title: '数据列表' });
+Actions.pushViewWithName(StatisPolValueNumsByDGIMN, 'StatisPolValueNumsByDGIMN', { title: '密度分布直方图' });
+Actions.pushViewWithName(FluctuationRange, 'FluctuationRange', { title: '波动范围' });
+Actions.pushViewWithName(StatisLinearCoefficient, 'StatisLinearCoefficient'); // 图表数据
+Actions.pushViewWithName(AlarmVerifyAnalyze, 'AlarmVerifyAnalyze', { title: '报警核实' });
+Actions.pushViewWithName(AlarmReview, 'AlarmReview', { title: '复核' });
+
+Actions.pushViewWithName(AnalysisModelAbnormalRectificationList, 'AnalysisModelAbnormalRectificationList', { title: '异常整改' }); // 异常整改
+Actions.pushViewWithName(RectificationReviewDetails, 'RectificationReviewDetails', { title: '整改复核详情' }); 
+Actions.pushViewWithName(AnalysisModelAbnormalRectificationRecords, 'AnalysisModelAbnormalRectificationRecords', { title: '整改记录' }); 
+Actions.pushViewWithName(AbnormalVerifyDetails, 'AbnormalVerifyDetails', { title: '核实详情' }); 
+Actions.pushViewWithName(AbnormalRectification, 'AbnormalRectification', { title: '异常整改' }); 
+Actions.pushViewWithName(RectificationReviewExecution, 'RectificationReviewExecution', { title: '整改复核' }); 
+
+
+// 模型2.0
+Actions.pushViewWithName(AbnormalEnterpriseList, 'AbnormalEnterpriseList', { title: '异常识别线索' }); 
+Actions.pushViewWithName(AlarmDataChart2, 'AlarmDataChart2', { title: '数据列表' });
+Actions.pushViewWithName(TaskToBeVerifiedList, 'TaskToBeVerifiedList', { title: '核查任务' }); 
+Actions.pushViewWithName(ClueDetail, 'ClueDetail', { title: '线索详情' }); 
+Actions.pushViewWithName(CheckDetails, 'CheckDetails', { title: '核查详情' }); 
+Actions.pushViewWithName(StopRange, 'StopRange', { title: '停运范围' }); 
+Actions.pushViewWithName(DataPhenomenon, 'DataPhenomenon', { title: '数据现象' }); 
+
+
+Actions.pushViewWithName(MissionVerificationRectificationList, 'MissionVerificationRectificationList', { title: '异常整改' }); 
+
+
+
 
 //成套签到
 Actions.pushViewWithName(ChengTaoSignIn, 'ChengTaoSignIn', { title: '签到' });
@@ -358,6 +456,7 @@ Actions.pushViewWithName(SupervisionItemAppeal, 'SupervisionItemAppeal', { title
 Actions.pushViewWithName(EquipmentFailureFeedbackList, 'EquipmentFailureFeedbackList', { title: '设备故障反馈' }); //设备故障反馈
 Actions.pushViewWithName(EquipmentFailureFeedbackEdit, 'EquipmentFailureFeedbackEdit', { title: '故障反馈记录' }); //故障反馈记录
 Actions.pushViewWithName(EquipmentFailureFeedbackDetail, 'EquipmentFailureFeedbackDetail', { title: '故障反馈记录' }); //故障反馈记录
+
 
 
 

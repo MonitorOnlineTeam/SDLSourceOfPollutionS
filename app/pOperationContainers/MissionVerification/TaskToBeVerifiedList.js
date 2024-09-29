@@ -30,13 +30,6 @@ if (Platform.OS === 'ios') {
     workerBenchMenu: login.workerBenchMenu // 动态菜单
 }))
 class TaskToBeVerifiedList extends Component {
-    static navigationOptions = ({ navigation }) =>
-        createNavigationOptions({
-            title: '核查任务',
-            headerStyle: platformContainerStyles,
-            headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-        });
-
     constructor(props) {
         super(props);
         let buttons = [];
@@ -66,6 +59,10 @@ class TaskToBeVerifiedList extends Component {
                 .format('YYYY-MM-DD HH:mm:ss'),
             endTime: moment().format('YYYY-MM-DD HH:mm:ss')
         };
+
+        props.navigation.setOptions({
+            title: '核查任务',
+          });
     }
 
     componentDidMount() {

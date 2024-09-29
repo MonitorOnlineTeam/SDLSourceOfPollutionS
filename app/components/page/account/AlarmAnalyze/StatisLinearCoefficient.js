@@ -17,13 +17,8 @@ import globalcolor from '../../../../config/globalcolor';
     StatisLinearCoefficientValue: alarmAnaly.StatisLinearCoefficientValue
 }))
 export default class StatisLinearCoefficient extends React.Component {
-    static navigationOptions = {
-        header: null
-    };
     static propTypes = {};
-
     static defaultProps = {};
-
     constructor(props) {
         super(props);
         this.state = {
@@ -32,6 +27,10 @@ export default class StatisLinearCoefficient extends React.Component {
             selectTime: moment().format('YYYY-MM-DD HH:mm:ss'),
             option1: {}
         };
+
+        props.navigation.setOptions({
+            headerShown: false,
+          });
     }
 
     componentDidMount() {
@@ -45,8 +44,8 @@ export default class StatisLinearCoefficient extends React.Component {
 
     refreshData() {
         this.props.dispatch(
-            createAction(`alarmAnaly/${this.props.navigation.state.params.type}`)({
-                DGIMN: this.props.navigation.state.params.DGIMN || '45007750002401'
+            createAction(`alarmAnaly/${this.props.route.params.params.type}`)({
+                DGIMN: this.props.route.params.params.DGIMN || '45007750002401'
             })
         );
     }
@@ -127,7 +126,7 @@ export default class StatisLinearCoefficient extends React.Component {
                     errorPaddingTop={50}
                     emptyPaddingTop={50}
                     style={{ flex: 1 }}
-                    status={this.props.navigation.state.params.type == 'StatisPolValueNumsByDGIMN' ? this.props.StatisPolValue.status : this.props.StatisLinearCoefficientValue.status}
+                    status={this.props.route.params.params.type == 'StatisPolValueNumsByDGIMN' ? this.props.StatisPolValue.status : this.props.StatisLinearCoefficientValue.status}
                     //页面是否有回调按钮，如果不传，没有按钮，
                     emptyBtnText={'重新请求'}
                     errorBtnText={'点击重试'}

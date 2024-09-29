@@ -1,8 +1,6 @@
 
 import { Text, View, Platform } from 'react-native'
 import React, { Component } from 'react'
-import ScrollableTabView from 'react-native-scrollable-tab-view';
-
 import { SCREEN_WIDTH } from '../../config/globalsize'
 import { NavigationActions, SentencedToEmpty, createAction, createNavigationOptions } from '../../utils'
 import { FlatListWithHeaderAndFooter, SDLText, StatusPage } from '../../components'
@@ -17,18 +15,10 @@ import { connect } from 'react-redux';
     checkedRectificationListGResult: abnormalTask.checkedRectificationListGResult
 }))
 export default class MissionVerificationRectificationList extends Component {
-
-    static navigationOptions = ({ navigation }) => {
-        return createNavigationOptions({
-            title: '异常整改',
-            // headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
-            headerRight: navigation.state.params ? navigation.state.params.headerRight : <View style={{ height: 20, width: 20, marginHorizontal: 16 }} />
-        });
-    }
-
     componentDidMount() {
-        this.props.navigation.setParams({
-            headerRight: (
+        this.props.navigation.setOptions({
+            title: '异常整改',
+            headerRight: () => (
                 <TouchableOpacity
                     onPress={() => {
                         // this.props.dispatch(NavigationActions.navigate({ routeName: 'AnalysisModelAbnormalRectificationRecords' }));
@@ -39,9 +29,10 @@ export default class MissionVerificationRectificationList extends Component {
                 </TouchableOpacity>
             )
         });
-        console.log('navigation = ', this.props.navigation.state.params);
+
+        console.log('navigation = ', this.props.route.params.params);
         this.props.dispatch(createAction('abnormalTask/updateState')({
-            role: SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'role'], 'operationStaff')
+            role: SentencedToEmpty(this.props, ['route', 'params', 'params', 'role'], 'operationStaff')
         }))
         this.statusPageOnRefresh();
     }
