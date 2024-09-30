@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-04-25 09:20:10
- * @LastEditTime: 2024-09-27 15:13:52
+ * @LastEditTime: 2024-09-29 10:09:29
  * @FilePath: /SDLMainProject/app/pollutionContainers/pointDetails/HistoryData.js
  */
 import React, { PureComponent } from 'react';
@@ -287,7 +287,7 @@ export default class HistoryData extends PureComponent {
                         }]}
                         >
                             {
-                                ['小时', '日均', '小时', '月均'].map((item, index) => <SDLTabButton
+                                ['小时', '日均', '分钟', '月均'].map((item, index) => <SDLTabButton
                                     topButtonWidth={SCREEN_WIDTH / 4}
                                     selected={index == this.props.showIndex}
                                     label={item}

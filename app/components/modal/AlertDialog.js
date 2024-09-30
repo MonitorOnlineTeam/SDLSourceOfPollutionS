@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableHighlight, Text, Dimensions, Modal, Button, Platform } from 'react-native';
+import { View, StyleSheet, TouchableHighlight, Text, Dimensions, Modal, Button, Platform, StatusBar } from 'react-native';
 import { SentencedToEmpty } from '../../utils';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../config/globalsize';
 const { width, height } = Dimensions.get('window');
@@ -40,7 +40,8 @@ export default class AlertDialog extends Component {
                 }}
                 supportedOrientations={['portrait', 'portrait-upside-down', 'landscape', 'landscape-left', 'landscape-right']}
             >
-                <View style={this.props.orientation == 'LANDSCAPE' ? {
+                <View style={this.props.orientation == 'LANDSCAPE'
+                    && false ? {
                     width: SCREEN_HEIGHT,
                     height: SCREEN_WIDTH,
                     alignItems: 'flex-start',
@@ -52,6 +53,7 @@ export default class AlertDialog extends Component {
                                 const { alertDialogHideCallback = () => { } } = this.props.options;
                                 alertDialogHideCallback();
                                 this.hideModal();
+                                console.log('1');
                             }}
                             style={this.props.orientation == 'LANDSCAPE' ? {
                                 justifyContent: 'center',

@@ -2,10 +2,10 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2024-09-27 17:20:46
+ * @LastEditTime: 2024-09-30 10:15:30
  * @FilePath: /SDLMainProject/app/Router.js
  */
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
 import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -354,34 +354,34 @@ Actions.pushViewWithName(AlarmVerifyAnalyze, 'AlarmVerifyAnalyze', { title: '报
 Actions.pushViewWithName(AlarmReview, 'AlarmReview', { title: '复核' });
 
 Actions.pushViewWithName(AnalysisModelAbnormalRectificationList, 'AnalysisModelAbnormalRectificationList', { title: '异常整改' }); // 异常整改
-Actions.pushViewWithName(RectificationReviewDetails, 'RectificationReviewDetails', { title: '整改复核详情' }); 
-Actions.pushViewWithName(AnalysisModelAbnormalRectificationRecords, 'AnalysisModelAbnormalRectificationRecords', { title: '整改记录' }); 
-Actions.pushViewWithName(AbnormalVerifyDetails, 'AbnormalVerifyDetails', { title: '核实详情' }); 
-Actions.pushViewWithName(AbnormalRectification, 'AbnormalRectification', { title: '异常整改' }); 
-Actions.pushViewWithName(RectificationReviewExecution, 'RectificationReviewExecution', { title: '整改复核' }); 
+Actions.pushViewWithName(RectificationReviewDetails, 'RectificationReviewDetails', { title: '整改复核详情' });
+Actions.pushViewWithName(AnalysisModelAbnormalRectificationRecords, 'AnalysisModelAbnormalRectificationRecords', { title: '整改记录' });
+Actions.pushViewWithName(AbnormalVerifyDetails, 'AbnormalVerifyDetails', { title: '核实详情' });
+Actions.pushViewWithName(AbnormalRectification, 'AbnormalRectification', { title: '异常整改' });
+Actions.pushViewWithName(RectificationReviewExecution, 'RectificationReviewExecution', { title: '整改复核' });
 
 
 // 模型2.0
-Actions.pushViewWithName(AbnormalEnterpriseList, 'AbnormalEnterpriseList', { title: '异常识别线索' }); 
-Actions.pushViewWithName(AbnormalOneETypeList, 'AbnormalOneETypeList', { title: '异常识别线索' }); 
-Actions.pushViewWithName(TaskProduce, 'TaskProduce', { title: '任务生成' }); 
+Actions.pushViewWithName(AbnormalEnterpriseList, 'AbnormalEnterpriseList', { title: '异常识别线索' });
+Actions.pushViewWithName(AbnormalOneETypeList, 'AbnormalOneETypeList', { title: '异常识别线索' });
+Actions.pushViewWithName(TaskProduce, 'TaskProduce', { title: '任务生成' });
 Actions.pushViewWithName(AlarmDataChart2, 'AlarmDataChart2', { title: '数据列表' });
-Actions.pushViewWithName(TaskToBeVerifiedList, 'TaskToBeVerifiedList', { title: '核查任务' }); 
-Actions.pushViewWithName(ClueDetail, 'ClueDetail', { title: '线索详情' }); 
-Actions.pushViewWithName(CheckDetails, 'CheckDetails', { title: '核查详情' }); 
-Actions.pushViewWithName(StopRange, 'StopRange', { title: '停运范围' }); 
-Actions.pushViewWithName(DataPhenomenon, 'DataPhenomenon', { title: '数据现象' }); 
+Actions.pushViewWithName(TaskToBeVerifiedList, 'TaskToBeVerifiedList', { title: '核查任务' });
+Actions.pushViewWithName(ClueDetail, 'ClueDetail', { title: '线索详情' });
+Actions.pushViewWithName(CheckDetails, 'CheckDetails', { title: '核查详情' });
+Actions.pushViewWithName(StopRange, 'StopRange', { title: '停运范围' });
+Actions.pushViewWithName(DataPhenomenon, 'DataPhenomenon', { title: '数据现象' });
 
 
-Actions.pushViewWithName(MissionVerificationRectificationList, 'MissionVerificationRectificationList', { title: '异常整改' }); 
-Actions.pushViewWithName(MissionAnalysisModelAbnormalRectificationRecords, 'MissionAnalysisModelAbnormalRectificationRecords', { title: '整改记录' }); 
-Actions.pushViewWithName(CheckRoleList, 'CheckRoleList', { title: '用户名册' }); 
-Actions.pushViewWithName(RepulseMissionVerification, 'RepulseMissionVerification', { title: '打回' }); 
-Actions.pushViewWithName(RepulseCheckList, 'RepulseCheckList', { title: '打回记录' }); 
-Actions.pushViewWithName(MissionAbnormalVerifyDetails, 'MissionAbnormalVerifyDetails', { title: '核实详情' }); 
-Actions.pushViewWithName(MissionAbnormalRectification, 'MissionAbnormalRectification', { title: '异常整改' }); 
-Actions.pushViewWithName(MissionRectificationReviewDetails, 'MissionRectificationReviewDetails', { title: '整改复核' }); 
-Actions.pushViewWithName(MissionRectificationReviewExecution, 'MissionRectificationReviewExecution', { title: '整改复核' }); 
+Actions.pushViewWithName(MissionVerificationRectificationList, 'MissionVerificationRectificationList', { title: '异常整改' });
+Actions.pushViewWithName(MissionAnalysisModelAbnormalRectificationRecords, 'MissionAnalysisModelAbnormalRectificationRecords', { title: '整改记录' });
+Actions.pushViewWithName(CheckRoleList, 'CheckRoleList', { title: '用户名册' });
+Actions.pushViewWithName(RepulseMissionVerification, 'RepulseMissionVerification', { title: '打回' });
+Actions.pushViewWithName(RepulseCheckList, 'RepulseCheckList', { title: '打回记录' });
+Actions.pushViewWithName(MissionAbnormalVerifyDetails, 'MissionAbnormalVerifyDetails', { title: '核实详情' });
+Actions.pushViewWithName(MissionAbnormalRectification, 'MissionAbnormalRectification', { title: '异常整改' });
+Actions.pushViewWithName(MissionRectificationReviewDetails, 'MissionRectificationReviewDetails', { title: '整改复核' });
+Actions.pushViewWithName(MissionRectificationReviewExecution, 'MissionRectificationReviewExecution', { title: '整改复核' });
 
 
 
@@ -505,7 +505,37 @@ export default function Router() {
             }); //后台定位~
         }
         initf();
+        return () => {
+            // componentWillUnmount
+        }
     }, [])
+
+    // 推送消息监听 需要进一步调试，暂不使用
+    //初始化阿里推送监听
+    initAlipushListener = () => {
+        DeviceEventEmitter.addListener('onMessage', this.onMessage);
+        DeviceEventEmitter.addListener('onNotification', this.onNotification);
+        DeviceEventEmitter.addListener('onNotificationOpened', this.onNotificationOpened);
+    };
+
+    // 解绑阿里推送监听
+    removeAlipushListener = () => {
+        DeviceEventEmitter.removeListener('onMessage', this.onMessage);
+        DeviceEventEmitter.removeListener('onNotification', this.onNotification);
+        DeviceEventEmitter.removeListener('onNotificationOpened', this.onNotificationOpened);
+    };
+
+    onNotificationOpened = e => {
+        console.log('Message onNotificationOpened. Title:' + e.title + ', Content:' + e.content);
+    };
+
+    //事件处理逻辑
+    onMessage = e => {
+        console.log('Message Received. Title:' + e.title + ', Content:' + e.content);
+    };
+    onNotification = e => {
+        console.log('Notification Received.Title:' + e.title + ', Content:' + e.content);
+    };
 
     return (
         <NavigationContainer>

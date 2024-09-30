@@ -1,6 +1,6 @@
 //import liraries
 import React, { PureComponent } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import moment from 'moment';
 
 
@@ -9,6 +9,8 @@ import Mask from './component/Mask';
 import { SingleTime, RangeTime, HourRangeTime, RangeDay, RangeMonth, SingleTimeWheel, DataPicker } from './index';
 import SingleTime_unselect from './SingleTime_unselected';
 import SingleTimeWheel_Unselected from './SingleTimeWheel_Unselected';
+import { calendarHeight, SCREEN_WIDTH, WINDOW_HEIGHT } from '../../config/globalsize';
+import { SCREEN_HEIGHT } from './constant/globalsize';
 
 // create a component
 class PickerView extends PureComponent {
@@ -124,6 +126,7 @@ class PickerView extends PureComponent {
             />);
         } else if (this.props.pickerType == 'SingleTimeWheel') {
             return (<SingleTimeWheel
+                orientation={this.props.orientation}
                 defaultDate={this.props.defaultValue}
                 format={this.props.format}
                 callbackForResult={this.props.callback}
@@ -164,9 +167,18 @@ class PickerView extends PureComponent {
                         this._modalParent.hideModal();
                     }}>
                     {
+                        // this.renderContent()
+                    }
+
+                </Mask>
+                <View style={[{
+                    width: WINDOW_HEIGHT, height: calendarHeight + 45//295
+                    , flexDirection: 'row', backgroundColor: 'red'
+                }]}>
+                    {
                         this.renderContent()
                     }
-                </Mask>
+                </View>
             </ModalParent>
         );
     }

@@ -49,7 +49,7 @@ class SingleWheel extends PureComponent {
                         {
                             height: 1,
                             width: '100%',
-                            position: 'absolute',
+                            // position: 'absolute',
                             top: scrollViewStyle.height / 2 - 21,
                             backgroundColor: '#49a1fe'
                         }
@@ -60,7 +60,7 @@ class SingleWheel extends PureComponent {
                         {
                             height: 1,
                             width: '100%',
-                            position: 'absolute',
+                            // position: 'absolute',
                             top: scrollViewStyle.height / 2 + 19,
                             backgroundColor: '#49a1fe'
                         }
@@ -87,7 +87,7 @@ class SingleWheel extends PureComponent {
                         return (this._scrollView = ref);
                     }}
                     scrollEnabled={this.props.scrollEnabled}
-                    style={[scrollViewStyle]}
+                    style={[scrollViewStyle, { zIndex: 999 }]}
                     showsVerticalScrollIndicator={false}
                     onScrollEndDrag={({ nativeEvent }) => { }}
                     onMomentumScrollEnd={({ nativeEvent }) => {

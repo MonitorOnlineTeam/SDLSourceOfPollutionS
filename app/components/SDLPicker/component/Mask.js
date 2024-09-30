@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-12-29 11:36:14
- * @LastEditTime: 2024-06-24 10:49:21
- * @FilePath: /SDLMainProject37/app/components/SDLPicker/component/Mask.js
+ * @LastEditTime: 2024-09-29 15:14:58
+ * @FilePath: /SDLMainProject/app/components/SDLPicker/component/Mask.js
  */
 //import liraries
 import React, { PureComponent } from 'react';
@@ -58,18 +58,21 @@ class Mask extends PureComponent {
 
     render() {
         if (this.props.orientation == 'LANDSCAPE') {
-            return (<TouchableWithoutFeedback
-                onPress={() => {
-                    this.props.hideDialog();
-                }}
-            >
-                <View
-                    style={[{ alignItems: 'flex-end', justifyContent: 'flex-start', flexDirection: 'row', backgroundColor: 'rgba(0,0,0,0.4)' }
-                        , this.props.style, { height: SCREEN_WIDTH, width: SCREEN_HEIGHT }]}
-                >
-                    {this.props.children}
+            return (
+                <View style={[{ zIndex: 0, flex: 1, alignItems: 'center', justifyContent: 'flex-end' }, this.props.style]} onLayout={event => this.onLayout(event)}>
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            this.props.hideDialog();
+                        }}
+                    >
+                        <View
+                            style={[{ zIndex: 5, alignItems: 'flex-end', justifyContent: 'flex-start', flexDirection: 'row', backgroundColor: 'rgba(0,0,0,0.4)' }
+                                , this.props.style, { height: SCREEN_WIDTH, width: SCREEN_HEIGHT }]}
+                        >
+                            {this.props.children}
+                        </View>
+                    </TouchableWithoutFeedback>
                 </View>
-            </TouchableWithoutFeedback>
             );
         } else {
             return (

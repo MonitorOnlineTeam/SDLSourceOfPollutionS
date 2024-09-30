@@ -8,11 +8,12 @@ import moment from 'moment';
 
 import CalendarView from './component/CalendarView';
 import WheelPicker from './component/WheelPicker';
+import { calendarHeight, WINDOW_WIDTH } from '../../config/globalsize';
 
-const WINDOW_WIDTH = Dimensions.get('window').width;
-const WINDOW_HEIGHT = Dimensions.get('window').height;
-let scaleFactor = 375;
-let calendarHeight = 320 * (Math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / scaleFactor);
+// const WINDOW_WIDTH = Dimensions.get('window').width;
+// const WINDOW_HEIGHT = Dimensions.get('window').height;
+// let scaleFactor = 375;
+// let calendarHeight = 320 * (Math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / scaleFactor);
 let t = moment();
 t.set('date', 1);
 // const TimeNavigator = createBottomTabNavigator({
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
-        height: 295,
+        height: calendarHeight + 45//295,
     },
 });
 

@@ -1,6 +1,6 @@
 //import liraries
 import React, { PureComponent } from 'react';
-import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 // import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
 
@@ -8,6 +8,7 @@ import SingleWheel from './SingleWheel';
 import DateSingleWheel from './DateSingleWheel';
 import { hour, minuteOrSecond, year, month, day28, day29, day30, day31 } from '../constant/baseConstant';
 import { SentencedToEmpty } from '../../../utils';
+import { SCREEN_HEIGHT } from '../../../config/globalsize';
 const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 
@@ -242,7 +243,7 @@ class WheelPicker extends PureComponent {
                                 }
                             });
                         }}
-                        key={1}
+                        key={2}
                         callback={item => {
                             let result = moment(this.state.result.format('YYYY-MM-DD HH:mm:ss'));
                             if (isNaN(result.minute())) {
@@ -308,12 +309,24 @@ class WheelPicker extends PureComponent {
         }
         return (
             <View
+                // onStartShouldSetResponderCapture={() => {
+                //     // 拦截事件 不传递给父组件
+                //     console.log('1onStartShouldSetResponderCapture orientation = ', this.props.orientation);
+                //     if (this.props.orientation == 'LANDSCAPE') {
+                //         console.log('onStartShouldSetResponderCapture true');
+                //         return true;
+                //     } else {
+                //         console.log('onStartShouldSetResponderCapture false');
+                //         return false;
+                //     }
+                // }}
                 style={[
                     {
                         flexDirection: 'row',
                         justifyContent: _format == 'YYYY-MM' ? 'space-around' : _format == 'YYYY-MM-DD' || _format == 'YYYY-MM-DD HH:00' || _format == 'YYYY-MM-DD 00:00' ? 'space-between' : 'center',
                         paddingHorizontal: 21,
                         width: WINDOW_WIDTH
+                        // width: this.props.orientation == 'LANDSCAPE' ? SCREEN_HEIGHT : WINDOW_WIDTH
                     }
                 ]}
             >
@@ -325,16 +338,23 @@ class WheelPicker extends PureComponent {
     };
 
     render() {
+        const { orientation = 'Portrait' } = this.props;
         return (
             <View style={[styles.container, { height: calendarHeight }]}>
                 <View
                     style={[
-                        {
-                            width: WINDOW_WIDTH,
-                            height: calendarHeight,
-                            backgroundColor: 'white',
-                            alignItems: 'center'
-                        }
+                        orientation == 'LANDSCAPE' ?
+                            {
+                                minWidth: WINDOW_HEIGHT,
+                                height: calendarHeight,
+                                backgroundColor: 'white',
+                                alignItems: 'center'
+                            } : {
+                                width: WINDOW_WIDTH,
+                                height: calendarHeight,
+                                backgroundColor: 'white',
+                                alignItems: 'center'
+                            }
                     ]}
                 >
                     {/* <LinearGradient colors={['#ffffffff', '#ffffff88', '#ffffff00']} style={[styles.linearGradient,{position:'absolute',top:0,left:0}]}></LinearGradient> */}

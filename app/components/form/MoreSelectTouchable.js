@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Dimensions, View, ScrollView, StyleSheet, Text } from 'react-native';
+import { Dimensions, View, ScrollView, StyleSheet, Text, StatusBar } from 'react-native';
 import { Touchable } from '..';
 import { AlertDialog } from '../../components';
 import SelectButton from '../../components/SelectButton';
@@ -94,7 +94,8 @@ export default class MoreSelectTouchable extends Component {
                 <AlertDialog
                     orientation={this.props.orientation}
                     components={
-                        <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: this.props.width, height: this.props.orientation == 'LANDSCAPE' ? SCREEN_WIDTH : 360 }}>
+                        <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: this.props.width, height: this.props.orientation == 'LANDSCAPE' ? SCREEN_WIDTH : 360, borderWidth: 1 }}>
+                            <StatusBar hidden={true} />
                             <Text style={{ marginTop: 10, color: '#4aa0ff' }}>{this.state.showText == true ? '最多支持选中' + maxNum + '个' : ''}</Text>
                             <ScrollView>{this.renderView()}</ScrollView>
                             <View style={{ height: 1, backgroundColor: '#f0f0f0', width: this.props.width }} />

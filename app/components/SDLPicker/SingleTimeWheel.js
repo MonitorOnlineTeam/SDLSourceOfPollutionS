@@ -10,11 +10,12 @@ import moment from 'moment';
 
 import CalendarView from './component/CalendarView';
 import WheelPicker from './component/WheelPicker';
+import { calendarHeight, WINDOW_HEIGHT, WINDOW_WIDTH } from '../../config/globalsize';
 
-const WINDOW_WIDTH = Dimensions.get('window').width;
-const WINDOW_HEIGHT = Dimensions.get('window').height;
-let scaleFactor = 375;
-let calendarHeight = 320 * (Math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / scaleFactor);
+// const WINDOW_WIDTH = Dimensions.get('window').width;
+// const WINDOW_HEIGHT = Dimensions.get('window').height;
+// let scaleFactor = 375;
+// let calendarHeight = 320 * (Math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / scaleFactor);
 let t = moment();
 t.set('date', 1);
 // const TimeNavigator = createBottomTabNavigator({
@@ -74,10 +75,12 @@ class SingleTimeWheel extends PureComponent {
         let defaultDate = moment(this.props.defaultDate.format(this.props.format));
         return (
             <View
-                style={styles.container}
+                style={[styles.container
+                    , this.props.orientation == 'LANDSCAPE'
+                    ? { width: WINDOW_HEIGHT } : { width: WINDOW_WIDTH }]}
             >
                 <View style={[{
-                    width: WINDOW_WIDTH,
+                    width: this.props.orientation == 'LANDSCAPE' ? WINDOW_HEIGHT : WINDOW_WIDTH,
                     flexDirection: 'row',
                     paddingHorizontal: 8,
                 }]}>
@@ -105,13 +108,25 @@ class SingleTimeWheel extends PureComponent {
                         </View>
                     </TouchableOpacity>
                 </View>
-                <View style={[{ height: calendarHeight, flex: 1, width: WINDOW_WIDTH, justifyContent: 'center' }]}>
+                <View style={[{
+                    height: calendarHeight,
+                    width: this.props.orientation == 'LANDSCAPE' ? WINDOW_HEIGHT : WINDOW_WIDTH
+                    , justifyContent: 'center'
+                }]}>
                     <View
                         // onStartShouldSetResponderCapture={() => {
                         //     // 拦截事件 不传递给父组件
-                        //     return true;
+                        //     console.log('onStartShouldSetResponderCapture orientation = ', this.props.orientation);
+                        //     if (this.props.orientation == 'LANDSCAPE') {
+                        //         return true;
+                        //     } else {
+                        //         return false;
+                        //     }
                         // }}
-                        style={{ height: 200, width: WINDOW_WIDTH }}>
+                        style={{
+                            height: 200
+                            , width: this.props.orientation == 'LANDSCAPE' ? WINDOW_HEIGHT : WINDOW_WIDTH
+                        }}>
                         {/* <this.state.TimeNavigator ref={ref => {
                             if (ref !== null && __DEV__) {
                                 // console.log(ref);
@@ -120,6 +135,7 @@ class SingleTimeWheel extends PureComponent {
                             return this.timeNavigator = ref;
                         }} /> */}
                         <WheelPicker
+                            orientation={this.props.orientation}
                             defaultDate={defaultDate}
                             callbackFun={(date) => {
                                 let dateStr = this.state.currentDate.format(this.props.format);
@@ -146,11 +162,10 @@ class SingleTimeWheel extends PureComponent {
 // define your styles
 const styles = StyleSheet.create({
     container: {
-        width: WINDOW_WIDTH,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
-        height: 295,
+        height: calendarHeight + 45//295,
     },
 });
 

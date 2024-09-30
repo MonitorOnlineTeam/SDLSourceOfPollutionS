@@ -1,7 +1,7 @@
-import React, {PureComponent} from 'react';
-import {Text, View, StyleSheet, Image, Platform} from 'react-native';
+import React, { PureComponent } from 'react';
+import { Text, View, StyleSheet, Image, Platform } from 'react-native';
 import moment from 'moment';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import {
   StatusPage,
@@ -20,16 +20,16 @@ import {
   ShowToast,
   StackActions,
 } from '../../utils';
-import {SCREEN_WIDTH} from '../../config/globalsize';
-import {getRootUrl} from '../../dvapack/storage';
-import {getFormUrl} from '../../utils/taskUtils';
+import { SCREEN_WIDTH } from '../../config/globalsize';
+import { getRootUrl } from '../../dvapack/storage';
+import { getFormUrl } from '../../utils/taskUtils';
 
 import FlatListWithHeaderAndFooter from '../../components/FlatListWithHeaderAndFooter';
 
 /**
  * 运维日志
  */
-@connect(({pointDetails, app}) => ({
+@connect(({ pointDetails, app }) => ({
   operationLogsListData: pointDetails.operationLogsListData,
   operationLogsIndex: pointDetails.operationLogsIndex,
   operationLogsTotal: pointDetails.operationLogsTotal,
@@ -83,7 +83,7 @@ export default class OperationLog extends PureComponent {
   };
 
   getOperationLogsTypeSelectOption = () => {
-    let dataArr = [{CnName: '全部', TypeId: -1, Abbreviation: '全部'}];
+    let dataArr = [{ CnName: '全部', TypeId: -1, Abbreviation: '全部' }];
     dataArr = dataArr.concat(this.props.operationLogsRecordType);
     return {
       codeKey: 'TypeId',
@@ -110,7 +110,7 @@ export default class OperationLog extends PureComponent {
     if (this.operationLogsTypePicker == null) {
       console.log('ref 空空空空');
     } else {
-      let dataArr = [{CnName: '全部', TypeId: -1, Abbreviation: '全部'}];
+      let dataArr = [{ CnName: '全部', TypeId: -1, Abbreviation: '全部' }];
       dataArr = dataArr.concat(this.props.operationLogsRecordType);
       this.operationLogsTypePicker.setDataArr(dataArr);
     }
@@ -143,7 +143,7 @@ export default class OperationLog extends PureComponent {
         operationLogsTotal: 0,
         operationLogsBeginTime,
         operationLogsEndTime,
-        operationLogsListResult: {status: -1},
+        operationLogsListResult: { status: -1 },
       }),
     );
     this.props.dispatch(
@@ -215,13 +215,13 @@ export default class OperationLog extends PureComponent {
               padding: 15,
             },
           ]}>
-          <SDLText fontType={'normal'} style={[{color: '#333'}]}>
+          <SDLText fontType={'normal'} style={[{ color: '#333' }]}>
             {'设备异常报警'}
           </SDLText>
-          <SDLText fontType={'small'} style={[{marginTop: 5, color: '#666'}]}>
+          <SDLText fontType={'small'} style={[{ marginTop: 5, color: '#666' }]}>
             {SentencedToEmpty(outerItem, ['CreateTime'], 0)}
           </SDLText>
-          <SDLText fontType={'normal'} style={[{marginTop: 10, color: '#666'}]}>
+          <SDLText fontType={'normal'} style={[{ marginTop: 10, color: '#666' }]}>
             {SentencedToEmpty(outerItem, ['DisplayInfo'], '----')}
           </SDLText>
         </View>
@@ -239,14 +239,12 @@ export default class OperationLog extends PureComponent {
               currentItem.TaskID,
               0,
             );
-            console.log(formUrl);
-            console.log(outerItem);
 
             //  0：图片   1：电子表单    Type字段
             if (outerItem.Type == '0') {
               outerItem.FormMainID = outerItem.MainFormID;
               this.props.dispatch(
-                StackActions.push({
+                NavigationActions.navigate({
                   routeName: 'ImageForm',
                   params: {
                     ...outerItem,
@@ -268,7 +266,7 @@ export default class OperationLog extends PureComponent {
                     CusUrl: formUrl,
                     title: SentencedToEmpty(outerItem, ['Abbreviation'], {}),
                     currentItem,
-                    reloadList: () => {},
+                    reloadList: () => { },
                   },
                 }),
               );
@@ -293,31 +291,31 @@ export default class OperationLog extends PureComponent {
                   paddingHorizontal: 15,
                 },
               ]}>
-              <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+              <View style={[{ flexDirection: 'row', alignItems: 'center' }]}>
                 <SDLText
                   fontType={'normal'}
-                  style={[{color: '#333', lineHeight: 20}]}>
+                  style={[{ color: '#333', lineHeight: 20 }]}>
                   {SentencedToEmpty(outerItem, ['CreateUser'], '----')}
                 </SDLText>
                 {SentencedToEmpty(outerItem, ['CertificateInfos'], []).map(
                   item => {
                     return (
                       <Image
-                        style={{width: 18, height: 12, marginLeft: 3}}
+                        style={{ width: 18, height: 12, marginLeft: 3 }}
                         source={
                           item.CertificateType == 240
                             ? item.IsExpired == true
                               ? require('../../images/ic_certificate_flue_gas_Invalid.png')
                               : require('../../images/ic_certificate_flue_gas_valid.png')
                             : item.CertificateType == 242
-                            ? item.IsExpired == true
-                              ? require('../../images/ic_certificate_voc_Invalid.png')
-                              : require('../../images/ic_certificate_voc_valid.png')
-                            : item.CertificateType == 241
-                            ? item.IsExpired == true
-                              ? require('../../images/ic_certificate_waste_water_Invalid.png')
-                              : require('../../images/ic_certificate_waste_water_valid.png')
-                            : null
+                              ? item.IsExpired == true
+                                ? require('../../images/ic_certificate_voc_Invalid.png')
+                                : require('../../images/ic_certificate_voc_valid.png')
+                              : item.CertificateType == 241
+                                ? item.IsExpired == true
+                                  ? require('../../images/ic_certificate_waste_water_Invalid.png')
+                                  : require('../../images/ic_certificate_waste_water_valid.png')
+                                : null
                         }
                       />
                     );
@@ -341,11 +339,11 @@ export default class OperationLog extends PureComponent {
               </View>
               <SDLText
                 fontType={'small'}
-                style={[{marginTop: 5, color: '#666'}]}>
+                style={[{ marginTop: 5, color: '#666' }]}>
                 {SentencedToEmpty(outerItem, ['CreateTime'], 0)}
               </SDLText>
             </View>
-            <View style={[{paddingBottom: 6}]}>
+            <View style={[{ paddingBottom: 6 }]}>
               <View
                 key={'' + outerIndex}
                 style={[
@@ -358,10 +356,10 @@ export default class OperationLog extends PureComponent {
                     paddingHorizontal: 15,
                   },
                 ]}>
-                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                <View style={[{ flexDirection: 'row', alignItems: 'center' }]}>
                   <Image
                     source={require('../../images/ic_lian.png')}
-                    style={[{height: 11, width: 7, marginRight: 2}]}
+                    style={[{ height: 11, width: 7, marginRight: 2 }]}
                   />
                   <SDLText fontType={'normal'}>{`${SentencedToEmpty(
                     outerItem,
@@ -371,7 +369,7 @@ export default class OperationLog extends PureComponent {
                 </View>
                 <Image
                   source={require('../../images/ic_arrows_right.png')}
-                  style={[{height: 11, width: 11}]}
+                  style={[{ height: 11, width: 11 }]}
                 />
               </View>
             </View>
@@ -396,7 +394,7 @@ export default class OperationLog extends PureComponent {
           ]}>
           <SimplePickerRangeDay option={this.getRangeDaySelectOption()} />
           <SimplePicker
-            style={[{width: 120}]}
+            style={[{ width: 120 }]}
             ref={ref => (this.operationLogsTypePicker = ref)}
             option={this.getOperationLogsTypeSelectOption()}
           />
@@ -420,7 +418,7 @@ export default class OperationLog extends PureComponent {
             <FlatListWithHeaderAndFooter
               ref={ref => (this.list = ref)}
               ItemSeparatorComponent={() => {
-                return <View style={[{height: 0}]} />;
+                return <View style={[{ height: 0 }]} />;
               }}
               pageSize={20}
               hasMore={() => {
@@ -445,7 +443,7 @@ export default class OperationLog extends PureComponent {
                   }),
                 );
               }}
-              renderItem={({item, index}) => {
+              renderItem={({ item, index }) => {
                 return (
                   <View
                     style={[
@@ -457,7 +455,7 @@ export default class OperationLog extends PureComponent {
                     ]}>
                     <View
                       style={[
-                        {width: 40, height: this.getItemHeight(index, item)},
+                        { width: 40, height: this.getItemHeight(index, item) },
                       ]}>
                       <View
                         style={[
@@ -485,7 +483,7 @@ export default class OperationLog extends PureComponent {
                               borderRadius: 7,
                               backgroundColor:
                                 SentencedToEmpty(item, ['TypeID'], 0) == 0 ||
-                                SentencedToEmpty(item, ['MainFormID']) == ''
+                                  SentencedToEmpty(item, ['MainFormID']) == ''
                                   ? '#ff5b5c'
                                   : '#49a1fe',
                               justifyContent: 'center',
@@ -510,7 +508,7 @@ export default class OperationLog extends PureComponent {
                               width: 1,
                               backgroundColor:
                                 this.props.operationLogsListData.length == 1 ||
-                                index ==
+                                  index ==
                                   this.props.operationLogsListData.length - 1
                                   ? '#f2f2f2'
                                   : '#999',
@@ -519,10 +517,10 @@ export default class OperationLog extends PureComponent {
                         />
                       </View>
                     </View>
-                    <View style={[{width: SCREEN_WIDTH - 57}]}>
-                      <View style={[{height: index == 0 ? 40 : 20}]} />
+                    <View style={[{ width: SCREEN_WIDTH - 57 }]}>
+                      <View style={[{ height: index == 0 ? 40 : 20 }]} />
                       {this.renderItemContent(item, index)}
-                      <View style={[{height: 20}]} />
+                      <View style={[{ height: 20 }]} />
                     </View>
                   </View>
                 );

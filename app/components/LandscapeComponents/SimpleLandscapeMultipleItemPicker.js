@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2020-08-26 09:28:38
- * @LastEditTime: 2024-06-20 11:30:28
- * @FilePath: /SDLMainProject37/app/components/LandscapeComponents/SimpleLandscapeMultipleItemPicker.js
+ * @LastEditTime: 2024-09-29 11:02:50
+ * @FilePath: /SDLMainProject/app/components/LandscapeComponents/SimpleLandscapeMultipleItemPicker.js
  */
 import React, { PureComponent } from 'react';
 import { Text, View, Image } from 'react-native';

@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     container: {
         width: WINDOW_WIDTH,
         backgroundColor: 'white',
-        height: 295
+        height: calendarHeight + 45 // 295
     }
 });
 
