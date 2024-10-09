@@ -49,6 +49,7 @@
     "react-native-android-intent": "0.1.0",
     "react-redux": "^9.1.2",
     "redux": "^5.0.1",
+    "rn-bugly": "^0.3.1",
     "urijs": "^1.19.1"
   },
   "devDependencies": {

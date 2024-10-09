@@ -9,6 +9,7 @@ import globalcolor from '../../../config/globalcolor';
 import { saveStorage, loadStorage, getToken, getRootUrl, clearRootUrl, getEncryptData, loadRootUrl, clearEncryptData, setPasswordMobx } from '../../../dvapack/storage';
 import { LoginImage } from '../../../config/globalconst';
 import { NavigationActions } from '../../../utils/RouterUtils';
+import { ModalParent } from '../..';
 // import { SDLText, ModalParent } from '../..';
 // import Orientation from 'react-native-orientation';
 // import { init } from 'react-native-amap-geolocation';
@@ -47,6 +48,9 @@ class Login extends Component {
             logoImage: LoginImage
         };
         this.contentHeight = 0;
+        {
+            Platform.OS == 'android' && this._checkUpdate();
+        }
     }
 
     static navigationOptions = {
@@ -71,7 +75,8 @@ class Login extends Component {
             this.setState({ userRule });
         }
         {
-            Platform.OS == 'android' && this._checkUpdate();
+            // 检查版本
+            // Platform.OS == 'android' && this._checkUpdate();
         }
 
         let encryData = getEncryptData();
@@ -268,6 +273,8 @@ class Login extends Component {
                             }
                         } else {
                             if (VersionInfo.app_version_code < result.data.VersionCode) {
+                                console.log('this.refs = ', this.refs);
+                                console.log('updateAlert = ', this.refs.updateAlert);
                                 if (this.refs && this.refs.updateAlert) this.refs.updateAlert.showModal();
                                 else console.log('报空了');
                             } else {
@@ -518,7 +525,7 @@ class Login extends Component {
                         )}
                     </View>
                 </ScrollView>
-                {/* <ModalParent ref="updateAlert" ForcedUpdate={this.state.ForcedUpdate} DownLoadPath={Platform.OS == 'ios' ? this.state.IOSDownLoadPath : this.state.DownLoadPath} UpdateContent={this.state.UpdateContent} /> */}
+                <ModalParent ref="updateAlert" ForcedUpdate={this.state.ForcedUpdate} DownLoadPath={Platform.OS == 'ios' ? this.state.IOSDownLoadPath : this.state.DownLoadPath} UpdateContent={this.state.UpdateContent} />
             </View>
         );
     }

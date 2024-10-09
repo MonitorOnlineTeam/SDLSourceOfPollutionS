@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @LastEditors: hxf
+ * @Date: 2023-12-29 11:36:15
+ * @LastEditTime: 2024-10-08 19:19:34
+ * @FilePath: /SDLMainProject/app/pOperationModels/account.js
+ */
 import moment from 'moment';
 
 import { createAction, NavigationActions, Storage, StackActions, ShowToast } from '../utils';
@@ -24,13 +31,14 @@ export default Model.extend({
             {
                 payload: { params, callback }
             },
-            { call, put, take, update }
+            { call, put, take, update, select }
         ) {
+            let { constants } = yield select(state => state.app);
             var encrypt = new JSEncrypt();
             encrypt.setPublicKey(RSAPubSecret);
             const LocalPwd = getToken().LocalPwd;
             if (LocalPwd == params.userPwdOld) {
-                const result = yield call(axiosAuthPost, api.pollutionApi.Account.ChangePwd, { Pwd: global.constants.isSecret == true ? encrypt.encrypt(params.userPwdNew) : params.userPwdNew });
+                const result = yield call(axiosAuthPost, api.pollutionApi.Account.ChangePwd, { Pwd: constants.isSecret == true ? encrypt.encrypt(params.userPwdNew) : params.userPwdNew });
                 if (result.status == 200) {
                     ShowToast('密码修改成功，请重新登录');
                     yield put({ type: 'login/logout' });

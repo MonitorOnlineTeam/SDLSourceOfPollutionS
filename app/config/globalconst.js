@@ -241,8 +241,8 @@ const getAccountConfig = () => {
             { title: '我的证书', routeName: 'OperaStaffInfo', params: {} },
             { title: '账户与安全', routeName: 'AccountSecurity', params: {} },
             { title: '推送设置', routeName: 'PushSetting', params: {} },
-            { title: '微信公众号绑定', routeName: 'wxPushBinding', params: {} },
-            { title: '离线图片上传', routeName: 'OfflineImageUploadList', params: {} },
+            // { title: '微信公众号绑定', routeName: 'wxPushBinding', params: {} },
+            // { title: '离线图片上传', routeName: 'OfflineImageUploadList', params: {} },
             {
                 title: `版本更新 (v${getVersionInfo().app_version_name})`,
                 routeName: 'update',

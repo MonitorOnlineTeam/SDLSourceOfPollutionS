@@ -125,6 +125,7 @@ dependencies {
 //    implementation("com.facebook.react:react-native-gradle-plugin")
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    implementation project(':rn-bugly')
     implementation 'org.greenrobot:greendao:3.3.0'
     compileOnly('com.aliyun.ams:alicloud-android-third-push-huawei:3.8.6.1')
 

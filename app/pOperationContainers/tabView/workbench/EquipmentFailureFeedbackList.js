@@ -2,7 +2,7 @@
  * @Description: 设备故障反馈记录 列表
  * @LastEditors: hxf
  * @Date: 2022-02-10 09:59:44
- * @LastEditTime: 2024-09-27 11:50:09
+ * @LastEditTime: 2024-10-09 08:50:34
  * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbench/EquipmentFailureFeedbackList.js
  */
 
@@ -316,7 +316,7 @@ export default class EquipmentFailureFeedbackList extends Component {
                                 }));
                             this.props.dispatch(NavigationActions.navigate({ routeName: 'EquipmentFailureFeedbackEdit' }));
                         }}
-                        style={[{ position: 'absolute', bottom: 128, right: 18 }]}
+                        style={[{ position: 'absolute', bottom: 128, right: 18, zIndex: 600 }]}
                     >
                         <Image source={require('../../../images/ic_add_suspend_production.png')} style={[{ height: 60, width: 60 }]} />
                     </TouchableOpacity>

@@ -12,7 +12,8 @@ import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.soloader.SoLoader
 import com.sdl.alipush.PushModule
 import com.alibaba.sdk.android.push.huawei.HuaWeiRegister
-
+import com.reactlibrary.bugly.RNBuglyModule
+//
 class MainApplication : Application(), ReactApplication {
 
   override val reactNativeHost: ReactNativeHost =
@@ -42,6 +43,9 @@ class MainApplication : Application(), ReactApplication {
       PushModule.initCloudChannel(this, "2882303761519963767", "5281996355767");
       // 注册方法会自动判断是否支持华为系统推送，如不支持会跳过注册。
       HuaWeiRegister.register(this);
+
+    // 仅仅初始化(推荐使用该方法，所有的检查更新触发都都js端，更加灵活)
+    RNBuglyModule.initWithoutAutoCheckUpgrade(getApplicationContext(), "1400022651", true);
     if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
       // If you opted-in for the New Architecture, we load the native entry point for this app.
       load()

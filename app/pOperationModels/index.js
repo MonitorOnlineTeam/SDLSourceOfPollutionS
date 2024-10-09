@@ -2,7 +2,7 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-06-16 17:09:37
- * @LastEditTime: 2024-09-27 11:49:06
+ * @LastEditTime: 2024-09-30 16:27:15
  * @FilePath: /SDLMainProject/app/pOperationModels/index.js
  */
 /**
@@ -52,7 +52,7 @@ import equipmentFailureFeedbackModel from './equipmentFailureFeedbackModel';
 // import helpCenter from '../models/helpCenter';
 import supervision from './supervision';
 import keyParameterVerificationModel from './keyParameterVerificationModel';
-// import BWModel from './BWModel';
+import BWModel from './BWModel';
 // import alarmAnaly from './alarmAnaly';
 import alarmAnaly from './alarmAnaly_1';
 import CTModel from './CTModel';
@@ -123,7 +123,7 @@ export function registerModels(app) {
     // app.model(inspectionRecordsModel); // 督查记录
     app.model(supervision); // 督查整改
     app.model(keyParameterVerificationModel); // 关键参数核查
-    // app.model(BWModel); // 宝武 上海环保接口
+    app.model(BWModel); // 宝武 上海环保接口
     app.model(CTModel); // 成套相关功能
     app.model(CTRepair);
     app.model(CT7FormModel); // 成套 七张表单

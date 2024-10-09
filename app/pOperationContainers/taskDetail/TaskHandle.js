@@ -554,9 +554,9 @@ export default class TaskHandle extends Component {
         } else {
             if (SentencedToEmpty(item, ['RecordType'], 0) == '0') {
                 this.props.dispatch(
-                    StackActions.push({
-                        routeName: 'ImageForm',
-                        params: { ...item, createForm: item.FormMainID != null ? true : false, isEdit: 'noEdit', viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
+                    NavigationActions.navigate({
+                        routeName: 'ImageForm'
+                        , params: { ...item, createForm: item.FormMainID != null ? true : false, isEdit: 'noEdit', viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
                     })
                 );
             } else if (SentencedToEmpty(item, ['RecordType'], 0) == '1') {

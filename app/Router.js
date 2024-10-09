@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2024-09-30 10:15:30
+ * @LastEditTime: 2024-10-08 17:16:17
  * @FilePath: /SDLMainProject/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
@@ -205,6 +205,7 @@ import EquipmentFailureFeedbackList from './pOperationContainers/tabView/workben
 import EquipmentFailureFeedbackEdit from './pOperationContainers/tabView/workbench/EquipmentFailureFeedbackEdit';
 import EquipmentFailureFeedbackDetail from './pOperationContainers/tabView/workbench/EquipmentFailureFeedbackDetail';
 import AdvertisingPage from './components/page/login/AdvertisingPage';
+import AlarmVerifyDetail from './pOperationContainers/tabView/alarm/AlarmVerifyDetail';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
 function Test() {
     return (
@@ -319,9 +320,11 @@ Actions.pushViewWithName(TaskDetail, 'TaskDetail', { title: '任务详情' });
 Actions.pushViewWithName(WaterMaskCamera, 'WaterMaskCamera', { headerShown: false });
 Actions.pushViewWithName(OverData, 'OverData', { title: '超标数据' });
 Actions.pushViewWithName(ExceptionData, 'ExceptionData', { title: '异常数据' });
-Actions.pushViewWithName(MissDataList, 'MissDataList', { title: '确实数据' });
+Actions.pushViewWithName(MissDataList, 'MissDataList', { title: '缺失数据' });
 // Actions.pushViewWithName(OverAlarmVerify, 'OverAlarmVerify', { title: '超标核实记录' });
 Actions.pushViewWithName(VerifyRecords, 'VerifyRecords', { title: '超标核实记录' });
+Actions.pushViewWithName(AlarmVerifyDetail, 'AlarmVerifyDetail', { title: '核实信息' });
+
 Actions.pushViewWithName(SignInEnter, 'SignInEnter', { title: '签到' });
 Actions.pushViewWithName(SupplementarySignIn, 'SupplementarySignIn', {
     title: '补签', headerRight: () => (

@@ -114,18 +114,51 @@ const list = [
 //         completeTaskCountParams: BWModel.completeTaskCountParams, // 完成工单统计刷新参数
 //         serviceStatusNum: CTServiceReportRectificationModel.serviceStatusNum, // 服务报告整改工作台数字
 //     }))
-@connect(({ app, login, helpCenter }) => ({
-    homeData: app.homeData,
+// @connect(({ app, login, helpCenter }) => ({
+//     homeData: app.homeData,
 
-    workerBenchMenu: login.workerBenchMenu, // 动态菜单
-    testFunctionStatus: login.testFunctionStatus, // 未上线功能状态
-    menuList: login.menuList, // 可根据此数据加在工作台接口
-    tabList: login.tabList,
-    tabSelectIndex: login.tabSelectIndex,
+//     workerBenchMenu: login.workerBenchMenu, // 动态菜单
+//     testFunctionStatus: login.testFunctionStatus, // 未上线功能状态
+//     menuList: login.menuList, // 可根据此数据加在工作台接口
+//     tabList: login.tabList,
+//     tabSelectIndex: login.tabSelectIndex,
 
-    noticeContentResult: helpCenter.noticeContentResult,
+//     noticeContentResult: helpCenter.noticeContentResult,
 
-}))
+// }))
+@connect(({ CTModel, login, app, alarm, approvalModel
+    , helpCenter, keyParameterVerificationModel, supervision
+    , alarmAnaly, modelAnalysisAectificationModel, BWModel
+    , CTEquipmentPicAuditModel, CTServiceReportRectificationModel
+    , abnormalTask }) => ({
+
+        equipmentAuditRectificationNum: CTEquipmentPicAuditModel.equipmentAuditRectificationNum,
+        noticeContentResult: helpCenter.noticeContentResult,
+        homeData: app.homeData,
+        exceptionAlarmCount: alarm.exceptionAlarmCount, //首页异常报警数量
+        overAlarmCount: alarm.overAlarmCount, //首页超标报警数量
+        missAlarmCount: alarm.missAlarmCount, //首页缺失报警数量
+        OverWarningCount: alarm.OverWarningCount, // 首页预警（分钟超标报警）数量
+        PerformApprovalCount: approvalModel.PerformApprovalCount, // 待审批任务数
+        checkedRectificationListCount: abnormalTask.checkedRectificationListCount, // 异常识别2.0 任务整改数
+        checkTaskCount: abnormalTask.checkTaskCount, // 异常识别2.0 任务数
+
+        OperationKeyParameterCountResult: keyParameterVerificationModel.OperationKeyParameterCountResult, // 关键参数核查 计数
+        rectificationNumResult: supervision.rectificationNumResult, // 设施核查整改 计数
+        workerBenchMenu: login.workerBenchMenu, // 动态菜单
+        anaCount: alarmAnaly.anaCount,
+        testFunctionStatus: login.testFunctionStatus, // 未上线功能状态
+        menuList: login.menuList, // 可根据此数据加在工作台接口
+        serviceDispatchResult: CTModel.serviceDispatchResult, // 成套待办 模型发布需注释掉
+        // checkedRectificationListGResult: modelAnalysisAectificationModel.checkedRectificationListGResult, // 模型整改
+
+        tabList: login.tabList,
+        tabSelectIndex: login.tabSelectIndex,
+
+        executiveStatisticsParams: BWModel.executiveStatisticsParams, // 工单执行统计刷新参数
+        completeTaskCountParams: BWModel.completeTaskCountParams, // 完成工单统计刷新参数
+        serviceStatusNum: CTServiceReportRectificationModel.serviceStatusNum, // 服务报告整改工作台数字
+    }))
 class Workbench extends Component {
     static navigationOptions = ({ navigation }) => {
         return createNavigationOptions({
@@ -715,6 +748,7 @@ class Workbench extends Component {
         // });
         //刷新消息计数器
         this.props.dispatch(createAction('notice/getNewPushMessageList')({}));
+        this.onFreshData();
     }
 
     loadAdvertisement = isInit => {
