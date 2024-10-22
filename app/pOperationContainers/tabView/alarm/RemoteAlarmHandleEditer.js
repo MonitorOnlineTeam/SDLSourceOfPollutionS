@@ -2,14 +2,14 @@
  * @Description: 处理 异常和缺失报警
  * @LastEditors: hxf
  * @Date: 2023-04-28 10:51:41
- * @LastEditTime: 2024-09-19 19:04:37
+ * @LastEditTime: 2024-10-11 14:41:59
  * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/alarm/RemoteAlarmHandleEditer.js
  */
 import moment from 'moment';
 import React, { Component } from 'react'
 import { Text, TextInput, View, Image, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux';
-import { SDLText, SimpleLoadingComponent, SimpleLoadingView } from '../../../components';
+import { DeclareModule, SDLText, SimpleLoadingComponent, SimpleLoadingView } from '../../../components';
 import ImageGrid from '../../../components/form/images/ImageGrid';
 import { SCREEN_WIDTH } from '../../../config/globalsize';
 import { createAction, createNavigationOptions, SentencedToEmpty, ShowToast } from '../../../utils';
@@ -32,6 +32,28 @@ export default class RemoteAlarmHandleEditer extends Component {
             TaskContent: '',
             imageList: []
         };
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(this.props.route, ['params', 'params', 'title'], '报警处理登记表'),
+            headerRight: () => <DeclareModule
+                contentRender={() => {
+                    return <Text style={[{ fontSize: 13, color: 'white', marginHorizontal: 16 }]}>{'响应时限说明'}</Text>;
+                }}
+                options={{
+                    headTitle: '响应时限说明',
+                    innersHeight: 220,
+                    messText: `报警信息如在8:30-17:30发生，需要在4小时内进行响应，如在其他时间发生，需要在12小时之内进行响应`,
+                    headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
+                    buttons: [
+                        {
+                            txt: '知道了',
+                            btnStyle: { backgroundColor: '#fff' },
+                            txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
+                            onpress: () => { }
+                        }
+                    ]
+                }}
+            />
+        });
         this.props.navigation.setOptions({
             titile: SentencedToEmpty(this.props.route, ['params', 'params', 'title'], '报警处理登记表'),
             headerRight: () => <DeclareModule
@@ -119,14 +141,14 @@ export default class RemoteAlarmHandleEditer extends Component {
                             return;
                         }
                         let params = {
-                            "DGIMN": SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'DGIMN'], ''),
-                            "operationEntCode": SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'operationEntCode'], ''),
+                            "DGIMN": SentencedToEmpty(this.props, ['route', 'params', 'params', 'DGIMN'], ''),
+                            "operationEntCode": SentencedToEmpty(this.props, ['route', 'params', 'params', 'operationEntCode'], ''),
                             "Attachments": this.state.uuid,
-                            "OperationFlag": SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'OperationFlag'], ''),
-                            "RecordType": SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'recordType'], ''),
+                            "OperationFlag": SentencedToEmpty(this.props, ['route', 'params', 'params', 'OperationFlag'], ''),
+                            "RecordType": SentencedToEmpty(this.props, ['route', 'params', 'params', 'recordType'], ''),
                             "Description": this.state.TaskContent
                         };
-                        if ('missData' in SentencedToEmpty(this.props, ['navigation', 'state', 'params'], {})) {
+                        if ('missData' in SentencedToEmpty(this.props, ['route', 'params', 'params'], {})) {
                             params.missData = 1;
                         }
                         /**
@@ -134,7 +156,7 @@ export default class RemoteAlarmHandleEditer extends Component {
                          * this.props.alarmRecordsListData
                          * beginTime、endTime
                          */
-                        const innerParams = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], {});
+                        const innerParams = SentencedToEmpty(this.props, ['route', 'params', 'params'], {});
                         if ('beginTime' in innerParams && 'endTime' in innerParams) {
                             params.beginTime = innerParams.beginTime;
                             params.endTime = innerParams.endTime;
@@ -148,7 +170,7 @@ export default class RemoteAlarmHandleEditer extends Component {
                                     this.props.dispatch(createAction('pointDetails/updateState')({ alarmRecordsIndex: 1, alarmRecordsTotal: 0, alarmRecordsListDataSelected: [], alarmRecordsListResult: { status: -1 } }));
                                     this.props.dispatch(createAction('pointDetails/getAlarmRecords')({}));
                                     // 刷新报警一级列表
-                                    if ('missData' in SentencedToEmpty(this.props, ['navigation', 'state', 'params'], {})) {
+                                    if ('missData' in SentencedToEmpty(this.props, ['route', 'params', 'params'], {})) {
                                         // 缺失报警回调
                                         this.props.dispatch(createAction('alarm/updateState')({ monitorAlarmIndex: 1, monitorAlarmTotal: 0, monitorAlarmResult: { status: -1 } }));
                                         this.props.dispatch(

@@ -3,7 +3,7 @@ import { Text, View, Image, ImageBackground, TouchableOpacity } from 'react-nati
 import { connect } from 'react-redux';
 import { init } from 'react-native-amap-geolocation';
 import { NavigationActions } from '../../../utils/RouterUtils'
-
+import { checkPermission } from 'react-native-alipush';
 
 import { getRootUrl, loadEncryptData, loadRootUrl } from '../../../dvapack/storage';
 // import { NavigationActions, StackActions, SentencedToEmpty, createAction } from '../../../utils';
@@ -153,6 +153,8 @@ export default class BootPage extends Component {
         }
         // this.getNoticeConfig () ;
         this.initLocation();
+        // 通知权限检查
+        checkPermission();
     }
 
     render() {

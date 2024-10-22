@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-04-30 17:16:34
- * @LastEditTime: 2024-05-30 15:05:25
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationMultipleEditor.js
+ * @LastEditTime: 2024-10-15 15:41:44
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationMultipleEditor.js
  */
 import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
@@ -33,7 +33,7 @@ export default class ServiceReportRectificationMultipleEditor extends Component 
     constructor(props) {
         super(props);
         const incomeData = SentencedToEmpty(props
-            , ['navigation', 'state', 'params', 'item'], []);
+            , ['route', 'params', 'params', 'item'], []);
         incomeData.map((item, index) => {
             if (SentencedToEmpty(item, ['FileId'], '') == '') {
                 item.FileId = new Date().getTime();
@@ -42,6 +42,9 @@ export default class ServiceReportRectificationMultipleEditor extends Component 
         this.state = {
             stateDatas: [].concat(incomeData)
         };
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(this.props.route, ['params', 'params', 'title'], '服务报告整改'),
+        });
     }
 
     componentDidMount() {
@@ -51,7 +54,7 @@ export default class ServiceReportRectificationMultipleEditor extends Component 
     combinedData = (projectEntPointSysModelResult) => {
         const entList = SentencedToEmpty(projectEntPointSysModelResult, ['data', 'Datas'], [])
         const items = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'item'], [])
+            , ['route', 'params', 'params', 'item'], [])
         items.map((item, index) => {
             entList.map((entItem, entIndex) => {
                 if (item.EntId == entItem.EntId) {
@@ -63,7 +66,7 @@ export default class ServiceReportRectificationMultipleEditor extends Component 
     }
 
     onRefresh = () => {
-        const inParams = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], {});
+        const inParams = SentencedToEmpty(this.props, ['route', 'params', 'params'], {});
         const recordId = SentencedToEmpty(inParams, ['item', 0, 'RecordId'], '');
         const serviceId = SentencedToEmpty(inParams, ['item', 0, 'ServiceId'], '');
         const mainId = SentencedToEmpty(inParams, ['item', 0, 'MainId'], '');
@@ -168,7 +171,7 @@ export default class ServiceReportRectificationMultipleEditor extends Component 
             return { checkStatus: false };
         }
         const params = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params'], {}
+            , ['route', 'params', 'params'], {}
         );
         const recordId = SentencedToEmpty(params, ['item', 0, 'RecordId'], '');
         const serviceId = SentencedToEmpty(params, ['item', 0, 'ServiceId'], '');

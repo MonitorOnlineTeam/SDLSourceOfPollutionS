@@ -2,8 +2,8 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-09-20 14:55:47
- * @LastEditTime: 2024-05-23 13:55:10
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationEditor.js
+ * @LastEditTime: 2024-10-15 15:59:32
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationEditor.js
  */
 import React, { Component } from 'react';
 import { Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -36,18 +36,21 @@ export default class ServiceReportRectificationEditor extends Component {
         super(props);
         this.state = {
             imageUUID: SentencedToEmpty(this.props
-                , ['navigation', 'state', 'params', 'item', 'FileList', 'AttachID'], new Date().getTime()),
+                , ['route', 'params', 'params', 'item', 'FileList', 'AttachID'], new Date().getTime()),
             Remark: SentencedToEmpty(props
-                , ['navigation', 'state', 'params', 'item', 'Remark'], ''),
+                , ['route', 'params', 'params', 'item', 'Remark'], ''),
             images: [],
             nativeStatus: 200
         };
-        console.log('ServiceReportRectificationEditor constructor props = ', props);
+        // console.log('ServiceReportRectificationEditor constructor props = ', props);
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(this.props.route, ['params', 'params', 'title'], '服务报告整改'),
+        });
     }
 
     componentDidMount() {
         const ProxyCode = getEncryptData();
-        let params = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], {});
+        let params = SentencedToEmpty(this.props, ['route', 'params', 'params'], {});
         let newImages = [];
 
         SentencedToEmpty(params, ['item', 'FileList', 'ImgNameList'], [])
@@ -267,17 +270,17 @@ export default class ServiceReportRectificationEditor extends Component {
                         // ShowLoadingToast('提交中');
                         const serviceId = SentencedToEmpty
                             (this.props
-                                , ['navigation', 'state'
+                                , ['route', 'params'
                                     , 'params', 'item'
                                     , 'ServiceId'], '');
                         const recordId = SentencedToEmpty
                             (this.props
-                                , ['navigation', 'state'
+                                , ['route', 'params'
                                     , 'params', 'item'
                                     , 'RecordId'], '');
                         const mainId = SentencedToEmpty
                             (this.props
-                                , ['navigation', 'state'
+                                , ['route', 'params'
                                     , 'params', 'item'
                                     , 'MainId'], '');
                         let params = {

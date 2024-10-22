@@ -1,6 +1,6 @@
 import { createNativeStackNavigator, HeaderBackButton } from '@react-navigation/native-stack';
 import React, { useLayoutEffect, useRef } from 'react'
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, StatusBar } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MessageBar, MessageBarManager } from 'react-native-message-bar';
 import LoadingManager from './LoadingManager'
@@ -32,6 +32,7 @@ export default function RootView({ navigation }) {
     }, [])
     exportNavigation = navigation;
     return (<View style={[{ width: "100%", flex: 1 }]}>
+        <StatusBar hidden={true} />
         <Stack.Navigator >
             {
                 ViewList.map((item, index) => {

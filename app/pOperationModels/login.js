@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-08-21 15:00:35
- * @LastEditTime: 2024-09-18 15:02:53
+ * @LastEditTime: 2024-10-12 10:45:16
  * @FilePath: /SDLMainProject/app/pOperationModels/login.js
  */
 // import { AsyncStorage } from 'react-native';
@@ -377,6 +377,7 @@ export default Model.extend({
                         Complexity: user.Complexity
                     })
                 );
+                yield put(NavigationActions.reset({ routeName: 'AccountSecurity' }));
                 // 强制修改
                 // yield put(
                 //     StackActions.reset({

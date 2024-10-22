@@ -134,7 +134,7 @@ export default class RepairSubmitForm extends Component {
         commitData.recordId = recordId;
         commitData.serviceId = serviceId;
 
-        this.props.route.params.params.callback(commitData);
+        this.props.route.params.callback(commitData);
         this.props.navigation.goBack();
         // this.props.dispatch(createAction('CTRepair/saveRepairRecordOpr')({}));
     };
@@ -176,7 +176,7 @@ export default class RepairSubmitForm extends Component {
     delConfirm = () => {
         let commitData = { ...this.props.dataArray[0] };
 
-        this.props.route.params.params.callback({ index: commitData.index });
+        this.props.route.params.callback({ index: commitData.index });
         this.props.navigation.goBack();
     };
 

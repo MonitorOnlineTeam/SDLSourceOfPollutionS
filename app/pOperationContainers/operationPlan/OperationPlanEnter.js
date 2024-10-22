@@ -2,8 +2,8 @@
  * @Description: 运维计划入口
  * @LastEditors: hxf
  * @Date: 2024-05-08 16:06:31
- * @LastEditTime: 2024-05-18 15:01:55
- * @FilePath: /SDLMainProject37/app/pOperationContainers/operationPlan/OperationPlanEnter.js
+ * @LastEditTime: 2024-10-12 15:52:03
+ * @FilePath: /SDLMainProject/app/pOperationContainers/operationPlan/OperationPlanEnter.js
  */
 import { Platform, Text, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'

@@ -393,7 +393,7 @@ export default Model.extend({
                     params.IsPaging = false;
                     params.DGIMN = alarmRecordsListTargetDGIMN;
                     params.BeginTime = moment()
-                        .subtract(7, 'days')
+                        .subtract(14, 'days')
                         .format('YYYY-MM-DD 00:00:00');
                     params.EndTime = moment().format('YYYY-MM-DD HH:mm:ss');
                     params.AlarmType = '2';
@@ -406,7 +406,7 @@ export default Model.extend({
                     params.IsPaging = false;
                     params.DGIMN = alarmRecordsListTargetDGIMN;
                     params.BeginTime = moment()
-                        .subtract(7, 'days')
+                        .subtract(14, 'days')
                         .format('YYYY-MM-DD 00:00:00');
                     params.EndTime = moment().format('YYYY-MM-DD HH:mm:ss');
                     params.AlarmType = '0,1,3,4';
@@ -430,7 +430,7 @@ export default Model.extend({
                     params.IsPaging = false;
                     params.DGIMN = alarmRecordsListTargetDGIMN;
                     params.BeginTime = moment()
-                        .subtract(7, 'days')
+                        .subtract(14, 'days')
                         .format('YYYY-MM-DD 00:00:00');
                     params.EndTime = moment().format('YYYY-MM-DD HH:mm:ss');
                     params.AlarmType = '12';

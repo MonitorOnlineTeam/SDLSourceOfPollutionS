@@ -93,7 +93,6 @@ class PollutionAll extends Component {
     }
 
     render() {
-        // return (<View><Text>map</Text></View>)
         if (this.props.curPage == 'map') return <PollutionMap />;
         else return <MapList />;
     }

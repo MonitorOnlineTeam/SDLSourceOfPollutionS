@@ -10,6 +10,7 @@ import {
   SentencedToEmpty,
   createImageUrl,
   delay,
+  CloseToast,
 } from '../../../utils';
 import * as authService from '../../../services/auth';
 import { Model } from '../../../dvapack';
@@ -205,6 +206,7 @@ export default Model.extend({
     },
     //上传文件
     * uploadFile({ payload: { file, callback, uuid } }, { call }) {
+      console.log('uploadFile');
       if (file && file.size > 10000000) {
         callback('文件过大，上传失败', false);
         return;
@@ -217,13 +219,18 @@ export default Model.extend({
         uri: 'file://' + file.uri,
         type: 'multipart/form-data',
         name: EncodeUtf8(file.name),
+        // name: '123.xlsx',
       };
       let formdata = new FormData();
       formdata.append('file', upfile);
       formdata.append('FileUuid', uuid);
       formdata.append('FileTypes', '2');
-      // console.log('formdata = ', formdata);
+      formdata.append('FileActualType', '2');
+      console.log('formdata = ', formdata);
       // fetch(UrlInfo.BaseUrl + api.pollutionApi.Alarm.PostFilesAddWater, {
+      console.log('before fetch');
+      // fetch(UrlInfo.BaseUrl + api.pollutionApi.Alarm.uploadimage, {
+
       fetch(UrlInfo.BaseUrl + api.pollutionApi.Alarm.UploadFiles, {
         method: 'POST',
         bodyType: 'file', //后端接收的类型
@@ -231,23 +238,32 @@ export default Model.extend({
         headers: {
           authorization: 'Bearer ' + user.dataAnalyzeTicket,
           ProxyCode: encryData,
+          Accept: 'application/json, text/plain, */*',
         },
       })
+        .then(response => response.json())
         .then(res => {
-          if (res._bodyText && res._bodyText != '') {
-            let obj = JSON.parse(res._bodyText);
-            if (obj.IsSuccess) {
-              file.AttachID = obj.Datas.fNameList[0];
-              callback(file, true);
-            } else {
-              callback(
-                '上传失败:' + SentencedToEmpty(obj, ['Message'], '无错误信息'),
-                false,
-              );
-            }
+          console.log('res = ', res);
+          if (res.StatusCode == 200 && res.IsSuccess) {
+            file.AttachID = res.Datas.fNameList[0];
+            callback(file, true);
           } else {
             callback('上传失败', false);
           }
+          // if (res._bodyText && res._bodyText != '') {
+          //   let obj = JSON.parse(res._bodyText);
+          //   if (obj.IsSuccess) {
+          //     file.AttachID = obj.Datas.fNameList[0];
+          //     callback(file, true);
+          //   } else {
+          //     callback(
+          //       '上传失败:' + SentencedToEmpty(obj, ['Message'], '无错误信息'),
+          //       false,
+          //     );
+          //   }
+          // } else {
+          //   callback('1上传失败', false);
+          // }
         })
         .catch(error => {
           callback('上传失败' + error, false);
@@ -263,6 +279,7 @@ export default Model.extend({
           noCancelFlag: true,
         },
       );
+      CloseToast();
       if (result.data && result.data != null && result.data.IsSuccess == true) {
         ShowToast(result.data.Message);
         params.callback();

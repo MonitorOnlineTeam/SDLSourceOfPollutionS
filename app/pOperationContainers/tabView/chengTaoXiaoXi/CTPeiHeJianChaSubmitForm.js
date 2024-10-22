@@ -125,7 +125,7 @@ export default class CTPeiHeJianChaSubmitForm extends Component {
     }
 
     onRefresh = () => {
-        const record = SentencedToEmpty(this.props, ['route', 'params', 'params', 'currentItem'], {});
+        const record = SentencedToEmpty(this.props, ['route', 'params', 'currentItem'], {});
 
         this.fileId = record.EnclosureFiles ? record.EnclosureFiles : getDefinedId(); // localId
         this.imageId = record.PictureFiles ? record.PictureFiles : getDefinedId();
@@ -268,7 +268,7 @@ export default class CTPeiHeJianChaSubmitForm extends Component {
     commitForm = () => {
         const recordId = SentencedToEmpty(this.props, ['secondItem', 'RecordId'], '');
         const serviceId = SentencedToEmpty(this.props, ['firstItem', 'ItemId'], '');
-        let currentItem = SentencedToEmpty(this.props, ['route', 'params', 'params', 'currentItem'], {});
+        let currentItem = SentencedToEmpty(this.props, ['route', 'params', 'currentItem'], {});
         let commitData = {
             CooperationDate: this.state.CooperationDate, //核查日期,
             CooperationCompany: SentencedToEmpty(this.state.organizer, ['ChildID'], ''), // 核查单位,
@@ -301,7 +301,7 @@ export default class CTPeiHeJianChaSubmitForm extends Component {
         commitData.PointId = this.props.selectPoint.PointId;
         commitData.PointName = this.props.selectPoint.PointName;
         commitData.index = currentItem.index;
-        this.props.route.params.params.callback(commitData);
+        this.props.route.params.callback(commitData);
         this.props.navigation.goBack();
     };
 
@@ -309,9 +309,10 @@ export default class CTPeiHeJianChaSubmitForm extends Component {
      * 确认删除配合检查表单
      */
     confirm = () => {
-        let commitData = SentencedToEmpty(this.props, ['route', 'params', 'params', 'currentItem'], {});
+        let commitData = SentencedToEmpty(this.props, ['route', 'params', 'currentItem'], {});
 
-        this.props.navigation.params.params.callback({ index: commitData.index });
+        // this.props.navigation.params.params.callback({ index: commitData.index });
+        this.props.route.params.callback({ index: commitData.index });
         this.props.navigation.goBack();
     };
 
@@ -327,6 +328,7 @@ export default class CTPeiHeJianChaSubmitForm extends Component {
     }
 
     render() {
+        console.log('props = ', this.props);
         let options = {
             headTitle: '提示',
             messText: '确认删除该配合检查记录吗？',

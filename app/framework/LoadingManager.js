@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-08-21 14:24:05
- * @LastEditTime: 2024-09-13 13:27:14
+ * @LastEditTime: 2024-10-11 17:33:35
  * @FilePath: /SDLMainProject/app/framework/LoadingManager.js
  */
 module.exports = {
@@ -39,7 +39,9 @@ module.exports = {
   },
 
   hide() {
-    this._loadingView.hide();
+    setTimeout(() => {
+      this._loadingView.hide();
+    }, 100)
   },
 
 

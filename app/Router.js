@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2024-10-08 17:16:17
+ * @LastEditTime: 2024-10-15 15:34:19
  * @FilePath: /SDLMainProject/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
@@ -206,6 +206,17 @@ import EquipmentFailureFeedbackEdit from './pOperationContainers/tabView/workben
 import EquipmentFailureFeedbackDetail from './pOperationContainers/tabView/workbench/EquipmentFailureFeedbackDetail';
 import AdvertisingPage from './components/page/login/AdvertisingPage';
 import AlarmVerifyDetail from './pOperationContainers/tabView/alarm/AlarmVerifyDetail';
+import SignInAddressMap from './pOperationContainers/tabView/workbenchSignin/SignInAddressMap';
+import WarningDetail from './pOperationContainers/tabView/workbench/WarningDetail';
+import RemoteAlarmHandleEditer from './pOperationContainers/tabView/alarm/RemoteAlarmHandleEditer';
+import ManualClaimTask_bw from './pOperationContainers/tabView/workbench/ManualClaimTask_bw';
+import OperationPlanEnter from './pOperationContainers/operationPlan/OperationPlanEnter';
+import ClaimTaskList from './pOperationContainers/tabView/workbench/ClaimTaskList';
+import ApprovalDetails from './operationContainers/approval/ApprovalDetails';
+import EquipmentAuditRectificationAppeal from './pOperationContainers/tabView/chengTaoXiaoXi/EquipmentAuditRectificationAppeal';
+import ServiceReportRectificationMultipleEditor from './pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationMultipleEditor';
+import ServiceReportRectificationEditor from './pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationEditor';
+import ServiceReportRectificationAppeal from './pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationAppeal';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
 function Test() {
     return (
@@ -222,6 +233,10 @@ Actions.pushViewWithName(AgreementView, 'AgreementView', { title: '用户协议'
 Actions.pushViewWithName(SetEnterpriseInformation, 'SetEnterpriseInformation', { headerShown: false });
 Actions.pushViewWithName(MyTabView, 'MyTab', { headerShown: false });
 Actions.pushViewWithName(SearchList, 'SearchList', { headerShown: false });
+Actions.pushViewWithName(ManualClaimTask_bw, 'ManualClaimTask', { title: '领取工单' });
+Actions.pushViewWithName(OperationPlanEnter, 'OperationPlanEnter', { title: '运维计划' });
+Actions.pushViewWithName(ClaimTaskList, 'ClaimTaskList', { title: '领取记录' });
+
 Actions.pushViewWithName(GTaskOfEnterprise, 'GTaskOfEnterprise', {
     title: '待办任务', headerRight: () => (
         <TouchableOpacity
@@ -288,6 +303,7 @@ Actions.pushViewWithName(PoStandardLiquidReplaceForm, 'PoStandardLiquidReplaceFo
 
 // 待我审批
 Actions.pushViewWithName(PerformApproval, 'PerformApproval', { title: '审批' });
+Actions.pushViewWithName(ApprovalDetails, 'ApprovalDetails', { title: '审批' });
 
 
 Actions.pushViewWithName(AnnouncementsList, 'AnnouncementsList', { title: '通知公告' });
@@ -340,6 +356,9 @@ Actions.pushViewWithName(SupplementarySignIn, 'SupplementarySignIn', {
         </TouchableOpacity>
     )
 });
+Actions.pushViewWithName(SignInAddressMap, 'SignInAddressMap', { title: '地点微调' });
+
+
 Actions.pushViewWithName(SignInStatistics, 'SignInStatistics', { title: '统计' });
 Actions.pushViewWithName(SupplementarySignInRecord, 'SupplementarySignInRecord', { title: '补签记录' });
 Actions.pushViewWithName(SupplementarySignInApprove, 'SupplementarySignInApprove', { title: '补签记录' });
@@ -399,10 +418,14 @@ Actions.pushViewWithName(SparePartsChangeRecords, 'SparePartsChangeRecords', { t
 
 // 数据报警
 Actions.pushViewWithName(OverWarning, 'OverWarning', { title: '超标预警' });
+Actions.pushViewWithName(WarningDetail, 'WarningDetail', { title: '报警详情' });
 Actions.pushViewWithName(OverAlarm, 'OverAlarm', { title: '超标报警' });
 Actions.pushViewWithName(ExceptionAlarm, 'ExceptionAlarm', { title: '异常报警' });
 Actions.pushViewWithName(MissAlarm, 'MissAlarm', { title: '异常报警' });
 Actions.pushViewWithName(AlarmRecords, 'AlarmRecords', { title: '报警详情' });
+Actions.pushViewWithName(RemoteAlarmHandleEditer, 'RemoteAlarmHandleEditer', { title: '报警详情' });
+
+Actions.pushViewWithName(OverAlarmVerify, 'OverAlarmVerify', { title: '超标核实' });
 // Actions.pushViewWithName(RemoteAlarmHandleEditer, 'RemoteAlarmHandleEditer', { title: '报警处理登记表' });
 
 
@@ -446,6 +469,7 @@ Actions.pushViewWithName(RepairSubmitForm, 'RepairSubmitForm', { title: '设备�
 // 安装照片整改
 Actions.pushViewWithName(EquipmentInstallationPicAudit, 'EquipmentInstallationPicAudit', { title: '安装照片不合格' }); //安装照片不合格
 Actions.pushViewWithName(EquipmentInstallationPicAuditEditor, 'EquipmentInstallationPicAuditEditor', { title: '安装照片不合格' }); //安装照片不合格
+Actions.pushViewWithName(EquipmentAuditRectificationAppeal, 'EquipmentAuditRectificationAppeal', { title: '申诉' }); //安装照片不合格 申诉
 
 // 质保内服务填报
 Actions.pushViewWithName(ServiceUnderWarranty, 'ServiceUnderWarranty', { title: '质保内服务填报' }); //质保内服务填报
@@ -458,6 +482,10 @@ Actions.pushViewWithName(LeftoverProblem, 'LeftoverProblem', { title: '遗留问
 // 服务报告整改
 Actions.pushViewWithName(ServiceReportRectificationList, 'ServiceReportRectificationList', { title: '服务报告整改' }); //服务报告整改
 Actions.pushViewWithName(ServiceReportRectificationDetail, 'ServiceReportRectificationDetail', { title: '验收服务报告整改' }); //验收服务报告整改
+Actions.pushViewWithName(ServiceReportRectificationMultipleEditor, 'ServiceReportRectificationMultipleEditor', { title: '验收服务报告整改' }); //验收服务报告整改 编辑 多条
+Actions.pushViewWithName(ServiceReportRectificationEditor, 'ServiceReportRectificationEditor', { title: '验收服务报告整改' }); //验收服务报告整改 编辑 单条
+Actions.pushViewWithName(ServiceReportRectificationAppeal, 'ServiceReportRectificationAppeal', { title: '申诉' }); //验收服务报告整改 编辑 单条
+
 // 服务提醒
 Actions.pushViewWithName(ServiceReminderCalendar, 'ServiceReminderCalendar', { title: '服务提醒' }); //服务提醒
 Actions.pushViewWithName(ServiceReminderDetailEditor, 'ServiceReminderDetailEditor', { title: '添加服务提醒' }); //添加服务提醒

@@ -6,13 +6,15 @@ import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../../config/globalsize';
 import { StatusPage, Touchable, PickerTouchable } from '../../components';
 import { NavigationActions, createAction, createNavigationOptions } from '../../utils';
 import { connect } from 'react-redux';
+import SDLTabButton from '../../components/SDLTabButton';
 const ic_filt_arrows = require('../../images/ic_filt_arrows.png');
 /**
  * 审批
  */
 @connect(({ approvalModel }) => ({
   pendingData: approvalModel.pendingData,
-  approvalPage: approvalModel.approvalPage
+  approvalPage: approvalModel.approvalPage,
+  approvalTabIndex: approvalModel.approvalTabIndex,
 }))
 export default class PerformApproval extends PureComponent {
   static navigationOptions = createNavigationOptions({
@@ -71,6 +73,7 @@ export default class PerformApproval extends PureComponent {
 
   componentDidMount() {
     this.props.dispatch(createAction('approvalModel/updateState')({
+      approvalTabIndex: 0,
       approvalPage: 1,
       pendingData: { status: -1 },
     }))
@@ -89,8 +92,85 @@ export default class PerformApproval extends PureComponent {
   render() {
     // 0 待我审批 ；1 我发起的；2 我审批的
     return (
-      <View style={styles.container}>
-        {/* <ScrollableTabView
+      <StatusPage
+        backRef={true}
+        status={200}
+        //页面是否有回调按钮，如果不传，没有按钮，
+        emptyBtnText={'重新请求'}
+        errorBtnText={'点击重试'}
+        onEmptyPress={() => {
+          //空页面按钮回调
+          console.log('重新刷新');
+        }}
+        onErrorPress={() => {
+          //错误页面按钮回调
+          console.log('错误操作回调');
+        }}
+      >
+        <View style={styles.container}>
+          <View style={[{
+            flexDirection: 'row', height: 44
+            , width: SCREEN_WIDTH, alignItems: 'center'
+            , justifyContent: 'space-between'
+            , backgroundColor: 'white', marginBottom: 5
+          }]}>
+            <SDLTabButton
+              topButtonWidth={SCREEN_WIDTH / 3}
+              selected={this.props.approvalTabIndex == 0}
+              label={`待我审批`}
+              onPress={() => {
+                let params = {
+                  approvalTabIndex: 0,
+                }
+                this.props.dispatch(createAction('approvalModel/updateState')(params));
+                this.onChange(0);
+              }}
+            />
+            <SDLTabButton
+              topButtonWidth={SCREEN_WIDTH / 3}
+              selected={this.props.approvalTabIndex == 1}
+              label={`我发起的`}
+              onPress={() => {
+                let params = {
+                  approvalTabIndex: 1,
+                }
+                this.props.dispatch(createAction('approvalModel/updateState')(params));
+                this.onChange(1);
+              }}
+            />
+            <SDLTabButton
+              topButtonWidth={SCREEN_WIDTH / 3}
+              selected={this.props.approvalTabIndex == 2}
+              label={`我已审批`}
+              onPress={() => {
+                let params = {
+                  approvalTabIndex: 2,
+                }
+                this.props.dispatch(createAction('approvalModel/updateState')(params));
+                this.onChange(2);
+              }}
+            />
+          </View>
+          {
+            this.props.approvalTabIndex == 0
+              ? <ApprovalPendingList
+                selectItem={this.state.selectItem}
+                listKey='b' key='1' tabLabel='待我审批' datatype={0} approvaData={this.props.pendingData}
+                onRefresh={this.onRefresh} onEndReached={this.onEndReached}
+              />
+              : this.props.approvalTabIndex == 1
+                ? <ApprovalPendingList
+                  selectItem={this.state.selectItem}
+                  listKey='c' key='2' tabLabel='我已审批' datatype={2} approvaData={this.props.pendingData} onRefresh={this.onRefresh} onEndReached={this.onEndReached}
+                />
+                : this.props.approvalTabIndex == 2
+                  ? <ApprovalPendingList
+                    selectItem={this.state.selectItem}
+                    listKey='a' key='0' tabLabel='我发起的' datatype={1}
+                    approvaData={this.props.pendingData} onRefresh={this.onRefresh} onEndReached={this.onEndReached}
+                  /> : null
+          }
+          {/* <ScrollableTabView
           onChangeTab={(obj) => {
             this.onChange(obj.ref.props.datatype);
           }
@@ -125,7 +205,8 @@ export default class PerformApproval extends PureComponent {
             approvaData={this.props.pendingData} onRefresh={this.onRefresh} onEndReached={this.onEndReached}
           />
         </ScrollableTabView> */}
-      </View>
+        </View>
+      </StatusPage>
     )
   }
 }

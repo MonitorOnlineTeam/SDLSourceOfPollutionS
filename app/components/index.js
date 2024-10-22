@@ -2,14 +2,14 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-12-29 11:36:14
- * @LastEditTime: 2024-09-25 14:50:16
+ * @LastEditTime: 2024-10-12 15:58:07
  * @FilePath: /SDLMainProject/app/components/index.js
  */
 export { default as Button } from './base/Button';
 export { default as Touchable } from './base/Touchable';
 export { default as PickerTouchable } from './form/PickerTouchable';
 export { default as PickerSingleTimeTouchable } from './form/PickerSingleTimeTouchable';
-// export { default as PickerRangeDayTouchable } from './form/PickerRangeDayTouchable';
+export { default as PickerRangeDayTouchable } from './form/PickerRangeDayTouchable';
 export { default as MoreSelectTouchable } from './form/MoreSelectTouchable';
 export { default as ModalParent } from './modal/ModalParent';
 export { default as Contact } from './ContactList/Contact';

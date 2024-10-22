@@ -6,11 +6,12 @@ import api from '../config/globalapi';
 export default Model.extend({
     namespace: 'approvalModel',
     state: {
+        approvalTabIndex: 0,
         pendingData: { status: -1 },
         approvalPage: 1,
         currentApproval: {},
-        PerformApprovalCount:0,
-        approvalStatue:{status:200}
+        PerformApprovalCount: 0,
+        approvalStatue: { status: 200 }
     },
     reducers: {
         updateState(state, { payload }) {
@@ -66,12 +67,12 @@ export default Model.extend({
                 }
                 let workBenchCount = PerformApprovalCount;
                 if (params.type == '0') {
-                    workBenchCount = SentencedToEmpty(result,['data','Total'],0);
+                    workBenchCount = SentencedToEmpty(result, ['data', 'Total'], 0);
                 }
-                yield update({ pendingData: result, PerformApprovalCount: workBenchCount});
+                yield update({ pendingData: result, PerformApprovalCount: workBenchCount });
             } else {
                 const { pendingData } = yield select(state => state.approvalModel);
-                let newPendingData = SentencedToEmpty(pendingData,['data','Datas'],[]);
+                let newPendingData = SentencedToEmpty(pendingData, ['data', 'Datas'], []);
                 newPendingData = newPendingData.concat(result.data.Datas);
                 // todoData.data.data.concat(result.data.data)
                 result.data.Datas = newPendingData;
@@ -89,9 +90,9 @@ export default Model.extend({
             },
             { call, put, take, update }
         ) {
-            yield update({approvalStatue:{status:-1}})
+            yield update({ approvalStatue: { status: -1 } })
             const result = yield call(authService.axiosAuthPost, api.approval.ExamApplication, params);
-            yield update({approvalStatue:result})
+            yield update({ approvalStatue: result })
             if (result && result.status == 200) {
                 callback();
             } else {
@@ -117,7 +118,7 @@ export default Model.extend({
         //所有model中至少要注册一次listen
         setupSubscriber({ dispatch, listen }) {
             listen({
-                HistoryData: ({ params }) => {}
+                HistoryData: ({ params }) => { }
             });
         }
     }

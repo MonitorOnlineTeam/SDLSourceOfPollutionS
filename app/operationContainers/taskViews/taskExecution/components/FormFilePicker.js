@@ -2,8 +2,8 @@
  * @Description: 表单附件选择器
  * @LastEditors: hxf
  * @Date: 2021-11-30 16:17:34
- * @LastEditTime: 2024-07-01 19:10:41
- * @FilePath: /SDLMainProject37_1/app/operationContainers/taskViews/taskExecution/components/FormFilePicker.js
+ * @LastEditTime: 2024-10-09 16:22:32
+ * @FilePath: /SDLMainProject/app/operationContainers/taskViews/taskExecution/components/FormFilePicker.js
  */
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native'
@@ -83,6 +83,7 @@ export default class FormImagePicker extends Component {
                                     type: [DocumentPicker.types.allFiles],
                                     copyTo: 'cachesDirectory',
                                 });
+                                console.log('res = ', res);
                                 if (SentencedToEmpty(res, ['uri'], '') == '') {
                                     if (SentencedToEmpty(res, ['fileCopyUri'], '') != '') {
                                         res.uri = res.fileCopyUri;
@@ -110,6 +111,7 @@ export default class FormImagePicker extends Component {
                                     } else {
                                         this.props.dispatch(createAction('imageModel/uploadFile')({
                                             file: res, callback: (msg, requestSuccess) => {
+                                                CloseToast();
                                                 if (requestSuccess) {
                                                     ShowToast('上传成功');
                                                     callback(msg);

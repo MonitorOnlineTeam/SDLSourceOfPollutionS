@@ -168,6 +168,11 @@ export default class TaskDetail extends Component {
     };
     componentDidMount() {
         // this.props.dispatch(createAction('taskDetailModel/updateState')({status:-1}))
+        if (SentencedToEmpty(this.props, ['route', 'params', 'params', 'needApproval'], false)) {
+            this.props.dispatch(createAction('taskDetailModel/updateState')({ tabIndex: 1 }));
+        } else {
+            this.props.dispatch(createAction('taskDetailModel/updateState')({ tabIndex: 0 }));
+        }
         this.refreshSubScription = DeviceEventEmitter.addListener('refreshTask', message => {
             this.onRefresh();
         });
@@ -394,7 +399,7 @@ export default class TaskDetail extends Component {
                                     tabLabel="基本信息"
                                     listKey="a"
                                     key="0"
-                                    needApproval={SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'needApproval'], false)}
+                                    needApproval={SentencedToEmpty(this.props, ['route', 'params', 'params', 'needApproval'], false)}
                                 // onRefresh={() => {
                                 // this.props.navigation.state.params.onRefresh();
                                 // }}

@@ -2,8 +2,8 @@
  * @Description: 领取记录
  * @LastEditors: hxf
  * @Date: 2021-10-09 11:30:19
- * @LastEditTime: 2023-06-25 17:17:37
- * @FilePath: /SDLMainProject36/app/pOperationContainers/tabView/workbench/ClaimTaskList.js
+ * @LastEditTime: 2024-10-12 15:57:38
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbench/ClaimTaskList.js
  */
 import React, { Component } from 'react'
 import { Text, View, Platform, Image, TouchableOpacity } from 'react-native'
@@ -16,11 +16,11 @@ import { PickerRangeDayTouchable, StatusPage, FlatListWithHeaderAndFooter } from
 const calendarRight = require('../../../images/calendarRight.png');
 const calenderLeft = require('../../../images/calenderLeft.png');
 
-@connect(({claimTaskModels})=>({
-    receivingRecordListResult:claimTaskModels.receivingRecordListResult,
+@connect(({ claimTaskModels }) => ({
+    receivingRecordListResult: claimTaskModels.receivingRecordListResult,
 }))
 export default class ClaimTaskList extends Component {
-    
+
     static navigationOptions = createNavigationOptions({
         title: '领取记录',
         headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 }
@@ -52,11 +52,11 @@ export default class ClaimTaskList extends Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(createAction('claimTaskModels/updateState')({receivingRecordListResult:{status:-1}}));
+        this.props.dispatch(createAction('claimTaskModels/updateState')({ receivingRecordListResult: { status: -1 } }));
         this.props.dispatch(createAction('claimTaskModels/getReceivingRecordList')({
-            params:{
+            params: {
                 BeginTime: this.state.beginTime,
-                EndTime:this.state.endTime
+                EndTime: this.state.endTime
             }
         }));
     }
@@ -82,85 +82,91 @@ export default class ClaimTaskList extends Component {
                     });
 
                     this.props.dispatch(createAction('claimTaskModels/getReceivingRecordList')({
-                        params:{
+                        params: {
                             BeginTime: beginTime,
-                            EndTime:endTime
+                            EndTime: endTime
                         }
                     }));
                 }
-                
+
             }
         };
     };
 
-    getData = (success=()=>{},failure=()=>{}) => {
-        this.props.dispatch(createAction('claimTaskModels/updateState')({receivingRecordListResult:{status:-1}}));
+    getData = (success = () => { }, failure = () => { }) => {
+        this.props.dispatch(createAction('claimTaskModels/updateState')({ receivingRecordListResult: { status: -1 } }));
         this.props.dispatch(createAction('claimTaskModels/getReceivingRecordList')({
-            params:{
+            params: {
                 BeginTime: this.state.beginTime,
-                EndTime:this.state.endTime
+                EndTime: this.state.endTime
             },
-            success,failure
+            success, failure
         }));
     }
 
-    _renderItemList = ({item}) => {
+    _renderItemList = ({ item }) => {
         // hxf 表示不需要分割
-        const separator = SentencedToEmpty(item,['recordType'],'hxf');
+        const separator = SentencedToEmpty(item, ['recordType'], 'hxf');
         const messageList = item.message.split(separator);
         let dataArray = [];
-        messageList.map((msgItem,index)=>{
-            if (index == messageList.length-1) {
+        messageList.map((msgItem, index) => {
+            if (index == messageList.length - 1) {
                 dataArray.push(msgItem);
             } else {
                 dataArray.push(msgItem);
                 dataArray.push(separator);
             }
         });
-        return <View style={[{height:151.5,width:SCREEN_WIDTH }]}>
-                <View style={[{height:48,width:SCREEN_WIDTH,backgroundColor:'#f2f2f2'
-                ,justifyContent:'center',alignItems:'center'}]}>
-                    <View style={[{height:16,width:162.5,borderRadius:8
-                    ,justifyContent:'center',alignItems:"center",backgroundColor:'#D7D7D7'}]}>
-                        <Text style={[{fontSize:12,color:'#666666'}]}>{`${item.createTime}`}</Text>
+        return <View style={[{ height: 151.5, width: SCREEN_WIDTH }]}>
+            <View style={[{
+                height: 48, width: SCREEN_WIDTH, backgroundColor: '#f2f2f2'
+                , justifyContent: 'center', alignItems: 'center'
+            }]}>
+                <View style={[{
+                    height: 16, width: 162.5, borderRadius: 8
+                    , justifyContent: 'center', alignItems: "center", backgroundColor: '#D7D7D7'
+                }]}>
+                    <Text style={[{ fontSize: 12, color: '#666666' }]}>{`${item.createTime}`}</Text>
+                </View>
+            </View>
+            <TouchableOpacity>
+                <View style={[{
+                    height: 103.5, width: SCREEN_WIDTH, backgroundColor: 'white'
+                    , flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingRight: 9
+                }]}>
+                    <Image style={[{ height: 27.5, width: 27.5, marginLeft: 9, marginRight: 12 }]} source={item == 1 ? require('../../../images/ic_claim.png')
+                        : item == 2 ? require('../../../images/ic_give_up_claim.png')
+                            : require('../../../images/ic_system_close.png')} />
+                    <View style={[{ flex: 1 }]}>
+                        <Text style={[{ fontSize: 15, color: '#333333', padding: 0 }]}>{`${item.typeName}`}</Text>
+                        <Text numberOfLines={1} ellipsizeMode={'middle'} style={[{ fontSize: 12, color: '#666666', padding: 0, marginTop: 3 }]}>{`${item.parentName}-${item.pointName}`}</Text>
+                        {/* <Text numberOfLines={2} ellipsizeMode={'tail'}style={[{fontSize:12,color:'#666666',padding:0,marginTop:3}]}>{`${item.userName}${item.message}`}</Text> */}
+                        {(() => {
+                            if (messageList.length > 1) {
+                                return <Text numberOfLines={2} ellipsizeMode={'tail'} style={[{ fontSize: 12, color: '#666666', padding: 0, marginTop: 3, lineHeight: 16 }]}>{
+                                    dataArray.map((msgItem, index) => {
+                                        if (msgItem == separator) {
+                                            return <Text style={[{ fontSize: 12, color: 'red', padding: 0, fontWeight: 'bold' }]}>{separator}</Text>
+                                        } else if (index == 0) {
+                                            return (item.userName + msgItem);
+                                        } else {
+                                            return (msgItem);
+                                        }
+                                    })
+                                }</Text>
+                            } else {
+                                return <Text numberOfLines={2} ellipsizeMode={'tail'} style={[{ fontSize: 12, color: '#666666', padding: 0, marginTop: 3, lineHeight: 16 }]}>{item.userName + item.message}</Text>
+                            }
+                        })()}
                     </View>
                 </View>
-                <TouchableOpacity>
-                    <View style={[{height:103.5,width:SCREEN_WIDTH,backgroundColor:'white'
-                    ,flexDirection:'row', alignItems:'center', justifyContent:'space-between',paddingRight:9}]}>
-                        <Image style={[{height:27.5,width:27.5,marginLeft:9,marginRight:12}]} source={item==1?require('../../../images/ic_claim.png')
-                            :item == 2?require('../../../images/ic_give_up_claim.png')
-                            :require('../../../images/ic_system_close.png')}/>
-                        <View style={[{flex:1}]}>
-                            <Text style={[{fontSize:15,color:'#333333',padding:0}]}>{`${item.typeName}`}</Text>
-                            <Text numberOfLines={1} ellipsizeMode={'middle'} style={[{fontSize:12,color:'#666666',padding:0, marginTop:3}]}>{`${item.parentName}-${item.pointName}`}</Text>
-                            {/* <Text numberOfLines={2} ellipsizeMode={'tail'}style={[{fontSize:12,color:'#666666',padding:0,marginTop:3}]}>{`${item.userName}${item.message}`}</Text> */}
-                            {(()=>{
-                                if (messageList.length > 1) {
-                                    return <Text numberOfLines={2} ellipsizeMode={'tail'}style={[{fontSize:12,color:'#666666',padding:0,marginTop:3, lineHeight:16}]}>{
-                                        dataArray.map((msgItem,index)=>{
-                                            if (msgItem == separator) {
-                                                return<Text style={[{fontSize:12,color:'red',padding:0, fontWeight:'bold'}]}>{separator}</Text>
-                                            } else if (index == 0) {
-                                                return(item.userName+msgItem);
-                                            } else {
-                                                return(msgItem);
-                                            }
-                                        })
-                                    }</Text>
-                                } else {
-                                    return <Text numberOfLines={2} ellipsizeMode={'tail'}style={[{fontSize:12,color:'#666666',padding:0,marginTop:3, lineHeight:16}]}>{item.userName+item.message}</Text>
-                                }
-                            })()}
-                        </View>
-                    </View>
-                </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
+        </View>
     }
 
     render() {
         return (
-            <View style={[{flex:1}]} >
+            <View style={[{ flex: 1 }]} >
                 <View
                     style={{
                         width: SCREEN_WIDTH,
@@ -189,7 +195,7 @@ export default class ClaimTaskList extends Component {
                     }}
                 >
                     <FlatListWithHeaderAndFooter
-                        style={[{ backgroundColor: '#f2f2f2'}]}
+                        style={[{ backgroundColor: '#f2f2f2' }]}
                         ref={ref => (this.list = ref)}
                         pageSize={20}
                         hasMore={() => {
@@ -205,7 +211,7 @@ export default class ClaimTaskList extends Component {
                             return this._renderItemList(item);
                         }}
                         data={SentencedToEmpty(this.props.receivingRecordListResult
-                        ,['data','Datas'],[])}
+                            , ['data', 'Datas'], [])}
                     />
                 </StatusPage>
             </View>

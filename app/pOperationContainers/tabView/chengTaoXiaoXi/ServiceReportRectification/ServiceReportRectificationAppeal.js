@@ -2,8 +2,8 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-09-20 14:55:47
- * @LastEditTime: 2024-06-11 17:09:32
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationAppeal.js
+ * @LastEditTime: 2024-10-15 16:01:55
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationAppeal.js
  */
 import React, { Component } from 'react';
 import { Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -60,7 +60,7 @@ export default class ServiceReportRectificationAppeal extends Component {
         // 真正提交申诉
         // 2 不合格 4 已提交 5 申诉中
         const params = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params'], {}
+            , ['route', 'params', 'params'], {}
         )
         this.props.dispatch(
             createAction('CTServiceReportRectificationModel/auditService')({

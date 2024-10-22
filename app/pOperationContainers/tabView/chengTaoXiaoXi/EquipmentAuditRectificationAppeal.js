@@ -2,8 +2,8 @@
  * @Description: 申诉
  * @LastEditors: hxf
  * @Date: 2024-03-29 16:56:12
- * @LastEditTime: 2024-03-29 18:58:17
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/EquipmentAuditRectificationAppeal.js
+ * @LastEditTime: 2024-10-15 10:26:31
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/EquipmentAuditRectificationAppeal.js
  */
 // import { Text, View } from 'react-native'
 // import React, { Component } from 'react'
@@ -49,7 +49,7 @@ export default class EquipmentAuditRectificationAppeal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TimeS: SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item', 'AttachmentId'], new Date().getTime()),
+            TimeS: SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'AttachmentId'], new Date().getTime()),
             remark: '',
             images: [],
             nativeStatus: 200
@@ -106,7 +106,7 @@ export default class EquipmentAuditRectificationAppeal extends Component {
     cancelButton = () => { }
     confirm = () => {
         const data = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'data'], {});
+            , ['route', 'params', 'params', 'data'], {});
         const remark = SentencedToEmpty(this
             , ['state', 'remark'], '');
         let appealParams = {
@@ -268,7 +268,7 @@ export default class EquipmentAuditRectificationAppeal extends Component {
                     !this.isEdit() ? null : <TouchableOpacity
                         onPress={() => {
                             const data = SentencedToEmpty(this.props
-                                , ['navigation', 'state', 'params', 'data'], {});
+                                , ['route', 'params', 'params', 'data'], {});
                             const remark = SentencedToEmpty(this
                                 , ['state', 'remark'], '');
                             if (remark == '') {

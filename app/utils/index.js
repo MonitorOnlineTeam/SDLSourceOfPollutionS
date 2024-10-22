@@ -11,7 +11,7 @@ const NavigationActions = {
     reset: (params = {}) => {
         return createAction('sdlNavigate/reset')(params);
     },
-    back: () => {
+    back: (params = {}) => {
         return createAction('sdlNavigate/back')({});
     }
 }
@@ -70,6 +70,7 @@ export const ShowToast = msgOption => {
     //     alertType: 'error',
     // })
     // console.log('ShowToast 被调用');
+    CloseToast();
     console.log('ShowToast 被调用', msgOption);
     // Toast.info(msg, 1);
     if (typeof msgOption == 'string') {

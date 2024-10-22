@@ -2,7 +2,7 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-06-16 17:09:37
- * @LastEditTime: 2024-09-30 16:27:15
+ * @LastEditTime: 2024-10-12 15:53:09
  * @FilePath: /SDLMainProject/app/pOperationModels/index.js
  */
 /**
@@ -39,7 +39,7 @@ import imageModel from '../components/form/images/imageModel';
 import equipmentFautModel from './formModels/equipmentFautModel';
 // import commitStopResult from '../xinjiangBranch/models/enterpriseListModel';
 import commitStopResult from './enterpriseListModel';
-// import claimTaskModels from './claimTaskModels';
+import claimTaskModels from './claimTaskModels';
 import { peiHeJianChaModel, dataConsistencyModel } from './taskModel';
 import waterCalibrationFormModel from './formModels/waterCalibrationFormModel'; // 水质校准记录 model
 // import approvalModel from '../operationModels/approvalModel';
@@ -68,7 +68,7 @@ import CTServiceStatisticsModel from './CTServiceStatisticsModel';
 import CTEquipmentPicAuditModel from './CTEquipmentPicAuditModel';
 import CTServiceReminderModel from './CTServiceReminderModel';
 import CTServiceReportRectificationModel from './CTServiceReportRectificationModel';
-// import operationPlanModel from './operationPlanModel';
+import operationPlanModel from './operationPlanModel';
 import CTSparePartsChangeModel from './CTSparePartsChangeModel';
 // import GeneralSearchModel from './GeneralSearchModel';
 import historyDataModel from './historyDataModel';
@@ -107,7 +107,7 @@ export function registerModels(app) {
     app.model(imageFormModel);
     app.model(imageModel);
     app.model(commitStopResult); //停运上报
-    // app.model(claimTaskModels); // 领取工单
+    app.model(claimTaskModels); // 领取工单
     // // 表单model
     app.model(peiHeJianChaModel); // 配合检查记录
     // app.model(dataConsistencyModel); // 数据一致性（实时数据）记录
@@ -136,7 +136,7 @@ export function registerModels(app) {
     app.model(CTEquipmentPicAuditModel); // 签到相关
     app.model(CTServiceReminderModel); // 服务提醒
     app.model(CTServiceReportRectificationModel); // 服务报告整改
-    // app.model(operationPlanModel); // 运维计划
+    app.model(operationPlanModel); // 运维计划
     app.model(CTSparePartsChangeModel); // 成套 备件更换
     // app.model(GeneralSearchModel); // 通用搜索model
     app.model(historyDataModel); // 历史数据model

@@ -2,8 +2,8 @@
  * @Description: 非现场签到 微调地图
  * @LastEditors: hxf
  * @Date: 2024-02-02 09:34:42
- * @LastEditTime: 2024-06-03 16:56:12
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/workbenchSignin/SignInAddressMap.js
+ * @LastEditTime: 2024-10-10 14:47:54
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbenchSignin/SignInAddressMap.js
  */
 import {
     Image, Text, TouchableOpacity, View
@@ -59,32 +59,66 @@ export default class SignInAddressMap extends Component {
             , selectedPoint: null
             , selectedIndex: -1
         };
-        this.props.navigation.setParams({
-            navigatePress: () => {
-                console.log('navigatePress selectedPoint = ', this.props.selectedPoint)
-                let selectedEnt = {};
-                selectedEnt.entName = SentencedToEmpty(this.props, ['selectedPoint', 'title'], '');
-                selectedEnt.address = SentencedToEmpty(this.props, ['selectedPoint', 'address'], '');
 
-                const provinceName = SentencedToEmpty(this.props, ['selectedPoint', 'provinceName'], '');
-                const cityName = SentencedToEmpty(this.props, ['selectedPoint', 'cityName'], '');
-                const adName = SentencedToEmpty(this.props, ['selectedPoint', 'adName'], '');
-                if (provinceName == cityName) {
-                    selectedEnt.address = provinceName + adName + SentencedToEmpty(this.props, ['selectedPoint', 'address'], '');
-                } else {
-                    selectedEnt.address = provinceName + cityName + adName + SentencedToEmpty(this.props, ['selectedPoint', 'address'], '');
-                }
-                selectedEnt.ProviceName = provinceName;
-                selectedEnt.title = SentencedToEmpty(this.props, ['selectedPoint', 'title'], '');
+        this.props.navigation.setOptions({
+            headerRight: () => <TouchableOpacity
+                style={{ width: 44, height: 40, justifyContent: 'center' }}
+                onPress={() => {
+                    console.log('navigatePress selectedPoint = ', this.props.selectedPoint)
+                    let selectedEnt = {};
+                    selectedEnt.entName = SentencedToEmpty(this.props, ['selectedPoint', 'title'], '');
+                    selectedEnt.address = SentencedToEmpty(this.props, ['selectedPoint', 'address'], '');
 
-                selectedEnt.latitude = Number(SentencedToEmpty(this.props, ['selectedPoint', 'LatLon', 'Latitude'], 0));
-                selectedEnt.longitude = Number(SentencedToEmpty(this.props, ['selectedPoint', 'LatLon', 'Longitude'], 0));
-                this.props.dispatch(createAction('signInModel/updateState')({
-                    signInEntItem: selectedEnt, // 选中的企业
-                }));
-                this.props.dispatch(NavigationActions.back());
-            },
+                    const provinceName = SentencedToEmpty(this.props, ['selectedPoint', 'provinceName'], '');
+                    const cityName = SentencedToEmpty(this.props, ['selectedPoint', 'cityName'], '');
+                    const adName = SentencedToEmpty(this.props, ['selectedPoint', 'adName'], '');
+                    if (provinceName == cityName) {
+                        selectedEnt.address = provinceName + adName + SentencedToEmpty(this.props, ['selectedPoint', 'address'], '');
+                    } else {
+                        selectedEnt.address = provinceName + cityName + adName + SentencedToEmpty(this.props, ['selectedPoint', 'address'], '');
+                    }
+                    selectedEnt.ProviceName = provinceName;
+                    selectedEnt.title = SentencedToEmpty(this.props, ['selectedPoint', 'title'], '');
+
+                    selectedEnt.latitude = Number(SentencedToEmpty(this.props, ['selectedPoint', 'LatLon', 'Latitude'], 0));
+                    selectedEnt.longitude = Number(SentencedToEmpty(this.props, ['selectedPoint', 'LatLon', 'Longitude'], 0));
+                    this.props.dispatch(createAction('signInModel/updateState')({
+                        signInEntItem: selectedEnt, // 选中的企业
+                    }));
+                    this.props.dispatch(NavigationActions.back());
+                }}
+            >
+                <Text style={[{ fontSize: 12, color: globalcolor.whiteFont }]}>{'确定'}</Text>
+            </TouchableOpacity>
         });
+
+
+        // this.props.navigation.setParams({
+        //     navigatePress: () => {
+        //         console.log('navigatePress selectedPoint = ', this.props.selectedPoint)
+        //         let selectedEnt = {};
+        //         selectedEnt.entName = SentencedToEmpty(this.props, ['selectedPoint', 'title'], '');
+        //         selectedEnt.address = SentencedToEmpty(this.props, ['selectedPoint', 'address'], '');
+
+        //         const provinceName = SentencedToEmpty(this.props, ['selectedPoint', 'provinceName'], '');
+        //         const cityName = SentencedToEmpty(this.props, ['selectedPoint', 'cityName'], '');
+        //         const adName = SentencedToEmpty(this.props, ['selectedPoint', 'adName'], '');
+        //         if (provinceName == cityName) {
+        //             selectedEnt.address = provinceName + adName + SentencedToEmpty(this.props, ['selectedPoint', 'address'], '');
+        //         } else {
+        //             selectedEnt.address = provinceName + cityName + adName + SentencedToEmpty(this.props, ['selectedPoint', 'address'], '');
+        //         }
+        //         selectedEnt.ProviceName = provinceName;
+        //         selectedEnt.title = SentencedToEmpty(this.props, ['selectedPoint', 'title'], '');
+
+        //         selectedEnt.latitude = Number(SentencedToEmpty(this.props, ['selectedPoint', 'LatLon', 'Latitude'], 0));
+        //         selectedEnt.longitude = Number(SentencedToEmpty(this.props, ['selectedPoint', 'LatLon', 'Longitude'], 0));
+        //         this.props.dispatch(createAction('signInModel/updateState')({
+        //             signInEntItem: selectedEnt, // 选中的企业
+        //         }));
+        //         this.props.dispatch(NavigationActions.back());
+        //     },
+        // });
     }
 
     componentDidMount() {

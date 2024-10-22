@@ -2,8 +2,8 @@
  * @Description: 预警详情，分钟数据报警
  * @LastEditors: hxf
  * @Date: 2022-08-22 16:15:44
- * @LastEditTime: 2023-05-10 16:12:14
- * @FilePath: /SDLMainProject34/app/pOperationContainers/tabView/workbench/WarningDetail.js
+ * @LastEditTime: 2024-10-10 15:30:02
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbench/WarningDetail.js
  */
 import moment from 'moment';
 import React, { Component } from 'react'
@@ -36,7 +36,7 @@ export default class WarningDetail extends Component {
 
     constructor(props) {
         super(props);
-        this.state={};
+        this.state = {};
     }
 
     componentDidMount() {
@@ -87,7 +87,7 @@ export default class WarningDetail extends Component {
                     }}
                 >
                     <View style={styles.container}>
-                        {SentencedToEmpty(this.props.navigation, ['state', 'params', 'pageType'], 'AlarmDetail') == 'AlarmDetail' ? (
+                        {SentencedToEmpty(this.props.route, ['params', 'params', 'pageType'], 'AlarmDetail') == 'AlarmDetail' ? (
                             <PointBar
                                 style={{ width: SCREEN_WIDTH, marginBottom: 10 }}
                                 DGIMN={SentencedToEmpty(this.props.alarmRecordsPointInfo, ['DGIMN'], null)}
@@ -113,11 +113,11 @@ export default class WarningDetail extends Component {
                                 // this.props.dispatch(createAction('pointDetails/getAlarmRecords')({ setListData: this.list.setListData }));
                             }}
                             renderItem={({ item, index }) => {
-                                return(<View 
+                                return (<View
                                     onPress={() => {
-                                        this.props.dispatch(createAction('pointDetails/updateState')({ selectTime: moment(item.AlarmTime).subtract(3,'hours').format('YYYY-MM-DD HH:mm:ss') }));
-                                        this.props.dispatch(NavigationActions.navigate({ routeName: 'HistoryData', params: { DGIMN: item.DGIMN, params:{sourceType: 'OverWarning',...item} } }));
-                                    }} 
+                                        this.props.dispatch(createAction('pointDetails/updateState')({ selectTime: moment(item.AlarmTime).subtract(3, 'hours').format('YYYY-MM-DD HH:mm:ss') }));
+                                        this.props.dispatch(NavigationActions.navigate({ routeName: 'HistoryData', params: { DGIMN: item.DGIMN, params: { sourceType: 'OverWarning', ...item } } }));
+                                    }}
                                     style={[{ minHeight: 92, width: SCREEN_WIDTH, backgroundColor: '#fff', paddingHorizontal: 13, justifyContent: 'center' }]} >
                                     <View style={[{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }]}>
                                         {/* 报警响应则创建任务不多选，核实 处置 超标核实进行多选操作 */}
@@ -142,13 +142,13 @@ export default class WarningDetail extends Component {
                                             {SentencedToEmpty(item, ['AlarmMsg'], '暂无提示信息')}
                                         </SDLText>
                                     </View>
-                                    <TouchableOpacity 
+                                    <TouchableOpacity
                                         onPress={() => {
-                                            this.props.dispatch(createAction('pointDetails/updateState')({ selectTime: moment(item.AlarmTime).subtract(3,'hours').format('YYYY-MM-DD HH:mm:ss') }));
-                                            this.props.dispatch(NavigationActions.navigate({ routeName: 'HistoryData', params: { DGIMN: item.DGIMN, params:{sourceType: 'OverWarning',...item} } }));
-                                        }} 
-                                        style={{width:SCREEN_WIDTH/2,height:22}}>
-                                        <Text style={{ color:globalcolor.headerBackgroundColor, fontSize:14, textDecorationLine:'underline'}}>{'查看报警数据'}</Text>
+                                            this.props.dispatch(createAction('pointDetails/updateState')({ selectTime: moment(item.AlarmTime).subtract(3, 'hours').format('YYYY-MM-DD HH:mm:ss') }));
+                                            this.props.dispatch(NavigationActions.navigate({ routeName: 'HistoryData', params: { DGIMN: item.DGIMN, params: { sourceType: 'OverWarning', ...item } } }));
+                                        }}
+                                        style={{ width: SCREEN_WIDTH / 2, height: 22 }}>
+                                        <Text style={{ color: globalcolor.headerBackgroundColor, fontSize: 14, textDecorationLine: 'underline' }}>{'查看报警数据'}</Text>
                                     </TouchableOpacity>
                                 </View>);
                             }}

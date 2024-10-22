@@ -2,8 +2,8 @@
  * @Description: 合同编号本地搜索
  * @LastEditors: hxf
  * @Date: 2024-04-14 18:22:05
- * @LastEditTime: 2024-05-10 15:18:45
- * @FilePath: /SDLMainProject37/app/pOperationContainers/ServiceReminder/ContractNumberLocalSearchList.js
+ * @LastEditTime: 2024-10-15 16:29:18
+ * @FilePath: /SDLMainProject/app/pOperationContainers/ServiceReminder/ContractNumberLocalSearchList.js
  */
 import React, { Component } from 'react'
 import { Platform, Text, TextInput, TouchableOpacity, View, Image, StyleSheet } from 'react-native'
@@ -40,6 +40,10 @@ export default class ContractNumberLocalSearchList extends Component {
     }
 
     statusPageOnRefresh = () => {
+        this.props.dispatch(createAction('CTServiceReminderModel/updateState')({
+            contractNumberSearchList: [],
+            contractNumberSearchString:'',
+        }))
         // this.props.dispatch(createAction('CTModel/updateState')({
         //     checkInProjectListResult: { status: -1 }
         // }));

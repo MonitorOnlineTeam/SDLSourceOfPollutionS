@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { TouchableOpacity, View, StyleSheet, Image, Platform, TextInput, AsyncStorage, Modal, Alert } from 'react-native';
+import { TouchableOpacity, View, StyleSheet, Image, Platform, TextInput, AsyncStorage, Modal, Alert, ScrollView } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import SyanImagePicker from 'react-native-syan-image-picker';
 import { connect } from 'react-redux';
@@ -120,6 +120,58 @@ export default class OverAlarmVerify extends PureComponent {
                 }
             ]
         };
+        this.props.navigation.setOptions({
+            headerRight: () => <TouchableOpacity
+                onPress={() => {
+                    // 确认核实
+                    let ExceptionProcessingIDStr = '';
+                    this.props.route.params.params.alramData.map(item => {
+                        ExceptionProcessingIDStr = ExceptionProcessingIDStr + item.ID + ',';
+                    });
+                    let formdataJson = {
+                        cuid: that.state.TimeS,
+                        EntCode: that.props.alarmRecordsPointInfo.TargetId,
+                        DGIMN: this.props.route.params.params.alramData[0].DGIMN,
+                        VerifyState: that.state.selectedOverDataType.code,
+                        VerifyType: that.state.selectedOverDataType.code,
+                        RecoveryDateTime: that.state.recoverTime,
+                        VerifyImage: that.state.TimeS,
+                        VerifyTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+                        VerifyPerSon: getToken().User_Name,
+
+                        VerifyMessage: that.state.VerifyMessage
+                    };
+                    let verifyState = SentencedToEmpty(that.state, ['selectedOverDataType', 'code'], -1);
+                    if (verifyState == -1) {
+                        ShowToast('请选择检查状态！');
+                        return;
+                    }
+
+                    // 备注
+                    if (SentencedToEmpty(that.state, ['VerifyMessage'], '') == '') {
+                        ShowToast('备注信息不能为空！');
+                        return;
+                    }
+                    that.setState({ loading: true });
+
+                    that.props.dispatch(
+                        createAction('alarm/operationVerifyAdd')({
+                            params: {
+                                ExceptionProcessingID: ExceptionProcessingIDStr,
+                                // 选择的检查状态，接口获取
+                                State: that.state.selectedOverDataType.code,
+                                Remark: that.state.VerifyMessage,
+                                // TechnologyOverType: that.state.selectedOverDataType.ID,
+                                Data: formdataJson
+                            },
+                            callback: that.callback
+                        })
+                    );
+                }}
+            >
+                <Image source={require('../../../images/ic_ok.png')} style={{ width: 24, height: 24, marginRight: 16 }} />
+            </TouchableOpacity>
+        });
     }
     callback = isSuccess => {
         this.setState({ loading: false });
@@ -132,7 +184,7 @@ export default class OverAlarmVerify extends PureComponent {
                         {
                             text: '确定',
                             onPress: () => {
-                                this.props.navigation.dispatch(NavigationActions.back());
+                                this.props.dispatch(NavigationActions.back());
                                 this.props.dispatch(
                                     NavigationActions.navigate({
                                         routeName: 'CreateTask',
@@ -144,7 +196,7 @@ export default class OverAlarmVerify extends PureComponent {
                         {
                             text: '取消',
                             onPress: () => {
-                                this.props.navigation.dispatch(NavigationActions.back());
+                                this.props.dispatch(NavigationActions.back());
                             }
                         }
                     ],
@@ -153,7 +205,7 @@ export default class OverAlarmVerify extends PureComponent {
             } else {
                 ShowToast('提交成功');
 
-                this.props.navigation.dispatch(NavigationActions.back());
+                this.props.dispatch(NavigationActions.back());
             }
         } else {
             ShowToast('提交失败');
@@ -396,10 +448,9 @@ export default class OverAlarmVerify extends PureComponent {
                     this.props.dispatch(createAction('alarm/getOverDataType')({}));
                 }}
             >
-                <KeyboardAwareScrollView>
+                <ScrollView>
                     <View style={{ width: SCREEN_WIDTH, height: 180, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
                         <TextInput
-                            style={{ color: '#333' }}
                             autoCapitalize={'none'}
                             autoCorrect={false}
                             underlineColorAndroid={'transparent'}
@@ -410,7 +461,7 @@ export default class OverAlarmVerify extends PureComponent {
                             value={this.state.VerifyMessage}
                             multiline={true}
                             placeholder="点击输入核查信息~"
-                            style={{ width: SCREEN_WIDTH - 28, height: 140, backgroundColor: '#f0f0f0', padding: 13, textAlignVertical: 'top' }}
+                            style={{ color: '#333', width: SCREEN_WIDTH - 28, height: 140, backgroundColor: '#f0f0f0', padding: 13, textAlignVertical: 'top' }}
                         />
                         <TouchableOpacity
                             onPress={() => {
@@ -494,7 +545,7 @@ export default class OverAlarmVerify extends PureComponent {
                         />
                     </Modal>
                     <OperationAlertDialog options={dialogOptions} ref="doAlert" />
-                </KeyboardAwareScrollView>
+                </ScrollView>
             </StatusPage>
         );
     }

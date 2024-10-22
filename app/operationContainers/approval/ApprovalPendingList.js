@@ -530,7 +530,7 @@ export default class ApprovalPendingList extends PureComponent {
         return (
             <View style={styles.container}>
                 <StatusPage
-                    backRef={needLeaveRefresh}
+                    // backRef={needLeaveRefresh}
                     status={this.props.approvaData.status}
                     //页面是否有回调按钮，如果不传，没有按钮，
                     emptyBtnText={'重新请求'}
@@ -559,7 +559,9 @@ export default class ApprovalPendingList extends PureComponent {
                         refreshing={false}
                         onRefresh={this.props.onRefresh}
                         onEndReached={info => {
-                            this.props.onEndReached();
+                            if (this.props.approvaData.data.Datas.length >= 10) {
+                                this.props.onEndReached();
+                            }
                         }}
                     />
                 </StatusPage>

@@ -2,13 +2,13 @@
  * @Description: 手动领取工单
  * @LastEditors: hxf
  * @Date: 2021-09-29 16:40:17
- * @LastEditTime: 2024-06-03 15:44:37
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/workbench/ManualClaimTask_bw.js
+ * @LastEditTime: 2024-10-12 15:32:16
+ * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbench/ManualClaimTask_bw.js
  */
 
 import React, { Component } from 'react'
 import { Text, View, Dimensions, TouchableOpacity, Image, TextInput, Platform, StyleSheet } from 'react-native'
-import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
+// import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 import Popover from 'react-native-popover';
 import { connect } from 'react-redux';
 
@@ -17,6 +17,7 @@ import MyTabBar from '../../../operationContainers/taskViews/taskExecution/compo
 import { FlatListWithHeaderAndFooter, OperationAlertDialog, AlertDialog, StatusPage } from '../../../components';
 import globalcolor from '../../../config/globalcolor';
 import moment from 'moment';
+import SDLTabButton from '../../../components/SDLTabButton';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -65,6 +66,22 @@ export default class ManualClaimTask extends Component {
             navigateRightPress: (pageX, pageY) => {
                 this.showSpinner(pageX, pageY);
             }
+        });
+
+        this.props.navigation.setOptions({
+            headerRight: () => <View>
+                <TouchableOpacity
+                    style={{ width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}
+                    onPress={(e) => {
+                        const {
+                            nativeEvent: { pageX, pageY }
+                        } = e;
+                        this.showSpinner(pageX, pageY);
+                    }}
+                >
+                    <Image source={require('../../../images/ic_more_option.png')} style={{ width: 18, height: 18, marginRight: 16, tintColor: '#fff' }} />
+                </TouchableOpacity>
+            </View>
         });
     }
 
@@ -430,7 +447,320 @@ export default class ManualClaimTask extends Component {
                         <Text style={{ fontSize: 15, color: 'white' }} >{'搜索'}</Text>
                     </TouchableOpacity>
                 </View>
-                <ScrollableTabView
+                <View style={[{
+                    flexDirection: 'row', height: 44
+                    , width: SCREEN_WIDTH, alignItems: 'center'
+                    , justifyContent: 'space-between'
+                    , backgroundColor: 'white', marginBottom: 5
+                }]}>
+                    <SDLTabButton
+                        topButtonWidth={SCREEN_WIDTH / 2}
+                        selected={this.props.tabPageIndex == 0}
+                        label={`废气(${(SentencedToEmpty(this.props
+                            , ['unclaimedGasTaskCountResult', 'data'
+                                , 'Datas', 'calibrationCount'], 0)
+                            + SentencedToEmpty(this.props
+                                , ['unclaimedGasTaskCountResult', 'data'
+                                    , 'Datas', 'inspectionCount'], 0))})`}
+                        onPress={() => {
+                            let params = { tabPageIndex: 0, };
+                            params.claimTaskResultGas = { status: -1 }
+                            params.selectedTaskType = 1;
+
+                            this.props.dispatch(createAction('claimTaskModels/updateState')(params));
+                            this._onChangeTab(0);
+                        }}
+                    />
+                    <SDLTabButton
+                        topButtonWidth={SCREEN_WIDTH / 2}
+                        selected={this.props.tabPageIndex == 1}
+                        label={`废水(${(SentencedToEmpty(this.props
+                            , ['unclaimedWaterTaskCountResult', 'data'
+                                , 'Datas', 'inspectionCount'], 0)
+                            + SentencedToEmpty(this.props
+                                , ['unclaimedWaterTaskCountResult', 'data'
+                                    , 'Datas', 'calibrationCount'], 0))})`}
+                        onPress={() => {
+                            let params = { tabPageIndex: 1, };
+                            params.claimTaskResultWater = { status: -1 }
+                            params.selectedTaskType = 7;
+
+                            this.props.dispatch(createAction('claimTaskModels/updateState')(params));
+                            this._onChangeTab(1);
+                        }}
+                    />
+                </View>
+                {
+                    this.props.tabPageIndex == 0 ?
+                        <View tabLabel="废气" style={{ flex: 1 }}>
+                            <View style={[{
+                                width: SCREEN_WIDTH, height: 52
+                                , flexDirection: 'row', alignItems: 'center'
+                                , paddingLeft: 8, backgroundColor: 'white', borderTopColor: "#f2f2f2"
+                                , borderTopWidth: 1
+                            }]}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        let params = {}, listParams = {};
+                                        params.selectedTaskType = 1;
+                                        params.claimTaskResultGas = { status: -1 }
+                                        this.props.dispatch(createAction('claimTaskModels/updateState')(params));
+                                        listParams.PollutantType = 2;
+                                        listParams.TaskType = '1';
+                                        this.props.dispatch(createAction('claimTaskModels/getUnclaimedTaskList')({ params: listParams }))
+                                    }}
+                                    style={{ marginLeft: 12 }}>
+                                    <View style={[selectedTaskType == 1 ? styles.selectedContainer : styles.unSelectedContainer]}>
+                                        <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
+                                        <Text style={[selectedTaskType == 1 ? styles.selectedText : styles.unSelectedText]}>{'巡检'}</Text>
+                                        {
+                                            SentencedToEmpty(this.props
+                                                , ['unclaimedGasTaskCountResult', 'data'
+                                                    , 'Datas', 'inspectionCount'], 0) == 0
+                                                ? <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
+                                                : <View style={[{
+                                                    width: 12, height: 12, backgroundColor: '#ff0000', borderRadius: 6, marginBottom: 17.5
+                                                    , justifyContent: 'center', alignItems: 'center'
+                                                }]}>
+                                                    <Text style={{ fontSize: 7, color: '#ffffff' }}>{SentencedToEmpty(this.props
+                                                        , ['unclaimedGasTaskCountResult', 'data'
+                                                            , 'Datas', 'inspectionCount'], 0)}</Text>
+                                                </View>
+                                        }
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        let params = {}, listParams = {};
+                                        params.selectedTaskType = 3;
+                                        params.claimTaskResultGas = { status: -1 }
+                                        this.props.dispatch(createAction('claimTaskModels/updateState')(params));
+                                        listParams.PollutantType = 2;
+                                        listParams.TaskType = '3';
+                                        this.props.dispatch(createAction('claimTaskModels/getUnclaimedTaskList')({ params: listParams }))
+                                    }}
+                                    style={{ marginLeft: 12 }}>
+                                    <View style={[selectedTaskType == 3 ? styles.selectedContainer : styles.unSelectedContainer
+                                    ]}>
+                                        <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
+                                        <Text style={[selectedTaskType == 3 ? styles.selectedText : styles.unSelectedText]}>{'校准'}</Text>
+                                        {
+                                            SentencedToEmpty(this.props
+                                                , ['unclaimedGasTaskCountResult', 'data'
+                                                    , 'Datas', 'calibrationCount'], 0) == 0
+                                                ? <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
+                                                : <View style={[{
+                                                    width: 12, height: 12, backgroundColor: '#ff0000', borderRadius: 6, marginBottom: 17.5
+                                                    , justifyContent: 'center', alignItems: 'center'
+                                                }]}>
+                                                    <Text style={{ fontSize: 7, color: '#ffffff' }}>{SentencedToEmpty(this.props
+                                                        , ['unclaimedGasTaskCountResult', 'data'
+                                                            , 'Datas', 'calibrationCount'], 0)}</Text>
+                                                </View>
+                                        }
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={[{ height: 10, width: SCREEN_WIDTH, backgroundColor: '#f2f2f2' }]}>
+                            </View>
+                            {
+                                this.props.tabPageIndex == 0
+                                    ? <StatusPage
+                                        backRef={SentencedToEmpty(this.props, ['route', 'params', 'params', 'needRefresh'], 'true') == 'true'}
+                                        status={this.props.claimTaskResultGas.status}
+                                        errorBtnText={'点击重试'}
+                                        emptyBtnText={'点击重试'}
+                                        onErrorPress={() => {
+                                            let listParams = { PollutantType: 2 };
+                                            let params = { PollutantType: 2 };
+                                            listParams.claimTaskResultGas = { status: -1 }
+                                            listParams.PollutantType = 2;
+                                            callback = SentencedToEmpty(this, ['gasList', 'setListData'], () => { });
+                                            params.PollutantType = 2;
+                                            params.TaskType = '1,3';
+
+                                            this.getData(params);
+                                        }}
+                                        onEmptyPress={() => {
+                                            let params = { PollutantType: 1 };
+                                            this.getData(params);
+                                        }}
+                                    >
+                                        <FlatListWithHeaderAndFooter
+                                            style={[{ backgroundColor: '#f2f2f2' }]}
+                                            ref={ref => (this.gasList = ref)}
+                                            ItemSeparatorComponent={() => {
+                                                return (
+                                                    <View style={[{ height: 10.5, width: SCREEN_WIDTH, alignItems: 'center', backgroundColor: '#fff' }]}>
+                                                        <View style={[{ height: 10.5, width: SCREEN_WIDTH - 13, backgroundColor: '#f2f2f2' }]} />
+                                                    </View>
+                                                );
+                                            }}
+                                            pageSize={20}
+                                            hasMore={() => {
+                                                return false;
+                                            }}
+                                            onRefresh={index => {
+                                                let params = { PollutantType: 2 };
+                                                this.getData(params, SentencedToEmpty(this, ['gasList', 'setListData'], () => { }));
+                                            }}
+                                            onEndReached={index => {
+                                                // 不分页
+                                            }}
+                                            renderItem={item => {
+                                                return this._renderItemList(item);
+                                            }}
+                                            data={SentencedToEmpty(this.props.claimTaskResultGas, ['data', 'Datas'], [])}
+                                        />
+                                    </StatusPage>
+                                    : <View style={[{ width: SCREEN_WIDTH, flex: 1 }]}></View>
+                            }
+                            {/*
+                            // 数据样例
+                            [{
+                                pointName:'废水排放口',
+                                entName:'新疆白鹭纤维有限公司',
+                                createTime:'2020-08-13 15:33',
+                                taskID:'',
+                                overHour:'14',
+                                overDay:'5'
+                            },{
+                                pointName:'废水排放口',
+                                entName:'新疆白鹭纤维有限公司',
+                                createTime:'2020-08-13 15:33',
+                                taskID:'',
+                                overHour:'14',
+                                overDay:'5'
+                            },{
+                                pointName:'废水排放口',
+                                entName:'新疆白鹭纤维有限公司',
+                                createTime:'2020-08-13 15:33',
+                                taskID:'',
+                                overHour:'14',
+                                overDay:'5'
+                            }]
+                         */}
+                        </View>
+                        : this.props.tabPageIndex == 1 ?
+                            <View tabLabel="废水" style={{ flex: 1 }}>
+                                <View style={[{
+                                    width: SCREEN_WIDTH, height: 52
+                                    , flexDirection: 'row', alignItems: 'center'
+                                    , paddingLeft: 8, backgroundColor: 'white', borderTopColor: "#f2f2f2"
+                                    , borderTopWidth: 1
+                                }]}>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            let params = {}, listParams = {};
+                                            params.selectedTaskType = 7;
+                                            params.claimTaskResultWater = { status: -1 }
+                                            this.props.dispatch(createAction('claimTaskModels/updateState')(params));
+                                            listParams.PollutantType = 1;
+                                            listParams.TaskType = '7';
+                                            this.props.dispatch(createAction('claimTaskModels/getUnclaimedTaskList')({ params: listParams }))
+                                        }}
+                                        style={{ marginLeft: 12 }}>
+                                        <View style={[selectedTaskType == 7 ? styles.selectedContainer : styles.unSelectedContainer]}>
+                                            <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
+                                            <Text style={[selectedTaskType == 7 ? styles.selectedText : styles.unSelectedText]}>{'巡检'}</Text>
+                                            {
+                                                SentencedToEmpty(this.props
+                                                    , ['unclaimedWaterTaskCountResult', 'data'
+                                                        , 'Datas', 'inspectionCount'], 0) == 0
+                                                    ? <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
+                                                    : <View style={[{
+                                                        width: 12, height: 12, backgroundColor: '#ff0000', borderRadius: 6, marginBottom: 17.5
+                                                        , justifyContent: 'center', alignItems: 'center'
+                                                    }]}>
+                                                        <Text style={{ fontSize: 7, color: '#ffffff' }}>{SentencedToEmpty(this.props
+                                                            , ['unclaimedWaterTaskCountResult', 'data'
+                                                                , 'Datas', 'inspectionCount'], 0)}</Text>
+                                                    </View>
+                                            }
+                                        </View>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            let params = {}, listParams = {};
+                                            params.selectedTaskType = 9;
+                                            params.claimTaskResultWater = { status: -1 }
+                                            this.props.dispatch(createAction('claimTaskModels/updateState')(params));
+                                            listParams.PollutantType = 1;
+                                            listParams.TaskType = '9';
+                                            this.props.dispatch(createAction('claimTaskModels/getUnclaimedTaskList')({ params: listParams }))
+                                        }}
+                                        style={{ marginLeft: 12 }}>
+                                        <View style={[selectedTaskType == 9 ? styles.selectedContainer : styles.unSelectedContainer
+                                        ]}>
+                                            <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
+                                            <Text style={[selectedTaskType == 9 ? styles.selectedText : styles.unSelectedText]}>{'校准'}</Text>
+                                            {
+                                                SentencedToEmpty(this.props
+                                                    , ['unclaimedWaterTaskCountResult', 'data'
+                                                        , 'Datas', 'calibrationCount'], 0) == 0
+                                                    ? <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
+                                                    : <View style={[{
+                                                        width: 12, height: 12, backgroundColor: '#ff0000', borderRadius: 6, marginBottom: 17.5
+                                                        , justifyContent: 'center', alignItems: 'center'
+                                                    }]}>
+                                                        <Text style={{ fontSize: 7, color: '#ffffff' }}>{SentencedToEmpty(this.props
+                                                            , ['unclaimedWaterTaskCountResult', 'data'
+                                                                , 'Datas', 'calibrationCount'], 0)}</Text>
+                                                    </View>
+                                            }
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={[{ height: 10, width: SCREEN_WIDTH, backgroundColor: '#f2f2f2' }]}></View>
+                                {
+                                    this.props.tabPageIndex == 1
+                                        ? <StatusPage
+                                            backRef={SentencedToEmpty(this.props, ['route', 'params', 'params', 'needRefresh'], 'true') == 'true'}
+                                            status={this.props.claimTaskResultWater.status}
+                                            errorBtnText={'点击重试'}
+                                            emptyBtnText={'点击重试'}
+                                            onErrorPress={() => {
+                                                let params = { PollutantType: 2 };
+                                                this.getData(params);
+                                            }}
+                                            onEmptyPress={() => {
+                                                let params = { PollutantType: 2 };
+                                                this.getData(params);
+                                            }}
+                                        >
+                                            <FlatListWithHeaderAndFooter
+                                                style={[{ backgroundColor: '#f2f2f2' }]}
+                                                ref={ref => (this.waterList = ref)}
+                                                ItemSeparatorComponent={() => {
+                                                    return (
+                                                        <View style={[{ height: 10.5, width: SCREEN_WIDTH, alignItems: 'center', backgroundColor: '#fff' }]}>
+                                                            <View style={[{ height: 10.5, width: SCREEN_WIDTH - 13, backgroundColor: '#f2f2f2' }]} />
+                                                        </View>
+                                                    );
+                                                }}
+                                                pageSize={20}
+                                                hasMore={() => {
+                                                    return false;
+                                                }}
+                                                onRefresh={index => {
+                                                    let params = { PollutantType: 1 };
+                                                    this.getData(params, this.waterList.setListData);
+                                                }}
+                                                onEndReached={index => {
+                                                    // 不分页
+                                                }}
+                                                renderItem={item => {
+                                                    return this._renderItemList(item);
+                                                }}
+                                                data={SentencedToEmpty(this.props.claimTaskResultWater, ['data', 'Datas'], [])}
+                                            />
+                                        </StatusPage>
+                                        : <View style={[{ width: SCREEN_WIDTH, flex: 1 }]}></View>
+                                }
+                            </View>
+                            : null
+                }
+                {/* <ScrollableTabView
                     onChangeTab={obj => {
                         let params = { tabPageIndex: obj.i, };
                         if (obj.i == 0) {
@@ -479,272 +809,8 @@ export default class ManualClaimTask extends Component {
                     tabBarInactiveTextColor="#000033"
                     tabBarTextStyle={{ fontSize: 15, backgroundColor: 'red' }}
                 >
-                    <View tabLabel="废气" style={{ flex: 1 }}>
-                        <View style={[{
-                            width: SCREEN_WIDTH, height: 52
-                            , flexDirection: 'row', alignItems: 'center'
-                            , paddingLeft: 8, backgroundColor: 'white', borderTopColor: "#f2f2f2"
-                            , borderTopWidth: 1
-                        }]}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    let params = {}, listParams = {};
-                                    params.selectedTaskType = 1;
-                                    params.claimTaskResultGas = { status: -1 }
-                                    this.props.dispatch(createAction('claimTaskModels/updateState')(params));
-                                    listParams.PollutantType = 2;
-                                    listParams.TaskType = '1';
-                                    this.props.dispatch(createAction('claimTaskModels/getUnclaimedTaskList')({ params: listParams }))
-                                }}
-                                style={{ marginLeft: 12 }}>
-                                <View style={[selectedTaskType == 1 ? styles.selectedContainer : styles.unSelectedContainer]}>
-                                    <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
-                                    <Text style={[selectedTaskType == 1 ? styles.selectedText : styles.unSelectedText]}>{'巡检'}</Text>
-                                    {
-                                        SentencedToEmpty(this.props
-                                            , ['unclaimedGasTaskCountResult', 'data'
-                                                , 'Datas', 'inspectionCount'], 0) == 0
-                                            ? <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
-                                            : <View style={[{
-                                                width: 12, height: 12, backgroundColor: '#ff0000', borderRadius: 6, marginBottom: 17.5
-                                                , justifyContent: 'center', alignItems: 'center'
-                                            }]}>
-                                                <Text style={{ fontSize: 7, color: '#ffffff' }}>{SentencedToEmpty(this.props
-                                                    , ['unclaimedGasTaskCountResult', 'data'
-                                                        , 'Datas', 'inspectionCount'], 0)}</Text>
-                                            </View>
-                                    }
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    let params = {}, listParams = {};
-                                    params.selectedTaskType = 3;
-                                    params.claimTaskResultGas = { status: -1 }
-                                    this.props.dispatch(createAction('claimTaskModels/updateState')(params));
-                                    listParams.PollutantType = 2;
-                                    listParams.TaskType = '3';
-                                    this.props.dispatch(createAction('claimTaskModels/getUnclaimedTaskList')({ params: listParams }))
-                                }}
-                                style={{ marginLeft: 12 }}>
-                                <View style={[selectedTaskType == 3 ? styles.selectedContainer : styles.unSelectedContainer
-                                ]}>
-                                    <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
-                                    <Text style={[selectedTaskType == 3 ? styles.selectedText : styles.unSelectedText]}>{'校准'}</Text>
-                                    {
-                                        SentencedToEmpty(this.props
-                                            , ['unclaimedGasTaskCountResult', 'data'
-                                                , 'Datas', 'calibrationCount'], 0) == 0
-                                            ? <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
-                                            : <View style={[{
-                                                width: 12, height: 12, backgroundColor: '#ff0000', borderRadius: 6, marginBottom: 17.5
-                                                , justifyContent: 'center', alignItems: 'center'
-                                            }]}>
-                                                <Text style={{ fontSize: 7, color: '#ffffff' }}>{SentencedToEmpty(this.props
-                                                    , ['unclaimedGasTaskCountResult', 'data'
-                                                        , 'Datas', 'calibrationCount'], 0)}</Text>
-                                            </View>
-                                    }
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={[{ height: 10, width: SCREEN_WIDTH, backgroundColor: '#f2f2f2' }]}>
-                        </View>
-                        {
-                            this.props.tabPageIndex == 0
-                                ? <StatusPage
-                                    backRef={SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'needRefresh'], 'true') == 'true'}
-                                    status={this.props.claimTaskResultGas.status}
-                                    errorBtnText={'点击重试'}
-                                    emptyBtnText={'点击重试'}
-                                    onErrorPress={() => {
-                                        let listParams = { PollutantType: 2 };
-                                        let params = { PollutantType: 2 };
-                                        listParams.claimTaskResultGas = { status: -1 }
-                                        listParams.PollutantType = 2;
-                                        callback = SentencedToEmpty(this, ['gasList', 'setListData'], () => { });
-                                        params.PollutantType = 2;
-                                        params.TaskType = '1,3';
-
-                                        this.getData(params);
-                                    }}
-                                    onEmptyPress={() => {
-                                        let params = { PollutantType: 1 };
-                                        this.getData(params);
-                                    }}
-                                >
-                                    <FlatListWithHeaderAndFooter
-                                        style={[{ backgroundColor: '#f2f2f2' }]}
-                                        ref={ref => (this.gasList = ref)}
-                                        ItemSeparatorComponent={() => {
-                                            return (
-                                                <View style={[{ height: 10.5, width: SCREEN_WIDTH, alignItems: 'center', backgroundColor: '#fff' }]}>
-                                                    <View style={[{ height: 10.5, width: SCREEN_WIDTH - 13, backgroundColor: '#f2f2f2' }]} />
-                                                </View>
-                                            );
-                                        }}
-                                        pageSize={20}
-                                        hasMore={() => {
-                                            return false;
-                                        }}
-                                        onRefresh={index => {
-                                            let params = { PollutantType: 2 };
-                                            this.getData(params, SentencedToEmpty(this, ['gasList', 'setListData'], () => { }));
-                                        }}
-                                        onEndReached={index => {
-                                            // 不分页
-                                        }}
-                                        renderItem={item => {
-                                            return this._renderItemList(item);
-                                        }}
-                                        data={SentencedToEmpty(this.props.claimTaskResultGas, ['data', 'Datas'], [])}
-                                    />
-                                </StatusPage>
-                                : <View style={[{ width: SCREEN_WIDTH, flex: 1 }]}></View>
-                        }
-                        {/*
-                            // 数据样例
-                            [{
-                                pointName:'废水排放口',
-                                entName:'新疆白鹭纤维有限公司',
-                                createTime:'2020-08-13 15:33',
-                                taskID:'',
-                                overHour:'14',
-                                overDay:'5'
-                            },{
-                                pointName:'废水排放口',
-                                entName:'新疆白鹭纤维有限公司',
-                                createTime:'2020-08-13 15:33',
-                                taskID:'',
-                                overHour:'14',
-                                overDay:'5'
-                            },{
-                                pointName:'废水排放口',
-                                entName:'新疆白鹭纤维有限公司',
-                                createTime:'2020-08-13 15:33',
-                                taskID:'',
-                                overHour:'14',
-                                overDay:'5'
-                            }]
-                         */}
-                    </View>
-                    <View tabLabel="废水" style={{ flex: 1 }}>
-                        <View style={[{
-                            width: SCREEN_WIDTH, height: 52
-                            , flexDirection: 'row', alignItems: 'center'
-                            , paddingLeft: 8, backgroundColor: 'white', borderTopColor: "#f2f2f2"
-                            , borderTopWidth: 1
-                        }]}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    let params = {}, listParams = {};
-                                    params.selectedTaskType = 7;
-                                    params.claimTaskResultWater = { status: -1 }
-                                    this.props.dispatch(createAction('claimTaskModels/updateState')(params));
-                                    listParams.PollutantType = 1;
-                                    listParams.TaskType = '7';
-                                    this.props.dispatch(createAction('claimTaskModels/getUnclaimedTaskList')({ params: listParams }))
-                                }}
-                                style={{ marginLeft: 12 }}>
-                                <View style={[selectedTaskType == 7 ? styles.selectedContainer : styles.unSelectedContainer]}>
-                                    <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
-                                    <Text style={[selectedTaskType == 7 ? styles.selectedText : styles.unSelectedText]}>{'巡检'}</Text>
-                                    {
-                                        SentencedToEmpty(this.props
-                                            , ['unclaimedWaterTaskCountResult', 'data'
-                                                , 'Datas', 'inspectionCount'], 0) == 0
-                                            ? <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
-                                            : <View style={[{
-                                                width: 12, height: 12, backgroundColor: '#ff0000', borderRadius: 6, marginBottom: 17.5
-                                                , justifyContent: 'center', alignItems: 'center'
-                                            }]}>
-                                                <Text style={{ fontSize: 7, color: '#ffffff' }}>{SentencedToEmpty(this.props
-                                                    , ['unclaimedWaterTaskCountResult', 'data'
-                                                        , 'Datas', 'inspectionCount'], 0)}</Text>
-                                            </View>
-                                    }
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    let params = {}, listParams = {};
-                                    params.selectedTaskType = 9;
-                                    params.claimTaskResultWater = { status: -1 }
-                                    this.props.dispatch(createAction('claimTaskModels/updateState')(params));
-                                    listParams.PollutantType = 1;
-                                    listParams.TaskType = '9';
-                                    this.props.dispatch(createAction('claimTaskModels/getUnclaimedTaskList')({ params: listParams }))
-                                }}
-                                style={{ marginLeft: 12 }}>
-                                <View style={[selectedTaskType == 9 ? styles.selectedContainer : styles.unSelectedContainer
-                                ]}>
-                                    <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
-                                    <Text style={[selectedTaskType == 9 ? styles.selectedText : styles.unSelectedText]}>{'校准'}</Text>
-                                    {
-                                        SentencedToEmpty(this.props
-                                            , ['unclaimedWaterTaskCountResult', 'data'
-                                                , 'Datas', 'calibrationCount'], 0) == 0
-                                            ? <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
-                                            : <View style={[{
-                                                width: 12, height: 12, backgroundColor: '#ff0000', borderRadius: 6, marginBottom: 17.5
-                                                , justifyContent: 'center', alignItems: 'center'
-                                            }]}>
-                                                <Text style={{ fontSize: 7, color: '#ffffff' }}>{SentencedToEmpty(this.props
-                                                    , ['unclaimedWaterTaskCountResult', 'data'
-                                                        , 'Datas', 'calibrationCount'], 0)}</Text>
-                                            </View>
-                                    }
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={[{ height: 10, width: SCREEN_WIDTH, backgroundColor: '#f2f2f2' }]}></View>
-                        {
-                            this.props.tabPageIndex == 1
-                                ? <StatusPage
-                                    backRef={SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'needRefresh'], 'true') == 'true'}
-                                    status={this.props.claimTaskResultWater.status}
-                                    errorBtnText={'点击重试'}
-                                    emptyBtnText={'点击重试'}
-                                    onErrorPress={() => {
-                                        let params = { PollutantType: 2 };
-                                        this.getData(params);
-                                    }}
-                                    onEmptyPress={() => {
-                                        let params = { PollutantType: 2 };
-                                        this.getData(params);
-                                    }}
-                                >
-                                    <FlatListWithHeaderAndFooter
-                                        style={[{ backgroundColor: '#f2f2f2' }]}
-                                        ref={ref => (this.waterList = ref)}
-                                        ItemSeparatorComponent={() => {
-                                            return (
-                                                <View style={[{ height: 10.5, width: SCREEN_WIDTH, alignItems: 'center', backgroundColor: '#fff' }]}>
-                                                    <View style={[{ height: 10.5, width: SCREEN_WIDTH - 13, backgroundColor: '#f2f2f2' }]} />
-                                                </View>
-                                            );
-                                        }}
-                                        pageSize={20}
-                                        hasMore={() => {
-                                            return false;
-                                        }}
-                                        onRefresh={index => {
-                                            let params = { PollutantType: 1 };
-                                            this.getData(params, this.waterList.setListData);
-                                        }}
-                                        onEndReached={index => {
-                                            // 不分页
-                                        }}
-                                        renderItem={item => {
-                                            return this._renderItemList(item);
-                                        }}
-                                        data={SentencedToEmpty(this.props.claimTaskResultWater, ['data', 'Datas'], [])}
-                                    />
-                                </StatusPage>
-                                : <View style={[{ width: SCREEN_WIDTH, flex: 1 }]}></View>
-                        }
-                    </View>
-                </ScrollableTabView>
+                    
+                </ScrollableTabView> */}
                 <Popover
                     //设置可见性
                     isVisible={this.state.isVisible}
