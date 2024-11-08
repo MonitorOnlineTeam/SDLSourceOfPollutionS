@@ -2,8 +2,8 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-09-20 14:55:47
- * @LastEditTime: 2024-10-15 15:59:32
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationEditor.js
+ * @LastEditTime: 2024-11-01 15:16:08
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationEditor.js
  */
 import React, { Component } from 'react';
 import { Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -116,7 +116,7 @@ export default class ServiceReportRectificationEditor extends Component {
                                 ]}
                             >
                                 <Text style={[{ color: 'red', marginRight: 4 }]}>{'*'}</Text>
-                                <Text>{'照片'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'照片'}</Text>
                             </View>
                             <View
                                 style={[
@@ -230,7 +230,7 @@ export default class ServiceReportRectificationEditor extends Component {
                                     }
                                 ]}
                             >
-                                <Text>{'备注'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'备注'}</Text>
                             </View>
                             <View
                                 style={[

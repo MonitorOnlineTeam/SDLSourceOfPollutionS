@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity, Platform } from 'react-native';
+import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity, Platform, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -49,7 +49,7 @@ export default class TaskTransfer extends PureComponent {
         let taskArr = this.props.TaskID.split(',');
         return (
             <View style={[styles.container]}>
-                <KeyboardAwareScrollView ref="scroll" style={{ flex: 1, width: SCREEN_WIDTH }}>
+                <ScrollView ref="scroll" style={{ flex: 1, width: SCREEN_WIDTH }}>
                     {(taskArr.length > 1 && taskArr[1] != '') || this.props.currentTask == null ? null : (
                         <View style={[{ width: SCREEN_WIDTH, backgroundColor: globalcolor.headerBackgroundColor, flexDirection: 'row', paddingHorizontal: 20, alignItems: 'center' }]}>
                             <View style={[{ marginRight: 14 }]}>
@@ -108,7 +108,7 @@ export default class TaskTransfer extends PureComponent {
                             />
                         </View>
                     </View>
-                </KeyboardAwareScrollView>
+                </ScrollView>
                 <TouchableOpacity
                     onPress={() => {
                         const _ToUserId = SentencedToEmpty(this.props, ['selectTransUser', 'User_ID'], '');

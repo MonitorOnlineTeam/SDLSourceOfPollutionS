@@ -51,7 +51,7 @@ export default class HistoryDataLandscapeChart extends Component {
                         'show source';
                         var paramsString = JSON.stringify(params);
                         if (typeof window.postMessage == 'function') window.postMessage(JSON.stringify({ types: 'ON_PRESS', payload: paramsString }));
-                        if (window.ReactNativeWebView && typeof window.ReactNativeWebView.postMessage == 'function') window.ReactNativeWebView.postMessage(JSON.stringify({ types: 'ON_PRESS', payload: paramsString }));
+                        if (window.ReactNativeWebView && typeof window.ReactNativeWebView != 'undefined' && typeof window.ReactNativeWebView.postMessage == 'function') window.ReactNativeWebView.postMessage(JSON.stringify({ types: 'ON_PRESS', payload: paramsString }));
                         return null;
                     }
                 },
@@ -116,9 +116,13 @@ export default class HistoryDataLandscapeChart extends Component {
     }
 
     componentDidMount() {
+        this.props.dispatch(createAction('app/updateState')({ hideStatusBar: true }));
         lockToLandscape();
     }
 
+    componentWillUnmount() {
+        this.props.dispatch(createAction('app/updateState')({ hideStatusBar: false }));
+    }
     // componentWillUnmount() {
     //     lockToPortrait();
     //     console.log(this.props)

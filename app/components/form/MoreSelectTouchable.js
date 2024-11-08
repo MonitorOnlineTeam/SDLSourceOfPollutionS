@@ -11,7 +11,7 @@ const { width, height } = Dimensions.get('window');
 
 export default class MoreSelectTouchable extends Component {
     static defaultProps = {
-        width: width - 60,
+        width: SCREEN_WIDTH - 60,
         count: 3,
         option: {
             maxNum: 999
@@ -94,10 +94,13 @@ export default class MoreSelectTouchable extends Component {
                 <AlertDialog
                     orientation={this.props.orientation}
                     components={
-                        <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: this.props.width, height: this.props.orientation == 'LANDSCAPE' ? SCREEN_WIDTH : 360, borderWidth: 1 }}>
-                            <StatusBar hidden={true} />
+                        <View style={[{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: this.props.width }
+                            , this.props.orientation == 'LANDSCAPE' ? { flex: 1 } : { height: 360 }
+                        ]}>
                             <Text style={{ marginTop: 10, color: '#4aa0ff' }}>{this.state.showText == true ? '最多支持选中' + maxNum + '个' : ''}</Text>
-                            <ScrollView>{this.renderView()}</ScrollView>
+                            <ScrollView
+                                style={[this.props.orientation == 'LANDSCAPE' ? { marginTop: 40 } : {}, { width: this.props.width, flex: 1 }]}
+                            >{this.renderView()}</ScrollView>
                             <View style={{ height: 1, backgroundColor: '#f0f0f0', width: this.props.width }} />
                             <View style={{ marginTop: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'white', width: this.props.width, height: 45, paddingLeft: 10, paddingRight: 10 }}>
                                 <Touchable
@@ -147,7 +150,8 @@ export default class MoreSelectTouchable extends Component {
                     options={{
                         hiddenTitle: true,
                         innersHeight: 360,
-                        innersWidth: width - 60,
+                        // innersWidth: width - 60,
+                        innersWidth: this.props.width + 8,
                         modalVisible: false,
                         alertDialogHideCallback: () => {
                             let beforeSubmitCode = this.state.beforeSubmitCode;

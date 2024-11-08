@@ -1,6 +1,8 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+apply from: rootProject.file('yeshen_delete.gradle')
+
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -42,7 +44,7 @@ react {
     //   A list of extra flags to pass to the 'bundle' commands.
     //   See https://github.com/react-native-community/cli/blob/main/docs/commands.md#bundle
     // extraPackagerArgs = []
-
+    extraPackagerArgs = ['--minify=false']
     /* Hermes Commands */
     //   The hermes compiler command to run. By default it is 'hermesc'
     // hermesCommand = "$rootDir/my-custom-hermesc/bin/hermesc"
@@ -70,6 +72,22 @@ def enableProguardInReleaseBuilds = false
 def jscFlavor = 'org.webkit:android-jsc:+'
 
 android {
+
+    //uniapp 相关 此处配置必须添加 否则无法正确运行
+    // 必须配置在主项目中，在模块中设置无效
+    aaptOptions {
+        additionalParameters '--auto-add-overlay'
+        //noCompress 'foo', 'bar'
+        ignoreAssetsPattern "!.svn:!.git:.*:!CVS:!thumbs.db:!picasa.ini:!*.scc:*~"
+    }
+
+    // add the following packagingOptions
+    // 新增 发布专用
+//    packagingOptions {
+//        pickFirst 'lib/x86_64/libjsc.so'
+//        pickFirst 'lib/arm64-v8a/libjsc.so'
+//    }
+
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
@@ -81,8 +99,8 @@ android {
 
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 72
-        versionName "1.7.2"
+        versionCode 73
+        versionName "1.7.3"
     }
     signingConfigs {
         release {
@@ -126,6 +144,7 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
     implementation project(':rn-bugly')
+//    implementation project(':react-native-uniapp')
     implementation 'org.greenrobot:greendao:3.3.0'
     compileOnly('com.aliyun.ams:alicloud-android-third-push-huawei:3.8.6.1')
 

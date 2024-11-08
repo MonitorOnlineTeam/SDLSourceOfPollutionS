@@ -50,7 +50,7 @@ export default class AlarmDataChart extends React.Component {
 
         props.navigation.setOptions({
             headerShown: false,
-          });
+        });
     }
 
     componentDidMount() {
@@ -249,6 +249,7 @@ export default class AlarmDataChart extends React.Component {
                     markLine: {
                         label: {
                             formatter: params => {
+                                'show source';
                                 return params.name;
                             }
                         },
@@ -261,6 +262,7 @@ export default class AlarmDataChart extends React.Component {
                         label: {
                             color: 'rgba(228, 223, 223, 1)',
                             formatter: params => {
+                                'show source';
                                 return params.name;
                             }
                         },
@@ -278,6 +280,7 @@ export default class AlarmDataChart extends React.Component {
                         label: {
                             color: 'rgba(228, 223, 223, 1)',
                             formatter: params => {
+                                'show source';
                                 return params.name;
                             }
                         },
@@ -295,6 +298,7 @@ export default class AlarmDataChart extends React.Component {
                         label: {
                             color: 'rgba(228, 223, 223, 1)',
                             formatter: params => {
+                                'show source';
                                 return params.name;
                             }
                         },
@@ -386,6 +390,7 @@ export default class AlarmDataChart extends React.Component {
                     type: 'cross'
                 },
                 formatter: function (params) {
+                    'show source';
                     var htmlStr = '<div style="height: auto;display: flex;flex-direction: column;justify-content:space-between;align-items:flex-start;"><span style="color: #fff;">' + params[0].axisValue + '</span>';
                     htmlStr += '<span style="color: #fff;">' + `${'工况：'}${params[0].data.workingFlagName}` + '</span>';
                     htmlStr += '<span style="color: #fff;">' + `${'人为干预：'}${params[0].data.WCArtificialFlag}` + '</span>';
@@ -529,12 +534,12 @@ export default class AlarmDataChart extends React.Component {
                                 {this.state.hideEchart == false ? <Echarts option={self.state.option1} width={SCREEN_HEIGHT} height={SCREEN_WIDTH - 140} onPress={this.onPress} /> : null}
                             </View>
                             <View style={{ flexDirection: 'row', flexWrap: 'wrap', backgroundColor: '#fff', paddingRight: 100, alignItems: 'center' }}>
-                                <Text>时间选择:</Text>
+                                <Text style={[{ color: '#333333' }]}>时间选择:</Text>
 
                                 <SimplePickerRangeDay style={[{ width: 120, marginLeft: 15 }]} option={this.getRangeDaySelectOption()} />
                                 <SimplePicker option={this.getDataTypeSelectOption()} style={[{ width: 120, marginLeft: 15 }]} />
                                 <View style={{ flexDirection: 'row', marginLeft: 15, alignItems: 'center' }}>
-                                    <Text>图例：</Text>
+                                    <Text style={[{ color: '#333333' }]}>图例：</Text>
                                     <View style={{ alignItems: 'center', flexDirection: 'row', marginLeft: 5 }}>
                                         <View style={{ width: 10, height: 10, backgroundColor: '#c026d3', borderRadius: 5 }}></View>
                                         <Text style={{ color: '#666', fontSize: 12, marginLeft: 3 }}>人为干预</Text>

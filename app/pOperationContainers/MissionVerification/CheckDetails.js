@@ -86,7 +86,7 @@ export default class CheckDetails extends Component {
 
         props.navigation.setOptions({
             title: '核查详情',
-          });
+        });
     }
     componentDidMount() {
         this.statusPageOnRefresh();
@@ -260,7 +260,26 @@ export default class CheckDetails extends Component {
                                     });
                                     return;
                                 }
-                                this.refs.doAlert.show();
+                                SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                                    if (err) {
+                                        // 取消选择
+                                        return;
+                                    }
+
+                                    if (selectedPhotos.length <= 0) {
+                                        return;
+                                    } else {
+                                        ShowLoadingToast('正在上传图片');
+                                        that.props.dispatch(
+                                            createAction('imageModel/uploadimage')({
+                                                images: selectedPhotos,
+                                                uuid: uuid,
+                                                callback: this.uploadImageCallBack
+                                            })
+                                        );
+                                    }
+                                });
+                                // this.refs.doAlert.show();
                             }}
                             style={{ width: (SCREEN_WIDTH - 86) / 3, height: (SCREEN_WIDTH - 86) / 3 }}
                         >

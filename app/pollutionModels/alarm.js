@@ -31,7 +31,40 @@ export default Model.extend({
         exceptionDataListResult: { status: -1 },
         alarmVerifyDetailsRuslt: { status: -1 }, //报警核实详情
         trendCountRuslt: { status: -1 }, // 异常报警 趋势报警 计数结果
-        sourceType: '' //点击的来源：WorkbenchOver运维工作台超标，运维工作台异常WorkbenchException
+        sourceType: '', //点击的来源：WorkbenchOver运维工作台超标，运维工作台异常WorkbenchException
+
+        // 默认一个月
+        missBeginTime: moment().subtract(1, 'month').format('YYYY-MM-DD HH:mm:ss'),
+        missEndTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+        missEntName: '',
+        missPageIndex: 1,
+        missResult: { status: -1 },
+        missData: [],
+        missDataLength: 0,
+        responseRecordType: '',
+
+        overBeginTime: moment().subtract(1, 'month').format('YYYY-MM-DD HH:mm:ss'),
+        overEndTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+        overEntName: '',
+        overPageIndex: 1,
+        overResult: { status: -1 },
+        overData: [],
+        overDataLength: 0,
+
+        exceptionBeginTime: moment().subtract(1, 'month').format('YYYY-MM-DD HH:mm:ss'),
+        exceptionEndTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+        exceptionEntName: '',
+        exceptionPageIndex: 1,
+        exceptionResult: { status: -1 },
+        exceptionData: [],
+        exceptionDataLength: 0,
+
+        taskID: '',
+        DGIMN: '',
+        VID: '',
+
+        alarmResponseAlarmDetailResult: { status: -1 }, //报警响应报警详情
+        alarmResponseAlarmDetailData: [], //报警响应报警详情 数据
     },
     reducers: {
         updateState(state, { payload }) {
@@ -225,6 +258,223 @@ export default Model.extend({
                     yield update({ OverWarningCount: SentencedToEmpty(result, ['data', 'Total'], '-') });
                 }
             } else {
+            }
+        },
+        /**
+         * 报警响应记录
+         * GetExceptionInfoList
+         * @param {*} param0
+         * @param {*} param1
+         */
+        *getExceptionInfoList(
+            {
+                payload: { params, setListData = (data, duration) => { } }
+            },
+            { call, put, take, update, select }
+        ) {
+
+            const { responseRecordType } = yield select(state => state.alarm);
+            let _params = {};
+            if (responseRecordType == 'WorkbenchMiss') {
+                const {
+                    missBeginTime,
+                    missEndTime,
+                    missEntName,
+                    missPageIndex,
+                } = yield select(state => state.alarm);
+                _params = {
+                    "beginTime": missBeginTime,
+                    "endTime": missEndTime,
+                    pageIndex: missPageIndex,
+                    // "pageSize": 20,// 分页无效，暂时不用分页
+                    entName: missEntName,
+                    alarmType: 12
+                }
+            } else if (responseRecordType == 'WorkbenchException') {
+                const {
+                    exceptionBeginTime,
+                    exceptionEndTime,
+                    exceptionPageIndex,
+                    // "pageSize": 20,// 分页无效，暂时不用分页
+                    exceptionEntName,
+                } = yield select(state => state.alarm);
+                _params = {
+                    "beginTime": exceptionBeginTime,
+                    "endTime": exceptionEndTime,
+                    pageIndex: exceptionPageIndex,
+                    entName: exceptionEntName,
+                    alarmType: 0
+                }
+            } else if (responseRecordType == 'WorkbenchOver') {
+                const {
+                    overBeginTime,
+                    overEndTime,
+                    overPageIndex,
+                    overEntName,
+                } = yield select(state => state.alarm);
+                _params = {
+                    "beginTime": overBeginTime,
+                    "endTime": overEndTime,
+                    pageIndex: overPageIndex,
+                    // "pageSize": 20,// 分页无效，暂时不用分页
+                    entName: overEntName,
+                }
+            }
+            let result;
+            if (responseRecordType == 'WorkbenchMiss'
+                || responseRecordType == 'WorkbenchException'
+            ) {
+                result = yield call(authService.axiosAuthPost
+                    , api.pollutionApi.Alarm.GetExceptionInfoList
+                    , _params);
+            } else if (responseRecordType == 'WorkbenchOver') {
+                result = yield call(authService.axiosAuthPost
+                    , api.pollutionApi.Alarm.GetOverAlarmInfoList
+                    , _params);
+            }
+
+            let listData = [];
+            /**
+             * missResult: { status: -1 },
+                missData: [],
+                overResult: { status: -1 },
+                overData: [],
+                exceptionResult: { status: -1 },
+                exceptionData: [],
+             */
+            let updateParams = {};
+            if (_params.pageIndex == 1) {
+                listData = SentencedToEmpty(result, ['data', 'Datas'], []);
+                if (responseRecordType == 'WorkbenchMiss') {
+                    updateParams['missData'] = listData;
+                    updateParams['missResult'] = result;
+                    updateParams['missDataLength'] = SentencedToEmpty(result, ['data', 'Total'], 0);
+                    yield update(updateParams);
+                    setListData(updateParams.missData, 0);
+                } else if (responseRecordType == 'WorkbenchException') {
+                    updateParams['exceptionData'] = listData;
+                    updateParams['exceptionResult'] = result;
+                    updateParams['exceptionDataLength'] = SentencedToEmpty(result, ['data', 'Total'], 0);
+                    yield update(updateParams);
+                    setListData(updateParams.exceptionData, 0);
+                } else if (responseRecordType == 'WorkbenchOver') {
+                    updateParams['overData'] = listData;
+                    updateParams['overResult'] = result;
+                    updateParams['overDataLength'] = SentencedToEmpty(result, ['data', 'Total'], 0);
+                    yield update(updateParams);
+                    setListData(updateParams.overData, 0);
+                }
+            } else {
+                listData = SentencedToEmpty(result, ['data', 'Datas'], []);
+                if (responseRecordType == 'WorkbenchMiss') {
+                    const {
+                        missData,
+                    } = yield select(state => state.alarm);
+                    updateParams['missData'] = missData.concat(listData);
+                    updateParams['missResult'] = result;
+                    updateParams['missDataLength'] = SentencedToEmpty(result, ['data', 'Total'], 0);
+                    yield update(updateParams);
+                    setListData(updateParams.missData, 0);
+                } else if (responseRecordType == 'WorkbenchException') {
+                    const {
+                        exceptionData,
+                    } = yield select(state => state.alarm);
+                    updateParams['exceptionData'] = exceptionData.concat(listData);
+                    updateParams['exceptionResult'] = result;
+                    updateParams['exceptionDataLength'] = SentencedToEmpty(result, ['data', 'Total'], 0);
+                    yield update(updateParams);
+                    setListData(updateParams.exceptionData, 0);
+                } else if (responseRecordType == 'WorkbenchOver') {
+                    const {
+                        overData,
+                    } = yield select(state => state.alarm);
+                    updateParams['overData'] = overData.concat(listData);
+                    updateParams['overResult'] = result;
+                    updateParams['overDataLength'] = SentencedToEmpty(result, ['data', 'Total'], 0);
+                    yield update(updateParams);
+                    setListData(updateParams.overData, 0);
+                }
+            }
+
+        },
+        /**
+         * 异常报警详情
+         * GetExResponseInfoList
+         * @param {*} param0
+         * @param {*} param1
+         */
+        * getExResponseInfoList(
+            {
+                payload: { params, setListData = (data, duration) => { } }
+            },
+            { call, put, take, update, select }
+        ) {
+            const {
+                taskID,
+                DGIMN,
+            } = yield select(state => state.alarm);
+            const result = yield call(authService.axiosAuthPost
+                , api.pollutionApi.Alarm.GetExResponseInfoList
+                , { taskID, DGIMN });
+
+            yield update({
+                alarmResponseAlarmDetailResult: result, //报警响应报警详情
+                alarmResponseAlarmDetailData: SentencedToEmpty(result, ['data', 'Datas'], []), //报警响应报警详情
+            })
+            if (result.status == 200) {
+                // let pointInfo = { ...SentencedToEmpty(result, ['data', 'Datas', 0], []) };
+                // delete pointInfo.AlarmMsg;
+                let item = SentencedToEmpty(result, ['data', 'Datas'], [])[0];
+                let pointInfo = {
+                    DGIMN: SentencedToEmpty(item, ['DGIMN'], ''),
+                    Abbreviation: SentencedToEmpty(item, ['TargetName'], ''),
+                    PointName: SentencedToEmpty(item, ['PointName'], ''),
+                    PollutantType: SentencedToEmpty(item, ['PollutantType'], ''),
+                    Status: SentencedToEmpty(item, ['Status'], ''),
+                }
+                yield put(createAction('pointDetails/updateState')({
+                    alarmRecordsPointInfo: pointInfo
+                }));
+            }
+        },
+        /**
+         * 超标报警 报警详情
+         * GetOverResponseInfoList
+         * @param {*} param0
+         * @param {*} param1
+         */
+        * getOverResponseInfoList(
+            {
+                payload: { params, setListData = (data, duration) => { } }
+            },
+            { call, put, take, update, select }
+        ) {
+            const {
+                VID,
+                DGIMN,
+            } = yield select(state => state.alarm);
+            const result = yield call(authService.axiosAuthPost
+                , api.pollutionApi.Alarm.GetOverResponseInfoList
+                , { VID, DGIMN });
+
+            yield update({
+                alarmResponseAlarmDetailResult: result, //报警响应报警详情
+                alarmResponseAlarmDetailData: SentencedToEmpty(result, ['data', 'Datas'], []), //报警响应报警详情
+            })
+            if (result.status == 200) {
+                // let pointInfo = { ...SentencedToEmpty(result, ['data', 'Datas', 0], []) };
+                // delete pointInfo.AlarmMsg;
+                let item = SentencedToEmpty(result, ['data', 'Datas'], [])[0];
+                let pointInfo = {
+                    DGIMN: SentencedToEmpty(item, ['DGIMN'], ''),
+                    Abbreviation: SentencedToEmpty(item, ['TargetName'], ''),
+                    PointName: SentencedToEmpty(item, ['PointName'], ''),
+                    PollutantType: SentencedToEmpty(item, ['PollutantType'], ''),
+                    Status: SentencedToEmpty(item, ['Status'], ''),
+                }
+                yield put(createAction('pointDetails/updateState')({
+                    alarmRecordsPointInfo: pointInfo
+                }));
             }
         },
         /**

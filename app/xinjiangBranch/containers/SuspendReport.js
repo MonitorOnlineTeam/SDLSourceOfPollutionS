@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import {
   TouchableOpacity,
   View,
@@ -11,9 +11,9 @@ import {
   Text,
   ScrollView,
 } from 'react-native';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import SyanImagePicker from 'react-native-syan-image-picker';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import moment from 'moment';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {
@@ -34,12 +34,12 @@ import {
   ShowToast,
   SentencedToEmpty,
 } from '../../utils';
-import {SCREEN_WIDTH} from '../../config/globalsize';
-import {IMAGE_DEBUG, ImageUrlPrefix, UrlInfo} from '../../config/globalconst';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {SCREEN_HEIGHT} from '../../components/SDLPicker/constant/globalsize';
+import { SCREEN_WIDTH } from '../../config/globalsize';
+import { IMAGE_DEBUG, ImageUrlPrefix, UrlInfo } from '../../config/globalconst';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { SCREEN_HEIGHT } from '../../components/SDLPicker/constant/globalsize';
 import globalcolor from '../../config/globalcolor';
-import {getEncryptData, getRootUrl} from '../../dvapack/storage';
+import { getEncryptData, getRootUrl } from '../../dvapack/storage';
 const options = {
   mediaType: 'photo',
   quality: 0.7,
@@ -54,7 +54,7 @@ let that;
 /**
  * 停运上报
  */
-@connect(({enterpriseListModel}) => ({
+@connect(({ enterpriseListModel }) => ({
   commitStopResult: enterpriseListModel.commitStopResult,
 }))
 export default class SuspendReport extends PureComponent {
@@ -105,7 +105,7 @@ export default class SuspendReport extends PureComponent {
     } else {
       ShowToast('提交失败');
     }
-    this.setState({loading: false});
+    this.setState({ loading: false });
   };
   getTimeSelectOption = () => {
     // let defaultTime;
@@ -151,16 +151,16 @@ export default class SuspendReport extends PureComponent {
       const source =
         item.attachID != ''
           ? {
-              uri: IMAGE_DEBUG
-                ? `${ImageUrlPrefix}/${item.attachID}`
-                : `${ImageUrlPrefix}${ProxyCode}/thumb_${item.attachID}`,
-            }
+            uri: IMAGE_DEBUG
+              ? `${ImageUrlPrefix}/${item.attachID}`
+              : `${ImageUrlPrefix}${ProxyCode}/thumb_${item.attachID}`,
+          }
           : require('../../images/addpic.png');
       console.log('source', source);
       rtnVal.push(
         <View
           key={item.attachID}
-          style={{width: SCREEN_WIDTH / 4 - 5, height: SCREEN_WIDTH / 4 - 5}}>
+          style={{ width: SCREEN_WIDTH / 4 - 5, height: SCREEN_WIDTH / 4 - 5 }}>
           <Image
             resizeMethod={'resize'}
             source={source}
@@ -174,12 +174,12 @@ export default class SuspendReport extends PureComponent {
           />
           <TouchableOpacity
             onPress={() => {
-              this.setState({modalVisible: true, index: key});
+              this.setState({ modalVisible: true, index: key });
             }}
-            style={[{position: 'absolute', bottom: 0, left: 0}]}>
+            style={[{ position: 'absolute', bottom: 0, left: 0 }]}>
             <View
               style={[
-                {height: SCREEN_WIDTH / 4 - 10, width: SCREEN_WIDTH / 4 - 15},
+                { height: SCREEN_WIDTH / 4 - 10, width: SCREEN_WIDTH / 4 - 15 },
               ]}
             />
           </TouchableOpacity>
@@ -212,10 +212,10 @@ export default class SuspendReport extends PureComponent {
                 }),
               );
             }}
-            style={[{position: 'absolute', top: 2, right: 2}]}>
+            style={[{ position: 'absolute', top: 2, right: 2 }]}>
             <Image
               source={require('../../images/ic_close_blue.png')}
-              style={{width: 16, height: 16}}
+              style={{ width: 16, height: 16 }}
             />
           </TouchableOpacity>
         </View>,
@@ -254,7 +254,7 @@ export default class SuspendReport extends PureComponent {
           });
         });
 
-        return {imagelist: newImagelist, refresh, imgUrls: newImgUrls};
+        return { imagelist: newImagelist, refresh, imgUrls: newImgUrls };
       });
       CloseToast('上传成功');
     } else {
@@ -268,7 +268,7 @@ export default class SuspendReport extends PureComponent {
       createAction('pointDetails/updateState')({
         outputStopListIndex: 1,
         outputStopListTotal: 0,
-        outputStopListResult: {status: -1},
+        outputStopListResult: { status: -1 },
       }),
     );
     this.props.dispatch(createAction('pointDetails/getOutputStopList')({}));
@@ -281,7 +281,7 @@ export default class SuspendReport extends PureComponent {
 
     let encryData = getEncryptData();
     const rootUrl = getRootUrl();
-    this.setState({encryData: encryData});
+    this.setState({ encryData: encryData });
     // AsyncStorage.getItem('encryptData', function (error, result) {
     //     if (error) {
     //         encryData = '';
@@ -308,7 +308,7 @@ export default class SuspendReport extends PureComponent {
         //         headers: { ProxyCode: encryData}
         //     }});
         if (item != '')
-          ims.push({attachID: item, url: `${rootUrl.ReactUrl}/upload/${item}`});
+          ims.push({ attachID: item, url: `${rootUrl.ReactUrl}/upload/${item}` });
       });
     /**
          * {
@@ -321,7 +321,7 @@ export default class SuspendReport extends PureComponent {
                 }
          */
     let fuben = [].concat(ims);
-    this.setState({imagelist: ims, imgUrls: fuben});
+    this.setState({ imagelist: ims, imgUrls: fuben });
   }
 
   render() {
@@ -339,11 +339,11 @@ export default class SuspendReport extends PureComponent {
       buttons: [
         {
           txt: '打开相机',
-          btnStyle: {backgroundColor: '#fff'},
-          txtStyle: {color: '#f97740', fontSize: 15, fontWeight: 'bold'},
+          btnStyle: { backgroundColor: '#fff' },
+          txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
           onpress: () => {
             launchCamera(options, response => {
-              const {assets = []} = response;
+              const { assets = [] } = response;
               let imageObj = null;
               if (assets.length <= 0) {
                 return;
@@ -364,11 +364,11 @@ export default class SuspendReport extends PureComponent {
         },
         {
           txt: '选择照片',
-          btnStyle: {backgroundColor: '#fff'},
-          txtStyle: {color: '#f97740', fontSize: 15, fontWeight: 'bold'},
+          btnStyle: { backgroundColor: '#fff' },
+          txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
           onpress: () => {
             launchImageLibrary(options, response => {
-              const {assets = []} = response;
+              const { assets = [] } = response;
               let imageObj = null;
               if (assets.length <= 0) {
                 return;
@@ -390,8 +390,8 @@ export default class SuspendReport extends PureComponent {
       ],
     };
     return (
-      <View style={[{flex: 1}]}>
-        <ScrollView style={[{flex: 1, borderWidth: 1}]}>
+      <View style={[{ flex: 1 }]}>
+        <ScrollView style={[{ flex: 1, borderWidth: 1 }]}>
           <View
             style={{
               flexDirection: 'row',
@@ -401,9 +401,9 @@ export default class SuspendReport extends PureComponent {
               justifyContent: 'space-between',
               backgroundColor: 'white',
             }}>
-            <SDLText style={{marginLeft: 13}}>开始时间</SDLText>
+            <SDLText style={{ marginLeft: 13 }}>开始时间</SDLText>
             <SimplePickerSingleTime
-              style={{marginLeft: 20, width: SCREEN_WIDTH - 120}}
+              style={{ marginLeft: 20, width: SCREEN_WIDTH - 120 }}
               option={this.getTimeSelectOption()}
             />
           </View>
@@ -417,9 +417,9 @@ export default class SuspendReport extends PureComponent {
               backgroundColor: 'white',
               marginTop: 1,
             }}>
-            <SDLText style={{marginLeft: 13}}>截止时间</SDLText>
+            <SDLText style={{ marginLeft: 13 }}>截止时间</SDLText>
             <SimplePickerSingleTime
-              style={{marginLeft: 20, width: SCREEN_WIDTH - 120}}
+              style={{ marginLeft: 20, width: SCREEN_WIDTH - 120 }}
               option={this.getTimeSelectOption2()}
             />
           </View>
@@ -431,17 +431,17 @@ export default class SuspendReport extends PureComponent {
               backgroundColor: 'white',
               marginTop: 1,
             }}>
-            <SDLText style={{marginLeft: 13, marginTop: 13}}>
+            <SDLText style={{ marginLeft: 13, marginTop: 13 }}>
               原因备注：
             </SDLText>
             <TextInput
-            //   style={{color: '#333'}}
+              //   style={{color: '#333'}}
               autoCapitalize={'none'}
               autoCorrect={false}
               underlineColorAndroid={'transparent'}
               onChangeText={text => {
                 //动态更新组件内state 记录输入内容
-                this.setState({VerifyMessage: text});
+                this.setState({ VerifyMessage: text });
               }}
               te
               value={this.state.VerifyMessage}
@@ -454,6 +454,7 @@ export default class SuspendReport extends PureComponent {
                 textAlignVertical: 'top',
                 marginLeft: 15,
                 marginTop: 12,
+                color: '#333'
               }}
             />
           </View>
@@ -468,7 +469,7 @@ export default class SuspendReport extends PureComponent {
             <SDLText
               style={[
                 styles.texttitleStyle,
-                {marginLeft: 13, color: '#333', marginTop: 15},
+                { marginLeft: 13, color: '#333', marginTop: 15 },
               ]}>
               添加附件：
             </SDLText>
@@ -510,7 +511,26 @@ export default class SuspendReport extends PureComponent {
                     );
                     return;
                   }
-                  this.refs.doAlert.show();
+                  SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                    if (err) {
+                      // 取消选择
+                      return;
+                    }
+
+                    if (selectedPhotos.length <= 0) {
+                      return;
+                    } else {
+                      ShowLoadingToast('正在上传图片');
+                      that.props.dispatch(
+                        createAction('imageModel/uploadimage')({
+                          images: selectedPhotos,
+                          uuid: uuid,
+                          callback: this.uploadImageCallBack
+                        })
+                      );
+                    }
+                  });
+                  // this.refs.doAlert.show();
 
                   // ImagePicker.showImagePicker(options, response => {
                   //     if (response.didCancel) {
@@ -550,7 +570,7 @@ export default class SuspendReport extends PureComponent {
           <Modal
             visible={this.state.modalVisible}
             transparent={true}
-            onRequestClose={() => this.setState({modalVisible: false})}>
+            onRequestClose={() => this.setState({ modalVisible: false })}>
             <ImageViewer
               saveToLocalByLongPress={false}
               onClick={() => {
@@ -625,7 +645,7 @@ export default class SuspendReport extends PureComponent {
             height: 52,
             backgroundColor: globalcolor.headerBackgroundColor,
           }}>
-          <Text style={{color: '#ffffff', fontSize: 18}}>{'确定'}</Text>
+          <Text style={{ color: '#ffffff', fontSize: 18 }}>{'确定'}</Text>
         </TouchableOpacity>
         <OperationAlertDialog options={dialogOptions} ref="doAlert" />
       </View>

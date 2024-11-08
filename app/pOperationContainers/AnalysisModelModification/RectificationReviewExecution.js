@@ -2,8 +2,8 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-11-01 16:56:11
- * @LastEditTime: 2024-01-03 10:48:47
- * @FilePath: /SDLMainProject37/app/pOperationContainers/AnalysisModelModification/RectificationReviewExecution.js
+ * @LastEditTime: 2024-11-07 17:14:18
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/AnalysisModelModification/RectificationReviewExecution.js
  */
 import {
   Text,
@@ -15,8 +15,8 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import React, {Component} from 'react';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import React, { Component } from 'react';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import SyanImagePicker from 'react-native-syan-image-picker';
 import {
   NavigationActions,
@@ -35,12 +35,12 @@ import {
   SimpleLoadingComponent,
   StatusPage,
 } from '../../components';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../config/globalsize';
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../config/globalsize';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import {IMAGE_DEBUG, ImageUrlPrefix, UrlInfo} from '../../config';
+import { IMAGE_DEBUG, ImageUrlPrefix, UrlInfo } from '../../config';
 import globalcolor from '../../config/globalcolor';
-import {connect} from 'react-redux';
-import {getEncryptData} from '../../dvapack/storage';
+import { connect } from 'react-redux';
+import { getEncryptData } from '../../dvapack/storage';
 const options = {
   mediaType: 'photo',
   quality: 0.7,
@@ -52,7 +52,7 @@ const options = {
   },
 };
 
-@connect(({modelAnalysisAectificationModel}) => ({
+@connect(({ modelAnalysisAectificationModel }) => ({
   recheckItemId: modelAnalysisAectificationModel.recheckItemId,
   checkedRectificationResult:
     modelAnalysisAectificationModel.checkedRectificationResult,
@@ -112,17 +112,16 @@ export default class RectificationReviewExecution extends Component {
       const source =
         item.attachID != ''
           ? {
-              uri: IMAGE_DEBUG
-                ? `${ImageUrlPrefix}/${nameArray[nameArray.length - 1]}`
-                : `${ImageUrlPrefix}${ProxyCode}/${
-                    nameArray[nameArray.length - 1]
-                  }`,
-            }
+            uri: IMAGE_DEBUG
+              ? `${ImageUrlPrefix}/${nameArray[nameArray.length - 1]}`
+              : `${ImageUrlPrefix}${ProxyCode}/${nameArray[nameArray.length - 1]
+              }`,
+          }
           : require('../../images/addpic.png');
       rtnVal.push(
         <View
           key={item.attachID}
-          style={{width: SCREEN_WIDTH / 4 - 5, height: SCREEN_WIDTH / 4 - 5}}>
+          style={{ width: SCREEN_WIDTH / 4 - 5, height: SCREEN_WIDTH / 4 - 5 }}>
           <Image
             resizeMethod={'resize'}
             source={source}
@@ -136,12 +135,12 @@ export default class RectificationReviewExecution extends Component {
           />
           <TouchableOpacity
             onPress={() => {
-              this.setState({modalVisible: true, index: key});
+              this.setState({ modalVisible: true, index: key });
             }}
-            style={[{position: 'absolute', bottom: 0, left: 0}]}>
+            style={[{ position: 'absolute', bottom: 0, left: 0 }]}>
             <View
               style={[
-                {height: SCREEN_WIDTH / 4 - 10, width: SCREEN_WIDTH / 4 - 15},
+                { height: SCREEN_WIDTH / 4 - 10, width: SCREEN_WIDTH / 4 - 15 },
               ]}
             />
           </TouchableOpacity>
@@ -176,10 +175,10 @@ export default class RectificationReviewExecution extends Component {
                   }),
                 );
               }}
-              style={[{position: 'absolute', top: 2, right: 2}]}>
+              style={[{ position: 'absolute', top: 2, right: 2 }]}>
               <Image
                 source={require('../../images/ic_close_blue.png')}
-                style={{width: 16, height: 16}}
+                style={{ width: 16, height: 16 }}
               />
             </TouchableOpacity>
           ) : null}
@@ -205,13 +204,12 @@ export default class RectificationReviewExecution extends Component {
             // url: `${UrlInfo.DataAnalyze}/${item.url}`
             url: IMAGE_DEBUG
               ? `${ImageUrlPrefix}/${nameArray[nameArray.length - 1]}`
-              : `${ImageUrlPrefix}${ProxyCode}/${
-                  nameArray[nameArray.length - 1]
-                }`,
+              : `${ImageUrlPrefix}${ProxyCode}/${nameArray[nameArray.length - 1]
+              }`,
           });
         });
 
-        return {imagelist: newImagelist, refresh, imgUrls: newImgUrls};
+        return { imagelist: newImagelist, refresh, imgUrls: newImgUrls };
       });
       CloseToast('上传成功');
     } else {
@@ -220,7 +218,7 @@ export default class RectificationReviewExecution extends Component {
     }
   };
 
-  cancelButton = () => {};
+  cancelButton = () => { };
   confirm = () => {
     this.props.dispatch(
       createAction('modelAnalysisAectificationModel/checkedRectification')({
@@ -239,7 +237,7 @@ export default class RectificationReviewExecution extends Component {
           );
           this.props.dispatch(
             createAction('modelAnalysisAectificationModel/updateState')({
-              checkedRectificationListGResult: {status: -1},
+              checkedRectificationListGResult: { status: -1 },
             }),
           );
           this.props.dispatch(NavigationActions.back());
@@ -268,14 +266,14 @@ export default class RectificationReviewExecution extends Component {
       buttons: [
         {
           txt: '取消',
-          btnStyle: {backgroundColor: 'transparent'},
-          txtStyle: {color: globalcolor.headerBackgroundColor},
+          btnStyle: { backgroundColor: 'transparent' },
+          txtStyle: { color: globalcolor.headerBackgroundColor },
           onpress: this.cancelButton,
         },
         {
           txt: '确定',
-          btnStyle: {backgroundColor: globalcolor.headerBackgroundColor},
-          txtStyle: {color: '#ffffff'},
+          btnStyle: { backgroundColor: globalcolor.headerBackgroundColor },
+          txtStyle: { color: '#ffffff' },
           onpress: this.confirm,
         },
       ],
@@ -295,11 +293,11 @@ export default class RectificationReviewExecution extends Component {
       buttons: [
         {
           txt: '打开相机',
-          btnStyle: {backgroundColor: '#fff'},
-          txtStyle: {color: '#f97740', fontSize: 15, fontWeight: 'bold'},
+          btnStyle: { backgroundColor: '#fff' },
+          txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
           onpress: () => {
             launchCamera(options, response => {
-              const {assets = []} = response;
+              const { assets = [] } = response;
               let imageObj = null;
               if (assets.length <= 0) {
                 return;
@@ -321,12 +319,12 @@ export default class RectificationReviewExecution extends Component {
         },
         {
           txt: '选择照片',
-          btnStyle: {backgroundColor: '#fff'},
-          txtStyle: {color: '#f97740', fontSize: 15, fontWeight: 'bold'},
+          btnStyle: { backgroundColor: '#fff' },
+          txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
           onpress: () => {
             launchImageLibrary(options, response => {
               console.log('response = ', response);
-              const {assets = []} = response;
+              const { assets = [] } = response;
               let imageObj = null;
               if (assets.length <= 0) {
                 return;
@@ -364,7 +362,7 @@ export default class RectificationReviewExecution extends Component {
           console.log('错误操作回调');
           // this.statusPageOnRefresh();
         }}>
-        <ScrollView style={[{flex: 1, paddingTop: 13}]}>
+        <ScrollView style={[{ flex: 1, paddingTop: 13 }]}>
           <View
             style={{
               flexDirection: 'row',
@@ -381,15 +379,15 @@ export default class RectificationReviewExecution extends Component {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <SDLText style={{color: 'red'}}>*</SDLText>
+              <SDLText style={{ color: 'red' }}>*</SDLText>
               <SDLText style={{}}>复核结果</SDLText>
             </View>
             <SelectButton
               editable={this.props.editCommitEnable}
-              style={{flexDirection: 'row', width: 200}} //整个组件的样式----这样可以垂直和水平
-              conTainStyle={{height: 44, width: 80}} //图片和文字的容器样式
-              imageStyle={{width: 18, height: 18}} //图片样式
-              textStyle={{color: '#666'}} //文字样式
+              style={{ flexDirection: 'row', width: 200 }} //整个组件的样式----这样可以垂直和水平
+              conTainStyle={{ height: 44, width: 80 }} //图片和文字的容器样式
+              imageStyle={{ width: 18, height: 18 }} //图片样式
+              textStyle={{ color: '#666' }} //文字样式
               selectIndex={this.state.approvalStatus} //空字符串,表示不选中,数组索引表示默认选中
               data={this.state.dataArray} //数据源
               onPress={(index, item) => {
@@ -420,8 +418,8 @@ export default class RectificationReviewExecution extends Component {
               backgroundColor: '#ffffff',
               padding: 13,
             }}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <SDLText style={{color: 'red'}}>*</SDLText>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <SDLText style={{ color: 'red' }}>*</SDLText>
               <SDLText style={{}}>复核意见</SDLText>
             </View>
             <TextInput
@@ -434,7 +432,7 @@ export default class RectificationReviewExecution extends Component {
                 // newObj.approvalRemarks = text;
                 // //动态更新组件内state 记录输入内容
                 // this.props.dispatch(createAction('alarmAnaly/updateState')({ alarmVerifyDetail: { ...this.props.alarmVerifyDetail, data: { Datas: newObj } } }));
-                this.setState({approvalRemarks: text});
+                this.setState({ approvalRemarks: text });
               }}
               value={this.state.approvalRemarks}
               multiline={true}
@@ -467,7 +465,7 @@ export default class RectificationReviewExecution extends Component {
                 alignItems: 'center',
                 justifyContent: 'flex-start',
               }}>
-              <SDLText style={{color: 'red'}}> </SDLText>
+              <SDLText style={{ color: 'red' }}> </SDLText>
               <SDLText style={{}}>附件</SDLText>
             </View>
             <View
@@ -486,7 +484,7 @@ export default class RectificationReviewExecution extends Component {
                   onPress={() => {
                     if (Platform.OS == 'ios') {
                       SyanImagePicker.showImagePicker(
-                        {imageCount: 1},
+                        { imageCount: 1 },
                         (err, selectedPhotos) => {
                           if (err) {
                             // 取消选择
@@ -510,7 +508,26 @@ export default class RectificationReviewExecution extends Component {
                       );
                       return;
                     }
-                    this.refs.doAlert.show();
+                    SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                      if (err) {
+                        // 取消选择
+                        return;
+                      }
+
+                      if (selectedPhotos.length <= 0) {
+                        return;
+                      } else {
+                        ShowLoadingToast('正在上传图片');
+                        that.props.dispatch(
+                          createAction('imageModel/uploadimage')({
+                            images: selectedPhotos,
+                            uuid: uuid,
+                            callback: this.uploadImageCallBack
+                          })
+                        );
+                      }
+                    });
+                    // this.refs.doAlert.show();
                   }}
                   style={{
                     width: SCREEN_WIDTH / 4 - 25,
@@ -532,7 +549,7 @@ export default class RectificationReviewExecution extends Component {
             {this.props.editCommitEnable == true ? (
               <TouchableOpacity
                 onPress={() => {
-                  const {approvalStatus, approvalRemarks} = this.state;
+                  const { approvalStatus, approvalRemarks } = this.state;
                   if (
                     approvalStatus == '' ||
                     approvalRemarks == '' ||
@@ -554,7 +571,7 @@ export default class RectificationReviewExecution extends Component {
                   height: 52,
                   backgroundColor: globalcolor.headerBackgroundColor,
                 }}>
-                <Text style={{color: '#ffffff', fontSize: 18}}>{'保存'}</Text>
+                <Text style={{ color: '#ffffff', fontSize: 18 }}>{'保存'}</Text>
               </TouchableOpacity>
             ) : null}
           </View>
@@ -562,7 +579,7 @@ export default class RectificationReviewExecution extends Component {
           <Modal
             visible={this.state.modalVisible}
             transparent={true}
-            onRequestClose={() => this.setState({modalVisible: false})}>
+            onRequestClose={() => this.setState({ modalVisible: false })}>
             <ImageViewer
               saveToLocalByLongPress={false}
               onClick={() => {

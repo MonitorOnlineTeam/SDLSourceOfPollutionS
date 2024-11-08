@@ -2,8 +2,8 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-06-16 17:09:37
- * @LastEditTime: 2024-10-12 15:53:09
- * @FilePath: /SDLMainProject/app/pOperationModels/index.js
+ * @LastEditTime: 2024-10-31 11:51:24
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/index.js
  */
 /**
  * 已迁移 未完成
@@ -62,7 +62,7 @@ import CT7FormModel from './CT7FormModel';
 import CTWorkRecordModel from './CTWorkRecordModel';
 import CTParameterSettingPicModel from './CTParameterSettingPicModel';
 import CTInstallationPhotosModel from './CTInstallationPhotosModel';
-// import modelAnalysisAectificationModel from './modelAnalysisAectificationModel';
+import modelAnalysisAectificationModel from './modelAnalysisAectificationModel';
 import signInModel from './signInModel';
 import CTServiceStatisticsModel from './CTServiceStatisticsModel';
 import CTEquipmentPicAuditModel from './CTEquipmentPicAuditModel';
@@ -70,7 +70,7 @@ import CTServiceReminderModel from './CTServiceReminderModel';
 import CTServiceReportRectificationModel from './CTServiceReportRectificationModel';
 import operationPlanModel from './operationPlanModel';
 import CTSparePartsChangeModel from './CTSparePartsChangeModel';
-// import GeneralSearchModel from './GeneralSearchModel';
+import GeneralSearchModel from './GeneralSearchModel';
 import historyDataModel from './historyDataModel';
 // import requestTestModel from './requestTestModel';
 import baseModel from './model';
@@ -131,14 +131,14 @@ export function registerModels(app) {
     app.model(CTParameterSettingPicModel); // 成套 参数设置照片
     app.model(CTInstallationPhotosModel); // 成套 安装照片
     app.model(CTServiceStatisticsModel); // 成套 派单详情 服务统计
-    // app.model(modelAnalysisAectificationModel); // 模型报警整改
+    app.model(modelAnalysisAectificationModel); // 模型报警整改
     app.model(signInModel); // 签到相关
     app.model(CTEquipmentPicAuditModel); // 签到相关
     app.model(CTServiceReminderModel); // 服务提醒
     app.model(CTServiceReportRectificationModel); // 服务报告整改
     app.model(operationPlanModel); // 运维计划
     app.model(CTSparePartsChangeModel); // 成套 备件更换
-    // app.model(GeneralSearchModel); // 通用搜索model
+    app.model(GeneralSearchModel); // 通用搜索model
     app.model(historyDataModel); // 历史数据model
     // app.model(requestTestModel); // 网络请求本地测试
 

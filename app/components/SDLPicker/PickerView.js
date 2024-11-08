@@ -1,6 +1,6 @@
 //import liraries
 import React, { PureComponent } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, StatusBar } from 'react-native';
 import moment from 'moment';
 
 
@@ -160,25 +160,29 @@ class PickerView extends PureComponent {
             <ModalParent
                 orientation={this.props.orientation}
                 ref={ref => this._modalParent = ref}>
+                <StatusBar hidden={true} />
                 <Mask
                     orientation={this.props.orientation}
                     hideDialog={() => {
                         console.log('hideDialog');
                         this._modalParent.hideModal();
                     }}>
-                    {
-                        // this.renderContent()
-                    }
-
+                    <View
+                        style={[{ zIndex: 800 }]}
+                    >
+                        {
+                            this.renderContent()
+                        }
+                    </View>
                 </Mask>
-                <View style={[{
+                {/* <View style={[{
                     width: WINDOW_HEIGHT, height: calendarHeight + 45//295
-                    , flexDirection: 'row', backgroundColor: 'red'
+                    , flexDirection: 'row'
                 }]}>
                     {
                         this.renderContent()
                     }
-                </View>
+                </View> */}
             </ModalParent>
         );
     }

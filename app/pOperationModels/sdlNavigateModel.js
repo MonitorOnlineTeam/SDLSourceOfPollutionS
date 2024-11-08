@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-09-03 13:50:33
- * @LastEditTime: 2024-09-13 14:28:18
- * @FilePath: /SDLMainProject/app/pOperationModels/sdlNavigateModel.js
+ * @LastEditTime: 2024-10-28 10:25:06
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/sdlNavigateModel.js
  */
 // sdlNavigate
 
@@ -12,11 +12,14 @@ import { Model } from '../dvapack';
 import api from '../config/globalapi';
 import moment from 'moment';
 import Actions from '../utils/RouterUtils';
+import { DeviceEventEmitter } from 'react-native';
 
 export default Model.extend({
     namespace: 'sdlNavigate',
     state: {
         a: '',
+        routeList: [],
+        currentRoute: '',
     },
     reducers: {
         updateState(state, { payload }) {
@@ -34,6 +37,15 @@ export default Model.extend({
             Actions.navigate(payload.routeName, {
                 params: SentencedToEmpty(payload, ['params'], {})
             });
+            const { routeList } = yield select(state => state.sdlNavigate);
+            let newList = [...routeList, payload.routeName];
+            yield update({
+                routeList: newList,
+                currentRoute: payload.routeName
+            });
+            // if (payload.routeName == 'GTaskOfEnterprise') {
+            //     DeviceEventEmitter.emit('net401', 'true');
+            // }
         },
 
         /**
@@ -48,6 +60,10 @@ export default Model.extend({
                     { name: payload.routeName },
                 ],
             });
+            yield update({
+                routeList: [payload.routeName],
+                currentRoute: payload.routeName
+            });
         },
         /**
          * 返回上一级
@@ -57,6 +73,13 @@ export default Model.extend({
         *back({ payload }, { call, put, update, take, select }) {
             console.log('back effect payload = ', payload);
             Actions.back();
+            const { routeList } = yield select(state => state.sdlNavigate);
+            routeList.pop();
+            let newList = [...routeList];
+            yield update({
+                routeList: newList,
+                currentRoute: routeList[routeList.length - 1]
+            });
         },
     },
     subscriptions: {

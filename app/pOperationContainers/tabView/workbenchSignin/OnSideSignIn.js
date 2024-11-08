@@ -2,8 +2,8 @@
  * @Description: 现场签到
  * @LastEditors: hxf
  * @Date: 2024-01-31 08:34:22
- * @LastEditTime: 2024-09-19 10:49:39
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbenchSignin/OnSideSignIn.js
+ * @LastEditTime: 2024-11-01 13:44:41
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbenchSignin/OnSideSignIn.js
  */
 import {
     Image, ImageBackground, Text, TouchableOpacity
@@ -406,7 +406,7 @@ export default class OnSideSignIn extends Component {
                     <View style={[{
                         height: 48, paddingHorizontal: 10,
                     }]}>
-                        <Text>{'查看打卡范围'}</Text>
+                        <Text style={{ color: '#333333' }}>{'查看打卡范围'}</Text>
                     </View>
                 </TouchableOpacity>
                 {/* <TouchableOpacity></TouchableOpacity> */}

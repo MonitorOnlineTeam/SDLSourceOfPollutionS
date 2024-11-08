@@ -2,14 +2,17 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2024-10-15 15:34:19
- * @FilePath: /SDLMainProject/app/Router.js
+ * @LastEditTime: 2024-11-08 11:50:18
+ * @FilePath: /SDLSourceOfPollutionS/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
 import React, { useEffect } from 'react'
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { init, Geolocation } from 'react-native-amap-geolocation';
+
+import { ReactNativeUniappModule } from 'react-native-uniapp'
+
 
 import RootView from './framework/RootView';
 import Actions from './utils/RouterUtils';
@@ -24,7 +27,7 @@ import GTaskOfEnterprise from './pOperationContainers/tabView/workbench/GTaskOfE
 import { NavigationActions } from './utils';
 import { DeclareModule, SDLText } from './components';
 import { dispatch } from '../index'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import TaskRecord from './pOperationContainers/tabView/workbench/TaskRecord';
 import CreateTask from './pOperationContainers/tabView/workbench/CreateTask';
 import AnnouncementsList from './pOperationContainers/tabView/workbench/AnnouncementsList';
@@ -72,6 +75,10 @@ import OverWarning from './pOperationContainers/tabView/workbench/OverWarning';
 import OverAlarm from './pOperationContainers/tabView/workbench/OverAlarm';
 import ExceptionAlarm from './pOperationContainers/tabView/workbench/ExceptionAlarm';
 import MissAlarm from './pOperationContainers/tabView/workbench/MissAlarm';
+import AlarmHandleDetail from './pOperationContainers/tabView/workbench/AlarmHandleDetail';
+import AlarmResponseAlarmDetail from './pOperationContainers/tabView/workbench/AlarmResponseAlarmDetail';
+import AlarmResponseRecord from './pOperationContainers/tabView/workbench/AlarmResponseRecord';
+
 import AlarmRecords from './pollutionContainers/pointDetails/AlarmRecords';
 // import RemoteAlarmHandleEditer from './pOperationContainers/tabView/alarm/RemoteAlarmHandleEditer';
 // import Login from './components/page/login/Login';
@@ -217,6 +224,13 @@ import EquipmentAuditRectificationAppeal from './pOperationContainers/tabView/ch
 import ServiceReportRectificationMultipleEditor from './pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationMultipleEditor';
 import ServiceReportRectificationEditor from './pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationEditor';
 import ServiceReportRectificationAppeal from './pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationAppeal';
+import TaskTransfer from './operationContainers/taskViews/taskExecution/TaskTransfer';
+import SignInAddressSearchListView from './pOperationContainers/tabView/workbenchSignin/SignInAddressSearchListView';
+import GeneralRemoteSearchList from './components/GeneralRemoteSearchList';
+import ScopeMap from './operationContainers/taskViews/taskExecution/ScopeMap';
+import GeneralLocalSearchList from './components/GeneralLocalSearchList';
+import SparePartsChangeDetail from './pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeDetail';
+import SparePartsChangeUpdate from './pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeUpdate';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
 function Test() {
     return (
@@ -332,6 +346,8 @@ Actions.pushViewWithName(TestView, 'TestView', { title: '测试页面' });
 Actions.pushViewWithName(ContactOperation, 'ContactOperation', { title: '监测目标' });
 Actions.pushViewWithName(SearchListWithoutLoad, 'SearchListWithoutLoad', { title: '监测点选择' });
 Actions.pushViewWithName(GTasks, 'GTasks', { title: '待办任务' });
+Actions.pushViewWithName(TaskTransfer, 'TaskTransfer', { title: '任务转移' });
+
 Actions.pushViewWithName(TaskDetail, 'TaskDetail', { title: '任务详情' });
 Actions.pushViewWithName(WaterMaskCamera, 'WaterMaskCamera', { headerShown: false });
 Actions.pushViewWithName(OverData, 'OverData', { title: '超标数据' });
@@ -357,7 +373,8 @@ Actions.pushViewWithName(SupplementarySignIn, 'SupplementarySignIn', {
     )
 });
 Actions.pushViewWithName(SignInAddressMap, 'SignInAddressMap', { title: '地点微调' });
-
+Actions.pushViewWithName(SignInAddressSearchListView, 'SignInAddressSearchListView', { headerShown: false });
+Actions.pushViewWithName(ScopeMap, 'ScopeMap', { title: '查看打卡范围' });
 
 Actions.pushViewWithName(SignInStatistics, 'SignInStatistics', { title: '统计' });
 Actions.pushViewWithName(SupplementarySignInRecord, 'SupplementarySignInRecord', { title: '补签记录' });
@@ -415,6 +432,8 @@ Actions.pushViewWithName(CTProjectInfoList, 'CTProjectInfoList', { title: '项�
 // 成套备件更换
 Actions.pushViewWithName(SparePartsChangeEditor, 'SparePartsChangeEditor', { title: '备件更换' });
 Actions.pushViewWithName(SparePartsChangeRecords, 'SparePartsChangeRecords', { title: '备件更换历史记录' });
+Actions.pushViewWithName(SparePartsChangeDetail, 'SparePartsChangeDetail', { title: '更换详情' });
+Actions.pushViewWithName(SparePartsChangeUpdate, 'SparePartsChangeUpdate', { title: '备件更换' });
 
 // 数据报警
 Actions.pushViewWithName(OverWarning, 'OverWarning', { title: '超标预警' });
@@ -424,6 +443,13 @@ Actions.pushViewWithName(ExceptionAlarm, 'ExceptionAlarm', { title: '异常报�
 Actions.pushViewWithName(MissAlarm, 'MissAlarm', { title: '异常报警' });
 Actions.pushViewWithName(AlarmRecords, 'AlarmRecords', { title: '报警详情' });
 Actions.pushViewWithName(RemoteAlarmHandleEditer, 'RemoteAlarmHandleEditer', { title: '报警详情' });
+
+
+AlarmResponseRecord
+Actions.pushViewWithName(AlarmHandleDetail, 'AlarmHandleDetail', { title: '报警响应记录' });
+Actions.pushViewWithName(AlarmResponseAlarmDetail, 'AlarmResponseAlarmDetail', { title: '报警详情' });
+Actions.pushViewWithName(AlarmResponseRecord, 'AlarmResponseRecord', { title: '报警响应记录' });
+
 
 Actions.pushViewWithName(OverAlarmVerify, 'OverAlarmVerify', { title: '超标核实' });
 // Actions.pushViewWithName(RemoteAlarmHandleEditer, 'RemoteAlarmHandleEditer', { title: '报警处理登记表' });
@@ -508,6 +534,8 @@ Actions.pushViewWithName(EquipmentFailureFeedbackList, 'EquipmentFailureFeedback
 Actions.pushViewWithName(EquipmentFailureFeedbackEdit, 'EquipmentFailureFeedbackEdit', { title: '故障反馈记录' }); //故障反馈记录
 Actions.pushViewWithName(EquipmentFailureFeedbackDetail, 'EquipmentFailureFeedbackDetail', { title: '故障反馈记录' }); //故障反馈记录
 
+Actions.pushViewWithName(GeneralRemoteSearchList, 'GeneralRemoteSearchList', { title: '本地列表' }); //本地列表
+Actions.pushViewWithName(GeneralLocalSearchList, 'GeneralLocalSearchList', { title: '本地列表' }); //本地列表
 
 
 
@@ -518,7 +546,9 @@ Actions.pushView(Test, { headerShown: false });
 
 const Stack = createNativeStackNavigator();
 export default function Router() {
-
+    // const { currentRoute } = useSelector(state => state.sdlNavigate);
+    const sdlNavigate = useSelector(state => state.sdlNavigate);
+    console.log('currentRoute  = ', sdlNavigate.currentRoute);
     useEffect(() => {
         async function initf() {
             await loadRootUrl();
@@ -536,8 +566,19 @@ export default function Router() {
             }); //后台定位~
         }
         initf();
+        ReactNativeUniappModule.init();
+        //监听401 重新登录
+        const listener401 = DeviceEventEmitter.addListener('net401', () => {
+            Actions.reset({
+                index: 1,
+                routes: [
+                    { name: 'Login' },
+                ],
+            });
+        });
         return () => {
             // componentWillUnmount
+            listener401.remove();
         }
     }, [])
 
@@ -575,6 +616,10 @@ export default function Router() {
                     name="RootView"
                     component={RootView}
                 />
+                {/* <Stack.Screen
+                    name="RootView"
+                    component={Test}
+                /> */}
             </Stack.Navigator>
         </NavigationContainer>
     );

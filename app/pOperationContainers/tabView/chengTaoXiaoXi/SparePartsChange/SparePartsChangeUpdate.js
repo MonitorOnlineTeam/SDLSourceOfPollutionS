@@ -2,8 +2,8 @@
  * @Description: 修改
  * @LastEditors: hxf
  * @Date: 2024-04-26 11:47:43
- * @LastEditTime: 2024-06-06 20:17:05
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeUpdate.js
+ * @LastEditTime: 2024-11-05 11:26:59
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeUpdate.js
  */
 import { Image, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
@@ -58,7 +58,7 @@ export default class SparePartsChangeUpdate extends Component {
         const user = getToken();
         console.log('props = ', props);
         let naviParams = SentencedToEmpty(props
-            , ['navigation', 'state'
+            , ['route', 'params'
                 , 'params', 'naviParams'
             ], {}
         )
@@ -130,7 +130,7 @@ export default class SparePartsChangeUpdate extends Component {
                 console.log('callback result = ', result);
                 const projectList = SentencedToEmpty(result, ['data', 'Datas'], [])
                 const naviParams = SentencedToEmpty(this.props
-                    , ['navigation', 'state'
+                    , ['route', 'params'
                         , 'params', 'naviParams'
                     ], {}
                 )
@@ -574,7 +574,7 @@ export default class SparePartsChangeUpdate extends Component {
                                     , flexDirection: 'row'
                                     , justifyContent: 'flex-end', alignItems: 'center'
                                 }]}>
-                                    <Text>{`${SentencedToEmpty(comiteParamsData, ['projectCode'], '')}`}</Text>
+                                    <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(comiteParamsData, ['projectCode'], '')}`}</Text>
                                     <Image
                                         resizeMode={'contain'}
                                         style={[{ height: 16, tintColor: globalcolor.blue }]}
@@ -766,7 +766,7 @@ export default class SparePartsChangeUpdate extends Component {
                                                 , flexDirection: 'row'
                                                 , justifyContent: 'flex-end', alignItems: 'center'
                                             }]}>
-                                                <Text>{`${SentencedToEmpty(comiteParamsData, ['systemModel'], '')}`}</Text>
+                                                <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(comiteParamsData, ['systemModel'], '')}`}</Text>
                                                 <Image
                                                     resizeMode={'contain'}
                                                     style={[{ height: 16, tintColor: globalcolor.blue }]}
@@ -960,6 +960,7 @@ export default class SparePartsChangeUpdate extends Component {
                                     <Text
                                         numberOfLines={1}
                                         style={[{
+                                            color: '#333333',
                                             width: SCREEN_WIDTH - 164, textAlign: 'right'
                                             , marginRight: 4
                                         }]}

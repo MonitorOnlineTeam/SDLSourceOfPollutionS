@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import {
   TouchableOpacity,
   View,
@@ -11,9 +11,9 @@ import {
   Text,
   ScrollView,
 } from 'react-native';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import SyanImagePicker from 'react-native-syan-image-picker';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import moment from 'moment';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {
@@ -34,12 +34,12 @@ import {
   ShowToast,
   SentencedToEmpty,
 } from '../../utils';
-import {SCREEN_WIDTH} from '../../config/globalsize';
-import {IMAGE_DEBUG, ImageUrlPrefix, UrlInfo} from '../../config/globalconst';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {SCREEN_HEIGHT} from '../../components/SDLPicker/constant/globalsize';
+import { SCREEN_WIDTH } from '../../config/globalsize';
+import { IMAGE_DEBUG, ImageUrlPrefix, UrlInfo } from '../../config/globalconst';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { SCREEN_HEIGHT } from '../../components/SDLPicker/constant/globalsize';
 import globalcolor from '../../config/globalcolor';
-import {getEncryptData, getRootUrl} from '../../dvapack/storage';
+import { getEncryptData, getRootUrl } from '../../dvapack/storage';
 const options = {
   mediaType: 'photo',
   quality: 0.7,
@@ -54,7 +54,7 @@ let that;
 /**
  * 异常上报
  */
-@connect(({enterpriseListModel, pointDetails}) => ({
+@connect(({ enterpriseListModel, pointDetails }) => ({
   abnormalListDGIMN: pointDetails.abnormalListDGIMN,
   commitStopResult: enterpriseListModel.commitStopResult,
   PollantCodes: pointDetails.PollantCodes,
@@ -131,7 +131,7 @@ export default class AbnormalityReport extends PureComponent {
     } else {
       ShowToast('提交失败');
     }
-    this.setState({loading: false});
+    this.setState({ loading: false });
   };
   getTimeSelectOption = () => {
     let defaultTime;
@@ -179,16 +179,16 @@ export default class AbnormalityReport extends PureComponent {
       const source =
         item.attachID != ''
           ? {
-              uri: IMAGE_DEBUG
-                ? `${ImageUrlPrefix}/${item.attachID}`
-                : `${ImageUrlPrefix}${ProxyCode}/thumb_${item.attachID}`,
-            }
+            uri: IMAGE_DEBUG
+              ? `${ImageUrlPrefix}/${item.attachID}`
+              : `${ImageUrlPrefix}${ProxyCode}/thumb_${item.attachID}`,
+          }
           : require('../../images/addpic.png');
       // const source = item.attachID != '' ? { uri: `${ImageUrlPrefix}/${item}` } : require('../../images/addpic.png');
       rtnVal.push(
         <View
           key={item.attachID}
-          style={{width: SCREEN_WIDTH / 4 - 5, height: SCREEN_WIDTH / 4 - 5}}>
+          style={{ width: SCREEN_WIDTH / 4 - 5, height: SCREEN_WIDTH / 4 - 5 }}>
           <Image
             resizeMethod={'resize'}
             source={source}
@@ -202,12 +202,12 @@ export default class AbnormalityReport extends PureComponent {
           />
           <TouchableOpacity
             onPress={() => {
-              this.setState({modalVisible: true, index: key});
+              this.setState({ modalVisible: true, index: key });
             }}
-            style={[{position: 'absolute', bottom: 0, left: 0}]}>
+            style={[{ position: 'absolute', bottom: 0, left: 0 }]}>
             <View
               style={[
-                {height: SCREEN_WIDTH / 4 - 10, width: SCREEN_WIDTH / 4 - 15},
+                { height: SCREEN_WIDTH / 4 - 10, width: SCREEN_WIDTH / 4 - 15 },
               ]}
             />
           </TouchableOpacity>
@@ -240,10 +240,10 @@ export default class AbnormalityReport extends PureComponent {
                 }),
               );
             }}
-            style={[{position: 'absolute', top: 2, right: 2}]}>
+            style={[{ position: 'absolute', top: 2, right: 2 }]}>
             <Image
               source={require('../../images/ic_close_blue.png')}
-              style={{width: 16, height: 16}}
+              style={{ width: 16, height: 16 }}
             />
           </TouchableOpacity>
         </View>,
@@ -279,7 +279,7 @@ export default class AbnormalityReport extends PureComponent {
             // }
           });
         });
-        return {imagelist: newImagelist, refresh, imgUrls: newImgUrls};
+        return { imagelist: newImagelist, refresh, imgUrls: newImgUrls };
       });
       CloseToast('上传成功');
     } else {
@@ -293,7 +293,7 @@ export default class AbnormalityReport extends PureComponent {
       createAction('pointDetails/updateState')({
         abnormalListIndex: 1,
         abnormalListTotal: 0,
-        abnormalListResult: {status: -1},
+        abnormalListResult: { status: -1 },
       }),
     );
     this.props.dispatch(createAction('pointDetails/getAbnormalList')({}));
@@ -307,7 +307,7 @@ export default class AbnormalityReport extends PureComponent {
     let that = this;
     let encryData = getEncryptData();
     const rootUrl = getRootUrl();
-    this.setState({encryData: encryData});
+    this.setState({ encryData: encryData });
     // AsyncStorage.getItem('encryptData', function(error, result) {
     //     if (error) {
     //         encryData = '';
@@ -338,12 +338,12 @@ export default class AbnormalityReport extends PureComponent {
           });
       });
     let fuben = [].concat(ims);
-    this.setState({imagelist: ims, imgUrls: fuben});
+    this.setState({ imagelist: ims, imgUrls: fuben });
 
     this.props.dispatch(
       createAction('pointDetails/getPollantCodes')({
-        params: {DGIMNs: this.props.abnormalListDGIMN},
-        callBack: () => {},
+        params: { DGIMNs: this.props.abnormalListDGIMN },
+        callBack: () => { },
       }),
     );
   }
@@ -357,8 +357,8 @@ export default class AbnormalityReport extends PureComponent {
       // maxNum: 3,
       selectCode: this.state.selectExcepTyopes.split(','),
       dataArr: this.state.excepTypes,
-      callback: ({selectCode, selectNameStr, selectCodeStr, selectData}) => {
-        this.setState({selectExcepTyopes: selectCodeStr});
+      callback: ({ selectCode, selectNameStr, selectCodeStr, selectData }) => {
+        this.setState({ selectExcepTyopes: selectCodeStr });
       },
     };
   };
@@ -381,12 +381,12 @@ export default class AbnormalityReport extends PureComponent {
       // maxNum: 3,
       selectCode: this.state.selectCodes.split(','),
       dataArr: dataSource,
-      callback: ({selectCode, selectNameStr, selectCodeStr, selectData}) => {
+      callback: ({ selectCode, selectNameStr, selectCodeStr, selectData }) => {
         if (selectCode.length < 1) {
           ShowToast('请至少选择一种因子');
           return;
         }
-        this.setState({selectCodes: selectCodeStr});
+        this.setState({ selectCodes: selectCodeStr });
       },
     };
   };
@@ -405,11 +405,11 @@ export default class AbnormalityReport extends PureComponent {
       buttons: [
         {
           txt: '打开相机',
-          btnStyle: {backgroundColor: '#fff'},
-          txtStyle: {color: '#f97740', fontSize: 15, fontWeight: 'bold'},
+          btnStyle: { backgroundColor: '#fff' },
+          txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
           onpress: () => {
             launchCamera(options, response => {
-              const {assets = []} = response;
+              const { assets = [] } = response;
               let imageObj = null;
               if (assets.length <= 0) {
                 return;
@@ -430,11 +430,11 @@ export default class AbnormalityReport extends PureComponent {
         },
         {
           txt: '选择照片',
-          btnStyle: {backgroundColor: '#fff'},
-          txtStyle: {color: '#f97740', fontSize: 15, fontWeight: 'bold'},
+          btnStyle: { backgroundColor: '#fff' },
+          txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
           onpress: () => {
             launchImageLibrary(options, response => {
-              const {assets = []} = response;
+              const { assets = [] } = response;
               let imageObj = null;
               if (assets.length <= 0) {
                 return;
@@ -456,7 +456,7 @@ export default class AbnormalityReport extends PureComponent {
       ],
     };
     return (
-      <View style={[{flex: 1}]}>
+      <View style={[{ flex: 1 }]}>
         <ScrollView>
           <View
             style={{
@@ -467,7 +467,7 @@ export default class AbnormalityReport extends PureComponent {
               justifyContent: 'space-between',
               backgroundColor: 'white',
             }}>
-            <SDLText style={{marginLeft: 13, color: 'red'}}>* 开始时间</SDLText>
+            <SDLText style={{ marginLeft: 13, color: 'red' }}>* 开始时间</SDLText>
             <SimplePickerSingleTime option={this.getTimeSelectOption()} />
           </View>
           <View
@@ -480,7 +480,7 @@ export default class AbnormalityReport extends PureComponent {
               backgroundColor: 'white',
               marginTop: 1,
             }}>
-            <SDLText style={{marginLeft: 13, color: 'red'}}>* 截止时间</SDLText>
+            <SDLText style={{ marginLeft: 13, color: 'red' }}>* 截止时间</SDLText>
             <SimplePickerSingleTime option={this.getTimeSelectOption2()} />
           </View>
           <View
@@ -493,7 +493,7 @@ export default class AbnormalityReport extends PureComponent {
               backgroundColor: 'white',
               marginTop: 1,
             }}>
-            <SDLText style={{marginLeft: 13, color: 'red'}}>
+            <SDLText style={{ marginLeft: 13, color: 'red' }}>
               * 选择污染物
             </SDLText>
             {this.props.PollantCodes.length > 0 ? (
@@ -502,7 +502,7 @@ export default class AbnormalityReport extends PureComponent {
                   this.simpleMultipleItemPicker2 = ref;
                 }}
                 option={this.getPointTypeOption()}
-                style={[{width: 210}]}
+                style={[{ width: 210 }]}
               />
             ) : null}
           </View>
@@ -516,14 +516,14 @@ export default class AbnormalityReport extends PureComponent {
               backgroundColor: 'white',
               marginTop: 1,
             }}>
-            <SDLText style={{marginLeft: 13, color: 'red'}}>* 异常类型</SDLText>
+            <SDLText style={{ marginLeft: 13, color: 'red' }}>* 异常类型</SDLText>
             {this.props.PollantCodes.length > 0 ? (
               <SimpleMultipleItemPicker
                 ref={ref => {
                   this.simpleMultipleItemPicker = ref;
                 }}
                 option={this.getExceptionOption()}
-                style={[{width: 210}]}
+                style={[{ width: 210 }]}
               />
             ) : null}
           </View>
@@ -535,22 +535,23 @@ export default class AbnormalityReport extends PureComponent {
               backgroundColor: 'white',
               marginTop: 1,
             }}>
-            <SDLText style={{marginLeft: 13, marginTop: 13, color: 'red'}}>
+            <SDLText style={{ marginLeft: 13, marginTop: 13, color: 'red' }}>
               * 异常描述：
             </SDLText>
             <TextInput
-              style={{color: '#333'}}
+              // style={{color: '#333'}}
               autoCapitalize={'none'}
               autoCorrect={false}
               underlineColorAndroid={'transparent'}
               onChangeText={text => {
                 //动态更新组件内state 记录输入内容
-                this.setState({ExceptionMsg: text});
+                this.setState({ ExceptionMsg: text });
               }}
               value={this.state.ExceptionMsg}
               multiline={true}
               placeholder="请输入原因备注"
               style={{
+                color: '#333',
                 width: SCREEN_WIDTH - 28,
                 height: 44,
                 backgroundColor: '#fff',
@@ -571,7 +572,7 @@ export default class AbnormalityReport extends PureComponent {
             <SDLText
               style={[
                 styles.texttitleStyle,
-                {marginLeft: 13, color: '#333', marginTop: 15},
+                { marginLeft: 13, color: '#333', marginTop: 15 },
               ]}>
               添加附件：
             </SDLText>
@@ -613,7 +614,26 @@ export default class AbnormalityReport extends PureComponent {
                     );
                     return;
                   }
-                  this.refs.doAlert.show();
+                  SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                    if (err) {
+                      // 取消选择
+                      return;
+                    }
+
+                    if (selectedPhotos.length <= 0) {
+                      return;
+                    } else {
+                      ShowLoadingToast('正在上传图片');
+                      that.props.dispatch(
+                        createAction('imageModel/uploadimage')({
+                          images: selectedPhotos,
+                          uuid: uuid,
+                          callback: this.uploadImageCallBack
+                        })
+                      );
+                    }
+                  });
+                  // this.refs.doAlert.show();
 
                   // ImagePicker.showImagePicker(options, response => {
                   //     if (response.didCancel) {
@@ -653,7 +673,7 @@ export default class AbnormalityReport extends PureComponent {
           <Modal
             visible={this.state.modalVisible}
             transparent={true}
-            onRequestClose={() => this.setState({modalVisible: false})}>
+            onRequestClose={() => this.setState({ modalVisible: false })}>
             <ImageViewer
               saveToLocalByLongPress={false}
               onClick={() => {
@@ -716,7 +736,7 @@ export default class AbnormalityReport extends PureComponent {
             backgroundColor: globalcolor.headerBackgroundColor,
             position: 'absolute',
           }}>
-          <Text style={{color: '#ffffff', fontSize: 18}}>{'确定'}</Text>
+          <Text style={{ color: '#ffffff', fontSize: 18 }}>{'确定'}</Text>
         </TouchableOpacity>
         <OperationAlertDialog options={dialogOptions} ref="doAlert" />
       </View>

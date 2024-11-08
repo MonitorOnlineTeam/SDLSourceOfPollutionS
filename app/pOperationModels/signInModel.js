@@ -2,8 +2,8 @@
  * @Description: 宝武相关事件
  * @LastEditors: hxf
  * @Date: 2023-05-06 08:44:32
- * @LastEditTime: 2024-04-23 18:05:41
- * @FilePath: /SDLMainProject37_backup/app/pOperationModels/signInModel.js
+ * @LastEditTime: 2024-11-06 10:46:09
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/signInModel.js
  */
 import { SentencedToEmpty, ShowToast, NavigationActions, bwFormatArray, CloseToast, createAction } from '../utils';
 import * as authService from '../services/auth';
@@ -12,6 +12,9 @@ import { Model } from '../dvapack';
 import api from '../config/globalapi';
 import moment from 'moment';
 import { getToken } from '../dvapack/storage';
+import { NativeModules } from 'react-native';
+
+const AMapPOISearch = NativeModules.AMapPOISearch;
 
 export default Model.extend({
     namespace: 'signInModel',

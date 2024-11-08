@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-04-26 11:47:43
- * @LastEditTime: 2024-05-16 14:48:05
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeEditor.js
+ * @LastEditTime: 2024-11-01 15:05:56
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeEditorTask.js
  */
 import { Image, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
@@ -555,7 +555,7 @@ export default class SparePartsChangeEditor extends Component {
                                     , flexDirection: 'row'
                                     , justifyContent: 'flex-end', alignItems: 'center'
                                 }]}>
-                                    <Text>{`${SentencedToEmpty(comiteParamsData, ['projectCode'], '')}`}</Text>
+                                    <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(comiteParamsData, ['projectCode'], '')}`}</Text>
                                     <Image
                                         resizeMode={'contain'}
                                         style={[{ height: 16, tintColor: globalcolor.blue }]}
@@ -825,6 +825,7 @@ export default class SparePartsChangeEditor extends Component {
                                     <Text
                                         numberOfLines={1}
                                         style={[{
+                                            color: '#333333',
                                             width: SCREEN_WIDTH - 164, textAlign: 'right'
                                             , marginRight: 4
                                         }]}

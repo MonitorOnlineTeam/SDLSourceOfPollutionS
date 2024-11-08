@@ -45,6 +45,10 @@ export default class SignInAddressSearchListView extends Component {
         this.getSurroundings();
     }
 
+    componentWillUnmount() {
+
+    }
+
     getSurroundingsNextPage = () => {
         console.log('getSurroundingsNextPage');
         let pageIndex = this.props.pageIndex + 1;
@@ -309,8 +313,10 @@ export default class SignInAddressSearchListView extends Component {
                 <TouchableOpacity
                     onPress={() => {
                         this.props.dispatch(createAction('signInModel/updateState')({
-                            pageIndex: 1
+                            pageIndex: 1,
+                            listStatus: -1,
                         }));
+                        this.props.dispatch(NavigationActions.back());
                         AMapPOISearch.doSearchQuery(
                             {
                                 keywords: '',
@@ -320,6 +326,7 @@ export default class SignInAddressSearchListView extends Component {
                             },
                             callback = (result) => {
                                 console.log(result);
+
                                 this.props.dispatch(createAction('signInModel/updateState')({
                                     listStatus: 200,
                                     selectedPoint: null,
@@ -327,7 +334,6 @@ export default class SignInAddressSearchListView extends Component {
                                     hasMore: SentencedToEmpty(result, ['assets'], []).length < SentencedToEmpty(result, ['count'], 0),
                                     listData: SentencedToEmpty(result, ['assets'], [])
                                 }));
-                                this.props.dispatch(NavigationActions.back());
                             }
                         );
                     }}
@@ -359,7 +365,7 @@ export default class SignInAddressSearchListView extends Component {
                             });
                         }}
                         value={this.state.keywords}
-                        style={{ marginLeft: 8, textAlign: 'left', flex: 1, height: 30, paddingVertical: 0 }}
+                        style={{ color: '#333333', marginLeft: 8, textAlign: 'left', flex: 1, height: 30, paddingVertical: 0 }}
                         underlineColorAndroid="transparent"
                         placeholder="请输入点位名称"
                     />

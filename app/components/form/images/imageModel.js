@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { AsyncStorage } from 'react-native';
+import { Alert, AsyncStorage } from 'react-native';
 import {
   EncodeUtf8,
   createAction,
@@ -22,6 +22,7 @@ import {
 } from '../../../dvapack/storage';
 import api from '../../../config/globalapi';
 import { UrlInfo } from '../../../config/globalconst';
+import axios from 'axios';
 
 export default Model.extend({
   namespace: 'imageModel',
@@ -62,6 +63,7 @@ export default Model.extend({
         // 多张
         images.map((imageItem, index) => {
           _file[index] = {
+            // uri: imageItem.uri,
             uri: imageItem.uri,
             type: 'multipart/form-data',
             name: `image${index}.jpg`,
@@ -73,15 +75,42 @@ export default Model.extend({
       formdata.append('FileUuid', uuid);
       // formdata.append('type', '2');
       // console.log('formdata = ', formdata);
+      // Alert.alert('上传中', JSON.stringify(formdata));
 
+      // // 使用axios发送请求
+      // axios.post(UrlInfo.BaseUrl + api.pollutionApi.Alarm.uploadimage
+      //   , formdata
+      //   , {
+      //     headers: {
+      //       'Content-Type': 'multipart/form-data',
+      //       authorization: 'Bearer ' + user.dataAnalyzeTicket,
+      //       ProxyCode: encryData,
+      //       Accept: 'application/json, text/plain, */*',
+      //       'Content-Type': 'multipart/form-data',
+      //     }
+      //   })
+      //   .then(response => {
+      //     console.log(response);
+      //     callback('', true);
+      //     Alert.alert('上传成功', JSON.stringify(response));
+      //   })
+      //   .catch(error => {
+      //     console.error(error);
+      //     callback('', false);
+      //     Alert.alert('失败', '123');
+      //   });
+      // Alert.alert('结束', '123');
       fetch(UrlInfo.BaseUrl + api.pollutionApi.Alarm.uploadimage, {
         method: 'POST',
         bodyType: 'file', //后端接收的类型
         body: formdata,
         headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
           authorization: 'Bearer ' + user.dataAnalyzeTicket,
           ProxyCode: encryData,
           Accept: 'application/json, text/plain, */*',
+          'Content-Type': 'multipart/form-data',
         },
       })
         .then(response => response.json())
@@ -89,7 +118,7 @@ export default Model.extend({
           if (res.StatusCode == 200) {
             //     console.log('typeof = ', typeof res);
             //     const response = res.json();
-            //     console.log('response = ', response);
+            console.log('res = ', res);
             //     debugger;
             //     // let urls = JSON.parse(res._bodyInit).Datas;
             // let urls = SentencedToEmpty(response, ['_j', 'Datas'], []);
@@ -112,12 +141,17 @@ export default Model.extend({
             });
             callback(images, true);
           } else {
-            callback(res.Message, false);
+            console.log('not 200 res = ', res);
+            callback(res, false);
           }
         })
         .catch(error => {
           // console.log('error = ', error);
-          callback('', false);
+          const msg = JSON.stringify(error)
+          callback(msg, false);
+          // Alert.alert("title", msg);
+          // Alert.alert("title", error);
+          // callback('', false);
         });
     },
     //反馈上传图片-服务端加水印
@@ -158,7 +192,7 @@ export default Model.extend({
       formdata.append('str_lat', imageParams.str_lat);
       formdata.append('str_long', imageParams.str_long);
 
-      // console.log('formdata = ', formdata);
+      console.log('formdata = ', formdata);
       // http://172.16.12.39:49003
       fetch(UrlInfo.BaseUrl + api.pollutionApi.Alarm.PostFilesAddWater, {
         // fetch('http://172.16.12.39:49003/' + api.pollutionApi.Alarm.PostFilesAddWater, {
@@ -197,7 +231,7 @@ export default Model.extend({
             let imageName = res.Datas.split('/').pop()
             callback([{ ...file, attachID: imageName }], true);
           } else {
-            callback(res._bodyInit, false);
+            callback(res, false);
           }
         })
         .catch(error => {

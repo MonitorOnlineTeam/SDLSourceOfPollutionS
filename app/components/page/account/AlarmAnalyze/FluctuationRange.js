@@ -62,7 +62,7 @@ export default class FluctuationRange extends Component {
                                 if (SentencedToEmpty(fluctuationRange, [item.PollutantCode, [0]], '').length != '') {
                                     return (
                                         <View style={{ marginTop: 10, height: 30, marginTop: 10 }}>
-                                            <Text>{`${item.PollutantName}:${fluctuationRange[item.PollutantCode][0]}-${fluctuationRange[item.PollutantCode][1]}${item.Unit}`}</Text>
+                                            <Text style={[{ color: '#333333' }]}>{`${item.PollutantName}:${fluctuationRange[item.PollutantCode][0]}-${fluctuationRange[item.PollutantCode][1]}${item.Unit}`}</Text>
                                         </View>
                                     );
                                 }

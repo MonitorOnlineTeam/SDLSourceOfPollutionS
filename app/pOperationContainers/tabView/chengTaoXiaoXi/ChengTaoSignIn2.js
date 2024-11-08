@@ -2,8 +2,8 @@
  * @Description:对成套打卡功能进行升级
  * @LastEditors: hxf
  * @Date: 2023-09-06 14:20:53
- * @LastEditTime: 2024-09-19 19:10:52
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoSignIn2.js
+ * @LastEditTime: 2024-11-01 16:56:17
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoSignIn2.js
  */
 import moment from 'moment';
 import React, { Component, PureComponent } from 'react';
@@ -439,7 +439,7 @@ class SignInComponent extends Component {
                     <View style={[{
                         height: 48, paddingHorizontal: 10,
                     }]}>
-                        <Text>{'查看打卡范围'}</Text>
+                        <Text style={[{ color: '#333333' }]}>{'查看打卡范围'}</Text>
                     </View>
                 </TouchableOpacity>
             </View>);
@@ -678,7 +678,7 @@ class SignInComponent extends Component {
                                             }
                                         ]}
                                     >
-                                        <Text numberOfLines={1} style={[{ width: SCREEN_WIDTH - 160 }]}>{`${this.getProjectName()}`}</Text>
+                                        <Text numberOfLines={1} style={[{ color: '#333333', width: SCREEN_WIDTH - 160 }]}>{`${this.getProjectName()}`}</Text>
                                         <Image style={[{ width: 15, height: 15, marginLeft: 8 }]} source={require('../../../images/calendarRight.png')} />
                                     </View>
                                 </View>

@@ -2,8 +2,8 @@
  * @Description: 成套位置异常展示地图
  * @LastEditors: hxf
  * @Date: 2024-01-25 14:39:41
- * @LastEditTime: 2024-01-25 15:22:44
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/CTSignInMap.js
+ * @LastEditTime: 2024-11-01 16:49:05
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/CTSignInMap.js
  */
 import React, { Component } from 'react';
 import { View, StyleSheet, Platform, TouchableOpacity, Text, Image } from 'react-native';
@@ -57,11 +57,11 @@ export default class CTSignInMap extends Component {
                         <View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                                 <Image style={{ height: 13, width: 13, marginRight: 8 }} source={require('../../../images/userlocal.png')} />
-                                <Text>{'您的当前位置'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'您的当前位置'}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                                 <Image style={{ height: 13, width: 13, marginRight: 8 }} source={require('../../../images/enterpriselocal.png')} />
-                                <Text>{this.isChengTaoSignIn() ? '项目位置' : '监测点位置'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{this.isChengTaoSignIn() ? '项目位置' : '监测点位置'}</Text>
                             </View>
                             {/* 大家都认为标记这个位置不合适
                             <View style={{flexDirection:'row', alignItems:'center',marginBottom:10}}>
@@ -74,11 +74,11 @@ export default class CTSignInMap extends Component {
 
                             {this.isChengTaoSignIn() ? null : <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                                 <Image style={{ height: 13, width: 13, marginRight: 8 }} source={require('../../../images/ic_audit_invalid.png')} />
-                                <Text>{'打卡异常的位置'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'打卡异常的位置'}</Text>
                             </View>}
                             {this.isChengTaoSignIn() ? null : <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                                 <Image style={{ height: 13, width: 13, marginRight: 8 }} source={require('../../../images/auditselect.png')} />
-                                <Text>{'无异常的打卡位置'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'无异常的打卡位置'}</Text>
                             </View>}
                         </View>
                     </View>

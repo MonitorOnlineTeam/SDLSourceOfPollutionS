@@ -1,5 +1,7 @@
 package com.sdlmainproject
 
+import android.app.Activity
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
@@ -9,8 +11,12 @@ import com.facebook.react.defaults.DefaultReactActivityDelegate
 class MainActivity : ReactActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+//        if (savedInstanceState != null) {
+//            savedInstanceState.remove("android:support:fragments");
+//            savedInstanceState.remove("android:fragments");
+//        }
         super.onCreate(savedInstanceState)
-//        requestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
   /**
@@ -26,3 +32,4 @@ class MainActivity : ReactActivity() {
   override fun createReactActivityDelegate(): ReactActivityDelegate =
       DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
 }
+

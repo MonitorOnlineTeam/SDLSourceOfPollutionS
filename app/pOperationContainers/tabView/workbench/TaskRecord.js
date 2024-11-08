@@ -6,7 +6,7 @@ import moment from 'moment';
 import { SCREEN_WIDTH } from '../../../config/globalsize';
 import { ShowToast, createNavigationOptions, createAction, SentencedToEmpty, NavigationActions } from '../../../utils';
 // import { StatusPagem, SimpleLoadingComponent, StatusPage, Touchable, SimplePickerRangeDay, FlatListWithHeaderAndFooter, SDLText, DeclareModule } from '../../../components';
-import { StatusPage, FlatListWithHeaderAndFooter, SDLText, DeclareModule } from '../../../components';
+import { StatusPage, FlatListWithHeaderAndFooter, SDLText, DeclareModule, SimplePickerRangeDay } from '../../../components';
 import TextLabel from '../../components/TextLabel';
 import { getToken } from '../../../dvapack/storage';
 import globalcolor from '../../../config/globalcolor';
@@ -141,7 +141,7 @@ export default class TaskRecord extends Component {
         return (
             <View style={styles.container}>
                 <View style={{ flexDirection: 'row', marginBottom: 10, width: SCREEN_WIDTH, alignItems: 'center', backgroundColor: '#fff' }}>
-                    {/* <SimplePickerRangeDay style={[{ width: SCREEN_WIDTH / 3, justifyContent: 'center' }]} ref={ref => (this.simplePickerRangeDay = ref)} option={this.getRangeDaySelectOption()} /> */}
+                    <SimplePickerRangeDay style={[{ width: SCREEN_WIDTH / 3, justifyContent: 'center' }]} ref={ref => (this.simplePickerRangeDay = ref)} option={this.getRangeDaySelectOption()} />
                     <View
                         style={{
                             height: 40,
@@ -160,6 +160,7 @@ export default class TaskRecord extends Component {
                             underlineColorAndroid="transparent"
                             placeholder={'企业、点位、工单类型'}
                             style={{
+                                color: '#333333',
                                 textAlign: 'center',
                                 width: SCREEN_WIDTH * 2 / 3 - 80,
                                 borderColor: '#cccccc',

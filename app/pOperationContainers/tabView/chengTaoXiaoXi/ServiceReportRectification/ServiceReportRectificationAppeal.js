@@ -2,8 +2,8 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-09-20 14:55:47
- * @LastEditTime: 2024-10-15 16:01:55
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationAppeal.js
+ * @LastEditTime: 2024-11-01 15:23:13
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationAppeal.js
  */
 import React, { Component } from 'react';
 import { Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -141,7 +141,7 @@ export default class ServiceReportRectificationAppeal extends Component {
                                 ]}
                             >
                                 <Text style={[{ color: 'red', marginRight: 4 }]}>{'*'}</Text>
-                                <Text>{'申诉描述'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'申诉描述'}</Text>
                             </View>
                             <View
                                 style={[
@@ -194,7 +194,7 @@ export default class ServiceReportRectificationAppeal extends Component {
                                     }
                                 ]}
                             >
-                                <Text>{'申诉图片'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'申诉图片'}</Text>
                             </View>
                             <View
                                 style={[

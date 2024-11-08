@@ -2,8 +2,8 @@
  * @Description: 成套签到项目列表
  * @LastEditors: hxf
  * @Date: 2023-09-21 09:19:56
- * @LastEditTime: 2024-01-12 11:31:23
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/CTProjectInfoList.js
+ * @LastEditTime: 2024-11-01 16:50:26
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/CTProjectInfoList.js
  */
 import React, { Component } from 'react'
 import { Platform, Text, TextInput, TouchableOpacity, View, Image, StyleSheet } from 'react-native'
@@ -129,6 +129,7 @@ export default class CTProjectInfoList extends Component {
                         />
                         <TextInput
                             style={[{
+                                color: '#333333',
                                 flex: 1
                                 , paddingVertical: 0
                                 , marginHorizontal: 5

@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-08-16 15:27:19
- * @LastEditTime: 2024-08-22 13:37:17
- * @FilePath: /SDLMainProject37/app/components/page/account/OfflineImageUploadList.js
+ * @LastEditTime: 2024-11-04 18:53:10
+ * @FilePath: /SDLSourceOfPollutionS/app/components/page/account/OfflineImageUploadList.js
  */
 import { Platform, ScrollView, Text, View, Image, TouchableOpacity } from 'react-native'
 import React, { Component } from 'react'
@@ -112,7 +112,7 @@ export default class OfflineImageUploadList extends Component {
                                     justifyContent: 'center',
                                 }]}
                             >
-                                <Text>{this.getRecordType(item)}</Text>
+                                <Text style={[{ color: '#333333' }]}>{this.getRecordType(item)}</Text>
                                 {/* <Text>{item.uuid}</Text> */}
                             </View>
                             {

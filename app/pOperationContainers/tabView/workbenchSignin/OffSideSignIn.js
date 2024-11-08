@@ -367,6 +367,7 @@ export default class OffSideSignIn extends Component {
                                     numberOfLines={1}
                                     style={[{
                                         flex: 1, marginHorizontal: 4
+                                        , color: '#333333'
                                     }]}
                                 >
                                     {`${SentencedToEmpty(this.props
@@ -405,6 +406,7 @@ export default class OffSideSignIn extends Component {
                             }]}>{'备注：'}</Text>
                             <TextInput
                                 style={[{
+                                    color: "#333333",
                                     flex: 1, height: 90
                                     , textAlign: 'right',
                                     textAlignVertical: 'top'

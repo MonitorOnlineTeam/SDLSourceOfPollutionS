@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-08-21 15:00:35
- * @LastEditTime: 2024-10-12 10:45:16
- * @FilePath: /SDLMainProject/app/pOperationModels/login.js
+ * @LastEditTime: 2024-11-05 14:09:42
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/login.js
  */
 // import { AsyncStorage } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -93,16 +93,13 @@ export default Model.extend({
     effects: {
         *loadglobalvariable({ payload }, { call, put, update, take }) {
             const { user, _dispatch } = payload;
-            console.log('loadglobalvariable 1');
-            // 获取通用配置信息
-            yield put({ type: 'app/getOperationSetting', payload: {} });
 
-            if (user.RoleIds == '2b345cf3-1440-4898-84c8-93f9a64f8daf') {
-                //运维人员
-                yield update({ proFlag: 1 });
-            } else if (user.RoleIds == '2b345cf3-1440-4898-84c8-93f9a64f8daf') {
-                yield update({ proFlag: 1 });
-            }
+            // if (user.RoleIds == '2b345cf3-1440-4898-84c8-93f9a64f8daf') {
+            //     //运维人员
+            //     yield update({ proFlag: 1 });
+            // } else if (user.RoleIds == '2b345cf3-1440-4898-84c8-93f9a64f8daf') {
+            //     yield update({ proFlag: 1 });
+            // }
             // setCookies(UrlInfo.FormUrl, user.Ticket);
             let workerBenchMenuData = [];
             let topLevelRouter = [];
@@ -125,7 +122,7 @@ export default Model.extend({
                 }
             });
             // let workerBenchMenuData = SentencedToEmpty(user, ['MenuDatas'], []);
-            console.log('workerBenchMenuData = ', workerBenchMenuData);
+            // console.log('workerBenchMenuData = ', workerBenchMenuData);
             // let editWorkBenchData = {};
             let editWorkBenchData = [];
             /**
@@ -147,127 +144,14 @@ export default Model.extend({
                     // editWorkBenchData.push(firstlevel);
                     testItem = { ...tabDataItem };
                     testItem.children = [tabDataItem];
-                    console.log('testItem ' + tabIndex + ' = ', testItem);
                 }
                 const { editWorkBenchDataResult, menuListResult } = secondlevelDataHandle(testItem);
-                console.log('editWorkBenchDataResult ' + tabIndex + ' = ', editWorkBenchDataResult);
-                // editWorkBenchData = editWorkBenchDataResult;
-                // menuList = menuListResult;
 
                 tabItem.editWorkBenchData = editWorkBenchDataResult;
                 tabItem.menuList = menuListResult;
                 tabList.push(tabItem);
             });
 
-            // workerBenchMenuData.map(item => {
-            //     (firstlevel = { ...item }), (secondlevel = []);
-            //     SentencedToEmpty(item, ['children'], []).map((innerItem, innerIndex) => {
-            //         switch (innerItem.id) {
-            //             case '27d6140f-0acb-4c54-bea1-61ef1ef36ac6':
-            //                 // 运维签到
-            //                 secondlevel.push({ ...innerItem, label: '运维签到', numkey: 'SignInEnter', countkey: 'SignInEnter', dcountkey: '', img: require('../images/ic_ct_sign_in.png') });
-            //                 menuList.push({ ...innerItem, label: '运维签到', numkey: 'SignInEnter', countkey: 'SignInEnter', dcountkey: '', img: require('../images/ic_ct_sign_in.png') })
-            //                 break;
-            //             case '0fc20ea8-5091-4d03-b964-8aa3e2dda124':
-            //                 // 待办任务
-            //                 // secondlevel.push({ label: '待办任务', numkey: 'GTaskOfEnterprise', countkey: 'TaskCount', dcountkey: '' });
-            //                 secondlevel.push({ ...innerItem, label: '待办任务', numkey: 'GTaskOfEnterprise', countkey: 'TaskCount', dcountkey: '' });
-            //                 menuList.push({ ...innerItem, label: '待办任务', numkey: 'GTaskOfEnterprise', countkey: 'TaskCount', dcountkey: '' })
-            //                 break;
-            //             case '2fa0ef8d-dd69-46a3-b159-5ab105912c0a':
-            //                 // 待我审批
-            //                 // secondlevel.push({ label: '待我审批', numkey: 'PerformApproval', countkey: 'PerformApprovalCount', dcountkey: 'PerformApprovalCount', params: { pageType: 1 }  });
-            //                 secondlevel.push({ ...innerItem, label: '待我审批', numkey: 'PerformApproval', countkey: 'PerformApprovalCount', dcountkey: 'PerformApprovalCount', params: { pageType: 1 } });
-            //                 menuList.push({ ...innerItem, label: '待我审批', numkey: 'PerformApproval', countkey: 'PerformApprovalCount', dcountkey: 'PerformApprovalCount', params: { pageType: 1 } });
-            //                 break;
-            //             case '401cc92e-7ef3-430f-8dc1-57d64b09c352':
-            //                 // 超标预警
-            //                 // secondlevel.push({ label: '超标预警', numkey: 'OverWarning', countkey: 'OverWarning', dcountkey: 'OverWarningCount' });
-            //                 secondlevel.push({ ...innerItem, label: '超标预警', numkey: 'OverWarning', countkey: 'OverWarning', dcountkey: 'OverWarningCount' });
-            //                 menuList.push({ ...innerItem, label: '超标预警', numkey: 'OverWarning', countkey: 'OverWarning', dcountkey: 'OverWarningCount' });
-            //                 break;
-            //             case 'e976cd64-86e9-4309-a471-41c141d9e15a':
-            //                 // 超标报警
-            //                 // secondlevel.push({ label: '超标报警', numkey: 'OverAlarm', countkey: 'OverCount', dcountkey: 'overAlarmCount' });
-            //                 secondlevel.push({ ...innerItem, label: '超标报警', numkey: 'OverAlarm', countkey: 'OverCount', dcountkey: 'overAlarmCount' });
-            //                 menuList.push({ ...innerItem, label: '超标报警', numkey: 'OverAlarm', countkey: 'OverCount', dcountkey: 'overAlarmCount' });
-            //                 break;
-            //             case 'bad20981-02ca-4063-bddb-69746bb14102':
-            //                 // 异常报警
-            //                 // secondlevel.push({ label: '异常报警', numkey: 'ExceptionAlarm', countkey: 'AlarmCount', dcountkey: 'exceptionAlarmCount' });
-            //                 secondlevel.push({ ...innerItem, label: '异常报警', numkey: 'ExceptionAlarm', countkey: 'AlarmCount', dcountkey: 'exceptionAlarmCount' });
-            //                 menuList.push({ ...innerItem, label: '异常报警', numkey: 'ExceptionAlarm', countkey: 'AlarmCount', dcountkey: 'exceptionAlarmCount' });
-            //                 break;
-            //             case '6d1e3a4b-397c-4c06-983e-a9c2f45176dd':
-            //                 // 缺失报警
-            //                 // secondlevel.push({ label: '缺失报警', numkey: 'MissAlarm', countkey: 'MissAlarm', dcountkey: 'missAlarmCount' });
-            //                 secondlevel.push({ ...innerItem, label: '缺失报警', numkey: 'MissAlarm', countkey: 'MissAlarm', dcountkey: 'missAlarmCount' });
-            //                 menuList.push({ ...innerItem, label: '缺失报警', numkey: 'MissAlarm', countkey: 'MissAlarm', dcountkey: 'missAlarmCount' });
-            //                 break;
-            //             case '735faa4e-4e9c-45cd-8802-f9553126acba':
-            //                 // 故障反馈
-            //                 // secondlevel.push({ label: '故障反馈', img: require('../images/renwujilu.png'), numkey: 'EquipmentFailureFeedbackList' });
-            //                 secondlevel.push({ ...innerItem, label: '故障反馈', img: require('../images/renwujilu.png'), numkey: 'EquipmentFailureFeedbackList' });
-            //                 menuList.push({ ...innerItem, label: '故障反馈', img: require('../images/renwujilu.png'), numkey: 'EquipmentFailureFeedbackList' });
-            //                 break;
-            //             case 'ae4426a8-cdd3-4d5d-b2da-2b5f349373a2':
-            //                 /**
-            //                  * 宝武运维
-            //                  * ae4426a8-cdd3-4d5d-b2da-2b5f349373a2
-            //                  * bwtask
-            //                  */
-            //                 secondlevel.push({ ...innerItem, label: '宝武运维', img: require('../images/renwujilu.png'), numkey: 'SHEnterpriseList' });
-            //                 menuList.push({ ...innerItem, label: '宝武运维', img: require('../images/renwujilu.png'), numkey: 'SHEnterpriseList' });
-            //                 break;
-            //             case 'f8c7b7dc-6441-40bb-bc7a-9bb4da5f211f':
-            //                 // 关键参数核查
-            //                 // secondlevel.push({ label: '关键参数核查', img: require('../images/renwujilu.png'), numkey: 'KeyParameterVerificationList' });
-            //                 secondlevel.push({ ...innerItem, label: '关键参数核查', img: require('../images/renwujilu.png'), numkey: 'KeyParameterVerificationList' });
-            //                 menuList.push({ ...innerItem, label: '关键参数核查', img: require('../images/renwujilu.png'), numkey: 'KeyParameterVerificationList' });
-            //                 break;
-            //             case '4e66e62b-66f1-41fe-a595-37312c549bdb':
-            //                 // 设施核查整改
-            //                 // secondlevel.push({ label: '设施核查整改', img: require('../images/renwujilu.png'), numkey: 'SuperviserRectifyList' });
-            //                 secondlevel.push({ ...innerItem, label: '设施核查整改', img: require('../images/renwujilu.png'), numkey: 'SuperviserRectifyList' });
-            //                 menuList.push({ ...innerItem, label: '设施核查整改', img: require('../images/renwujilu.png'), numkey: 'SuperviserRectifyList' });
-            //                 break;
-            //             case '021d1519-b23d-48fd-8130-0e0bf44bd728':
-            //                 // 宝武领取工单'
-            //                 secondlevel.push({ ...innerItem, label: '领取工单', img: require('../images/renwujilu.png'), numkey: 'ManualClaimTask' });
-            //                 menuList.push({ ...innerItem, label: '领取工单', img: require('../images/renwujilu.png'), numkey: 'ManualClaimTask' });
-            //                 break;
-            //             case '153aecef-0ca7-470e-8503-b6df1ef592bf':
-            //                 //  "数据报警/异常识别"
-            //                 secondlevel.push({ ...innerItem, label: '异常识别', img: require('../images/tongzhi.png'), numkey: 'AlarmSectionList' });
-            //                 menuList.push({ ...innerItem, label: '异常识别', img: require('../images/tongzhi.png'), numkey: 'AlarmSectionList' });
-            //                 break;
-            //             case '185ef6e1-96b4-48bd-b36f-2949a03fd8f2':
-            //                 //  "成套待办"
-            //                 secondlevel.push({ ...innerItem, label: '成套待办', img: require('../images/ic_ct_sign_in.png'), numkey: 'ChengTaoGTask' });
-            //                 menuList.push({ ...innerItem, label: '成套待办', img: require('../images/ic_ct_sign_in.png'), numkey: 'ChengTaoGTask' });
-            //                 break;
-            //             case 'b8b30732-3dae-46c4-aeaf-2114c0516c06':
-            //                 //  "成套签到"
-            //                 secondlevel.push({ ...innerItem, label: '成套签到', img: require('../images/ic_ct_sign_in.png'), numkey: 'ChengTaoSignIn' });
-            //                 menuList.push({ ...innerItem, label: '成套签到', img: require('../images/ic_ct_sign_in.png'), numkey: 'ChengTaoSignIn' });
-            //                 break;
-            //             case 'efbd94a3-e794-457b-91f7-592df4b91af4':
-            //                 //  "模型整改"
-            //                 secondlevel.push({ ...innerItem, label: innerItem.name, img: require('../images/ic_ct_sign_in.png'), numkey: 'AnalysisModelAbnormalRectificationList' });
-            //                 menuList.push({ ...innerItem, label: innerItem.name, img: require('../images/ic_ct_sign_in.png'), numkey: 'AnalysisModelAbnormalRectificationList' });
-            //                 break;
-            //             // case '':
-            //             //     //
-            //             //     break;
-            //         }
-            //     });
-            //     // firstlevel['name'] = item.name;
-            //     firstlevel.children = secondlevel;
-            //     // editWorkBenchData[item.id] = firstlevel;
-            //     editWorkBenchData.push(firstlevel);
-            // });
-            // yield update({ workerBenchMenu: editWorkBenchData });
-            // yield update({ menuList, workerBenchMenu: editWorkBenchData, initialRouteName });
             yield update({
                 menuList: SentencedToEmpty(tabList, [0, 'menuList'], []),
                 workerBenchMenu: SentencedToEmpty(tabList, [0, 'editWorkBenchData'], []),
@@ -275,6 +159,10 @@ export default Model.extend({
                 initialRouteName,
                 tabSelectIndex: 0
             });
+
+            yield put(NavigationActions.reset({ routeName: 'MyTab' }));
+            // 获取通用配置信息
+            yield put({ type: 'app/getOperationSetting', payload: {} });
             addAlias(user.UserId, (str = '') => {
                 if (str.indexOf('errorCode') != -1) {
                     _dispatch(
@@ -286,32 +174,10 @@ export default Model.extend({
                 }
             });
 
-            // yield saveRouterConfig([{ routeName: 'PollutionAll' }, { routeName: 'Workbench' }
-            //     , { routeName: 'chengTaoXiaoXi' }
-            //     , { routeName: 'Account' }]);
             yield saveRouterConfig(topLevelRouter);
             yield put({ type: 'map/resetPage', payload: {} }); //清空地图
 
-            // yield put(
-            //     createAction('alarm/getAlarmRecords')({
-            //         params: {
-            //             BeginTime: moment().format('YYYY-MM-DD 00:00:00'),
-            //             EndTime: moment().format('YYYY-MM-DD HH:mm:ss'),
-            //             AlarmType: '',
-            //             PageIndex: 1,
-            //             PageSize: 20
-            //         }
-            //     })
-            // );
-            // yield put(
-            //     createAction('websocket/GetAlarmNotices')({
-            //         isInit: true,
-            //         callBack: () => { }
-            //     })
-            // );
-            // yield put(createAction('configLoad/getPollutantTypeCode')({})); //获取大气的监测因子
             let websocketToken = yield loadWebsocketToken();
-            // console.log('websocketToken = ', websocketToken);
             if (websocketToken) {
                 console.log('websocketToken = ', websocketToken.websocketToken);
             }
@@ -359,18 +225,7 @@ export default Model.extend({
                     );
                 }, 5000);
             }
-            // yield put(
-            //     StackActions.reset({
-            //         index: 0,
-            //         actions: [NavigationActions.navigate({ routeName: 'HomeNavigator' })]
-            //     })
-            // );
-            Actions.reset({
-                index: 1,
-                routes: [
-                    { name: 'MyTab' },
-                ],
-            });
+
             if (typeof user.Complexity == 'boolean' && !user.Complexity) {
                 yield put(
                     createAction('account/updateState')({
@@ -457,7 +312,6 @@ export default Model.extend({
             //     (params.UserAccount = encrypt.encrypt(params.UserAccount)), (params.UserPwd = encrypt.encrypt(params.UserPwd)), (params.MenuID = encrypt.encrypt(params.MenuID));
             // }
 
-            console.log('params = ', params);
             const login = yield call(axiosAuthLogin, api.pollutionApi.Account.Login, params);
             let tokenData = null;
 
@@ -476,8 +330,6 @@ export default Model.extend({
                 console.log('tokenData = ', tokenData);
                 login.data.Datas.dataAnalyzeTicket = SentencedToEmpty(tokenData, ['data', 'access_token'], '');
             }
-            console.log('login 1');
-            console.log('login 1 login.status = ', login.status);
             if (login.status == 200) {
                 login.data.Datas.LocalPwd = payload.User_Pwd;
                 login.data.Datas.userSource = 'pOperation'; //运维标识 由于有些页面 污染源监控和运维是共用的 通过此标识区分开
@@ -487,8 +339,6 @@ export default Model.extend({
 
                 yield put('loadglobalvariable', { user: login.data.Datas, _dispatch });
             } else {
-                console.log('login 3');
-
                 if (SentencedToEmpty(login, ['data', 'Message'], '') == '请勾选阅读并接受《用户监测数据许可协议》') {
                     yield update({ loginData: { status: 200 }, needSignAgreement: true });
                 } else {
@@ -500,12 +350,13 @@ export default Model.extend({
         *logout(action, { call, put }) {
             yield clearToken();
             // removeAlias();
-            Actions.reset({
-                index: 1,
-                routes: [
-                    { name: 'Login' },
-                ],
-            });
+            // Actions.reset({
+            //     index: 1,
+            //     routes: [
+            //         { name: 'Login' },
+            //     ],
+            // });
+            yield put(NavigationActions.reset({ routeName: 'Login' }));
             // yield put(
             //     StackActions.reset({
             //         index: 0,

@@ -2,8 +2,8 @@
  * @Description: 帮助中心 搜索列表
  * @LastEditors: hxf
  * @Date: 2022-09-28 13:42:15
- * @LastEditTime: 2023-02-06 16:16:58
- * @FilePath: /SDLMainProject/app/components/page/account/HelpCenterSearchList.js
+ * @LastEditTime: 2024-11-04 18:56:03
+ * @FilePath: /SDLSourceOfPollutionS/app/components/page/account/HelpCenterSearchList.js
  */
 import React, { Component } from 'react'
 import { Platform, Text, View, Image, TouchableOpacity, TextInput } from 'react-native'
@@ -14,10 +14,10 @@ import { createAction, createNavigationOptions, SentencedToEmpty, NavigationActi
 import FlatListWithHeaderAndFooter from '../../FlatListWithHeaderAndFooter'
 import { StatusPage } from '../../StatusPages'
 
-@connect(({ helpCenter })=>({
-    QuestionDetialListResult:helpCenter.QuestionDetialListResult,
-    helpCenterData:helpCenter.helpCenterData,
-    helpCenterTotal:helpCenter.helpCenterTotal,
+@connect(({ helpCenter }) => ({
+    QuestionDetialListResult: helpCenter.QuestionDetialListResult,
+    helpCenterData: helpCenter.helpCenterData,
+    helpCenterTotal: helpCenter.helpCenterTotal,
 }))
 export default class HelpCenterSearchList extends Component {
 
@@ -27,10 +27,10 @@ export default class HelpCenterSearchList extends Component {
             headerTitleStyle: { flex: 1, textAlign: 'center', fontSize: 17, marginRight: Platform.OS === 'android' ? 76 : 0 } //标题居中
         });
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            QuestionName:''
+            QuestionName: ''
         }
     }
 
@@ -41,13 +41,13 @@ export default class HelpCenterSearchList extends Component {
         let QuestionName = this.state.QuestionName;// 由前一级传入
         this.props.dispatch(
             createAction('helpCenter/updateState')({
-                helpCenterPageIndex:1,
-                QuestionDetialListResult:{status:-1},
-                firstLevel:515
+                helpCenterPageIndex: 1,
+                QuestionDetialListResult: { status: -1 },
+                firstLevel: 515
             })
         );
         this.props.dispatch(createAction('helpCenter/getHelpCenterList')({
-            params:{ QuestionName }
+            params: { QuestionName }
         }))
     }
 
@@ -55,63 +55,69 @@ export default class HelpCenterSearchList extends Component {
         this.nextPage(1);
     }
 
-    nextPage = (index) =>{
+    nextPage = (index) => {
         let QuestionName = this.state.QuestionName;// 由前一级传入
         this.props.dispatch(
             createAction('helpCenter/updateState')({
-                helpCenterPageIndex:index,
+                helpCenterPageIndex: index,
             })
         );
-        this.props.dispatch(createAction('helpCenter/getNoticeContentList')({ 
+        this.props.dispatch(createAction('helpCenter/getNoticeContentList')({
             setListData: this.list.setListData,
-            params:{
+            params: {
                 QuestionName
             }
         }));
     }
 
-    renderItem = ({item,index}) => {
+    renderItem = ({ item, index }) => {
         let rootUrl = getRootUrl();
-        return(<TouchableOpacity
+        return (<TouchableOpacity
             key={`key${index}`}
-            onPress={()=>{
+            onPress={() => {
                 //  修改前 title:item.QuestionName 
-                this.props.dispatch(NavigationActions.navigate({ routeName: 'CusWebView', params: { CusUrl: rootUrl.ReactUrl+'/appoperation/appQuestionDetail/'+item.ID, title: '帮助中心', item, reloadList: () => {} } }));
+                this.props.dispatch(NavigationActions.navigate({ routeName: 'CusWebView', params: { CusUrl: rootUrl.ReactUrl + '/appoperation/appQuestionDetail/' + item.ID, title: '帮助中心', item, reloadList: () => { } } }));
             }}
         >
-            <View style={{width:SCREEN_WIDTH,backgroundColor:'white'}}>
-                <View style={{width:SCREEN_WIDTH-26,marginHorizontal:13
-                , minHeight:43, borderBottomWidth:1, borderBottomColor:'#E7E7E7'
-                , flexDirection:'row', alignItems:'center'
-                , justifyContent:'space-between'}}>
-                    <Text style={{ lineHeight:16, marginVertical:12}}>{`${item.QuestionName}`}</Text>
+            <View style={{ width: SCREEN_WIDTH, backgroundColor: 'white' }}>
+                <View style={{
+                    width: SCREEN_WIDTH - 26, marginHorizontal: 13
+                    , minHeight: 43, borderBottomWidth: 1, borderBottomColor: '#E7E7E7'
+                    , flexDirection: 'row', alignItems: 'center'
+                    , justifyContent: 'space-between'
+                }}>
+                    <Text style={{ color: '#333333', lineHeight: 16, marginVertical: 12 }}>{`${item.QuestionName}`}</Text>
                 </View>
             </View>
         </TouchableOpacity>);
     }
 
     render() {
-        return (<View style={{width:SCREEN_WIDTH, flex:1}}>
-            <View style={{height:48,width:SCREEN_WIDTH
-            , justifyContent:'center', alignItems:'center'
-            , backgroundColor:'#ffffff'}}>
-                <View style={{height:29,width:SCREEN_WIDTH-27
-                , borderRadius:5, backgroundColor:'#F4F4F4'
-                , flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+        return (<View style={{ width: SCREEN_WIDTH, flex: 1 }}>
+            <View style={{
+                height: 48, width: SCREEN_WIDTH
+                , justifyContent: 'center', alignItems: 'center'
+                , backgroundColor: '#ffffff'
+            }}>
+                <View style={{
+                    height: 29, width: SCREEN_WIDTH - 27
+                    , borderRadius: 5, backgroundColor: '#F4F4F4'
+                    , flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'
+                }}>
                     <Image source={require('../../../images/ic_search_help_center.png')}
-                        style={{width:14, height:14, marginLeft:10}}
+                        style={{ width: 14, height: 14, marginLeft: 10 }}
                     />
                     <TextInput
                         underlineColorAndroid="transparent"
                         placeholder={'请输入问题或关键字'}
                         style={{
-                            flex:1,color:'#999999',fontSize:14, marginLeft:5,
-                            padding:0
+                            flex: 1, color: '#999999', fontSize: 14, marginLeft: 5,
+                            padding: 0
                         }}
                         value={this.state.QuestionName}
                         onChangeText={text => {
                             this.setState({
-                                QuestionName:text
+                                QuestionName: text
                             });
                         }}
                         clearButtonMode="while-editing"
@@ -119,13 +125,13 @@ export default class HelpCenterSearchList extends Component {
                         placeholderTextColor={'#999999'}
                     />
                     {/* <Text style={{flex:1,color:'#999999',fontSize:14, marginLeft:5}}>{'请输入问题或关键字'}</Text> */}
-                    <View style={{height:22, width:0.5, backgroundColor:'#E7E7E7'}}></View>
+                    <View style={{ height: 22, width: 0.5, backgroundColor: '#E7E7E7' }}></View>
                     <TouchableOpacity
-                        onPress={()=>{
+                        onPress={() => {
                             this.statusPageOnRefresh();
                         }}
                     >
-                        <Text style={{color:'#666666',fontSize:14, marginHorizontal: 10}}>{'搜索'}</Text>
+                        <Text style={{ color: '#666666', fontSize: 14, marginHorizontal: 10 }}>{'搜索'}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -144,7 +150,7 @@ export default class HelpCenterSearchList extends Component {
                     this.statusPageOnRefresh();
                 }}
                 status={SentencedToEmpty(this.props
-                ,['QuestionDetialListResult','status'],200)}
+                    , ['QuestionDetialListResult', 'status'], 200)}
             >
                 <FlatListWithHeaderAndFooter
                     style={[{ backgroundColor: '#f2f2f2' }]}
@@ -162,7 +168,7 @@ export default class HelpCenterSearchList extends Component {
                         this.nextPage(index);
                     }}
                     renderItem={this.renderItem}
-                    data={SentencedToEmpty(this.props,['helpCenterData'],[])}
+                    data={SentencedToEmpty(this.props, ['helpCenterData'], [])}
                 />
             </StatusPage>
         </View>)

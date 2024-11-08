@@ -211,7 +211,7 @@ class EquipmentAbnormalForm extends Component {
                             ]}
                         >
                             <View style={styles.item}>
-                                <Text style={styles.label}>是否正常恢复运行</Text>
+                                <Text style={[styles.label, { color: '#333333' }]}>是否正常恢复运行</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <TouchableOpacity
                                         style={{ flexDirection: 'row', alignItems: 'center', padding: 20 }}
@@ -219,7 +219,7 @@ class EquipmentAbnormalForm extends Component {
                                             this.setState({ initId: '1' });
                                         }}
                                     >
-                                        <Text style={styles.value}>是</Text>
+                                        <Text style={[styles.value, { color: '#333333' }]}>是</Text>
                                         <Image source={this.state.initId == '1' ? require('../../../../images/duihao.png') : require('../../../../images/checkbox_off.png')} style={{ width: 15, height: 15, marginLeft: 12 }} />
                                     </TouchableOpacity>
                                     <TouchableOpacity
@@ -228,7 +228,7 @@ class EquipmentAbnormalForm extends Component {
                                             this.setState({ initId: '0' });
                                         }}
                                     >
-                                        <Text style={styles.value}>否</Text>
+                                        <Text style={[styles.value, { color: '#333333' }]}>否</Text>
                                         <Image source={this.state.initId == '0' ? require('../../../../images/cuohao.png') : require('../../../../images/checkbox_off.png')} style={{ width: 15, height: 15, marginLeft: 12 }} />
                                     </TouchableOpacity>
                                 </View>

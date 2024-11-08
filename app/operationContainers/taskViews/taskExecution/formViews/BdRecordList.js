@@ -561,7 +561,7 @@ class ListComponent extends Component {
                                 flex: 1, height: 42, justifyContent: 'center'
                                 , alignItems: 'center'
                             }}>
-                                <Text>{item.name}</Text>
+                                <Text style={[{ color: '#333333' }]}>{item.name}</Text>
                             </View>)
                         })
                     }

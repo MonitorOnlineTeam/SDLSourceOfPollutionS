@@ -46,7 +46,7 @@ export default class AqiBar extends PureComponent {
             tooltip: {
                 confine: false,
                 trigger: 'axis',
-                position: function(point, params, dom, rect, size) {
+                position: function (point, params, dom, rect, size) {
                     //其中point为当前鼠标的位置，size中有两个属性：viewSize和contentSize，分别为外层
                     //div和tooltip提示框的大小
                     let x = point[0]; //
@@ -73,7 +73,8 @@ export default class AqiBar extends PureComponent {
                         fontWeight: 'normal',
                         fontSize: 10
                     },
-                    formatter: function(value, index) {
+                    formatter: function (value, index) {
+                        'show source';
                         return value;
                     }
                 },
@@ -129,7 +130,7 @@ export default class AqiBar extends PureComponent {
                     name: 'AQI',
                     itemStyle: {
                         normal: {
-                            color: function(params) {
+                            color: function (params) {
                                 const iaqi = params.value;
                                 if (iaqi > 0 && iaqi <= 50) {
                                     return '#4cd077';

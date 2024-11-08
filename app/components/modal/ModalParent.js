@@ -106,7 +106,7 @@ class ModelParent extends PureComponent {
                                     }
                                 ]}
                             >
-                                <Text style={[{ width: (SCREEN_WIDTH * 4) / 5 - 60 }]}>{this.props.UpdateContent}</Text>
+                                <Text style={[{ color: '#333333', width: (SCREEN_WIDTH * 4) / 5 - 60 }]}>{this.props.UpdateContent}</Text>
                                 {this.state.canUpdate || true ? (
                                     <TouchableOpacity
                                         style={[{ marginTop: 15 }]}

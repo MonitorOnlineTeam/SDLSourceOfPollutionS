@@ -72,7 +72,6 @@ class RangeDay extends PureComponent {
     }
 
     render() {
-        // return (<View><Text>RangeDay</Text></View>)
         return (
             <View style={[styles.container,]}>
                 <View style={[{

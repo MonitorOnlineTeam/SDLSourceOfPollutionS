@@ -131,7 +131,8 @@ class SetEnterpriseInformation extends Component {
                                                     height: 48,
                                                     width: 240,
                                                     backgroundColor: globalcolor.white,
-                                                    textAlign: 'center'
+                                                    textAlign: 'center',
+                                                    color: '#333333'
                                                 }
                                             ]}
                                             maxLength={5}

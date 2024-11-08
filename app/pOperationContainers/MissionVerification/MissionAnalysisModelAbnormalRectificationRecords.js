@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-10-26 14:49:11
- * @LastEditTime: 2024-08-28 14:56:34
- * @FilePath: /SDLMainProject37/app/pOperationContainers/MissionVerification/MissionAnalysisModelAbnormalRectificationRecords.js
+ * @LastEditTime: 2024-11-04 10:06:14
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/MissionVerification/MissionAnalysisModelAbnormalRectificationRecords.js
  */
 import { Text, View, Platform, TouchableOpacity, Image } from 'react-native'
 import React, { Component } from 'react'
@@ -101,7 +101,7 @@ export default class MissionAnalysisModelAbnormalRectificationRecords extends Co
                         </Text>
                     </View>
                 </View>
-                <Text style={[{ marginTop: 6, width: SCREEN_WIDTH - 60, height: 63, marginLeft: 30 }]}
+                <Text style={[{ color: '#333333', marginTop: 6, width: SCREEN_WIDTH - 60, height: 63, marginLeft: 30 }]}
                     numberOfLines={3}
                 >
                     {`${SentencedToEmpty(item, ['CheckedDes'], '-----')}`}

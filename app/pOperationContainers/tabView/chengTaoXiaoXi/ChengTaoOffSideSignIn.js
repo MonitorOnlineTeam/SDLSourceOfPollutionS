@@ -358,6 +358,7 @@ export default class ChengTaoOffSideSignIn extends Component {
                                 <Text
                                     numberOfLines={1}
                                     style={[{
+                                        color: '#333333',
                                         flex: 1, marginHorizontal: 4
                                     }]}
                                 >
@@ -403,6 +404,7 @@ export default class ChengTaoOffSideSignIn extends Component {
                                     , lineHeight: 18
                                     , paddingVertical: 0
                                     , marginLeft: 4
+                                    , color: '#333333'
                                 }]}
 
                                 onChangeText={text => {

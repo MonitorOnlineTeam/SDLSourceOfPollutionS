@@ -554,7 +554,7 @@ class AlarmDetails extends PureComponent {
                 position:
                     showFlag == 1
                         ? function (pos, params, dom, rect, size) {
-                            // 鼠标在左侧时 tooltip 显示到右侧，鼠标在右侧时 tooltip 显示到左侧。
+                            'show source';
                             var obj = { top: 10 };
                             obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 5;
                             return obj;
@@ -563,9 +563,9 @@ class AlarmDetails extends PureComponent {
                 formatter:
                     showFlag == 1
                         ? function (params) {
+                            'show source';
                             var htmlStr = '<div style="height: auto;display: flex;flex-direction: column;justify-content:space-between;align-items:flex-start;"><span style="color: #fff;">' + params[0].axisValue + '</span>';
                             for (var i = 0; i < params.length; i++) {
-                                //   htmlStr += '<span style="color: #fff;">' + '工况：' + params[i].data.workingFlagName + '</span>';
                                 htmlStr += '<span style="color: #fff;">' + `${'工况：'}${params[i].data.workingFlagName}` + '</span>';
                                 htmlStr += '<span style="color: #fff;">' + params[i].marker + params[i].seriesName + ':' + params[i].value + params[i].data.unit + '(' + params[i].data.dataFlagName + ')' + '</span>';
                             }

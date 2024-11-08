@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import {
   TouchableOpacity,
   View,
@@ -11,9 +11,9 @@ import {
   Text,
   ScrollView,
 } from 'react-native';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import SyanImagePicker from 'react-native-syan-image-picker';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import moment from 'moment';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {
@@ -34,15 +34,15 @@ import {
   ShowToast,
   SentencedToEmpty,
 } from '../../../../utils';
-import {SCREEN_WIDTH} from '../../../../config/globalsize';
+import { SCREEN_WIDTH } from '../../../../config/globalsize';
 import {
   IMAGE_DEBUG,
   ImageUrlPrefix,
   UrlInfo,
 } from '../../../../config/globalconst';
-import {SCREEN_HEIGHT} from '../../../../components/SDLPicker/constant/globalsize';
+import { SCREEN_HEIGHT } from '../../../../components/SDLPicker/constant/globalsize';
 import globalcolor from '../../../../config/globalcolor';
-import {getEncryptData, getRootUrl} from '../../../../dvapack/storage';
+import { getEncryptData, getRootUrl } from '../../../../dvapack/storage';
 const options = {
   mediaType: 'photo',
   quality: 0.7,
@@ -57,7 +57,7 @@ let that;
 /**
  * 报警核实
  */
-@connect(({alarmAnaly}) => ({
+@connect(({ alarmAnaly }) => ({
   commitVerifyResult: alarmAnaly.commitVerifyResult,
   alarmVerifyDetail: alarmAnaly.alarmVerifyDetail,
   editCommitEnable: alarmAnaly.editCommitEnable,
@@ -124,17 +124,16 @@ export default class AlarmVerifyAnalyze extends PureComponent {
       const source =
         item.attachID != ''
           ? {
-              uri: IMAGE_DEBUG
-                ? `${ImageUrlPrefix}/${urlArray[urlArray.length - 1]}`
-                : `${ImageUrlPrefix}${ProxyCode}/${
-                    urlArray[urlArray.length - 1]
-                  }`,
-            }
+            uri: IMAGE_DEBUG
+              ? `${ImageUrlPrefix}/${urlArray[urlArray.length - 1]}`
+              : `${ImageUrlPrefix}${ProxyCode}/${urlArray[urlArray.length - 1]
+              }`,
+          }
           : require('../../../../images/addpic.png');
       rtnVal.push(
         <View
           key={item.attachID}
-          style={{width: SCREEN_WIDTH / 4 - 5, height: SCREEN_WIDTH / 4 - 5}}>
+          style={{ width: SCREEN_WIDTH / 4 - 5, height: SCREEN_WIDTH / 4 - 5 }}>
           <Image
             resizeMethod={'resize'}
             source={source}
@@ -148,12 +147,12 @@ export default class AlarmVerifyAnalyze extends PureComponent {
           />
           <TouchableOpacity
             onPress={() => {
-              this.setState({modalVisible: true, index: key});
+              this.setState({ modalVisible: true, index: key });
             }}
-            style={[{position: 'absolute', bottom: 0, left: 0}]}>
+            style={[{ position: 'absolute', bottom: 0, left: 0 }]}>
             <View
               style={[
-                {height: SCREEN_WIDTH / 4 - 10, width: SCREEN_WIDTH / 4 - 15},
+                { height: SCREEN_WIDTH / 4 - 10, width: SCREEN_WIDTH / 4 - 15 },
               ]}
             />
           </TouchableOpacity>
@@ -188,10 +187,10 @@ export default class AlarmVerifyAnalyze extends PureComponent {
                   }),
                 );
               }}
-              style={[{position: 'absolute', top: 2, right: 2}]}>
+              style={[{ position: 'absolute', top: 2, right: 2 }]}>
               <Image
                 source={require('../../../../images/ic_close_blue.png')}
-                style={{width: 16, height: 16}}
+                style={{ width: 16, height: 16 }}
               />
             </TouchableOpacity>
           ) : null}
@@ -218,13 +217,12 @@ export default class AlarmVerifyAnalyze extends PureComponent {
             // url: `${UrlInfo.DataAnalyze}/${item.url}`
             url: IMAGE_DEBUG
               ? `${ImageUrlPrefix}/${urlArray[urlArray.length - 1]}`
-              : `${ImageUrlPrefix}${ProxyCode}/${
-                  urlArray[urlArray.length - 1]
-                }`,
+              : `${ImageUrlPrefix}${ProxyCode}/${urlArray[urlArray.length - 1]
+              }`,
           });
         });
 
-        return {imagelist: newImagelist, refresh, imgUrls: newImgUrls};
+        return { imagelist: newImagelist, refresh, imgUrls: newImgUrls };
       });
       CloseToast('上传成功');
     } else {
@@ -236,12 +234,17 @@ export default class AlarmVerifyAnalyze extends PureComponent {
   componentWillUnmount() {
     this.props.dispatch(
       createAction('alarmAnaly/updateState')({
-        alarmVerifyDetail: {status: 200},
+        alarmVerifyDetail: { status: 200 },
       }),
     );
   }
 
   componentDidMount() {
+    this.props.dispatch(
+      createAction('alarmAnaly/updateState')({
+        commitVerifyResult: { status: 200 },
+      }),
+    );
     /**ModelGuid	ModelName
 069ab699-428a-4f4b-8df7-915d6b4f3215	气态污染物波动大幅减小
 0fa091a3-7a19-4c9e-91bd-c5a4bf2e9827	数据零值微小波动
@@ -268,7 +271,7 @@ cda1f2e2-ec5f-425b-93d2-94ba62b17146	数据恒定值微小波动
 ce61d9a9-5d0d-4b66-abbd-72a89e823ee2	污染物排放量异常
 d5dea4cc-bd6c-44fa-a122-a1f44514b465	与本设备历史数据高度一致
 f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
-    const {WarningType} = this.alarmObj[0];
+    const { WarningType } = this.alarmObj[0];
     if (
       WarningType == '0fa091a3-7a19-4c9e-91bd-c5a4bf2e9827' ||
       WarningType == 'cda1f2e2-ec5f-425b-93d2-94ba62b17146' ||
@@ -277,7 +280,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
       let newObj = SentencedToEmpty(
         this.props.alarmVerifyDetail,
         ['data', 'Datas'],
-        {CheckedResult: null, CheckedDes: null, FileList: []},
+        { CheckedResult: null, CheckedDes: null, FileList: [] },
       );
       newObj.CheckedResult = '2';
       //动态更新组件内state 记录输入内容
@@ -285,20 +288,20 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
         createAction('alarmAnaly/updateState')({
           alarmVerifyDetail: {
             ...this.props.alarmVerifyDetail,
-            data: {Datas: newObj},
+            data: { Datas: newObj },
           },
         }),
       );
-      this.setState({hideRadio: true});
+      this.setState({ hideRadio: true });
     }
     this.statusPageOnRefresh();
   }
-  statusPageOnRefresh = () => {};
+  statusPageOnRefresh = () => { };
   getTypeOption = () => {
-    let {UntruthReason} = SentencedToEmpty(
+    let { UntruthReason } = SentencedToEmpty(
       this.props.alarmVerifyDetail,
       ['data', 'Datas'],
-      {CheckedResult: null, CheckedDes: null, FileList: []},
+      { CheckedResult: null, CheckedDes: null, FileList: [] },
     );
     return {
       contentWidth: 166,
@@ -308,16 +311,16 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
       nameKey: 'TypeName',
       defaultCode: UntruthReason,
       dataArr: [
-        {ID: '湿度仪堵塞', TypeName: '湿度仪堵塞'},
-        {ID: '湿度仪故障', TypeName: '湿度仪故障'},
-        {ID: '标定', TypeName: '标定'},
-        {ID: '故障', TypeName: '故障'},
-        {ID: '公共烟道窜烟', TypeName: '公共烟道窜烟'},
-        {ID: '数采仪上传压力单位异常', TypeName: '数采仪上传压力单位异常'},
-        {ID: '启炉/停炉/停运未标记', TypeName: '启炉/停炉/停运未标记'},
-        {ID: '数采仪使用老版软件', TypeName: '数采仪使用老版软件'},
-        {ID: '数采仪调试', TypeName: '数采仪调试'},
-        {ID: '其他', TypeName: '其他'},
+        { ID: '湿度仪堵塞', TypeName: '湿度仪堵塞' },
+        { ID: '湿度仪故障', TypeName: '湿度仪故障' },
+        { ID: '标定', TypeName: '标定' },
+        { ID: '故障', TypeName: '故障' },
+        { ID: '公共烟道窜烟', TypeName: '公共烟道窜烟' },
+        { ID: '数采仪上传压力单位异常', TypeName: '数采仪上传压力单位异常' },
+        { ID: '启炉/停炉/停运未标记', TypeName: '启炉/停炉/停运未标记' },
+        { ID: '数采仪使用老版软件', TypeName: '数采仪使用老版软件' },
+        { ID: '数采仪调试', TypeName: '数采仪调试' },
+        { ID: '其他', TypeName: '其他' },
       ],
       onSelectListener: item => {
         this.setState({
@@ -351,11 +354,11 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
       buttons: [
         {
           txt: '打开相机',
-          btnStyle: {backgroundColor: '#fff'},
-          txtStyle: {color: '#f97740', fontSize: 15, fontWeight: 'bold'},
+          btnStyle: { backgroundColor: '#fff' },
+          txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
           onpress: () => {
             launchCamera(options, response => {
-              const {assets = []} = response;
+              const { assets = [] } = response;
               let imageObj = null;
               if (assets.length <= 0) {
                 return;
@@ -377,11 +380,11 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
         },
         {
           txt: '选择照片',
-          btnStyle: {backgroundColor: '#fff'},
-          txtStyle: {color: '#f97740', fontSize: 15, fontWeight: 'bold'},
+          btnStyle: { backgroundColor: '#fff' },
+          txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
           onpress: () => {
             launchImageLibrary(options, response => {
-              const {assets = []} = response;
+              const { assets = [] } = response;
               let imageObj = null;
               if (assets.length <= 0) {
                 return;
@@ -421,7 +424,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
           this.statusPageOnRefresh();
         }}>
         <ScrollView
-          style={[{flex: 1, paddingTop: 13}]}
+          style={[{ flex: 1, paddingTop: 13 }]}
           showsVerticalScrollIndicator={false}>
           {this.state.hideRadio == false && (
             <View
@@ -440,15 +443,15 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                <SDLText style={{color: 'red'}}>*</SDLText>
+                <SDLText style={{ color: 'red' }}>*</SDLText>
                 <SDLText style={{}}>核实结果</SDLText>
               </View>
               <SelectButton
                 editable={this.props.editCommitEnable}
-                style={{flexDirection: 'row', width: 200}} //整个组件的样式----这样可以垂直和水平
-                conTainStyle={{height: 44, width: 80}} //图片和文字的容器样式
-                imageStyle={{width: 18, height: 18}} //图片样式
-                textStyle={{color: '#666'}} //文字样式
+                style={{ flexDirection: 'row', width: 200 }} //整个组件的样式----这样可以垂直和水平
+                conTainStyle={{ height: 44, width: 80 }} //图片和文字的容器样式
+                imageStyle={{ width: 18, height: 18 }} //图片样式
+                textStyle={{ color: '#666' }} //文字样式
                 selectIndex={
                   CheckedResult == '2' ? '0' : CheckedResult == '1' ? '1' : ''
                 } //空字符串,表示不选中,数组索引表示默认选中
@@ -457,7 +460,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                   let newObj = SentencedToEmpty(
                     this.props.alarmVerifyDetail,
                     ['data', 'Datas'],
-                    {CheckedResult: null, CheckedDes: null, FileList: []},
+                    { CheckedResult: null, CheckedDes: null, FileList: [] },
                   );
                   newObj.CheckedResult = item.id;
                   //动态更新组件内state 记录输入内容
@@ -465,7 +468,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                     createAction('alarmAnaly/updateState')({
                       alarmVerifyDetail: {
                         ...this.props.alarmVerifyDetail,
-                        data: {Datas: newObj},
+                        data: { Datas: newObj },
                       },
                     }),
                   );
@@ -501,7 +504,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                   alignItems: 'center',
                   justifyContent: 'flex-start',
                 }}>
-                <SDLText style={{color: 'red'}}>*</SDLText>
+                <SDLText style={{ color: 'red' }}>*</SDLText>
                 <SDLText style={{}}>异常原因</SDLText>
               </View>
               {this.props.editCommitEnable == true ? (
@@ -511,9 +514,9 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                   }}
                   option={this.getTypeOption()}
                   style={[
-                    {marginLeft: 40, flex: 1, justifyContent: 'flex-end'},
+                    { marginLeft: 40, flex: 1, justifyContent: 'flex-end' },
                   ]}
-                  textStyle={{textAlign: 'right', flex: 1}}
+                  textStyle={{ textAlign: 'right', flex: 1 }}
                 />
               ) : (
                 <Text>
@@ -543,28 +546,28 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                <SDLText style={{color: 'red'}}>*</SDLText>
+                <SDLText style={{ color: 'red' }}>*</SDLText>
                 <SDLText style={{}}>是否生成整改单</SDLText>
               </View>
               <SelectButton
                 editable={this.props.editCommitEnable}
-                style={{flexDirection: 'row', width: 200}} //整个组件的样式----这样可以垂直和水平
-                conTainStyle={{height: 44, width: 80}} //图片和文字的容器样式
-                imageStyle={{width: 18, height: 18}} //图片样式
-                textStyle={{color: '#666'}} //文字样式
+                style={{ flexDirection: 'row', width: 200 }} //整个组件的样式----这样可以垂直和水平
+                conTainStyle={{ height: 44, width: 80 }} //图片和文字的容器样式
+                imageStyle={{ width: 18, height: 18 }} //图片样式
+                textStyle={{ color: '#666' }} //文字样式
                 selectIndex={
                   IsRectificationRecord == '0'
                     ? '0'
                     : IsRectificationRecord == '1'
-                    ? '1'
-                    : ''
+                      ? '1'
+                      : ''
                 } //空字符串,表示不选中,数组索引表示默认选中
                 data={this.state.IsRectificationRecordDataArray} //数据源
                 onPress={(index, item) => {
                   let newObj = SentencedToEmpty(
                     this.props.alarmVerifyDetail,
                     ['data', 'Datas'],
-                    {CheckedResult: null, CheckedDes: null, FileList: []},
+                    { CheckedResult: null, CheckedDes: null, FileList: [] },
                   );
                   newObj.IsRectificationRecord = item.id;
                   //动态更新组件内state 记录输入内容
@@ -572,7 +575,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                     createAction('alarmAnaly/updateState')({
                       alarmVerifyDetail: {
                         ...this.props.alarmVerifyDetail,
-                        data: {Datas: newObj},
+                        data: { Datas: newObj },
                       },
                     }),
                   );
@@ -588,8 +591,8 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
               backgroundColor: '#ffffff',
               padding: 13,
             }}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <SDLText style={{color: 'red'}}>*</SDLText>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <SDLText style={{ color: 'red' }}>*</SDLText>
               <SDLText style={{}}>核实描述</SDLText>
             </View>
             <TextInput
@@ -601,7 +604,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                 let newObj = SentencedToEmpty(
                   this.props.alarmVerifyDetail,
                   ['data', 'Datas'],
-                  {CheckedResult: null, CheckedDes: null, FileList: []},
+                  { CheckedResult: null, CheckedDes: null, FileList: [] },
                 );
                 newObj.CheckedDes = text;
                 //动态更新组件内state 记录输入内容
@@ -609,11 +612,11 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                   createAction('alarmAnaly/updateState')({
                     alarmVerifyDetail: {
                       ...this.props.alarmVerifyDetail,
-                      data: {Datas: newObj},
+                      data: { Datas: newObj },
                     },
                   }),
                 );
-                this.setState({VerifyMessage: text});
+                this.setState({ VerifyMessage: text });
               }}
               value={CheckedDes}
               multiline={true}
@@ -646,7 +649,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                 alignItems: 'center',
                 justifyContent: 'flex-start',
               }}>
-              <SDLText style={{color: 'red'}}> </SDLText>
+              <SDLText style={{ color: 'red' }}> </SDLText>
               <SDLText style={{}}>核实材料</SDLText>
             </View>
             <View
@@ -665,7 +668,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                   onPress={() => {
                     if (Platform.OS == 'ios') {
                       SyanImagePicker.showImagePicker(
-                        {imageCount: 1},
+                        { imageCount: 1 },
                         (err, selectedPhotos) => {
                           if (err) {
                             // 取消选择
@@ -689,7 +692,26 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                       );
                       return;
                     }
-                    this.refs.doAlert.show();
+                    SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                      if (err) {
+                        // 取消选择
+                        return;
+                      }
+
+                      if (selectedPhotos.length <= 0) {
+                        return;
+                      } else {
+                        ShowLoadingToast('正在上传图片');
+                        that.props.dispatch(
+                          createAction('imageModel/uploadimage')({
+                            images: selectedPhotos,
+                            uuid: uuid,
+                            callback: this.uploadImageCallBack
+                          })
+                        );
+                      }
+                    });
+                    // this.refs.doAlert.show();
                   }}
                   style={{
                     width: SCREEN_WIDTH / 4 - 25,
@@ -736,7 +758,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                           warningTime: this.alarmObj[0].WarningTime,
                           modelWarningGuid:
                             this.alarmObj[0].modelCheckedGuid &&
-                            this.alarmObj[0].modelCheckedGuid.length > 0
+                              this.alarmObj[0].modelCheckedGuid.length > 0
                               ? []
                               : modelWarningGuids,
                           modelCheckedGuid: this.alarmObj[0].modelCheckedGuid,
@@ -792,11 +814,11 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                   height: 52,
                   backgroundColor: globalcolor.headerBackgroundColor,
                 }}>
-                <Text style={{color: '#ffffff', fontSize: 18}}>{'保存'}</Text>
+                <Text style={{ color: '#ffffff', fontSize: 18 }}>{'保存'}</Text>
               </TouchableOpacity>
             ) : null}
             <View>
-              <Text style={{color: '#ee6666'}}>
+              <Text style={{ color: '#ee6666' }}>
                 说明：如发现的线索属于监测正常波动，现场工况、CEMS、数采仪一切正常（不存在设备故障、停产未标记等情况）且污染物及辅助参数数据波动正常，选择系统误报并提交。
                 如发现异常情况请选择【异常原因】，找不到相符的选项请选择“其他”并在【核实描述】中简述现场存在的异常，上传核实材料后提交核实结果。
               </Text>
@@ -806,7 +828,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
           <Modal
             visible={this.state.modalVisible}
             transparent={true}
-            onRequestClose={() => this.setState({modalVisible: false})}>
+            onRequestClose={() => this.setState({ modalVisible: false })}>
             <ImageViewer
               saveToLocalByLongPress={false}
               onClick={() => {

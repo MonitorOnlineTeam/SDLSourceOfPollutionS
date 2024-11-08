@@ -153,6 +153,7 @@ export default Model.extend({
             yield update({ status: -1 });
             const result = yield call(authService.axiosAuthPost, api.pOperationApi.Task.PostTask, realParams);
             if (result.status == 200) {
+                yield update({ tabIndex: 1 });
                 yield put({ type: 'getTaskDetail', payload: { params: {} } });
                 yield take('getTaskDetail/@@end');
                 ShowToast('任务结束');

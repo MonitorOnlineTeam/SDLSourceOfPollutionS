@@ -224,6 +224,7 @@ export default class CTPeiHeJianChaList extends Component {
                                         <Text
                                             numberOfLines={1}
                                             style={[{
+                                                color: '#333333',
                                                 width: SCREEN_WIDTH - 140
                                             }]}
                                         >{item.EntName}</Text>
@@ -249,7 +250,7 @@ export default class CTPeiHeJianChaList extends Component {
                                         ]}
                                     >
                                         <Text style={[{ fontSize: 14, color: '#333333' }]}>{`监测点名称:`}</Text>
-                                        <Text>{item.PointName}</Text>
+                                        <Text style={[{ color: '#333333' }]}>{item.PointName}</Text>
                                     </View>
                                 </View>
                                 <View
@@ -272,7 +273,7 @@ export default class CTPeiHeJianChaList extends Component {
                                         ]}
                                     >
                                         <Text style={[{ fontSize: 14, color: '#333333' }]}>{`核查日期:`}</Text>
-                                        <Text>{moment(item.CooperationDate).format('YYYY-MM-DD')}</Text>
+                                        <Text style={[{ color: '#333333' }]}>{moment(item.CooperationDate).format('YYYY-MM-DD')}</Text>
                                     </View>
                                 </View>
                                 <View
@@ -294,7 +295,7 @@ export default class CTPeiHeJianChaList extends Component {
                                         ]}
                                     >
                                         <Text style={[{ fontSize: 14, color: '#333333' }]}>{`核查主题:`}</Text>
-                                        <Text numberOfLines={1}>{item.CooperationTheme}</Text>
+                                        <Text style={[{ color: '#333333' }]} numberOfLines={1}>{item.CooperationTheme}</Text>
                                     </View>
                                 </View>
                             </TouchableOpacity>

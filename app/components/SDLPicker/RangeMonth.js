@@ -63,7 +63,7 @@ class RangeTime extends PureComponent {
     }
 
     render() {
-        return (<View><Text>RangeMonth</Text></View>)
+        return (<View><Text style={[{ color: '#333333' }]}>RangeMonth</Text></View>)
         return (
             <View style={[styles.container, { height: (72 + 240) }]}>
                 <View style={[{

@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-09-18 09:29:20
- * @LastEditTime: 2024-09-26 10:55:58
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/AcceptanceServiceReportMultiple.js
+ * @LastEditTime: 2024-11-04 08:24:39
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/AcceptanceServiceReportMultiple.js
  */
 
 import React, { Component } from 'react'
@@ -476,7 +476,7 @@ export default class AcceptanceServiceReportMultiple extends Component {
                                             height: 40, width: 80
                                             , justifyContent: 'center', alignItems: 'flex-end'
                                         }]}>
-                                            <Text style={[{ fontSize: 13 }]}>{'删除'}</Text>
+                                            <Text style={[{ fontSize: 13, color: '#333333' }]}>{'删除'}</Text>
                                         </View>
                                     </TouchableOpacity> : null}
                                 </View>
@@ -520,6 +520,7 @@ export default class AcceptanceServiceReportMultiple extends Component {
                                                 numberOfLines={1}
                                                 style={[{
                                                     width: SCREEN_WIDTH - 140
+                                                    , color: '#333333'
                                                 }]}
                                             >{`${SentencedToEmpty(item, ['EntName'], '')}`}</Text>
                                             <Image
@@ -565,7 +566,7 @@ export default class AcceptanceServiceReportMultiple extends Component {
                                             , flexDirection: 'row'
                                             , justifyContent: 'flex-end', alignItems: 'center'
                                         }]}>
-                                            <Text>{`${SentencedToEmpty(item, ['PointName'], '')}`}</Text>
+                                            <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(item, ['PointName'], '')}`}</Text>
                                             <Image
                                                 style={[{ height: 15, width: 15 }]}
                                                 source={require('../../../images/ic_arrows_right.png')} />

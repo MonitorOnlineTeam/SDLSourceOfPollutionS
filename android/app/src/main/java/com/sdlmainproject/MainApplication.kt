@@ -13,6 +13,8 @@ import com.facebook.soloader.SoLoader
 import com.sdl.alipush.PushModule
 import com.alibaba.sdk.android.push.huawei.HuaWeiRegister
 import com.reactlibrary.bugly.RNBuglyModule
+//import com.reactnative.uniapp.ReactNativeUniappPackage
+
 //
 class MainApplication : Application(), ReactApplication {
 
@@ -22,6 +24,7 @@ class MainApplication : Application(), ReactApplication {
             PackageList(this).packages.apply {
               // Packages that cannot be autolinked yet can be added manually here, for example:
               // add(MyReactNativePackage())
+//              add(ReactNativeUniappPackage())
             }
 
         override fun getJSMainModuleName(): String = "index"
@@ -35,10 +38,16 @@ class MainApplication : Application(), ReactApplication {
   override val reactHost: ReactHost
     get() = getDefaultReactHost(applicationContext, reactNativeHost)
 
+  companion object{
+    private var instance:Application? = null;
+    fun instance() = instance!!
+  }
+
   override fun onCreate() {
     super.onCreate()
+    instance = this;
     SoLoader.init(this, false)
-
+    this
       // 公司
       PushModule.initCloudChannel(this, "2882303761519963767", "5281996355767");
       // 注册方法会自动判断是否支持华为系统推送，如不支持会跳过注册。

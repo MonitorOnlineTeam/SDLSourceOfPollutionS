@@ -2,8 +2,8 @@
  * @Description: 多条 工作记录 支持 指导安装和72小时调试的特殊属性
  * @LastEditors: hxf
  * @Date: 2023-09-19 19:33:41
- * @LastEditTime: 2024-05-13 18:50:15
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/WorkRecord72.js
+ * @LastEditTime: 2024-11-01 15:27:37
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/WorkRecord72.js
  */
 import moment from 'moment';
 import React, { Component } from 'react';
@@ -718,7 +718,7 @@ export default class WorkRecord72 extends Component {
                                                     }}
                                                 >
                                                     <View style={[{ height: 40, width: 80, justifyContent: 'center', alignItems: 'flex-end' }]}>
-                                                        <Text style={[{ fontSize: 13 }]}>{'删除'}</Text>
+                                                        <Text style={[{ color: '#333333', fontSize: 13 }]}>{'删除'}</Text>
                                                     </View>
                                                 </TouchableOpacity> : null}
                                             </View>
@@ -777,6 +777,7 @@ export default class WorkRecord72 extends Component {
                                                         <Text
                                                             numberOfLines={1}
                                                             style={[{
+                                                                color: '#333333',
                                                                 width: SCREEN_WIDTH - 140
                                                             }]}
                                                         >{`${SentencedToEmpty(item, ['EntName'], '')}`}</Text>
@@ -835,7 +836,7 @@ export default class WorkRecord72 extends Component {
                                                             }
                                                         ]}
                                                     >
-                                                        <Text>{`${SentencedToEmpty(item, ['PointName'], '')}`}</Text>
+                                                        <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(item, ['PointName'], '')}`}</Text>
                                                         <Image style={[{ height: 15, width: 15 }]} source={require('../../../images/ic_arrows_right.png')} />
                                                     </View>
                                                 </PickerTouchable>
@@ -902,7 +903,7 @@ export default class WorkRecord72 extends Component {
                                                                     }
                                                                 ]}
                                                             >
-                                                                <Text>{`${SentencedToEmpty(this.state, ['stateDatas', index, 'SystemModelName'], '')}`}</Text>
+                                                                <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(this.state, ['stateDatas', index, 'SystemModelName'], '')}`}</Text>
                                                                 <Image style={[{ height: 15, width: 15 }]} source={require('../../../images/ic_arrows_right.png')} />
                                                             </View>
                                                         </PickerTouchable>
@@ -1015,7 +1016,7 @@ export default class WorkRecord72 extends Component {
                                                             }
                                                         ]}
                                                     >
-                                                        <Text>{`${this.getCompletionStatusLabel(index, 'CompletionStatus')}`}</Text>
+                                                        <Text style={[{ color: '#333333' }]}>{`${this.getCompletionStatusLabel(index, 'CompletionStatus')}`}</Text>
                                                         <Image style={[{ height: 15, width: 15 }]} source={require('../../../images/ic_arrows_right.png')} />
                                                     </View>
                                                 </PickerTouchable>
@@ -1126,7 +1127,7 @@ export default class WorkRecord72 extends Component {
                                                                 }
                                                             ]}
                                                         >
-                                                            <Text>{`${this.getCompletionStatusLabel(index, 'Col1')}`}</Text>
+                                                            <Text style={[{ color: '#333333' }]}>{`${this.getCompletionStatusLabel(index, 'Col1')}`}</Text>
                                                             <Image style={[{ height: 15, width: 15 }]} source={require('../../../images/ic_arrows_right.png')} />
                                                         </View>
                                                     </PickerTouchable>

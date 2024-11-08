@@ -112,8 +112,8 @@ export default class SetEnterpriseInformationTestPage extends Component {
                             </View>
                         </TouchableOpacity>
                     </View>
-                    <Text>{`url:${this.props.url}`}</Text>
-                    <Text style={[{ lineHeight: 20 }]}>{`response:${this.props.response}`}</Text>
+                    <Text style={[{ color: '#333333' }]}>{`url:${this.props.url}`}</Text>
+                    <Text style={[{ lineHeight: 20, color: '#333333' }]}>{`response:${this.props.response}`}</Text>
                 </View>
             </ScrollView>
         )

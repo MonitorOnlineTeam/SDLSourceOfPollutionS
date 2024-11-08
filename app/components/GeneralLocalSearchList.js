@@ -2,8 +2,8 @@
  * @Description: 本地搜索列表
  * @LastEditors: hxf
  * @Date: 2024-05-10 15:30:38
- * @LastEditTime: 2024-07-01 18:34:14
- * @FilePath: /SDLMainProject37_1/app/components/GeneralLocalSearchList.js
+ * @LastEditTime: 2024-11-05 11:14:01
+ * @FilePath: /SDLSourceOfPollutionS/app/components/GeneralLocalSearchList.js
  */
 // import { Text, View } from 'react-native'
 // import React, { Component } from 'react'
@@ -44,10 +44,14 @@ export default class GeneralLocalSearchList extends Component {
         this.state = {
             searchText: '',
             metaData: SentencedToEmpty(props
-                , ['navigation', 'state', 'params', 'data'], []),
+                , ['route', 'params', 'params', 'data'], []),
             showData: SentencedToEmpty(props
-                , ['navigation', 'state', 'params', 'data'], []),
+                , ['route', 'params', 'params', 'data'], []),
         };
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(props
+                , ['route', 'params', 'params', 'title'], '本地列表')
+        });
     }
 
     componentDidMount() {
@@ -67,7 +71,7 @@ export default class GeneralLocalSearchList extends Component {
 
     _renderItem = ({ item, index }) => {
         return SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'renderItem']
+            , ['route', 'params', 'params', 'renderItem']
             , (dItem, dIndex) => {
                 return (<TouchableOpacity>
                     <View
@@ -132,7 +136,7 @@ export default class GeneralLocalSearchList extends Component {
 
     doSearch = () => {
         let newData = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'doSearch']
+            , ['route', 'params', 'params', 'doSearch']
             , () => { return [] }
         )(this.props.keyWords);
         this.setState({
@@ -203,12 +207,12 @@ export default class GeneralLocalSearchList extends Component {
                         />
                         <TextInput
                             style={[{
-                                flex: 1
+                                flex: 1, color: '#333333'
                                 , paddingVertical: 0
                                 , marginHorizontal: 5
                             }]}
                             placeholder={SentencedToEmpty(this.props
-                                , ['navigation', 'state', 'params', 'searchPlaceHolder']
+                                , ['route', 'params', 'params', 'searchPlaceHolder']
                                 , '企业名称、合同编号、立项号1')}
                             onChangeText={(text) => {
 

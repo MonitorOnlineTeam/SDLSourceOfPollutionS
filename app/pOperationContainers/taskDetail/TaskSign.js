@@ -2,8 +2,8 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2022-11-30 09:14:10
- * @LastEditTime: 2024-09-24 16:21:16
- * @FilePath: /SDLMainProject/app/pOperationContainers/taskDetail/TaskSign.js
+ * @LastEditTime: 2024-10-29 16:12:08
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/taskDetail/TaskSign.js
  */
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, NativeModules, Platform, Alert, Image } from 'react-native';
@@ -151,7 +151,9 @@ export default class TaskSign extends Component {
                             params: {
                                 taskID: this.props.taskDetail.ID,
                                 longitude: location.coords.longitude,
-                                latitude: location.coords.latitude
+                                latitude: location.coords.latitude,
+                                // exceptType  正常 0  异常 1
+                                exceptType: 0,
                             },
                             callback: () => {
                                 CloseToast('打卡结束');
@@ -377,7 +379,9 @@ export default class TaskSign extends Component {
                                             params: {
                                                 taskID: this.props.taskDetail.ID,
                                                 longitude: this.state.lastLongitude,
-                                                latitude: this.state.lastLatitude
+                                                latitude: this.state.lastLatitude,
+                                                // exceptType  正常 0  异常 1
+                                                exceptType: 1,
                                             },
                                             callback: () => {
                                                 CloseToast('打卡结束');

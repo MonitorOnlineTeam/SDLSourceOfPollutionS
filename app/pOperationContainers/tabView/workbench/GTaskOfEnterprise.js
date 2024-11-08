@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2022-08-25 09:44:43
- * @LastEditTime: 2024-09-20 16:12:48
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbench/GTaskOfEnterprise.js
+ * @LastEditTime: 2024-10-25 16:43:33
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbench/GTaskOfEnterprise.js
  */
 import React, { Component } from 'react'
 import { Text, TouchableOpacity, View, Image } from 'react-native'
@@ -24,6 +24,8 @@ export default class GTaskOfEnterprise extends Component {
         });
 
     componentDidMount() {
+        // 获取当前路由信息
+        // console.log('componentDidMount props = ', this.props);
         this.props.dispatch(createAction('taskModel/updateState')({ UnhandleTaskTypeListResult: { status: -1 } }))
         this.props.dispatch(createAction('taskModel/getUnhandleTaskTypeList')({}))
         this.props.navigation.setParams({

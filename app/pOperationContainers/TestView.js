@@ -1,9 +1,9 @@
 /*
  * @Description: 
- * @LastEditors: outman0611 jia_anbo@163.com
+ * @LastEditors: hxf
  * @Date: 2024-09-11 14:03:38
- * @LastEditTime: 2024-09-19 18:44:41
- * @FilePath: /SDLMainProject/app/pOperationContainers/TestView.js
+ * @LastEditTime: 2024-11-04 11:56:23
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/TestView.js
  */
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
@@ -607,10 +607,10 @@ export default class TestView extends Component {
                             , alignItems: 'center'
                         }]}
                     >
-                        <Text>点击</Text>
+                        <Text style={[{ color: '#333333' }]}>点击</Text>
                     </View>
                 </TouchableOpacity>
-                <Text>TestView</Text>
+                <Text style={[{ color: '#333333' }]}>TestView</Text>
                 {
                     this.state.loading ? <ActivityIndicator size="large" color="#0000ff" />
                         // : <RNEChartsPro width={SCREEN_WIDTH} height={250} option={this.state.option1} onPress={this.onPress} />
@@ -631,7 +631,7 @@ class SDLChartView extends Component {
     render() {
         return (
             //  <RNEChartsPro width={SCREEN_WIDTH} height={250} option={this.props.option} onPress={this.onPress} />
-              <View />
-            )
+            <View />
+        )
     }
 }

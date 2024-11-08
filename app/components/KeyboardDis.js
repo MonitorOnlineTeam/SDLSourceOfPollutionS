@@ -13,7 +13,7 @@ import ReactNative, {
     Animated
 } from 'react-native'
 
-import {SCREEN_HEIGHT} from '../config/globalsize';
+import { SCREEN_HEIGHT } from '../config/globalsize';
 
 var dataSources = [];
 
@@ -23,7 +23,7 @@ export default class KeyboardDis extends Component {
 
     constructor(props) {
         super(props);
-       
+
         this.state = {
             keyboardHeight: -10,
             cusViewHeight: 0,
@@ -33,7 +33,7 @@ export default class KeyboardDis extends Component {
 
     _renderItem = ({ item }) => (
         <View style={{ justifyContent: 'center' }} key={item.id}>
-            <Text key={item.id} style={styles.renderItem}>{item.data}</Text>
+            <Text key={item.id} style={[styles.renderItem, { color: '#333333' }]}>{item.data}</Text>
         </View>
     );
 
@@ -52,14 +52,14 @@ export default class KeyboardDis extends Component {
     }
 
     keyboardWillShow = (event) => {
-      
-        
+
+
         // this.refs.flatList.scrollToIndex({animated: true, index: this.generateBig().length - 1, viewPosition: 0.5});
         this.setState({ keyboardHeight: event.endCoordinates.height, cusViewHeight: 40 })
     };
 
     keyboardWillHide = (event) => {
-     
+
         // this.refs.flatList.scrollToIndex({animated: true, index: this.generateBig().length - 1, viewPosition: 1.9})
         this.setState({ keyboardHeight: event.endCoordinates.height, cusViewHeight: 0 })
     }
@@ -70,9 +70,9 @@ export default class KeyboardDis extends Component {
 
                 <View
                     ref='wancheng'
-                    style={[{ position: 'absolute', width: 375, height: this.state.cusViewHeight, backgroundColor: 'white', bottom:0,},this.props.style]}>
+                    style={[{ position: 'absolute', width: 375, height: this.state.cusViewHeight, backgroundColor: 'white', bottom: 0, }, this.props.style]}>
                     <Text
-                        style={{ top: 13, left: 10 }}
+                        style={{ color: '#333333', top: 13, left: 10 }}
                         onPress={() => {
                             Keyboard.dismiss()
                         }}>完成</Text>

@@ -9,6 +9,7 @@ import moment from 'moment';
 export default Model.extend({
     namespace: 'app',
     state: {
+        hideStatusBar: false,
         constants: {
             isSecret: false,
             name: '百度'

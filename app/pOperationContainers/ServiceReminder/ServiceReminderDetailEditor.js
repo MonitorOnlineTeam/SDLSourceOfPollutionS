@@ -2,8 +2,8 @@
  * @Description: 服务记录详情和提醒
  * @LastEditors: hxf
  * @Date: 2024-04-11 18:59:17
- * @LastEditTime: 2024-09-26 19:41:05
- * @FilePath: /SDLMainProject/app/pOperationContainers/ServiceReminder/ServiceReminderDetailEditor.js
+ * @LastEditTime: 2024-11-04 09:36:10
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/ServiceReminder/ServiceReminderDetailEditor.js
  */
 import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
@@ -411,7 +411,7 @@ export default class ServiceReminderDetailEditor extends Component {
                                                 , flexDirection: 'row'
                                                 , justifyContent: 'flex-end', alignItems: 'center'
                                             }]}>
-                                                <Text>{`${SentencedToEmpty(this.props, ['addServiceReminderParams', 'ProjectCode'], '')}`}</Text>
+                                                <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(this.props, ['addServiceReminderParams', 'ProjectCode'], '')}`}</Text>
                                                 <Image
                                                     style={[{ height: 15, width: 15 }]}
                                                     source={require('../../images/ic_arrows_right.png')} />
@@ -458,7 +458,7 @@ export default class ServiceReminderDetailEditor extends Component {
                                                 , flexDirection: 'row'
                                                 , justifyContent: 'flex-end', alignItems: 'center'
                                             }]}>
-                                                <Text>{`${SentencedToEmpty(this.props, ['addServiceReminderParams', 'EntName'], '')}`}</Text>
+                                                <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(this.props, ['addServiceReminderParams', 'EntName'], '')}`}</Text>
                                                 <Image
                                                     style={[{ height: 15, width: 15 }]}
                                                     source={require('../../images/ic_arrows_right.png')} />
@@ -506,7 +506,7 @@ export default class ServiceReminderDetailEditor extends Component {
                                                 , flexDirection: 'row'
                                                 , justifyContent: 'flex-end', alignItems: 'center'
                                             }]}>
-                                                <Text>{`${SentencedToEmpty(this.props, ['addServiceReminderParams', 'PointName'], '')}`}</Text>
+                                                <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(this.props, ['addServiceReminderParams', 'PointName'], '')}`}</Text>
                                                 <Image
                                                     style={[{ height: 15, width: 15 }]}
                                                     source={require('../../images/ic_arrows_right.png')} />
@@ -549,7 +549,7 @@ export default class ServiceReminderDetailEditor extends Component {
                                                 , flexDirection: 'row'
                                                 , justifyContent: 'flex-end', alignItems: 'center'
                                             }]}>
-                                                <Text>{`${SentencedToEmpty(this.props, ['addServiceReminderParams', 'ServiceName'], '')}`}</Text>
+                                                <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(this.props, ['addServiceReminderParams', 'ServiceName'], '')}`}</Text>
                                                 <Image
                                                     style={[{ height: 15, width: 15 }]}
                                                     source={require('../../images/ic_arrows_right.png')} />

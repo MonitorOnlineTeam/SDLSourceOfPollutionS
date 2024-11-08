@@ -2,8 +2,8 @@
  * @Description: 设备故障反馈记录 编辑页
  * @LastEditors: hxf
  * @Date: 2022-02-10 10:04:13
- * @LastEditTime: 2024-09-27 11:53:14
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbench/EquipmentFailureFeedbackEdit.js
+ * @LastEditTime: 2024-11-01 14:39:04
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbench/EquipmentFailureFeedbackEdit.js
  */
 
 import moment from 'moment';
@@ -224,7 +224,7 @@ export default class EquipmentFailureFeedbackEdit extends Component {
                                 width: SCREEN_WIDTH - 24, height: 32, flexDirection: 'row'
                                 , justifyContent: 'space-between'
                             }]}>
-                                <Text style={[{ fontSize: 16 }]}>{`故障记录`}</Text>
+                                <Text style={[{ fontSize: 16, color: '#333333' }]}>{`故障记录`}</Text>
                                 {/* <TouchableOpacity
                                     onPress={() => {
                                         let newArray = [...this.props.dataArray];

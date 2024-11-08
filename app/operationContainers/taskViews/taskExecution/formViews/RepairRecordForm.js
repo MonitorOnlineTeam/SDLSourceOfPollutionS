@@ -2,8 +2,8 @@
  * @Description: 2021.12.23 设备维修记录
  * @LastEditors: hxf
  * @Date: 2021-12-23 10:44:12
- * @LastEditTime: 2024-09-20 14:00:30
- * @FilePath: /SDLMainProject/app/operationContainers/taskViews/taskExecution/formViews/RepairRecordForm.js
+ * @LastEditTime: 2024-11-04 13:55:29
+ * @FilePath: /SDLSourceOfPollutionS/app/operationContainers/taskViews/taskExecution/formViews/RepairRecordForm.js
  */
 
 /**
@@ -209,7 +209,7 @@ export default class RepairRecordForm extends Component {
                                             width: SCREEN_WIDTH - 24, height: 32, flexDirection: 'row'
                                             , justifyContent: 'space-between'
                                         }]}>
-                                            <Text style={[{ fontSize: 16 }]}>{`维修记录${index + 1}`}</Text>
+                                            <Text style={[{ color: '#333333', fontSize: 16 }]}>{`维修记录${index + 1}`}</Text>
                                             <TouchableOpacity
                                                 onPress={() => {
                                                     let newArray = [...this.props.dataArray];

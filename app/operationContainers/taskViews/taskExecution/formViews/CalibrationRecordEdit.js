@@ -415,6 +415,7 @@ class CalibrationRecordEdit extends Component {
                         <Text
                             style={[
                                 {
+                                    color: '#333333',
                                     width: SCREEN_WIDTH - 28,
                                     marginVertical: 12
                                 }
@@ -493,6 +494,7 @@ class CalibrationRecordEdit extends Component {
                             <Text
                                 style={[
                                     {
+                                        color: '#333333',
                                         flex: 1,
                                         marginVertical: 12
                                     }
@@ -635,6 +637,7 @@ class CalibrationRecordEdit extends Component {
                                 <Text
                                     style={[
                                         {
+                                            color: '#333333',
                                             flex: 1,
                                             marginVertical: 12
                                         }

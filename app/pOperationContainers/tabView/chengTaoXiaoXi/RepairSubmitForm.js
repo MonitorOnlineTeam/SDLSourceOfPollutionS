@@ -262,7 +262,7 @@ export default class RepairSubmitForm extends Component {
                                 return (
                                     <View key={`record${index}`} style={[{ width: SCREEN_WIDTH - 24, alignItems: 'center', marginTop: 12 }]}>
                                         <View style={[{ width: SCREEN_WIDTH - 24, height: 32, flexDirection: 'row', justifyContent: 'space-between' }]}>
-                                            <Text style={[{ fontSize: 16 }]}>{`维修记录`}</Text>
+                                            <Text style={[{ color: '#333333', fontSize: 16 }]}>{`维修记录`}</Text>
                                             {false ? <TouchableOpacity
                                                 onPress={() => {
                                                     let newArray = [...this.props.dataArray];

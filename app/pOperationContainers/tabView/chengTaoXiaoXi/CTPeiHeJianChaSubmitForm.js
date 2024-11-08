@@ -569,7 +569,7 @@ export default class CTPeiHeJianChaSubmitForm extends Component {
                                         }
                                     ]}
                                 >
-                                    <Text style={{ fontSize: 15 }}>{'图片'}</Text>
+                                    <Text style={{ color: '#333333', fontSize: 15 }}>{'图片'}</Text>
                                 </View>
 
                                 <ImageGrid

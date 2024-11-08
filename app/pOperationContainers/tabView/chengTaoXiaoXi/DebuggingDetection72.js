@@ -2,8 +2,8 @@
  * @Description: 72小时调试检测
  * @LastEditors: hxf
  * @Date: 2023-09-20 09:46:44
- * @LastEditTime: 2024-07-10 10:06:37
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/DebuggingDetection72.js
+ * @LastEditTime: 2024-11-01 16:48:02
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/DebuggingDetection72.js
  */
 import moment from 'moment';
 import React, { Component } from 'react'
@@ -446,7 +446,7 @@ export default class DebuggingDetection72 extends Component {
                                                 height: 40, width: 80
                                                 , justifyContent: 'center', alignItems: 'flex-end'
                                             }]}>
-                                                <Text style={[{ fontSize: 13 }]}>{'删除'}</Text>
+                                                <Text style={[{ color: '#333333', fontSize: 13 }]}>{'删除'}</Text>
                                             </View>
                                         </TouchableOpacity> : null}
                                     </View>

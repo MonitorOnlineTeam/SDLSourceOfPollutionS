@@ -2,8 +2,8 @@
  * @Description: 手动领取工单
  * @LastEditors: hxf
  * @Date: 2021-09-29 16:40:17
- * @LastEditTime: 2024-10-12 15:32:16
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbench/ManualClaimTask_bw.js
+ * @LastEditTime: 2024-11-01 14:32:39
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbench/ManualClaimTask_bw.js
  */
 
 import React, { Component } from 'react'
@@ -395,6 +395,7 @@ export default class ManualClaimTask extends Component {
                         underlineColorAndroid="transparent"
                         placeholder={'输入企业、点位搜索'}
                         style={{
+                            color: '#333333',
                             textAlign: 'center',
                             width: SCREEN_WIDTH - 80,
                             borderColor: '#cccccc',

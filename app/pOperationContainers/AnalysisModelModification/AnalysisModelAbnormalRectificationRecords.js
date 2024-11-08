@@ -2,11 +2,11 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-10-26 14:49:11
- * @LastEditTime: 2023-11-03 15:42:47
- * @FilePath: /SDLMainProject36/app/pOperationContainers/AnalysisModelModification/AnalysisModelAbnormalRectificationRecords.js
+ * @LastEditTime: 2024-11-04 11:48:56
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/AnalysisModelModification/AnalysisModelAbnormalRectificationRecords.js
  */
-import {Text, View, Platform, TouchableOpacity, Image} from 'react-native';
-import React, {Component} from 'react';
+import { Text, View, Platform, TouchableOpacity, Image } from 'react-native';
+import React, { Component } from 'react';
 import {
   NavigationActions,
   SentencedToEmpty,
@@ -19,12 +19,12 @@ import {
   SimplePickerRangeDay,
   StatusPage,
 } from '../../components';
-import {connect} from 'react-redux';
-import {SCREEN_WIDTH} from '../../config/globalsize';
-import {getStatusObject} from './AnalysisModelAbnormalRectificationList';
+import { connect } from 'react-redux';
+import { SCREEN_WIDTH } from '../../config/globalsize';
+import { getStatusObject } from './AnalysisModelAbnormalRectificationList';
 import moment from 'moment';
 
-@connect(({modelAnalysisAectificationModel}) => ({
+@connect(({ modelAnalysisAectificationModel }) => ({
   btime: modelAnalysisAectificationModel.btime, // 整改记录参数 列表开始时间
   etime: modelAnalysisAectificationModel.etime,
   checkedRectificationCompleteListData:
@@ -39,7 +39,7 @@ export default class AnalysisModelAbnormalRectificationRecords extends Component
     });
     this.props.dispatch(
       createAction('modelAnalysisAectificationModel/updateState')({
-        checkedRectificationCompleteListResult: {status: -1},
+        checkedRectificationCompleteListResult: { status: -1 },
         completeIndex: 1,
         btime: moment().subtract(30, 'days').format('YYYY-MM-DD 00:00:00'), // 整改记录参数 列表开始时间
         etime: moment().format('YYYY-MM-DD 23:59:59'), // 整改记录参数 列表结束时间
@@ -61,7 +61,7 @@ export default class AnalysisModelAbnormalRectificationRecords extends Component
   statusPageOnRefresh = () => {
     this.props.dispatch(
       createAction('modelAnalysisAectificationModel/updateState')({
-        checkedRectificationCompleteListResult: {status: -1},
+        checkedRectificationCompleteListResult: { status: -1 },
         completeIndex: 1,
       }),
     );
@@ -83,7 +83,7 @@ export default class AnalysisModelAbnormalRectificationRecords extends Component
     );
   };
 
-  _renderItem = ({item, index}) => {
+  _renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -108,7 +108,7 @@ export default class AnalysisModelAbnormalRectificationRecords extends Component
         }}>
         <View
           style={[
-            {width: SCREEN_WIDTH, height: 136, backgroundColor: 'white'},
+            { width: SCREEN_WIDTH, height: 136, backgroundColor: 'white' },
           ]}>
           <View
             style={{
@@ -127,7 +127,7 @@ export default class AnalysisModelAbnormalRectificationRecords extends Component
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Text style={{fontSize: 10, color: '#FFFFFF'}}>企</Text>
+              <Text style={{ fontSize: 10, color: '#FFFFFF' }}>企</Text>
             </View>
             <Text
               numberOfLines={1}
@@ -137,10 +137,10 @@ export default class AnalysisModelAbnormalRectificationRecords extends Component
                 fontSize: 14,
                 color: '#333333',
               }}>{`${SentencedToEmpty(
-              item,
-              ['EntName'],
-              '--',
-            )}-${SentencedToEmpty(item, ['PointName'], '--')}`}</Text>
+                item,
+                ['EntName'],
+                '--',
+              )}-${SentencedToEmpty(item, ['PointName'], '--')}`}</Text>
             {/* <Text style={{ marginLeft: 4, fontSize: 12, color: '#4AA0FF' }}>{`(${SentencedToEmpty(item, ['Count'], '0')})`}</Text> */}
             <View
               style={[
@@ -179,6 +179,7 @@ export default class AnalysisModelAbnormalRectificationRecords extends Component
                 width: SCREEN_WIDTH - 60,
                 height: 63,
                 marginLeft: 30,
+                color: '#333333',
               },
             ]}
             numberOfLines={3}>
@@ -195,7 +196,7 @@ export default class AnalysisModelAbnormalRectificationRecords extends Component
               },
             ]}>
             <View
-              style={[{flex: 1, flexDirection: 'row', alignItems: 'center'}]}>
+              style={[{ flex: 1, flexDirection: 'row', alignItems: 'center' }]}>
               <View
                 style={{
                   width: 16,
@@ -205,16 +206,16 @@ export default class AnalysisModelAbnormalRectificationRecords extends Component
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                <Text style={{fontSize: 10, color: '#FFFFFF'}}>整</Text>
+                <Text style={{ fontSize: 10, color: '#FFFFFF' }}>整</Text>
               </View>
               <SDLText
                 numberOfLines={1}
                 fontType={'normal'}
-                style={[{color: '#666666', flex: 1}]}>
+                style={[{ color: '#666666', flex: 1 }]}>
                 {`${SentencedToEmpty(item, ['RectificationUserName'], '----')}`}
               </SDLText>
             </View>
-            <View style={[{width: 4}]} />
+            <View style={[{ width: 4 }]} />
             <View
               style={{
                 flexDirection: 'row',
@@ -222,11 +223,11 @@ export default class AnalysisModelAbnormalRectificationRecords extends Component
                 justifyContent: 'center',
               }}>
               <Image
-                style={{width: 16, height: 16, marginRight: 3}}
+                style={{ width: 16, height: 16, marginRight: 3 }}
                 source={require('../../images/ic_tab_statistics_selected.png')}
               />
               {/* RectificationStatus 1.CreateTime 2 CompleteTime 3 CreateTime */}
-              <SDLText fontType={'normal'} style={[{color: '#666666'}]}>
+              <SDLText fontType={'normal'} style={[{ color: '#666666' }]}>
                 {`${SentencedToEmpty(item, ['CompleteTime'], '----')}`}
               </SDLText>
             </View>
@@ -251,7 +252,7 @@ export default class AnalysisModelAbnormalRectificationRecords extends Component
 
         this.props.dispatch(
           createAction('modelAnalysisAectificationModel/updateState')({
-            checkedRectificationCompleteListResult: {status: -1},
+            checkedRectificationCompleteListResult: { status: -1 },
             completeIndex: 1,
             btime: startMoment.format('YYYY-MM-DD 00:00:00'), // 整改记录参数 列表开始时间
             etime: endMoment.format('YYYY-MM-DD 23:59:59'), // 整改记录参数 列表结束时间
@@ -266,7 +267,7 @@ export default class AnalysisModelAbnormalRectificationRecords extends Component
   render() {
     return (
       <StatusPage
-        style={[{width: SCREEN_WIDTH, flex: 1}]}
+        style={[{ width: SCREEN_WIDTH, flex: 1 }]}
         status={SentencedToEmpty(
           this.props,
           ['checkedRectificationCompleteListResult', 'status'],
@@ -310,14 +311,14 @@ export default class AnalysisModelAbnormalRectificationRecords extends Component
             option={this.getRangeDaySelectOption()}
           />
         </View>
-        <View style={[{width: SCREEN_WIDTH, flex: 1}]}>
+        <View style={[{ width: SCREEN_WIDTH, flex: 1 }]}>
           <FlatListWithHeaderAndFooter
             ref={ref => (this.list = ref)}
             // pageSize={this.props.pageSize}
             ItemSeparatorComponent={() => (
               <View
                 style={[
-                  {width: SCREEN_WIDTH, height: 1, backgroundColor: '#f2f2f2'},
+                  { width: SCREEN_WIDTH, height: 1, backgroundColor: '#f2f2f2' },
                 ]}
               />
             )}

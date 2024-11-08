@@ -150,7 +150,8 @@ class Contact extends Component {
                                 borderRadius: 15,
                                 height: 30,
                                 backgroundColor: '#fff',
-                                paddingVertical: 0
+                                paddingVertical: 0,
+                                color: '#333333',
                             }}
                             onChangeText={text => {
                                 //动态更新组件内state 记录输入内容

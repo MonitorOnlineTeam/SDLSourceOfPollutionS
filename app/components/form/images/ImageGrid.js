@@ -183,6 +183,7 @@ export default class ImageGrid extends PureComponent {
                                 extraInfo={extraInfo}
                                 uuid={UUID}
                                 callback={images => {
+                                    console.log('ImageGrid images = ', images);
                                     const ProxyCode = getEncryptData();
                                     let Imgs = [...this.state.Imgs];
                                     let largImage = [].concat(this.state.largImage);

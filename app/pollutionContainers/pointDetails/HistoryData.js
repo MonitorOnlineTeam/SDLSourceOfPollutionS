@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-04-25 09:20:10
- * @LastEditTime: 2024-09-29 10:09:29
- * @FilePath: /SDLMainProject/app/pollutionContainers/pointDetails/HistoryData.js
+ * @LastEditTime: 2024-10-31 15:54:26
+ * @FilePath: /SDLSourceOfPollutionS/app/pollutionContainers/pointDetails/HistoryData.js
  */
 import React, { PureComponent } from 'react';
 import { Text, View, StyleSheet, Image, Platform, Dimensions, TouchableOpacity } from 'react-native';
@@ -212,8 +212,10 @@ export default class HistoryData extends PureComponent {
     }
     componentWillUnmount() {
         this.props.dispatch(createAction('pointDetails/updateState')({ selectTime: moment().format('YYYY-MM-DD HH:mm:ss') }));
+        this.props.dispatch(createAction('app/updateState')({ hideStatusBar: false }));
     }
     componentDidMount() {
+        // this.props.dispatch(createAction('app/updateState')({ hideStatusBar: true }));
         this.props.dispatch(createAction('pointDetails/getPollantCodes')({ params: { DGIMNs: this.props.route.params.params.DGIMN }, callBack: this.callBack }));
         this.setHeadOption()
     }
@@ -287,7 +289,7 @@ export default class HistoryData extends PureComponent {
                         }]}
                         >
                             {
-                                ['小时', '日均', '分钟', '月均'].map((item, index) => <SDLTabButton
+                                ['小时', '日均', '实时', '分钟'].map((item, index) => <SDLTabButton
                                     topButtonWidth={SCREEN_WIDTH / 4}
                                     selected={index == this.props.showIndex}
                                     label={item}
@@ -401,7 +403,7 @@ export default class HistoryData extends PureComponent {
                                             null
                         }
 
-                        {SentencedToEmpty(this.props.ponitInfo, ['data', 'Datas', 0, 'PollutantTypeCode'], '') == '5' || SentencedToEmpty(this.props.ponitInfo, ['data', 'Datas', 0, 'PollutantType'], '') == '5' ? (
+                        {/* {SentencedToEmpty(this.props.ponitInfo, ['data', 'Datas', 0, 'PollutantTypeCode'], '') == '5' || SentencedToEmpty(this.props.ponitInfo, ['data', 'Datas', 0, 'PollutantType'], '') == '5' ? (
                             <HistoryDataList
                                 goToPage={this.goToPage}
                                 setRightButtonState={this.setRightButtonState}
@@ -414,7 +416,7 @@ export default class HistoryData extends PureComponent {
                                 showIndex={this.props.showIndex}
                                 dgimn={this.props.route.params.params.DGIMN}
                             />
-                        ) : null}
+                        ) : null} */}
                     </View>
                     {/* <ScrollableTabView
                                 ref='tabView'

@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-04-29 11:10:51
- * @LastEditTime: 2024-05-17 09:50:18
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeDetail.js
+ * @LastEditTime: 2024-11-05 11:21:10
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeDetail.js
  */
 import { Platform, ScrollView, Text, View } from 'react-native'
 import React, { Component } from 'react'
@@ -21,7 +21,7 @@ export default class SparePartsChangeDetail extends Component {
     };
 
     render() {
-        const oneItem = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'data'], {})
+        const oneItem = SentencedToEmpty(this.props, ['route', 'params', 'params', 'data'], {})
         console.log('data = ', oneItem);
         return (
             <View

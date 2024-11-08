@@ -1,0 +1,45 @@
+def yeshen_lib_name = "libc++_shared.so"
+
+afterEvaluate {
+
+    insertTask(tasks.findByName("deleteReleaseSoLibrary"), "Release")
+    insertTask(tasks.findByName("deleteDebugSoLibrary"), "Debug")
+
+}
+
+task(deleteReleaseSoLibrary) {}.doLast {
+    println("yeshen_delete... release task insert")
+    def file = new File("${projectDir}/build/intermediates/merged_native_libs/release/out/lib")
+    deleteFile(file, yeshen_lib_name)
+}
+
+task(deleteDebugSoLibrary) {}.doLast {
+    println("yeshen_delete... debug task insert")
+    def file = new File("${projectDir}/build/intermediates/merged_native_libs/debug/out/lib")
+    deleteFile(file, yeshen_lib_name)
+}
+
+def insertTask(insertTask, type) {
+    def merge = tasks.findByName("merge" + type + "NativeLibs")
+    if (merge == null) return
+    insertTask.mustRunAfter(merge)
+    def strip = tasks.findByName("strip" + type + "DebugSymbols")
+    strip.dependsOn(insertTask)
+}
+
+def deleteFile(file, name) {
+    if (!file.exists()) return;
+    file.listFiles().each { abi ->
+        if (abi.isDirectory()) {
+            abi.listFiles().each { target ->
+                if (abi.name == "x86") {
+                    target.delete()
+                    println("yeshen_delete ${abi.name} ${target.name}")
+                } else if (target.name == name) {
+                    target.delete()
+                    println("yeshen_delete ${abi.name} ${target.name}")
+                }
+            }
+        }
+    }
+}

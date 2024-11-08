@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-04-30 17:16:34
- * @LastEditTime: 2024-10-15 15:41:44
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationMultipleEditor.js
+ * @LastEditTime: 2024-11-01 15:12:22
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationMultipleEditor.js
  */
 import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
@@ -312,7 +312,7 @@ export default class ServiceReportRectificationMultipleEditor extends Component 
                                                 height: 40, width: 80
                                                 , justifyContent: 'center', alignItems: 'flex-end'
                                             }]}>
-                                                <Text style={[{ fontSize: 13 }]}>{'删除'}</Text>
+                                                <Text style={[{ color: '#333333', fontSize: 13 }]}>{'删除'}</Text>
                                             </View>
                                         </TouchableOpacity> : null}
                                     </View>
@@ -355,6 +355,7 @@ export default class ServiceReportRectificationMultipleEditor extends Component 
                                                 <Text
                                                     numberOfLines={1}
                                                     style={[{
+                                                        color: '#333333',
                                                         width: SCREEN_WIDTH - 150
                                                     }]}
                                                 >{`${SentencedToEmpty(item, ['EntName'], '')}`}</Text>
@@ -404,6 +405,7 @@ export default class ServiceReportRectificationMultipleEditor extends Component 
                                                 <Text
                                                     numberOfLines={1}
                                                     style={[{
+                                                        color: '#333333',
                                                         width: SCREEN_WIDTH - 150
                                                     }]}
                                                 >{`${SentencedToEmpty(item, ['PointName'], '')}`}</Text>

@@ -150,7 +150,7 @@ const list = [
         testFunctionStatus: login.testFunctionStatus, // 未上线功能状态
         menuList: login.menuList, // 可根据此数据加在工作台接口
         serviceDispatchResult: CTModel.serviceDispatchResult, // 成套待办 模型发布需注释掉
-        // checkedRectificationListGResult: modelAnalysisAectificationModel.checkedRectificationListGResult, // 模型整改
+        checkedRectificationListGResult: modelAnalysisAectificationModel.checkedRectificationListGResult, // 模型整改
 
         tabList: login.tabList,
         tabSelectIndex: login.tabSelectIndex,
@@ -902,7 +902,7 @@ class Workbench extends Component {
                 >
                     <View style={{ width: SCREEN_WIDTH, paddingHorizontal: 15, paddingVertical: 0, marginTop: 13 }}>
                         {/* <Text style={{ fontSize: 16 }}>日常关注</Text> */}
-                        <Text style={{ fontSize: 16 }}>{`${SentencedToEmpty(item, ['name'], '---')}`}</Text>
+                        <Text style={{ fontSize: 16, color: '#333333' }}>{`${SentencedToEmpty(item, ['name'], '---')}`}</Text>
                     </View>
                     <View style={{ width: SCREEN_WIDTH, flexDirection: 'row', marginTop: 10, flexWrap: 'wrap' }}>
                         {SentencedToEmpty(item, ['children'], []).map((item, key) => {
@@ -1251,7 +1251,7 @@ class Workbench extends Component {
         if (tabLength > 0) {
             topButtonWidth = SCREEN_WIDTH / tabLength;
         }
-
+        console.log('123');
         return (
             <View style={[{ width: SCREEN_WIDTH, flex: 1 }]}>
                 {SentencedToEmpty(this.props, ['noticeContentResult', 'status'], -1) == 200 && SentencedToEmpty(this.props, ['noticeContentResult', 'data', 'Datas'], []).length > 0 ? (
@@ -1319,6 +1319,7 @@ class Workbench extends Component {
                             {
                                 SentencedToEmpty(this.props
                                     , ['tabList'], []).map((tabItem, tabIndex) => {
+                                        console.log('tabList tabItem = ', tabItem);
                                         return (<View style={[{ flex: 1, height: 44, flexDirection: 'row' }]}>
                                             <TouchableOpacity style={[{ flex: 1, height: 44 }]}
                                                 onPress={() => {
@@ -1393,6 +1394,7 @@ class Workbench extends Component {
                                  * "完成工单统计"
                                  * "0c8da383-b312-431b-8ff5-f24f75c7f933"
                                  */
+                                console.log('item.id = ', item.id);
                                 if (item.id == "322ac13e-fadf-43ed-a7a6-b2ccde37f390") {
                                     // 工单执行统计
                                     return (<ExecutiveStatistics />);
@@ -1405,7 +1407,7 @@ class Workbench extends Component {
                             })}
                         </ScrollView>
                     </PullToRefresh>
-                    {/* <ExecutiveLoadingView /> */}
+                    <ExecutiveLoadingView />
                 </StatusPage>
             </View>
         );

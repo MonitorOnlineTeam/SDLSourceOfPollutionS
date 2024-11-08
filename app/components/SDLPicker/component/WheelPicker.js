@@ -8,9 +8,10 @@ import SingleWheel from './SingleWheel';
 import DateSingleWheel from './DateSingleWheel';
 import { hour, minuteOrSecond, year, month, day28, day29, day30, day31 } from '../constant/baseConstant';
 import { SentencedToEmpty } from '../../../utils';
-import { SCREEN_HEIGHT } from '../../../config/globalsize';
-const WINDOW_WIDTH = Dimensions.get('window').width;
-const WINDOW_HEIGHT = Dimensions.get('window').height;
+import { SCREEN_HEIGHT, WINDOW_WIDTH } from '../../../config/globalsize';
+import { WINDOW_HEIGHT } from '../constant/globalsize';
+// const WINDOW_WIDTH = Dimensions.get('window').width;
+// const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 let scaleFactor = 375;
 // let calendarHeight = 320*(Math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / scaleFactor);
@@ -57,6 +58,7 @@ class WheelPicker extends PureComponent {
         callbackFun: () => { },
         initResult: moment().format('HH:mm'),
         format: 'HH:mm',
+        width: WINDOW_WIDTH,
     };
 
     creactePicker = () => {
@@ -345,7 +347,7 @@ class WheelPicker extends PureComponent {
                     style={[
                         orientation == 'LANDSCAPE' ?
                             {
-                                minWidth: WINDOW_HEIGHT,
+                                minWidth: this.props.width,
                                 height: calendarHeight,
                                 backgroundColor: 'white',
                                 alignItems: 'center'

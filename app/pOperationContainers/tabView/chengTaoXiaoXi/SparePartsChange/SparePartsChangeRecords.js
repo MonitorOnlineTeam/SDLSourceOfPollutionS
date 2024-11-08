@@ -2,8 +2,8 @@
  * @Description: 备件更换历史记录 成套
  * @LastEditors: hxf
  * @Date: 2024-04-28 14:01:42
- * @LastEditTime: 2024-06-06 20:16:10
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeRecords.js
+ * @LastEditTime: 2024-11-01 15:00:15
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeRecords.js
  */
 import { Image, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
@@ -414,6 +414,7 @@ export default class SparePartsChangeRecords extends Component {
                         />
                         <TextInput
                             style={[{
+                                color: '#333333',
                                 flex: 1
                                 , paddingVertical: 0
                                 , marginHorizontal: 5

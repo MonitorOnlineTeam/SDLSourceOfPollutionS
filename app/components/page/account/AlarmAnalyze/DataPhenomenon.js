@@ -210,6 +210,7 @@ export default class DataPhenomenon extends Component {
                                         label: {
                                             color: 'rgba(228, 223, 223, 1)',
                                             formatter: params => {
+                                                'show source';
                                                 return params.name;
                                             }
                                         },

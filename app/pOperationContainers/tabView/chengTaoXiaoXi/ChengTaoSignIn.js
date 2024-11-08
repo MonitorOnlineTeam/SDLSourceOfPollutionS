@@ -2,8 +2,8 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-09-06 14:20:53
- * @LastEditTime: 2024-02-04 09:05:57
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoSignIn.js
+ * @LastEditTime: 2024-11-01 16:58:52
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoSignIn.js
  */
 import moment from 'moment';
 import React, { Component } from 'react';
@@ -468,7 +468,7 @@ class SignInComponent extends Component {
                     <View style={[{
                         height: 48, paddingHorizontal: 10,
                     }]}>
-                        <Text>{'查看打卡范围'}</Text>
+                        <Text style={[{ color: '#333333' }]}>{'查看打卡范围'}</Text>
                     </View>
                 </TouchableOpacity>
                 {/* <TouchableOpacity></TouchableOpacity> */}
@@ -537,7 +537,7 @@ class SignInComponent extends Component {
                             ]}
                         >
                             {/* <Text>{`${SentencedToEmpty(this.props, ['selectedProject', 'ProjectName'], '请选择项目')}`}</Text> */}
-                            <Text>{`${this.getProjectName()}`}</Text>
+                            <Text style={[{ color: '#333333' }]}>{`${this.getProjectName()}`}</Text>
                             <Image style={[{ width: 15, height: 15, marginLeft: 8 }]} source={require('../../../images/calendarRight.png')} />
                         </View>
                     </View>

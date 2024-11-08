@@ -2,8 +2,8 @@
  * @Description: 验收服务报告
  * @LastEditors: hxf
  * @Date: 2023-09-18 09:27:53
- * @LastEditTime: 2024-09-26 10:19:49
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/AcceptanceServiceReportSingle.js
+ * @LastEditTime: 2024-11-07 11:25:06
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/AcceptanceServiceReportSingle.js
  */
 import React, { Component } from 'react'
 import { Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -184,7 +184,7 @@ export default class AcceptanceServiceReportSingle extends Component {
                                 , paddingHorizontal: 19, alignItems: 'center'
                             }]}>
                                 <Text style={[{ color: 'red', marginRight: 4 }]}>{'*'}</Text>
-                                <Text>{'验收服务报告照片'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'验收服务报告照片'}</Text>
                             </View>
                             <View
                                 style={[{
@@ -207,6 +207,7 @@ export default class AcceptanceServiceReportSingle extends Component {
                                     )}
                                     UUID={this.state.TimeS}
                                     uploadCallback={items => {
+                                        console.log('AcceptanceServiceReportSingle uploadCallback = ', items);
                                         let newImages = SentencedToEmpty(this.state, ['images'], []).concat(items);
                                         this.setState({
                                             images: newImages
@@ -230,7 +231,7 @@ export default class AcceptanceServiceReportSingle extends Component {
                                 height: 44, width: SCREEN_WIDTH
                                 , paddingHorizontal: 19, justifyContent: 'center'
                             }]}>
-                                <Text>{'备注'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'备注'}</Text>
                             </View>
                             <View
                                 style={[{

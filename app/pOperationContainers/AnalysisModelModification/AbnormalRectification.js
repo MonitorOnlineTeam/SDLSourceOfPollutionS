@@ -2,10 +2,10 @@
  * @Description: 验收服务报告
  * @LastEditors: hxf
  * @Date: 2023-09-18 09:27:53
- * @LastEditTime: 2023-11-03 11:05:26
- * @FilePath: /SDLMainProject36/app/pOperationContainers/AnalysisModelModification/AbnormalRectification.js
+ * @LastEditTime: 2024-11-04 11:55:13
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/AnalysisModelModification/AbnormalRectification.js
  */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Image,
   Platform,
@@ -15,7 +15,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
   AlertDialog,
   PickerSingleTimeTouchable,
@@ -24,7 +24,7 @@ import {
 } from '../../components';
 import ImageGrid from '../../components/form/images/ImageGrid';
 import globalcolor from '../../config/globalcolor';
-import {SCREEN_WIDTH} from '../../config/globalsize';
+import { SCREEN_WIDTH } from '../../config/globalsize';
 import {
   createAction,
   createNavigationOptions,
@@ -33,7 +33,7 @@ import {
 } from '../../utils';
 import moment from 'moment';
 
-@connect(({modelAnalysisAectificationModel}) => ({
+@connect(({ modelAnalysisAectificationModel }) => ({
   updateCheckedRectificationResult:
     modelAnalysisAectificationModel.updateCheckedRectificationResult,
 }))
@@ -59,9 +59,9 @@ export default class AbnormalRectification extends Component {
     this.onRefresh();
   }
 
-  onRefreshWithLoading = () => {};
+  onRefreshWithLoading = () => { };
 
-  onRefresh = () => {};
+  onRefresh = () => { };
 
   // cancelButton = () => { }
   // confirm = () => {
@@ -107,7 +107,7 @@ export default class AbnormalRectification extends Component {
     };
   };
 
-  cancelButton = () => {};
+  cancelButton = () => { };
   confirm = () => {
     if (this.checkParams()) {
       this.props.dispatch(
@@ -138,14 +138,14 @@ export default class AbnormalRectification extends Component {
       buttons: [
         {
           txt: '取消',
-          btnStyle: {backgroundColor: 'transparent'},
-          txtStyle: {color: globalcolor.headerBackgroundColor},
+          btnStyle: { backgroundColor: 'transparent' },
+          txtStyle: { color: globalcolor.headerBackgroundColor },
           onpress: this.cancelButton,
         },
         {
           txt: '确定',
-          btnStyle: {backgroundColor: globalcolor.headerBackgroundColor},
-          txtStyle: {color: '#ffffff'},
+          btnStyle: { backgroundColor: globalcolor.headerBackgroundColor },
+          txtStyle: { color: '#ffffff' },
           onpress: this.confirm,
         },
       ],
@@ -179,7 +179,7 @@ export default class AbnormalRectification extends Component {
               flex: 1,
             },
           ]}>
-          <ScrollView style={[{width: SCREEN_WIDTH}]}>
+          <ScrollView style={[{ width: SCREEN_WIDTH }]}>
             <View
               style={[
                 {
@@ -204,7 +204,7 @@ export default class AbnormalRectification extends Component {
                       justifyContent: 'center',
                     },
                   ]}>
-                  <Text>{'整改描述'}</Text>
+                  <Text style={[{ color: '#333333' }]}>{'整改描述'}</Text>
                 </View>
                 <View
                   style={[
@@ -231,7 +231,7 @@ export default class AbnormalRectification extends Component {
                     color: '#666666',
                     fontSize: 15,
                   }}
-                  onChangeText={text => this.setState({remark: text})}>
+                  onChangeText={text => this.setState({ remark: text })}>
                   {`${this.state.remark}`}
                 </TextInput>
               </View>
@@ -265,7 +265,7 @@ export default class AbnormalRectification extends Component {
                       alignItems: 'center',
                     },
                   ]}>
-                  <Text style={[{color: 'red', marginRight: 4}]}>{'*'}</Text>
+                  <Text style={[{ color: 'red', marginRight: 4 }]}>{'*'}</Text>
                   <Text
                     style={[
                       {
@@ -286,15 +286,14 @@ export default class AbnormalRectification extends Component {
                       marginRight: 0,
                       height: 25,
                     }}>
-                    <Text style={{fontSize: 14, color: '#666'}}>{`${
-                      this.state.CompletionTime == ''
-                        ? ''
-                        : moment(this.state.CompletionTime).format(
-                            'YYYY-MM-DD HH:mm',
-                          )
-                    }`}</Text>
+                    <Text style={{ fontSize: 14, color: '#666' }}>{`${this.state.CompletionTime == ''
+                      ? ''
+                      : moment(this.state.CompletionTime).format(
+                        'YYYY-MM-DD HH:mm',
+                      )
+                      }`}</Text>
                     <Image
-                      style={[{height: 15, width: 15}]}
+                      style={[{ height: 15, width: 15 }]}
                       source={require('../../images/ic_arrows_right.png')}
                     />
                   </PickerSingleTimeTouchable>
@@ -327,8 +326,8 @@ export default class AbnormalRectification extends Component {
                       alignItems: 'center',
                     },
                   ]}>
-                  <Text style={[{color: 'red', marginRight: 4}]}>{'*'}</Text>
-                  <Text>{'整改材料'}</Text>
+                  <Text style={[{ color: 'red', marginRight: 4 }]}>{'*'}</Text>
+                  <Text style={[{ color: '#333333' }]}>{'整改材料'}</Text>
                 </View>
                 <View
                   style={[

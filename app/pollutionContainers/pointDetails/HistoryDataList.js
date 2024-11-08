@@ -290,7 +290,8 @@ export default class HistoryDataList extends React.Component {
         const screenOrientation = SentencedToEmpty(this.props, ['screenOrientation'], '');
         return (
             <StatusPage
-                style={{ flex: 0.95 }}
+                style={{ flex: 1 }}
+                // style={{ flex: 0.95 }}
                 status={this.props.chartStatus.status}
                 //页面是否有回调按钮，如果不传，没有按钮，
                 emptyBtnText={'重新请求'}

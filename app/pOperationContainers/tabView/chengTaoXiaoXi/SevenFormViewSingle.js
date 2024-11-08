@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-09-18 09:27:53
- * @LastEditTime: 2024-09-26 10:36:27
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/SevenFormViewSingle.js
+ * @LastEditTime: 2024-11-01 15:29:35
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/SevenFormViewSingle.js
  */
 import React, { Component } from 'react'
 import { Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -189,7 +189,7 @@ export default class SevenFormViewSingle extends Component {
                                 , paddingHorizontal: 19, alignItems: 'center'
                             }]}>
                                 <Text style={[{ color: 'red', marginRight: 4 }]}>{'*'}</Text>
-                                <Text>{`${this.getImageTitle()}`}</Text>
+                                <Text style={[{ color: '#333333' }]}>{`${this.getImageTitle()}`}</Text>
                             </View>
                             <View
                                 style={[{
@@ -235,7 +235,7 @@ export default class SevenFormViewSingle extends Component {
                                 height: 44, width: SCREEN_WIDTH
                                 , paddingHorizontal: 19, justifyContent: 'center'
                             }]}>
-                                <Text>{'备注'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'备注'}</Text>
                             </View>
                             <View
                                 style={[{

@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-09-21 18:21:36
- * @LastEditTime: 2024-05-13 18:50:04
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/SevenFormViewMultiple.js
+ * @LastEditTime: 2024-11-01 15:30:19
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/SevenFormViewMultiple.js
  */
 import React, { Component } from 'react'
 import { Platform, ScrollView, Text, TouchableOpacity, View, Image, TextInput } from 'react-native'
@@ -503,7 +503,7 @@ export default class SevenFormViewMultiple extends Component {
                                             height: 40, width: 80
                                             , justifyContent: 'center', alignItems: 'flex-end'
                                         }]}>
-                                            <Text style={[{ fontSize: 13 }]}>{'删除'}</Text>
+                                            <Text style={[{ color: '#333333', fontSize: 13 }]}>{'删除'}</Text>
                                         </View>
                                     </TouchableOpacity> : null}
                                 </View>
@@ -546,6 +546,7 @@ export default class SevenFormViewMultiple extends Component {
                                             <Text
                                                 numberOfLines={1}
                                                 style={[{
+                                                    color: '#333333',
                                                     width: SCREEN_WIDTH - 140
                                                 }]}
                                             >{`${SentencedToEmpty(item, ['EntName'], '')}`}</Text>
@@ -592,7 +593,7 @@ export default class SevenFormViewMultiple extends Component {
                                             , flexDirection: 'row'
                                             , justifyContent: 'flex-end', alignItems: 'center'
                                         }]}>
-                                            <Text>{`${SentencedToEmpty(item, ['PointName'], '')}`}</Text>
+                                            <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(item, ['PointName'], '')}`}</Text>
                                             <Image
                                                 style={[{ height: 15, width: 15 }]}
                                                 source={require('../../../images/ic_arrows_right.png')} />

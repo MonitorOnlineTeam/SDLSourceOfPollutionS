@@ -40,20 +40,20 @@ export default class AlertDialog extends Component {
                 }}
                 supportedOrientations={['portrait', 'portrait-upside-down', 'landscape', 'landscape-left', 'landscape-right']}
             >
+                <StatusBar hidden={true} />
                 <View style={this.props.orientation == 'LANDSCAPE'
-                    && false ? {
-                    width: SCREEN_HEIGHT,
-                    height: SCREEN_WIDTH,
-                    alignItems: 'flex-start',
-                    justifyContent: 'center',
-                } : styles.container}>
+                    ? {
+                        width: SCREEN_HEIGHT,
+                        height: SCREEN_WIDTH - 96,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                    } : styles.container}>
                     {this.state.clickScreenToHide && (
                         <TouchableHighlight
                             onPress={() => {
                                 const { alertDialogHideCallback = () => { } } = this.props.options;
                                 alertDialogHideCallback();
                                 this.hideModal();
-                                console.log('1');
                             }}
                             style={this.props.orientation == 'LANDSCAPE' ? {
                                 justifyContent: 'center',
@@ -70,7 +70,7 @@ export default class AlertDialog extends Component {
                         </TouchableHighlight>
                     )}
 
-                    <View style={[styles.containView, { width: this.state.innersWidth, height: this.state.innersHeight }]}>
+                    <View style={[styles.containView, { width: this.state.innersWidth, height: this.state.innersHeight }, {}]}>
                         {!this.state.hiddenTitle && (
                             <View style={styles.headerView}>
                                 <Text style={[styles.headerTitle, this.state.headStyle]}>{this.state.headTitle}</Text>
@@ -84,7 +84,7 @@ export default class AlertDialog extends Component {
                         )} */}
                         {SentencedToEmpty(this.props, ['options', 'messText'], '') != '' && (
                             <View style={styles.messText}>
-                                <Text>{`${SentencedToEmpty(this.props, ['options', 'messText'], '未传入提示信息')}`}</Text>
+                                <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(this.props, ['options', 'messText'], '未传入提示信息')}`}</Text>
                             </View>
                         )}
                         {this.state.buttons && <View style={styles.buttonView}>{this.state.buttons.map((item, i) => this.CreateBtns(item, i))}</View>}

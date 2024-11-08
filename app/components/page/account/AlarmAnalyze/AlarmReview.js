@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import {
   TouchableOpacity,
   View,
@@ -11,9 +11,9 @@ import {
   Text,
   ScrollView,
 } from 'react-native';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import SyanImagePicker from 'react-native-syan-image-picker';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import moment from 'moment';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {
@@ -34,15 +34,15 @@ import {
   ShowToast,
   SentencedToEmpty,
 } from '../../../../utils';
-import {SCREEN_WIDTH} from '../../../../config/globalsize';
+import { SCREEN_WIDTH } from '../../../../config/globalsize';
 import {
   IMAGE_DEBUG,
   ImageUrlPrefix,
   UrlInfo,
 } from '../../../../config/globalconst';
-import {SCREEN_HEIGHT} from '../../../../components/SDLPicker/constant/globalsize';
+import { SCREEN_HEIGHT } from '../../../../components/SDLPicker/constant/globalsize';
 import globalcolor from '../../../../config/globalcolor';
-import {getEncryptData, getRootUrl} from '../../../../dvapack/storage';
+import { getEncryptData, getRootUrl } from '../../../../dvapack/storage';
 const options = {
   mediaType: 'photo',
   quality: 0.7,
@@ -57,7 +57,7 @@ let that;
 /**
  * 报警核实
  */
-@connect(({alarmAnaly}) => ({
+@connect(({ alarmAnaly }) => ({
   commitVerifyResult: alarmAnaly.commitVerifyResult,
   alarmVerifyDetail: alarmAnaly.alarmVerifyDetail,
   editCommitEnable: alarmAnaly.editCommitEnable,
@@ -113,19 +113,18 @@ export default class AlarmReview extends PureComponent {
       const source =
         item.attachID != ''
           ? {
-              uri: IMAGE_DEBUG
-                ? `${ImageUrlPrefix}/${urlArray[urlArray.length - 1]}`
-                : `${ImageUrlPrefix}${ProxyCode}/${
-                    urlArray[urlArray.length - 1]
-                  }`,
-            }
+            uri: IMAGE_DEBUG
+              ? `${ImageUrlPrefix}/${urlArray[urlArray.length - 1]}`
+              : `${ImageUrlPrefix}${ProxyCode}/${urlArray[urlArray.length - 1]
+              }`,
+          }
           : require('../../../../images/addpic.png');
       console.log('source = ', source);
       rtnVal.push(
         <View
           View
           key={item.attachID}
-          style={{width: SCREEN_WIDTH / 4 - 5, height: SCREEN_WIDTH / 4 - 5}}>
+          style={{ width: SCREEN_WIDTH / 4 - 5, height: SCREEN_WIDTH / 4 - 5 }}>
           <Image
             resizeMethod={'resize'}
             source={source}
@@ -139,12 +138,12 @@ export default class AlarmReview extends PureComponent {
           />
           <TouchableOpacity
             onPress={() => {
-              this.setState({modalVisible: true, index: key});
+              this.setState({ modalVisible: true, index: key });
             }}
-            style={[{position: 'absolute', bottom: 0, left: 0}]}>
+            style={[{ position: 'absolute', bottom: 0, left: 0 }]}>
             <View
               style={[
-                {height: SCREEN_WIDTH / 4 - 10, width: SCREEN_WIDTH / 4 - 15},
+                { height: SCREEN_WIDTH / 4 - 10, width: SCREEN_WIDTH / 4 - 15 },
               ]}
             />
           </TouchableOpacity>
@@ -179,10 +178,10 @@ export default class AlarmReview extends PureComponent {
                   }),
                 );
               }}
-              style={[{position: 'absolute', top: 2, right: 2}]}>
+              style={[{ position: 'absolute', top: 2, right: 2 }]}>
               <Image
                 source={require('../../../../images/ic_close_blue.png')}
-                style={{width: 16, height: 16}}
+                style={{ width: 16, height: 16 }}
               />
             </TouchableOpacity>
           ) : null}
@@ -210,7 +209,7 @@ export default class AlarmReview extends PureComponent {
           });
         });
 
-        return {imagelist: newImagelist, refresh, imgUrls: newImgUrls};
+        return { imagelist: newImagelist, refresh, imgUrls: newImgUrls };
       });
       CloseToast('上传成功');
     } else {
@@ -222,18 +221,18 @@ export default class AlarmReview extends PureComponent {
   componentWillUnmount() {
     this.props.dispatch(
       createAction('alarmAnaly/updateState')({
-        alarmVerifyDetail: {status: 200},
+        alarmVerifyDetail: { status: 200 },
       }),
     );
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
   statusPageOnRefresh = () => {
     this.props.dispatch(
       createAction('alarmAnaly/GetWarningVerifyInfor')({
         modelWarningGuid: this.alarmObj.ModelWarningGuid,
         callback: info => {
-          this.setState({selectUntruthReason: info['UntruthReason']});
+          this.setState({ selectUntruthReason: info['UntruthReason'] });
 
           let imageArr = info['FileList'];
           let showImageList = [];
@@ -258,10 +257,10 @@ export default class AlarmReview extends PureComponent {
     );
   };
   getTypeOption = () => {
-    let {UntruthReason} = SentencedToEmpty(
+    let { UntruthReason } = SentencedToEmpty(
       this.props.alarmVerifyDetail,
       ['data', 'Datas'],
-      {approvalStatus: null, approvalRemarks: null, FileList: []},
+      { approvalStatus: null, approvalRemarks: null, FileList: [] },
     );
     return {
       contentWidth: 166,
@@ -271,16 +270,16 @@ export default class AlarmReview extends PureComponent {
       nameKey: 'TypeName',
       defaultCode: UntruthReason,
       dataArr: [
-        {ID: '湿度仪堵塞', TypeName: '湿度仪堵塞'},
-        {ID: '湿度仪故障', TypeName: '湿度仪故障'},
-        {ID: '标定', TypeName: '标定'},
-        {ID: '故障', TypeName: '故障'},
-        {ID: '公共烟道窜烟', TypeName: '公共烟道窜烟'},
-        {ID: '数采仪上传压力单位异常', TypeName: '数采仪上传压力单位异常'},
-        {ID: '启炉/停炉/停运未标记', TypeName: '启炉/停炉/停运未标记'},
-        {ID: '数采仪使用老版软件', TypeName: '数采仪使用老版软件'},
-        {ID: '数采仪调试', TypeName: '数采仪调试'},
-        {ID: '其他', TypeName: '其他'},
+        { ID: '湿度仪堵塞', TypeName: '湿度仪堵塞' },
+        { ID: '湿度仪故障', TypeName: '湿度仪故障' },
+        { ID: '标定', TypeName: '标定' },
+        { ID: '故障', TypeName: '故障' },
+        { ID: '公共烟道窜烟', TypeName: '公共烟道窜烟' },
+        { ID: '数采仪上传压力单位异常', TypeName: '数采仪上传压力单位异常' },
+        { ID: '启炉/停炉/停运未标记', TypeName: '启炉/停炉/停运未标记' },
+        { ID: '数采仪使用老版软件', TypeName: '数采仪使用老版软件' },
+        { ID: '数采仪调试', TypeName: '数采仪调试' },
+        { ID: '其他', TypeName: '其他' },
       ],
       onSelectListener: item => {
         this.setState({
@@ -291,10 +290,10 @@ export default class AlarmReview extends PureComponent {
   };
   render() {
     console.log('state1 = ', this.state);
-    let {approvalStatus, approvalRemarks, FileList} = SentencedToEmpty(
+    let { approvalStatus, approvalRemarks, FileList } = SentencedToEmpty(
       this.props.alarmVerifyDetail,
       ['data', 'Datas'],
-      {approvalStatus: null, approvalRemarks: null, FileList: []},
+      { approvalStatus: null, approvalRemarks: null, FileList: [] },
     );
     const dialogOptions = {
       headTitle: '选择照片',
@@ -310,11 +309,11 @@ export default class AlarmReview extends PureComponent {
       buttons: [
         {
           txt: '打开相机',
-          btnStyle: {backgroundColor: '#fff'},
-          txtStyle: {color: '#f97740', fontSize: 15, fontWeight: 'bold'},
+          btnStyle: { backgroundColor: '#fff' },
+          txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
           onpress: () => {
             launchCamera(options, response => {
-              const {assets = []} = response;
+              const { assets = [] } = response;
               let imageObj = null;
               if (assets.length <= 0) {
                 return;
@@ -336,11 +335,11 @@ export default class AlarmReview extends PureComponent {
         },
         {
           txt: '选择照片',
-          btnStyle: {backgroundColor: '#fff'},
-          txtStyle: {color: '#f97740', fontSize: 15, fontWeight: 'bold'},
+          btnStyle: { backgroundColor: '#fff' },
+          txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
           onpress: () => {
             launchImageLibrary(options, response => {
-              const {assets = []} = response;
+              const { assets = [] } = response;
               let imageObj = null;
               if (assets.length <= 0) {
                 return;
@@ -379,7 +378,7 @@ export default class AlarmReview extends PureComponent {
           console.log('错误操作回调');
           this.statusPageOnRefresh();
         }}>
-        <ScrollView style={[{flex: 1, paddingTop: 13}]}>
+        <ScrollView style={[{ flex: 1, paddingTop: 13 }]}>
           <View
             style={{
               flexDirection: 'row',
@@ -396,15 +395,15 @@ export default class AlarmReview extends PureComponent {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <SDLText style={{color: 'red'}}>*</SDLText>
+              <SDLText style={{ color: 'red' }}>*</SDLText>
               <SDLText style={{}}>复核结果</SDLText>
             </View>
             <SelectButton
               editable={this.props.editCommitEnable}
-              style={{flexDirection: 'row', width: 200}} //整个组件的样式----这样可以垂直和水平
-              conTainStyle={{height: 44, width: 80}} //图片和文字的容器样式
-              imageStyle={{width: 18, height: 18}} //图片样式
-              textStyle={{color: '#666'}} //文字样式
+              style={{ flexDirection: 'row', width: 200 }} //整个组件的样式----这样可以垂直和水平
+              conTainStyle={{ height: 44, width: 80 }} //图片和文字的容器样式
+              imageStyle={{ width: 18, height: 18 }} //图片样式
+              textStyle={{ color: '#666' }} //文字样式
               selectIndex={
                 approvalStatus == '3' ? '0' : approvalStatus == '4' ? '1' : ''
               } //空字符串,表示不选中,数组索引表示默认选中
@@ -413,7 +412,7 @@ export default class AlarmReview extends PureComponent {
                 let newObj = SentencedToEmpty(
                   this.props.alarmVerifyDetail,
                   ['data', 'Datas'],
-                  {approvalStatus: null, approvalRemarks: null, FileList: []},
+                  { approvalStatus: null, approvalRemarks: null, FileList: [] },
                 );
                 newObj.approvalStatus = item.id;
                 //动态更新组件内state 记录输入内容
@@ -421,7 +420,7 @@ export default class AlarmReview extends PureComponent {
                   createAction('alarmAnaly/updateState')({
                     alarmVerifyDetail: {
                       ...this.props.alarmVerifyDetail,
-                      data: {Datas: newObj},
+                      data: { Datas: newObj },
                     },
                   }),
                 );
@@ -445,8 +444,8 @@ export default class AlarmReview extends PureComponent {
               backgroundColor: '#ffffff',
               padding: 13,
             }}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <SDLText style={{color: 'red'}}>*</SDLText>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <SDLText style={{ color: 'red' }}>*</SDLText>
               <SDLText style={{}}>复核意见</SDLText>
             </View>
             <TextInput
@@ -458,7 +457,7 @@ export default class AlarmReview extends PureComponent {
                 let newObj = SentencedToEmpty(
                   this.props.alarmVerifyDetail,
                   ['data', 'Datas'],
-                  {approvalStatus: null, approvalRemarks: null, FileList: []},
+                  { approvalStatus: null, approvalRemarks: null, FileList: [] },
                 );
                 newObj.approvalRemarks = text;
                 //动态更新组件内state 记录输入内容
@@ -466,11 +465,11 @@ export default class AlarmReview extends PureComponent {
                   createAction('alarmAnaly/updateState')({
                     alarmVerifyDetail: {
                       ...this.props.alarmVerifyDetail,
-                      data: {Datas: newObj},
+                      data: { Datas: newObj },
                     },
                   }),
                 );
-                this.setState({VerifyMessage: text});
+                this.setState({ VerifyMessage: text });
               }}
               value={approvalRemarks}
               multiline={true}
@@ -503,7 +502,7 @@ export default class AlarmReview extends PureComponent {
                 alignItems: 'center',
                 justifyContent: 'flex-start',
               }}>
-              <SDLText style={{color: 'red'}}> </SDLText>
+              <SDLText style={{ color: 'red' }}> </SDLText>
               <SDLText style={{}}>附件</SDLText>
             </View>
             <View
@@ -522,7 +521,7 @@ export default class AlarmReview extends PureComponent {
                   onPress={() => {
                     if (Platform.OS == 'ios') {
                       SyanImagePicker.showImagePicker(
-                        {imageCount: 1},
+                        { imageCount: 1 },
                         (err, selectedPhotos) => {
                           if (err) {
                             // 取消选择
@@ -546,7 +545,26 @@ export default class AlarmReview extends PureComponent {
                       );
                       return;
                     }
-                    this.refs.doAlert.show();
+                    SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                      if (err) {
+                        // 取消选择
+                        return;
+                      }
+
+                      if (selectedPhotos.length <= 0) {
+                        return;
+                      } else {
+                        ShowLoadingToast('正在上传图片');
+                        that.props.dispatch(
+                          createAction('imageModel/uploadimage')({
+                            images: selectedPhotos,
+                            uuid: uuid,
+                            callback: this.uploadImageCallBack
+                          })
+                        );
+                      }
+                    });
+                    // this.refs.doAlert.show();
                   }}
                   style={{
                     width: SCREEN_WIDTH / 4 - 25,
@@ -612,7 +630,7 @@ export default class AlarmReview extends PureComponent {
                   height: 52,
                   backgroundColor: globalcolor.headerBackgroundColor,
                 }}>
-                <Text style={{color: '#ffffff', fontSize: 18}}>{'保存'}</Text>
+                <Text style={{ color: '#ffffff', fontSize: 18 }}>{'保存'}</Text>
               </TouchableOpacity>
             ) : null}
           </View>
@@ -620,7 +638,7 @@ export default class AlarmReview extends PureComponent {
           <Modal
             visible={this.state.modalVisible}
             transparent={true}
-            onRequestClose={() => this.setState({modalVisible: false})}>
+            onRequestClose={() => this.setState({ modalVisible: false })}>
             <ImageViewer
               saveToLocalByLongPress={false}
               onClick={() => {

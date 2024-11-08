@@ -25,6 +25,7 @@ export default class ChengTaoTaskDetail extends Component {
     // };
 
     componentDidMount() {
+        // 用ID查一下
         // 获取 服务统计 的状态
         this.props.dispatch(createAction('CTServiceStatisticsModel/getServiceRecordStatus')({}));
     }

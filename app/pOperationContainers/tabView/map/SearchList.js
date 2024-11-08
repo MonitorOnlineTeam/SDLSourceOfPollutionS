@@ -183,7 +183,7 @@ export default class SearchList extends Component {
                             this.search(text);
                         }}
                     >
-                        <Text>{this.state.text}</Text>
+                        <Text style={[{ color: '#333333' }]}>{this.state.text}</Text>
                     </TextInput>
                     {this.state.text ? (
                         <Touchable

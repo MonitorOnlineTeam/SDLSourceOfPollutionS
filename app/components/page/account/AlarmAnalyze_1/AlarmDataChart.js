@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
   createNavigationOptions,
   NavigationActions,
@@ -29,7 +29,7 @@ import {
   ImageBackground,
   ScrollView,
 } from 'react-native';
-import {Echarts, echarts} from 'react-native-secharts';
+import { Echarts, echarts } from 'react-native-secharts';
 import moment from 'moment';
 import {
   lockToLandscapeLeft,
@@ -41,7 +41,7 @@ import globalcolor from '../../../../config/globalcolor';
  *
  *图表数据
  */
-@connect(({alarmAnaly}) => ({
+@connect(({ alarmAnaly }) => ({
   AlarmDataChartValue: alarmAnaly.AlarmDataChartValue,
   AlarmChartPollutant: alarmAnaly.AlarmChartPollutant,
   alarmChartData: alarmAnaly.alarmChartData,
@@ -127,14 +127,14 @@ export default class AlarmDataChart extends React.Component {
         PointArr.length > 0 && PointArr[0].DGIMN
           ? PointArr
           : [
-              {
-                PointName: this.props.route.params.params.PointName,
-                DGIMN: this.props.route.params.params.DGIMN,
-              },
-            ],
+            {
+              PointName: this.props.route.params.params.PointName,
+              DGIMN: this.props.route.params.params.DGIMN,
+            },
+          ],
       defaultCode: '',
       onSelectListener: item => {
-        this.setState({selectDGIMN: item.DGIMN}, () => {
+        this.setState({ selectDGIMN: item.DGIMN }, () => {
           this.refreshData();
         });
       },
@@ -164,13 +164,13 @@ export default class AlarmDataChart extends React.Component {
       if (
         ChartArr.length > 0 &&
         Date.parse(item.replace(/-/g, '/')) -
-          Date.parse(ChartArr[0]['MonitorTime'].replace(/-/g, '/')) >
-          0 &&
+        Date.parse(ChartArr[0]['MonitorTime'].replace(/-/g, '/')) >
+        0 &&
         Date.parse(item.replace(/-/g, '/')) -
-          Date.parse(
-            ChartArr[ChartArr.length - 1]['MonitorTime'].replace(/-/g, '/'),
-          ) <
-          0
+        Date.parse(
+          ChartArr[ChartArr.length - 1]['MonitorTime'].replace(/-/g, '/'),
+        ) <
+        0
       ) {
         markLineArr.push({
           name: '发现异常',
@@ -231,14 +231,14 @@ export default class AlarmDataChart extends React.Component {
           data: data,
           yAxisIndex: selectIndex,
           markLine: {
-            label: {formatter: '发现异常'},
+            label: { formatter: '发现异常' },
             lineStyle: {
               color: 'red',
             },
             data: markLineArr,
           },
           markArea: {
-            label: {color: 'rgba(228, 223, 223, 1)'},
+            label: { color: 'rgba(228, 223, 223, 1)' },
             itemStyle: {
               color: 'rgba(228, 223, 223, 1)',
             },
@@ -250,7 +250,7 @@ export default class AlarmDataChart extends React.Component {
     let option = {
       tooltip: {
         position: function (point, params, dom, rect, size) {
-          // 固定在顶部
+          'show source';
           return [point[0], '8%'];
         },
         trigger: 'axis',
@@ -258,6 +258,7 @@ export default class AlarmDataChart extends React.Component {
           type: 'cross',
         },
         formatter: function (params) {
+          'show source';
           var htmlStr =
             '<div style="height: auto;display: flex;flex-direction: column;justify-content:space-between;align-items:flex-start;"><span style="color: #fff;">' +
             params[0].axisValue +
@@ -335,11 +336,11 @@ export default class AlarmDataChart extends React.Component {
   };
   render() {
     let self = this;
-
+    console.log('option1 = ', self.state.option1);
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <StatusPage
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           errorPaddingTop={50}
           emptyPaddingTop={50}
           status={this.props.AlarmDataChartValue.status}
@@ -358,7 +359,7 @@ export default class AlarmDataChart extends React.Component {
           }}>
           {this.props.AlarmDataChartValue.status == 200 ? (
             <View
-              style={{flex: 1}}
+              style={{ flex: 1 }}
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
               <View
@@ -408,9 +409,9 @@ export default class AlarmDataChart extends React.Component {
                             1,
                           );
                         }
-                        self.setState({hideEchart: true}, () => {
+                        self.setState({ hideEchart: true }, () => {
                           let newOP = self.getLinearCoefficientOption();
-                          self.setState({option1: newOP, hideEchart: false});
+                          self.setState({ option1: newOP, hideEchart: false });
                         });
                       }}
                       style={{
@@ -425,22 +426,22 @@ export default class AlarmDataChart extends React.Component {
                           }) < 0
                             ? '#ccc'
                             : this.state.colors[
-                                SentencedToEmpty(
-                                  this.props.AlarmChartPollutant,
-                                  ['pollttantSelect'],
-                                  [],
-                                ).findIndex(subI => {
-                                  if (subI.PollutantName == item.PollutantName)
-                                    return true;
-                                })
-                              ],
+                            SentencedToEmpty(
+                              this.props.AlarmChartPollutant,
+                              ['pollttantSelect'],
+                              [],
+                            ).findIndex(subI => {
+                              if (subI.PollutantName == item.PollutantName)
+                                return true;
+                            })
+                            ],
                         alignItems: 'center',
                         justifyContent: 'center',
                         padding: 5,
                         marginTop: 5,
                         marginLeft: 5,
                       }}>
-                      <Text style={{color: '#fff'}}>{item.PollutantName}</Text>
+                      <Text style={{ color: '#fff' }}>{item.PollutantName}</Text>
                     </TouchableOpacity>
                   );
                 })}
@@ -536,12 +537,12 @@ export default class AlarmDataChart extends React.Component {
                   );
                 })}
                 <SimplePickerRangeDay
-                  style={[{width: 120, marginLeft: 15}]}
+                  style={[{ width: 120, marginLeft: 15 }]}
                   option={this.getRangeDaySelectOption()}
                 />
                 <SimplePicker
                   option={this.getDataTypeSelectOption()}
-                  style={[{width: 120, marginLeft: 15}]}
+                  style={[{ width: 120, marginLeft: 15 }]}
                 />
               </View>
             </View>
@@ -563,7 +564,7 @@ export default class AlarmDataChart extends React.Component {
             lockToPortrait();
             this.props.dispatch(NavigationActions.back());
           }}>
-          <SDLText style={{color: '#fff'}}>返回</SDLText>
+          <SDLText style={{ color: '#fff' }}>返回</SDLText>
         </TouchableOpacity>
       </View>
     );

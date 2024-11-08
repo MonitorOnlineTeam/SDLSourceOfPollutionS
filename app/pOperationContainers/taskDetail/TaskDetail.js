@@ -265,6 +265,13 @@ export default class TaskDetail extends Component {
                                 // this._modalParent.showModal();
                             }
                         }
+                        const { from = 'other' } = this.props.route.params.params;
+                        if (from == 'AlarmResponseRecord') {
+                            // 来自异常报警响应记录
+                            this.props.dispatch(createAction('taskDetailModel/updateState')({
+                                tabIndex: 1
+                            }));
+                        }
                     }
                 }
             })
@@ -362,40 +369,71 @@ export default class TaskDetail extends Component {
                         , justifyContent: 'space-between'
                         , backgroundColor: 'white', marginBottom: 5
                     }]}>
-                        <SDLTabButton
+                        {hideSign ? null : <SDLTabButton
                             topButtonWidth={SCREEN_WIDTH / 3}
                             selected={this.props.tabIndex == 0}
                             label='签到打卡'
                             onPress={() => {
                                 this.props.dispatch(createAction('taskDetailModel/updateState')({ tabIndex: 0 }));
                             }}
-                        />
-                        <SDLTabButton
+                        />}
+                        {hideSign ? <SDLTabButton
+                            topButtonWidth={SCREEN_WIDTH / 2}
+                            selected={this.props.tabIndex == 0}
+                            label='基本信息'
+                            onPress={() => {
+                                this.props.dispatch(createAction('taskDetailModel/updateState')({ tabIndex: 0 }));
+                            }}
+                        /> : <SDLTabButton
                             topButtonWidth={SCREEN_WIDTH / 3}
                             selected={this.props.tabIndex == 1}
                             label='基本信息'
                             onPress={() => {
                                 this.props.dispatch(createAction('taskDetailModel/updateState')({ tabIndex: 1 }));
                             }}
-                        />
-                        <SDLTabButton
+                        />}
+                        {hideSign ? <SDLTabButton
+                            topButtonWidth={SCREEN_WIDTH / 2}
+                            selected={this.props.tabIndex == 1}
+                            label='任务处理'
+                            onPress={() => {
+                                this.props.dispatch(createAction('taskDetailModel/updateState')({ tabIndex: 1 }));
+                            }}
+                        /> : <SDLTabButton
                             topButtonWidth={SCREEN_WIDTH / 3}
                             selected={this.props.tabIndex == 2}
                             label='任务处理'
                             onPress={() => {
                                 this.props.dispatch(createAction('taskDetailModel/updateState')({ tabIndex: 2 }));
                             }}
-                        />
+                        />}
                     </View>
                     {
                         this.props.tabIndex == 0
-                            ? <TaskSign
+                            ? hideSign ? <TaskInfo
+                                tabLabel="基本信息"
+                                listKey="a"
+                                key="0"
+                                needApproval={SentencedToEmpty(this.props, ['route', 'params', 'params', 'needApproval'], false)}
+                            /> : <TaskSign
                                 tabLabel="打卡"
                                 listKey="c"
                                 key="3"
                             />
                             : this.props.tabIndex == 1
-                                ? <TaskInfo
+                                ? hideSign ? <TaskHandle
+                                    taskSign={() => {
+                                        // if (this._modalParent) {
+                                        //     this._modalParent.showModal();
+                                        // }
+                                        if (this.iconDialog) {
+                                            this.iconDialog.showModal();
+                                        }
+                                    }}
+                                    tabLabel="任务处理"
+                                    listKey="b"
+                                    key="1"
+                                /> : <TaskInfo
                                     tabLabel="基本信息"
                                     listKey="a"
                                     key="0"

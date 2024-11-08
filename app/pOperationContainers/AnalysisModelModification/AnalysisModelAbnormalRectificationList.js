@@ -2,14 +2,14 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-10-25 11:49:44
- * @LastEditTime: 2023-11-09 16:12:30
- * @FilePath: /SDLMainProject36/app/pOperationContainers/AnalysisModelModification/AnalysisModelAbnormalRectificationList.js
+ * @LastEditTime: 2024-11-04 11:53:46
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/AnalysisModelModification/AnalysisModelAbnormalRectificationList.js
  */
-import {Text, View, Platform} from 'react-native';
-import React, {Component} from 'react';
+import { Text, View, Platform } from 'react-native';
+import React, { Component } from 'react';
 // import ScrollableTabView from 'react-native-scrollable-tab-view';
 
-import {SCREEN_WIDTH} from '../../config/globalsize';
+import { SCREEN_WIDTH } from '../../config/globalsize';
 import {
   NavigationActions,
   SentencedToEmpty,
@@ -22,10 +22,10 @@ import {
   StatusPage,
 } from '../../components';
 import MyTabBar from '../../operationContainers/taskViews/taskExecution/components/MyTabBar';
-import {TouchableOpacity, Image} from 'react-native';
-import {connect} from 'react-redux';
+import { TouchableOpacity, Image } from 'react-native';
+import { connect } from 'react-redux';
 
-@connect(({modelAnalysisAectificationModel}) => ({
+@connect(({ modelAnalysisAectificationModel }) => ({
   checkedRectificationListGResult:
     modelAnalysisAectificationModel.checkedRectificationListGResult,
 }))
@@ -67,7 +67,7 @@ export default class AnalysisModelAbnormalRectificationList extends Component {
               }),
             );
           }}>
-          <SDLText style={{color: '#fff', marginHorizontal: 16}}>
+          <SDLText style={{ color: '#fff', marginHorizontal: 16 }}>
             {'整改记录'}
           </SDLText>
         </TouchableOpacity>
@@ -84,7 +84,7 @@ export default class AnalysisModelAbnormalRectificationList extends Component {
   statusPageOnRefresh = () => {
     this.props.dispatch(
       createAction('modelAnalysisAectificationModel/updateState')({
-        checkedRectificationListGResult: {status: -1},
+        checkedRectificationListGResult: { status: -1 },
       }),
     );
     this.props.dispatch(
@@ -186,7 +186,7 @@ export default class AnalysisModelAbnormalRectificationList extends Component {
     }
   };
 
-  _renderItem = ({item, index}) => {
+  _renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -267,7 +267,7 @@ export default class AnalysisModelAbnormalRectificationList extends Component {
             {/* 待整改 RectificationStatus == 1 ;Col1 列表中这个字段等于1代表打回。 */}
             {item.RectificationStatus == 1 && item.Col1 == 1 && (
               <Image
-                style={{width: 25, height: 25, marginRight: 3}}
+                style={{ width: 25, height: 25, marginRight: 3 }}
                 source={require('../../images/chehui.png')}
               />
             )}
@@ -280,7 +280,7 @@ export default class AnalysisModelAbnormalRectificationList extends Component {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Text style={{fontSize: 10, color: '#FFFFFF'}}>企</Text>
+              <Text style={{ fontSize: 10, color: '#FFFFFF' }}>企</Text>
             </View>
             <Text
               numberOfLines={1}
@@ -290,10 +290,10 @@ export default class AnalysisModelAbnormalRectificationList extends Component {
                 fontSize: 14,
                 color: '#333333',
               }}>{`${SentencedToEmpty(
-              item,
-              ['EntName'],
-              '--',
-            )}-${SentencedToEmpty(item, ['PointName'], '--')}`}</Text>
+                item,
+                ['EntName'],
+                '--',
+              )}-${SentencedToEmpty(item, ['PointName'], '--')}`}</Text>
             {/* <Text style={{ marginLeft: 4, fontSize: 12, color: '#4AA0FF' }}>{`(${SentencedToEmpty(item, ['Count'], '0')})`}</Text> */}
             <View
               style={[
@@ -329,6 +329,7 @@ export default class AnalysisModelAbnormalRectificationList extends Component {
           <Text
             style={[
               {
+                color: '#333333',
                 lineHeight: 19,
                 marginTop: 6,
                 width: SCREEN_WIDTH - 60,
@@ -337,11 +338,10 @@ export default class AnalysisModelAbnormalRectificationList extends Component {
               },
             ]}
             numberOfLines={3}>
-            {`${
-              index == 1 && false
-                ? '测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123'
-                : SentencedToEmpty(item, ['CheckedDes'], '-----')
-            }`}
+            {`${index == 1 && false
+              ? '测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123'
+              : SentencedToEmpty(item, ['CheckedDes'], '-----')
+              }`}
           </Text>
           <View
             style={[
@@ -354,7 +354,7 @@ export default class AnalysisModelAbnormalRectificationList extends Component {
               },
             ]}>
             <View
-              style={[{flex: 1, flexDirection: 'row', alignItems: 'center'}]}>
+              style={[{ flex: 1, flexDirection: 'row', alignItems: 'center' }]}>
               <View
                 style={{
                   width: 16,
@@ -364,16 +364,16 @@ export default class AnalysisModelAbnormalRectificationList extends Component {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                <Text style={{fontSize: 10, color: '#FFFFFF'}}>整</Text>
+                <Text style={{ fontSize: 10, color: '#FFFFFF' }}>整</Text>
               </View>
               <SDLText
                 numberOfLines={1}
                 fontType={'normal'}
-                style={[{color: '#666666', flex: 1}]}>
+                style={[{ color: '#666666', flex: 1 }]}>
                 {`${SentencedToEmpty(item, ['RectificationUserName'], '----')}`}
               </SDLText>
             </View>
-            <View style={[{width: 4}]} />
+            <View style={[{ width: 4 }]} />
             <View
               style={{
                 flexDirection: 'row',
@@ -381,10 +381,10 @@ export default class AnalysisModelAbnormalRectificationList extends Component {
                 justifyContent: 'center',
               }}>
               <Image
-                style={{width: 16, height: 16, marginRight: 3}}
+                style={{ width: 16, height: 16, marginRight: 3 }}
                 source={require('../../images/ic_tab_statistics_selected.png')}
               />
-              <SDLText fontType={'normal'} style={[{color: '#666666'}]}>
+              <SDLText fontType={'normal'} style={[{ color: '#666666' }]}>
                 {`${this.getShowTime(item)}`}
               </SDLText>
             </View>
@@ -398,7 +398,7 @@ export default class AnalysisModelAbnormalRectificationList extends Component {
     return (
       <StatusPage
         backRef={true}
-        style={[{width: SCREEN_WIDTH, flex: 1, marginTop: 8}]}
+        style={[{ width: SCREEN_WIDTH, flex: 1, marginTop: 8 }]}
         status={SentencedToEmpty(
           this.props,
           ['checkedRectificationListGResult', 'status'],
@@ -427,7 +427,7 @@ export default class AnalysisModelAbnormalRectificationList extends Component {
           ItemSeparatorComponent={() => (
             <View
               style={[
-                {width: SCREEN_WIDTH, height: 1, backgroundColor: '#f2f2f2'},
+                { width: SCREEN_WIDTH, height: 1, backgroundColor: '#f2f2f2' },
               ]}
             />
           )}
@@ -437,14 +437,14 @@ export default class AnalysisModelAbnormalRectificationList extends Component {
           onRefresh={index => {
             this.onRefresh(index);
           }}
-          onEndReached={index => {}}
+          onEndReached={index => { }}
           renderItem={this._renderItem}
           data={SentencedToEmpty(
             this.props,
             ['checkedRectificationListGResult', 'data', 'Datas'],
             [],
           )}
-          // data={[{}, {}]}
+        // data={[{}, {}]}
         />
       </StatusPage>
     );
@@ -472,12 +472,12 @@ export const getStatusObject = function (TaskStatus) {
     textColor = '#19B319';
     bgColor = '#DCFFDC4D';
   }
-  return {textColor, bgColor};
+  return { textColor, bgColor };
 };
 
 @connect()
 class ToBeRectified extends Component {
-  _renderItem = ({item, index}) => {
+  _renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -493,7 +493,7 @@ class ToBeRectified extends Component {
         }}>
         <View
           style={[
-            {width: SCREEN_WIDTH, height: 136, backgroundColor: 'white'},
+            { width: SCREEN_WIDTH, height: 136, backgroundColor: 'white' },
           ]}>
           <View
             style={{
@@ -512,7 +512,7 @@ class ToBeRectified extends Component {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Text style={{fontSize: 10, color: '#FFFFFF'}}>企</Text>
+              <Text style={{ fontSize: 10, color: '#FFFFFF' }}>企</Text>
             </View>
             <Text
               numberOfLines={1}
@@ -522,10 +522,10 @@ class ToBeRectified extends Component {
                 fontSize: 14,
                 color: '#333333',
               }}>{`${SentencedToEmpty(
-              item,
-              [0, 'EntName'],
-              '--',
-            )}-${SentencedToEmpty(item, [0, 'PointName'], '--')}`}</Text>
+                item,
+                [0, 'EntName'],
+                '--',
+              )}-${SentencedToEmpty(item, [0, 'PointName'], '--')}`}</Text>
             {/* <Text style={{ marginLeft: 4, fontSize: 12, color: '#4AA0FF' }}>{`(${SentencedToEmpty(item, ['Count'], '0')})`}</Text> */}
             <View
               style={[
@@ -555,6 +555,7 @@ class ToBeRectified extends Component {
           <Text
             style={[
               {
+                color: '#333333',
                 marginTop: 6,
                 width: SCREEN_WIDTH - 60,
                 height: 63,
@@ -574,7 +575,7 @@ class ToBeRectified extends Component {
                 height: 20,
               },
             ]}>
-            <View style={[{flex: 1}]} />
+            <View style={[{ flex: 1 }]} />
             <View
               style={{
                 flexDirection: 'row',
@@ -582,10 +583,10 @@ class ToBeRectified extends Component {
                 justifyContent: 'center',
               }}>
               <Image
-                style={{width: 16, height: 16, marginRight: 3}}
+                style={{ width: 16, height: 16, marginRight: 3 }}
                 source={require('../../images/ic_tab_statistics_selected.png')}
               />
-              <SDLText fontType={'normal'} style={[{color: '#666666'}]}>
+              <SDLText fontType={'normal'} style={[{ color: '#666666' }]}>
                 {`2023-10-26 11:00:00`}
               </SDLText>
             </View>
@@ -597,14 +598,14 @@ class ToBeRectified extends Component {
 
   render() {
     return (
-      <View style={[{width: SCREEN_WIDTH, flex: 1, marginTop: 8}]}>
+      <View style={[{ width: SCREEN_WIDTH, flex: 1, marginTop: 8 }]}>
         <FlatListWithHeaderAndFooter
           ref={ref => (this.list = ref)}
           // pageSize={this.props.pageSize}
           ItemSeparatorComponent={() => (
             <View
               style={[
-                {width: SCREEN_WIDTH, height: 1, backgroundColor: '#f2f2f2'},
+                { width: SCREEN_WIDTH, height: 1, backgroundColor: '#f2f2f2' },
               ]}
             />
           )}
@@ -614,7 +615,7 @@ class ToBeRectified extends Component {
           onRefresh={index => {
             // this.onRefresh(index);
           }}
-          onEndReached={index => {}}
+          onEndReached={index => { }}
           renderItem={this._renderItem}
           // data={this.props.serviceDispatchData}
           data={[{}, {}]}
@@ -626,7 +627,7 @@ class ToBeRectified extends Component {
 //To be reviewed
 
 class ToBeReviewed extends Component {
-  _renderItem = ({item, index}) => {
+  _renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity>
         <View
@@ -655,7 +656,7 @@ class ToBeReviewed extends Component {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Text style={{fontSize: 10, color: '#FFFFFF'}}>企</Text>
+              <Text style={{ fontSize: 10, color: '#FFFFFF' }}>企</Text>
             </View>
             <Text
               numberOfLines={1}
@@ -665,10 +666,10 @@ class ToBeReviewed extends Component {
                 fontSize: 14,
                 color: '#333333',
               }}>{`${SentencedToEmpty(
-              item,
-              [0, 'EntName'],
-              '--',
-            )}-${SentencedToEmpty(item, [0, 'PointName'], '--')}`}</Text>
+                item,
+                [0, 'EntName'],
+                '--',
+              )}-${SentencedToEmpty(item, [0, 'PointName'], '--')}`}</Text>
             {/* <Text style={{ marginLeft: 4, fontSize: 12, color: '#4AA0FF' }}>{`(${SentencedToEmpty(item, ['Count'], '0')})`}</Text> */}
             <View
               style={[
@@ -698,6 +699,7 @@ class ToBeReviewed extends Component {
           <Text
             style={[
               {
+                color: '#333333',
                 marginTop: 6,
                 width: SCREEN_WIDTH - 60,
                 height: 63,
@@ -717,7 +719,7 @@ class ToBeReviewed extends Component {
                 height: 20,
               },
             ]}>
-            <View style={[{flex: 1}]}></View>
+            <View style={[{ flex: 1 }]}></View>
             <View
               style={{
                 flexDirection: 'row',
@@ -725,10 +727,10 @@ class ToBeReviewed extends Component {
                 justifyContent: 'center',
               }}>
               <Image
-                style={{width: 16, height: 16, marginRight: 3}}
+                style={{ width: 16, height: 16, marginRight: 3 }}
                 source={require('../../images/ic_tab_statistics_selected.png')}
               />
-              <SDLText fontType={'normal'} style={[{color: '#666666'}]}>
+              <SDLText fontType={'normal'} style={[{ color: '#666666' }]}>
                 {`2023-10-26 11:00:00`}
               </SDLText>
             </View>
@@ -740,14 +742,14 @@ class ToBeReviewed extends Component {
 
   render() {
     return (
-      <StatusPage style={[{width: SCREEN_WIDTH, flex: 1}]}>
+      <StatusPage style={[{ width: SCREEN_WIDTH, flex: 1 }]}>
         <FlatListWithHeaderAndFooter
           ref={ref => (this.list = ref)}
           // pageSize={this.props.pageSize}
           ItemSeparatorComponent={() => (
             <View
               style={[
-                {width: SCREEN_WIDTH, height: 1, backgroundColor: '#f2f2f2'},
+                { width: SCREEN_WIDTH, height: 1, backgroundColor: '#f2f2f2' },
               ]}
             />
           )}
@@ -757,7 +759,7 @@ class ToBeReviewed extends Component {
           onRefresh={index => {
             // this.onRefresh(index);
           }}
-          onEndReached={index => {}}
+          onEndReached={index => { }}
           renderItem={this._renderItem}
           // data={this.props.serviceDispatchData}
           data={[{}, {}, {}]}

@@ -154,13 +154,13 @@ class ConsumablesReplaceRecord extends Component {
                             }
                         ]}
                     >
-                        <Text style={[{ fontSize: 15 }]}>添加记录</Text>
+                        <Text style={[{ color: '#333333', fontSize: 15 }]}>添加记录</Text>
                     </View>
                 </TouchableOpacity>
             </View>
         );
     };
-    cancelButton = () => {};
+    cancelButton = () => { };
     confirm = () => {
         this.props.dispatch(
             createAction('taskModel/deleteConsumablesReplace')({

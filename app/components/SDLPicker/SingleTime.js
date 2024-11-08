@@ -66,7 +66,7 @@ class SingleTime extends PureComponent {
 
     render() {
         let timeFormat = this.props.format.split(' ')[1];
-        return (<View><Text>SingleTime</Text></View>)
+        return (<View><Text style={[{ color: '#333333' }]}>SingleTime</Text></View>)
         return (
             <View style={styles.container}>
                 <View style={[{

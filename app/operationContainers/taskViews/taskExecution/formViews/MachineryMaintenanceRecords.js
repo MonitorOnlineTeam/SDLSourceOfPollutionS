@@ -167,13 +167,13 @@ class MachineryMaintenanceRecords extends Component {
                             }
                         ]}
                     >
-                        <Text style={[{ fontSize: 15 }]}>添加记录</Text>
+                        <Text style={[{ color: '#333333', fontSize: 15 }]}>添加记录</Text>
                     </View>
                 </TouchableOpacity>
             </View>
         );
     };
-    cancelButton = () => {};
+    cancelButton = () => { };
     confirm = () => {
         // this.refs.doAlert2.hideModal()
         // Alert.alert(

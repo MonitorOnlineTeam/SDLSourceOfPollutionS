@@ -62,7 +62,7 @@ class SparePartsRecord extends Component {
     }
 
     onRefresh() {
-        const { ID } = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item'], {});
+        const { ID } = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
         this.props.dispatch(
             createAction('taskModel/getSparePartsRecord')({
                 params: {
@@ -84,7 +84,7 @@ class SparePartsRecord extends Component {
     };
     _renderItem = ({ item, index }) => {
         // } else if (this.props.navigation.state.params.ID == 4) {
-        const formItem = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item'], {});
+        const formItem = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
         return (
             <View style={[{ width: SCREEN_WIDTH, alignItems: 'center' }]}>
                 <TouchableOpacity
@@ -205,7 +205,7 @@ class SparePartsRecord extends Component {
                             }
                         ]}
                     >
-                        <Text style={[{ fontSize: 15 }]}>添加记录</Text>
+                        <Text style={[{ color: '#333333', fontSize: 15 }]}>添加记录</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -213,7 +213,7 @@ class SparePartsRecord extends Component {
     };
     cancelButton = () => { };
     confirm = () => {
-        const { ID } = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'item'], {});
+        const { ID } = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
         this.props.dispatch(
             createAction('taskModel/deleteSpareParts')({
                 params: {

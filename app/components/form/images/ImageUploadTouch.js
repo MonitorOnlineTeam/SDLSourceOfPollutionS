@@ -68,6 +68,12 @@ export default class ImageUploadTouch extends Component {
                 // })
             }
         } else {
+            let logObject = {};
+            logObject.result = img;
+            this.props.dispatch(createAction('app/addClockInLog')({
+                //提交异常日志
+                msg: `${JSON.stringify(logObject)}`
+            }));
             if (type == 'online') {
                 ShowToast('上传失败！');
             } else if (type == 'offline') {
@@ -96,7 +102,19 @@ export default class ImageUploadTouch extends Component {
                 console.log("You can use the camera");
                 const { componentType } = this.props;
                 const _this = this;
-                if (componentType == 'taskhandle') {
+                if (componentType == 'normal') {
+                    _this.props.dispatch(
+                        NavigationActions.navigate({
+                            routeName: 'WaterMaskCamera',
+                            params: {
+                                // uuid
+                                uuid: _this.props.uuid,
+                                picType: 'normal', // 普通图片 不传就是水印相机
+                                callback: this.uploadImageCallBack
+                            }
+                        })
+                    );
+                } else if (componentType == 'taskhandle') {
                     _this.props.dispatch(
                         NavigationActions.navigate({
                             routeName: 'WaterMaskCamera',
@@ -363,7 +381,9 @@ export default class ImageUploadTouch extends Component {
                     onpress: () => {
                         {
                             // const _this = this;
-                            if (componentType == 'taskhandle' || componentType == 'signIn') {
+                            if (componentType == 'taskhandle' || componentType == 'signIn'
+                                // || componentType == 'normal'
+                            ) {
                                 this.requestCameraPermission();
                                 //     CameraWaterMaskModule.checkPermission(function (args) {
                                 //         console.log('checkPermission:', args);
@@ -434,25 +454,44 @@ export default class ImageUploadTouch extends Component {
                     btnStyle: { backgroundColor: '#fff' },
                     txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
                     onpress: () => {
-                        launchImageLibrary(options, response => {
-                            const { assets = [] } = response;
-                            let imageObj = null;
-                            if (assets.length <= 0) {
+                        SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                            if (err) {
+                                // 取消选择
+                                return;
+                            }
+
+                            if (selectedPhotos.length <= 0) {
                                 return;
                             } else {
-                                imageObj = assets[0];
                                 ShowLoadingToast('正在上传图片');
                                 that.props.dispatch(
                                     createAction('imageModel/uploadimage')({
-                                        image: imageObj,
-                                        images: assets,
-                                        // uuid: uuid,
-                                        uuid: this.props.uuid,
+                                        images: selectedPhotos,
+                                        uuid: uuid,
                                         callback: this.uploadImageCallBack
                                     })
                                 );
                             }
                         });
+                        // launchImageLibrary(options, response => {
+                        //     const { assets = [] } = response;
+                        //     let imageObj = null;
+                        //     if (assets.length <= 0) {
+                        //         return;
+                        //     } else {
+                        //         imageObj = assets[0];
+                        //         ShowLoadingToast('正在上传图片');
+                        //         that.props.dispatch(
+                        //             createAction('imageModel/uploadimage')({
+                        //                 image: imageObj,
+                        //                 images: assets,
+                        //                 // uuid: uuid,
+                        //                 uuid: this.props.uuid,
+                        //                 callback: this.uploadImageCallBack
+                        //             })
+                        //         );
+                        //     }
+                        // });
                     }
                 }
             ]
@@ -531,7 +570,29 @@ export default class ImageUploadTouch extends Component {
 
                             return;
                         }
-                        this.refs.doAlert.show();
+                        if (componentType == 'taskhandle' || componentType == 'signIn') {
+                            this.refs.doAlert.show();
+                        } else {
+                            SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                                if (err) {
+                                    // 取消选择
+                                    return;
+                                }
+
+                                if (selectedPhotos.length <= 0) {
+                                    return;
+                                } else {
+                                    ShowLoadingToast('正在上传图片');
+                                    that.props.dispatch(
+                                        createAction('imageModel/uploadimage')({
+                                            images: selectedPhotos,
+                                            uuid: uuid,
+                                            callback: this.uploadImageCallBack
+                                        })
+                                    );
+                                }
+                            });
+                        }
                     }}
                     style={style}
                 >

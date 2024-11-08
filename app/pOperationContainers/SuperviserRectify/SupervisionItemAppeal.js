@@ -2,8 +2,8 @@
  * @Description: 督查 申诉
  * @LastEditors: hxf
  * @Date: 2022-11-29 11:32:39
- * @LastEditTime: 2024-09-27 10:40:52
- * @FilePath: /SDLMainProject/app/pOperationContainers/SuperviserRectify/SupervisionItemAppeal.js
+ * @LastEditTime: 2024-11-04 08:40:44
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/SuperviserRectify/SupervisionItemAppeal.js
  */
 import React, { Component } from 'react'
 import { Modal, Platform, ScrollView, Text, TouchableOpacity, View, Image, TextInput } from 'react-native'
@@ -210,6 +210,7 @@ export default class SupervisionItemAppeal extends Component {
                                     multiline={true}
                                     placeholder="请输入"
                                     style={{
+                                        color: '#333333',
                                         width: SCREEN_WIDTH - 40
                                         , marginTop: 15, height: 75, marginLeft: 20, textAlignVertical: 'top'
                                     }}
@@ -218,6 +219,7 @@ export default class SupervisionItemAppeal extends Component {
                                     {`${this.state.supervisionInputString}`}
                                 </TextInput>
                                 : <Text style={{
+                                    color: '#333333',
                                     width: SCREEN_WIDTH - 40
                                     , marginTop: 15, height: 75, marginLeft: 20, textAlignVertical: 'top'
                                 }}>

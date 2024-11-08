@@ -72,18 +72,20 @@ class SingleTimeWheel extends PureComponent {
     }
 
     render() {
+        console.log('calendarHeight = ', calendarHeight);
         let defaultDate = moment(this.props.defaultDate.format(this.props.format));
+        const landscapeWidth = WINDOW_HEIGHT * 3 / 5;
         return (
             <View
-                style={[styles.container
+                style={[styles.container, {}
                     , this.props.orientation == 'LANDSCAPE'
-                    ? { width: WINDOW_HEIGHT } : { width: WINDOW_WIDTH }]}
+                    ? { width: landscapeWidth } : { width: WINDOW_WIDTH }]}
             >
                 <View style={[{
-                    width: this.props.orientation == 'LANDSCAPE' ? WINDOW_HEIGHT : WINDOW_WIDTH,
+                    width: this.props.orientation == 'LANDSCAPE' ? landscapeWidth : WINDOW_WIDTH,
                     flexDirection: 'row',
                     paddingHorizontal: 8,
-                }]}>
+                }, this.props.orientation == 'LANDSCAPE' ? { marginTop: 32 } : {}]}>
                     {/* <View style={[{height:46,justifyContent:'center',alignItems:'center',borderBottomColor:'#4499f0',borderBottomWidth:1,}]}>
                         <Text style={[{fontSize:14,color:'#4499f0',marginLeft:32,marginRight:16,fontWeight:'bold'}]}>{this.state.currentDate.format(this.props.format)}</Text>
                     </View> */}
@@ -110,7 +112,7 @@ class SingleTimeWheel extends PureComponent {
                 </View>
                 <View style={[{
                     height: calendarHeight,
-                    width: this.props.orientation == 'LANDSCAPE' ? WINDOW_HEIGHT : WINDOW_WIDTH
+                    width: this.props.orientation == 'LANDSCAPE' ? landscapeWidth : WINDOW_WIDTH
                     , justifyContent: 'center'
                 }]}>
                     <View
@@ -125,7 +127,7 @@ class SingleTimeWheel extends PureComponent {
                         // }}
                         style={{
                             height: 200
-                            , width: this.props.orientation == 'LANDSCAPE' ? WINDOW_HEIGHT : WINDOW_WIDTH
+                            , width: this.props.orientation == 'LANDSCAPE' ? landscapeWidth : WINDOW_WIDTH
                         }}>
                         {/* <this.state.TimeNavigator ref={ref => {
                             if (ref !== null && __DEV__) {
@@ -135,6 +137,7 @@ class SingleTimeWheel extends PureComponent {
                             return this.timeNavigator = ref;
                         }} /> */}
                         <WheelPicker
+                            width={this.props.orientation == 'LANDSCAPE' ? landscapeWidth : WINDOW_WIDTH}
                             orientation={this.props.orientation}
                             defaultDate={defaultDate}
                             callbackFun={(date) => {

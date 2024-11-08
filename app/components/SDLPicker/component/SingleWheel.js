@@ -87,7 +87,7 @@ class SingleWheel extends PureComponent {
                         return (this._scrollView = ref);
                     }}
                     scrollEnabled={this.props.scrollEnabled}
-                    style={[scrollViewStyle, { zIndex: 999 }]}
+                    style={[scrollViewStyle, { zIndex: 800 }]}
                     showsVerticalScrollIndicator={false}
                     onScrollEndDrag={({ nativeEvent }) => { }}
                     onMomentumScrollEnd={({ nativeEvent }) => {

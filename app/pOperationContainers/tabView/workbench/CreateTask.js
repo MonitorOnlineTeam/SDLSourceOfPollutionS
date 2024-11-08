@@ -720,11 +720,10 @@ export default class CreateTask extends Component {
                         </PickerSingleTimeTouchable> */}
                         <View style={styles.line} />
                         <View style={{ minHeight: 100, width: SCREEN_WIDTH, padding: 20, backgroundColor: 'white' }}>
-                            <Text>备注</Text>
+                            <Text style={[{ color: '#333333' }]}>备注</Text>
                             <TextInput
-                                style={{ textAlignVertical: 'top' }}
                                 placeholder={'请输入备注信息'}
-                                style={{ height: 54, width: SCREEN_WIDTH - 40, backgroundColor: 'white' }}
+                                style={{ textAlignVertical: 'top', height: 54, width: SCREEN_WIDTH - 40, backgroundColor: 'white' }}
                                 multiline={true}
                                 onChangeText={text => {
                                     // 动态更新组件内State记录

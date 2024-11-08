@@ -411,7 +411,26 @@ export default class TaskProduce extends PureComponent {
                                     });
                                     return;
                                 }
-                                this.refs.doAlert.show();
+                                SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                                    if (err) {
+                                        // 取消选择
+                                        return;
+                                    }
+
+                                    if (selectedPhotos.length <= 0) {
+                                        return;
+                                    } else {
+                                        ShowLoadingToast('正在上传图片');
+                                        that.props.dispatch(
+                                            createAction('imageModel/uploadimage')({
+                                                images: selectedPhotos,
+                                                uuid: uuid,
+                                                callback: this.uploadImageCallBack
+                                            })
+                                        );
+                                    }
+                                });
+                                // this.refs.doAlert.show();
                             }}
                             style={{ width: SCREEN_WIDTH / 4 - 25, height: SCREEN_WIDTH / 4 - 25 }}
                         >
@@ -587,7 +606,7 @@ export default class TaskProduce extends PureComponent {
                                     textStyle={{ textAlign: 'right', flex: 1 }}
                                 />
                             ) : (
-                                <Text>{SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'UntruthReason'], '')}</Text>
+                                <Text style={[{ color: '#333333' }]}>{SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'UntruthReason'], '')}</Text>
                             )}
                         </View>
                     )}
@@ -608,7 +627,7 @@ export default class TaskProduce extends PureComponent {
                                     textStyle={{ textAlign: 'right', flex: 1 }}
                                 />
                             ) : (
-                                <Text>{SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'UntruthReason'], '')}</Text>
+                                <Text style={[{ color: '#333333' }]}>{SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'UntruthReason'], '')}</Text>
                             )}
                         </View>
                     )}
@@ -629,7 +648,7 @@ export default class TaskProduce extends PureComponent {
                                     textStyle={{ textAlign: 'right', flex: 1 }}
                                 />
                             ) : (
-                                <Text>{SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'UntruthReason'], '')}</Text>
+                                <Text style={[{ color: '#333333' }]}>{SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'UntruthReason'], '')}</Text>
                             )}
                         </View>
                     ) : null}
@@ -706,7 +725,7 @@ export default class TaskProduce extends PureComponent {
                                     textStyle={{ textAlign: 'right', flex: 1 }}
                                 />
                             ) : (
-                                <Text>{SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'UntruthReason'], '')}</Text>
+                                <Text style={[{ color: '#333333' }]}>{SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'UntruthReason'], '')}</Text>
                             )}
                         </View>
                     ) : null}
@@ -748,7 +767,7 @@ export default class TaskProduce extends PureComponent {
                                 //     style={[{ marginLeft: 40, flex: 1, justifyContent: 'flex-end' }]}
                                 //     textStyle={{ textAlign: 'right', flex: 1 }}
                                 // />
-                                <Text>{SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'UntruthReason'], '')}</Text>
+                                <Text style={[{ color: '#333333' }]}>{SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'UntruthReason'], '')}</Text>
                             )}
                         </View>
                     ) : null}

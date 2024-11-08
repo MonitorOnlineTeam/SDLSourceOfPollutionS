@@ -1,9 +1,9 @@
 /*
  * @Description:主页 tabview
- * @LastEditors: outman0611 jia_anbo@163.com
+ * @LastEditors: hxf
  * @Date: 2023-08-09 11:24:20
- * @LastEditTime: 2024-09-12 09:58:45
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/MyTabView.js
+ * @LastEditTime: 2024-11-01 11:18:29
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/MyTabView.js
  */
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react'
@@ -171,7 +171,7 @@ export default function MyTab() {
             } else {
                 return <Image
                     source={require('../../images/ic_tab_account.png')}
-                    style={{ width: 24, height: 24, tintColor: focused ? globalcolor.tintblue : 'grey' }}
+                    style={{ width: 24, height: 24, tintColor: focused ? globalcolor.headerBackgroundColor : 'grey' }}
                 />;
             }
         }
@@ -179,15 +179,15 @@ export default function MyTab() {
             console.log('_tabBarIcon route = ', route);
             // return <Text style={focused ? { color: globalcolor.tintblue } : {}} >{'监控'}</Text>
             if (route.name == 'Account') {
-                return <Text style={focused ? { color: globalcolor.tintblue } : {}} >{'我的'}</Text>
+                return <Text style={focused ? { color: globalcolor.headerBackgroundColor } : { color: '#666666' }} >{'我的'}</Text>
             } else if (route.name == 'Workbench') {
-                return <Text style={focused ? { color: globalcolor.tintblue } : {}} >{'工作台'}</Text>
+                return <Text style={focused ? { color: globalcolor.headerBackgroundColor } : { color: '#666666' }} >{'工作台'}</Text>
             } else if (route.name == 'chengTaoXiaoXi') {
-                return <Text style={focused ? { color: globalcolor.tintblue } : {}} >{'消息'}</Text>
+                return <Text style={focused ? { color: globalcolor.headerBackgroundColor } : { color: '#666666' }} >{'消息'}</Text>
             } else if (route.name == 'PollutionAll') {
-                return <Text style={focused ? { color: globalcolor.tintblue } : {}} >{'监控'}</Text>
+                return <Text style={focused ? { color: globalcolor.headerBackgroundColor } : { color: '#666666' }} >{'监控'}</Text>
             } else {
-                return <Text style={focused ? { color: globalcolor.tintblue } : {}} >{'功能'}</Text>
+                return <Text style={focused ? { color: globalcolor.headerBackgroundColor } : { color: '#666666' }} >{'功能'}</Text>
             }
             // if (route.name == 'PollutionSourceMonitoring') {
             //     return <Text style={focused ? { color: globalcolor.tintblue } : {}} >{'监控'}</Text>

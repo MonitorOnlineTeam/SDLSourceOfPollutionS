@@ -7,9 +7,9 @@ export default class TaskImformationHeader extends Component {
     return (
       <View
         style={[{
-            height:64,width:SCREEN_WIDTH
+          height: 64, width: SCREEN_WIDTH
         }]}>
-        <Text> textInComponent </Text>
+        <Text style={[{ color: '#333333' }]}> textInComponent </Text>
       </View>
     );
   }

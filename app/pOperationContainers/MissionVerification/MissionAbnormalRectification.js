@@ -2,8 +2,8 @@
  * @Description: 验收服务报告
  * @LastEditors: hxf
  * @Date: 2023-09-18 09:27:53
- * @LastEditTime: 2024-08-27 17:14:21
- * @FilePath: /SDLMainProject37/app/pOperationContainers/MissionVerification/MissionAbnormalRectification.js
+ * @LastEditTime: 2024-11-04 10:07:26
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/MissionVerification/MissionAbnormalRectification.js
  */
 import React, { Component } from 'react'
 import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -164,7 +164,7 @@ export default class MissionAbnormalRectification extends Component {
                                 height: 44, width: SCREEN_WIDTH
                                 , paddingHorizontal: 19, justifyContent: 'center'
                             }]}>
-                                <Text>{'整改描述'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'整改描述'}</Text>
                             </View>
                             <View
                                 style={[{
@@ -255,7 +255,7 @@ export default class MissionAbnormalRectification extends Component {
                                 , paddingHorizontal: 19, alignItems: 'center'
                             }]}>
                                 <Text style={[{ color: 'red', marginRight: 4 }]}>{'*'}</Text>
-                                <Text>{'整改材料'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'整改材料'}</Text>
                             </View>
                             <View
                                 style={[{

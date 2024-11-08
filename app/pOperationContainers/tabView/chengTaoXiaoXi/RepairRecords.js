@@ -237,6 +237,7 @@ export default class RepairRecords extends Component {
                                         <Text
                                             numberOfLines={1}
                                             style={[{
+                                                color: '#333333',
                                                 width: SCREEN_WIDTH - 140
                                             }]}
                                         >{item.EntName}</Text>
@@ -262,7 +263,7 @@ export default class RepairRecords extends Component {
                                         ]}
                                     >
                                         <Text style={[{ fontSize: 14, color: '#333333' }]}>{`监测点名称:`}</Text>
-                                        <Text>{item.PointName}</Text>
+                                        <Text style={[{ color: '#333333' }]}>{item.PointName}</Text>
                                     </View>
                                 </View>
                                 <View
@@ -285,7 +286,7 @@ export default class RepairRecords extends Component {
                                         ]}
                                     >
                                         <Text style={[{ fontSize: 14, color: '#333333' }]}>{`维修日期:`}</Text>
-                                        <Text>{moment(item.RepairDate).format('YYYY-MM-DD')}</Text>
+                                        <Text style={[{ color: '#333333' }]}>{moment(item.RepairDate).format('YYYY-MM-DD')}</Text>
                                     </View>
                                 </View>
                                 <View
@@ -307,7 +308,7 @@ export default class RepairRecords extends Component {
                                         ]}
                                     >
                                         <Text style={[{ fontSize: 14, color: '#333333' }]}>{`故障单元:`}</Text>
-                                        <Text numberOfLines={1}>{item.FaultUnitName}</Text>
+                                        <Text style={[{ color: '#333333' }]} numberOfLines={1}>{item.FaultUnitName}</Text>
                                     </View>
                                 </View>
                             </TouchableOpacity>

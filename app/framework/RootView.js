@@ -8,6 +8,8 @@ import LoadingManager from './LoadingManager'
 import { createAction, getCommonHeaderStyle, SentencedToEmpty } from '../utils';
 import { SimpleLoadingView } from '../components';
 import GlobalLoadingView from './GlobalLoadingView';
+import { useSelector } from 'react-redux';
+import { useNavigationState, useRoute } from '@react-navigation/native';
 // import SimpleLoadingView from '@oldProjectComponent/SimpleLoadingView';
 
 const Stack = createNativeStackNavigator();
@@ -19,6 +21,7 @@ let lo
 export default function RootView({ navigation }) {
     let _messagebarRef = useRef();
     let _loadingViewRef = useRef();
+    const { hideStatusBar } = useSelector(state => state.app)
     useLayoutEffect(() => {
         // Register the alert located on this master page
         // This MessageBar will be accessible from the current (same) component, and from its child component
@@ -31,8 +34,11 @@ export default function RootView({ navigation }) {
         }
     }, [])
     exportNavigation = navigation;
+    console.log('hideStatusBar = ', hideStatusBar);
+    const _myRoute = useRoute();
+    console.log('_myRoute = ', _myRoute);
     return (<View style={[{ width: "100%", flex: 1 }]}>
-        <StatusBar hidden={true} />
+        <StatusBar hidden={hideStatusBar} />
         <Stack.Navigator >
             {
                 ViewList.map((item, index) => {
@@ -51,6 +57,11 @@ export const getNavigation = () => {
 };
 
 export class MyActions {
+    getState = () => {
+        console.log('exportNavigation = ', exportNavigation);
+        const routeState = exportNavigation.getState();
+        return routeState;
+    }
     navigate = (props, params = {}) => {
         exportNavigation.navigate(props, params);
     }

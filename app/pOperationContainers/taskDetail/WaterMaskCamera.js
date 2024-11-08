@@ -2,8 +2,8 @@
  * @Description: 水印相机
  * @LastEditors: hxf
  * @Date: 2023-06-01 14:09:24
- * @LastEditTime: 2024-09-13 15:33:46
- * @FilePath: /SDLMainProject/app/pOperationContainers/taskDetail/WaterMaskCamera.js
+ * @LastEditTime: 2024-11-07 11:43:57
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/taskDetail/WaterMaskCamera.js
  */
 import React, { Component } from 'react'
 import { Text, View, Platform, TouchableOpacity } from 'react-native'
@@ -75,7 +75,19 @@ export default class WaterMaskCamera extends Component {
                 message: '上传成功',
                 alertType: 'success',
             });
+            let logObject = {};
+            logObject.result = images;
+            this.props.dispatch(createAction('app/addClockInLog')({
+                //提交异常日志
+                msg: `${JSON.stringify(logObject)}`
+            }));
         } else {
+            let logObject = {};
+            logObject.result = images;
+            this.props.dispatch(createAction('app/addClockInLog')({
+                //提交异常日志
+                msg: `${JSON.stringify(logObject)}`
+            }));
             if (images == '') {
                 ShowToast({
                     message: '上传失败！',
@@ -125,6 +137,7 @@ export default class WaterMaskCamera extends Component {
                                             , () => {
                                                 // let uuid = this.props.navigation.state.params.uuid;
                                                 let uuid = this.props.route.params.params.uuid;
+                                                let { picType = 'mask' } = this.props.route.params.params;
                                                 takePhoto(options, response => {
                                                     const { assets = [] } = response;
                                                     let imageObj = null;
@@ -208,22 +221,36 @@ export default class WaterMaskCamera extends Component {
                                                             }, 2000)
                                                         } else {
                                                             this.props.dispatch(createAction('imageFormModel/updateState')({ imageStatus: { status: -1 } }));
-                                                            that.props.dispatch(
-                                                                createAction('imageModel/uploadimageWaterMask')({
-                                                                    // createAction('imageModel/uploadimage')({
-                                                                    image: imageObj,
-                                                                    images: assets,
-                                                                    uuid: uuid,
-                                                                    imageParams: {
-                                                                        EntName: response.EntName,
-                                                                        PointName: response.PointName,
-                                                                        RegionName: response.RegionName,
-                                                                        str_lat: r_lat,
-                                                                        str_long: r_long,
-                                                                    },
-                                                                    callback: this.uploadImageCallBack
-                                                                })
-                                                            );
+                                                            if (picType == 'normal') {
+                                                                that.props.dispatch(
+                                                                    createAction('imageModel/uploadimage')({
+                                                                        image: imageObj,
+                                                                        images: assets,
+                                                                        uuid: uuid,
+                                                                        // callback: SentencedToEmpty(this.props
+                                                                        //     , ['route', 'params', 'params', 'callback'], () => { })
+                                                                        // uuid: this.props.uuid,
+                                                                        callback: this.uploadImageCallBack
+                                                                    })
+                                                                );
+                                                            } else {
+                                                                that.props.dispatch(
+                                                                    createAction('imageModel/uploadimageWaterMask')({
+                                                                        // createAction('imageModel/uploadimage')({
+                                                                        image: imageObj,
+                                                                        images: assets,
+                                                                        uuid: uuid,
+                                                                        imageParams: {
+                                                                            EntName: response.EntName,
+                                                                            PointName: response.PointName,
+                                                                            RegionName: response.RegionName,
+                                                                            str_lat: r_lat,
+                                                                            str_long: r_long,
+                                                                        },
+                                                                        callback: this.uploadImageCallBack
+                                                                    })
+                                                                );
+                                                            }
                                                         }
                                                     }
                                                 });

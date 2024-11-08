@@ -186,9 +186,12 @@ export default class DistributeTask extends PureComponent {
                     <View style={{ minHeight: 100, width: SCREEN_WIDTH, padding: 20, backgroundColor: 'white' }}>
                         <Text style={{ fontSize: 14, color: '#333' }}>任务描述</Text>
                         <TextInput
-                            style={{ textAlignVertical: 'top' }}
                             placeholder={'请输入批注内容'}
-                            style={{ height: 54, width: SCREEN_WIDTH - 40, backgroundColor: 'white' }}
+                            style={{
+                                color: '#333333',
+                                textAlignVertical: 'top', height: 54
+                                , width: SCREEN_WIDTH - 40, backgroundColor: 'white'
+                            }}
                             multiline={true}
                             onChangeText={text => {
                                 // 动态更新组件内State记录

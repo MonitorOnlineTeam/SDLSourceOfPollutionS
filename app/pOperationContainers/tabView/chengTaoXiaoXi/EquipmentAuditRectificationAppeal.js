@@ -2,8 +2,8 @@
  * @Description: 申诉
  * @LastEditors: hxf
  * @Date: 2024-03-29 16:56:12
- * @LastEditTime: 2024-10-15 10:26:31
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/EquipmentAuditRectificationAppeal.js
+ * @LastEditTime: 2024-11-01 16:45:46
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/EquipmentAuditRectificationAppeal.js
  */
 // import { Text, View } from 'react-native'
 // import React, { Component } from 'react'
@@ -189,7 +189,7 @@ export default class EquipmentAuditRectificationAppeal extends Component {
                                 , paddingHorizontal: 19, alignItems: 'center'
                             }]}>
                                 <Text style={[{ color: 'red', marginRight: 4 }]}>{'*'}</Text>
-                                <Text>{'申诉描述'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'申诉描述'}</Text>
                             </View>
                             <View
                                 style={[{
@@ -224,7 +224,7 @@ export default class EquipmentAuditRectificationAppeal extends Component {
                                 , paddingHorizontal: 19, alignItems: 'center'
                             }]}>
                                 {/* <Text style={[{ color: 'red', marginRight: 4 }]}>{'*'}</Text> */}
-                                <Text>{`${this.getImageTitle()}`}</Text>
+                                <Text style={[{ color: '#333333' }]}>{`${this.getImageTitle()}`}</Text>
                             </View>
                             <View
                                 style={[{

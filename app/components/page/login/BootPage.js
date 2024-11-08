@@ -162,7 +162,7 @@ export default class BootPage extends Component {
             <View style={[{ width: SCREEN_WIDTH, backgroundColor: 'white', flex: 1, alignItems: 'center' }]}>
                 <Image style={[{ height: 250, width: 250, marginTop: 104 }]} source={require('../../../images/splash_logo.png')} />
                 <View style={[{ flex: 1 }]} />
-                <Text style={[{ marginBottom: 100, fontSize: 18 }]}>{this.state.text}</Text>
+                <Text style={[{ color: '#333333', marginBottom: 100, fontSize: 18 }]}>{this.state.text}</Text>
             </View>
         );
     }

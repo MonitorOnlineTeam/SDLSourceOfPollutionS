@@ -432,6 +432,7 @@ class ClueDetail extends PureComponent {
                     markLine: {
                         label: {
                             formatter: params => {
+                                'show source';
                                 return params.name;
                             }
                         },
@@ -444,6 +445,7 @@ class ClueDetail extends PureComponent {
                         label: {
                             color: 'rgba(228, 223, 223, 1)',
                             formatter: params => {
+                                'show source';
                                 return params.name;
                             }
                         },
@@ -462,6 +464,7 @@ class ClueDetail extends PureComponent {
                         label: {
                             color: 'rgba(228, 223, 223, 1)',
                             formatter: params => {
+                                'show source';
                                 return params.name;
                             }
                         },
@@ -479,6 +482,7 @@ class ClueDetail extends PureComponent {
                         label: {
                             color: 'rgba(228, 223, 223, 1)',
                             formatter: params => {
+                                'show source';
                                 return params.name;
                             }
                         },
@@ -570,6 +574,7 @@ class ClueDetail extends PureComponent {
                     type: 'cross'
                 },
                 formatter: function (params) {
+                    'show source';
                     var htmlStr = '<div style="height: auto;display: flex;flex-direction: column;justify-content:space-between;align-items:flex-start;"><span style="color: #fff;">' + params[0].axisValue + '</span>';
                     htmlStr += '<span style="color: #fff;">' + `${'工况：'}${params[0].data.workingFlagName}` + '</span>';
                     htmlStr += '<span style="color: #fff;">' + `${'人为干预：'}${params[0].data.WCArtificialFlag}` + '</span>';
@@ -703,7 +708,7 @@ class ClueDetail extends PureComponent {
                 <View style={{ height: 300, backgroundColor: '#ffffff', marginTop: 20 }}>
                     <Echarts option={this.getOption()} height={260} flex={1} />
                     <View style={{ flexDirection: 'row' }}>
-                        <Text>图例：</Text>
+                        <Text style={[{ color: '#333333' }]}>图例：</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
                             <View style={{ alignItems: 'center', flexDirection: 'row', marginLeft: 5 }}>
                                 <View style={{ width: 10, height: 10, backgroundColor: '#c026d3', borderRadius: 5 }}></View>

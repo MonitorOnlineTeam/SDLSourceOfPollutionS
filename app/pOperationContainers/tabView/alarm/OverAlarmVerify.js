@@ -486,7 +486,26 @@ export default class OverAlarmVerify extends PureComponent {
                                     });
                                     return;
                                 }
-                                this.refs.doAlert.show();
+                                SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                                    if (err) {
+                                        // 取消选择
+                                        return;
+                                    }
+
+                                    if (selectedPhotos.length <= 0) {
+                                        return;
+                                    } else {
+                                        ShowLoadingToast('正在上传图片');
+                                        that.props.dispatch(
+                                            createAction('imageModel/uploadimage')({
+                                                images: selectedPhotos,
+                                                uuid: uuid,
+                                                callback: this.uploadImageCallBack
+                                            })
+                                        );
+                                    }
+                                });
+                                // this.refs.doAlert.show();
 
                                 // ImagePicker.showImagePicker(options, response => {
                                 //     if (response.didCancel) {

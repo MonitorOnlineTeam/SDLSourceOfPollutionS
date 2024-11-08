@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-12-29 11:36:14
- * @LastEditTime: 2024-09-29 15:14:58
- * @FilePath: /SDLMainProject/app/components/SDLPicker/component/Mask.js
+ * @LastEditTime: 2024-10-30 15:50:29
+ * @FilePath: /SDLSourceOfPollutionS/app/components/SDLPicker/component/Mask.js
  */
 //import liraries
 import React, { PureComponent } from 'react';
@@ -59,18 +59,22 @@ class Mask extends PureComponent {
     render() {
         if (this.props.orientation == 'LANDSCAPE') {
             return (
-                <View style={[{ zIndex: 0, flex: 1, alignItems: 'center', justifyContent: 'flex-end' }, this.props.style]} onLayout={event => this.onLayout(event)}>
+                <View style={[{ flexDirection: 'row', zIndex: 0, flex: 1, alignItems: 'center', justifyContent: 'flex-end' }, this.props.style]} onLayout={event => this.onLayout(event)}>
                     <TouchableWithoutFeedback
                         onPress={() => {
                             this.props.hideDialog();
                         }}
                     >
-                        <View
-                            style={[{ zIndex: 5, alignItems: 'flex-end', justifyContent: 'flex-start', flexDirection: 'row', backgroundColor: 'rgba(0,0,0,0.4)' }
-                                , this.props.style, { height: SCREEN_WIDTH, width: SCREEN_HEIGHT }]}
-                        >
-                            {this.props.children}
-                        </View>
+                        <Animated.View style={styles.mask} />
+                    </TouchableWithoutFeedback>
+                    {/**此处添加需要弹出的框体*/}
+                    {this.props.children}
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            this.props.hideDialog();
+                        }}
+                    >
+                        <Animated.View style={styles.mask} />
                     </TouchableWithoutFeedback>
                 </View>
             );

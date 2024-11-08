@@ -189,7 +189,7 @@ class PoConsumablesReplaceRecord extends Component {
                             }
                         ]}
                     >
-                        <Text style={[{ fontSize: 15 }]}>添加记录</Text>
+                        <Text style={[{ fontSize: 15, color: '#333333' }]}>添加记录</Text>
                     </View>
                 </TouchableOpacity>
             </View>

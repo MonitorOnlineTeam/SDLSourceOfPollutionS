@@ -2,8 +2,8 @@
  * @Description: 督查整改单条问题编辑
  * @LastEditors: hxf
  * @Date: 2022-11-29 11:32:39
- * @LastEditTime: 2024-09-27 10:39:06
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbench/SupervisionItemEditor.js
+ * @LastEditTime: 2024-11-01 14:06:58
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbench/SupervisionItemEditor.js
  */
 import React, { Component } from 'react'
 import { Modal, Platform, ScrollView, Text, TouchableOpacity, View, Image, TextInput } from 'react-native'
@@ -208,6 +208,7 @@ export default class SupervisionItemEditor extends Component {
                                     multiline={true}
                                     placeholder="请输入"
                                     style={{
+                                        color: '#333333',
                                         width: SCREEN_WIDTH - 40
                                         , marginTop: 15, height: 75, marginLeft: 20, textAlignVertical: 'top'
                                     }}
@@ -216,7 +217,7 @@ export default class SupervisionItemEditor extends Component {
                                     {`${this.state.supervisionInputString}`}
                                 </TextInput>
                                 : <Text style={{
-                                    width: SCREEN_WIDTH - 40
+                                    width: SCREEN_WIDTH - 40, color: '#333333'
                                     , marginTop: 15, height: 75, marginLeft: 20, textAlignVertical: 'top'
                                 }}>
                                     {`${this.state.supervisionInputString}`}

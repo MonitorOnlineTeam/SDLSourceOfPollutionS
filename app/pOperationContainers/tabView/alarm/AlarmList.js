@@ -269,7 +269,7 @@ export default class AlarmList extends Component {
                     }}
                 >
                     <View style={[{ width: SCREEN_WIDTH, height: 90, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderRadius: 4 }]}>
-                        <Text>{'跳转核实记录'}</Text>
+                        <Text style={[{ color: '#333333' }]}>{'跳转核实记录'}</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -284,7 +284,7 @@ export default class AlarmList extends Component {
                     }}
                 >
                     <View style={[{ width: SCREEN_WIDTH, height: 90, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderRadius: 4 }]}>
-                        <Text>{'跳转超标数据'}</Text>
+                        <Text style={[{ color: '#333333' }]}>{'跳转超标数据'}</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -299,7 +299,7 @@ export default class AlarmList extends Component {
                     }}
                 >
                     <View style={[{ width: SCREEN_WIDTH, height: 90, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderRadius: 4 }]}>
-                        <Text>{'跳转异常数据'}</Text>
+                        <Text style={[{ color: '#333333' }]}>{'跳转异常数据'}</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -316,7 +316,7 @@ export default class AlarmList extends Component {
                     }}
                 >
                     <View style={[{ width: SCREEN_WIDTH, height: 90, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderRadius: 4 }]}>
-                        <Text>{'跳转报警记录'}</Text>
+                        <Text style={[{ color: '#333333' }]}>{'跳转报警记录'}</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -331,7 +331,7 @@ export default class AlarmList extends Component {
                     }}
                 >
                     <View style={[{ width: SCREEN_WIDTH, height: 90, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderRadius: 4 }]}>
-                        <Text>{'跳转运维日志'}</Text>
+                        <Text style={[{ color: '#333333' }]}>{'跳转运维日志'}</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -346,7 +346,7 @@ export default class AlarmList extends Component {
                     }}
                 >
                     <View style={[{ width: SCREEN_WIDTH, height: 90, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderRadius: 4 }]}>
-                        <Text>{'跳转设备资料库'}</Text>
+                        <Text style={[{ color: '#333333' }]}>{'跳转设备资料库'}</Text>
                     </View>
                 </TouchableOpacity>
                 <View style={{ flexDirection: 'row' }}>
@@ -358,7 +358,7 @@ export default class AlarmList extends Component {
                         this.simplePickerRangeDay.setTimeRange('2019-08-20 00:00:00', '2019-08-21 23:59:59');
                     }}
                 >
-                    <Text>设置时间段</Text>
+                    <Text style={[{ color: '#333333' }]}>设置时间段</Text>
                 </TouchableOpacity>
                 <SimpleMultipleItemPicker
                     ref={ref => {
@@ -373,7 +373,7 @@ export default class AlarmList extends Component {
                         this.simpleMultipleItemPicker.selectItems(['0', '2', '3']);
                     }}
                 >
-                    <Text>设置复选框</Text>
+                    <Text style={[{ color: '#333333' }]}>设置复选框</Text>
                 </TouchableOpacity>
                 <View style={[{ flexDirection: 'row' }]}>
                     <SimplePickerSingleTime ref={ref => (this._touchable = ref)} style={[{ flex: 1 }]} option={this.getTimeSelectOption()} />
@@ -391,7 +391,7 @@ export default class AlarmList extends Component {
                     style={[{ width: 300 }]}
                 />
                 <View style={[{ flexDirection: 'row', alignItems: 'center' }]}>
-                    <Text style={[]}>更换日期：</Text>
+                    <Text style={[{ color: '#333333' }]}>更换日期：</Text>
                     <SimplePickerSingleTime
                         ref={ref => (this._daytouchable = ref)}
                         option={{
@@ -410,7 +410,7 @@ export default class AlarmList extends Component {
                         this._touchable.setTime('2019-08-08 14:20');
                     }}
                 >
-                    <Text>设置单日期小时分钟</Text>
+                    <Text style={[{ color: '#333333' }]}>设置单日期小时分钟</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[{ marginTop: 8 }]}
@@ -418,7 +418,7 @@ export default class AlarmList extends Component {
                         this._daytouchable.setTime('2019-09-20');
                     }}
                 >
-                    <Text>设置日期</Text>
+                    <Text style={[{ color: '#333333' }]}>设置日期</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[{ marginTop: 8 }]}
@@ -433,7 +433,7 @@ export default class AlarmList extends Component {
                         );
                     }}
                 >
-                    <Text>站点详情</Text>
+                    <Text style={[{ color: '#333333' }]}>站点详情</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[{ marginTop: 8 }]}
@@ -445,7 +445,7 @@ export default class AlarmList extends Component {
                         }
                     }}
                 >
-                    <Text>报警核实</Text>
+                    <Text style={[{ color: '#333333' }]}>报警核实</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[{ marginTop: 8 }]}
@@ -460,10 +460,10 @@ export default class AlarmList extends Component {
                         );
                     }}
                 >
-                    <Text>运维人员</Text>
+                    <Text style={[{ color: '#333333' }]}>运维人员</Text>
                 </TouchableOpacity>
                 <View style={[{ flexDirection: 'row', alignItems: 'center' }]}>
-                    <Text style={[]}>{'是否有遗留问题'}</Text>
+                    <Text style={[{ color: '#333333' }]}>{'是否有遗留问题'}</Text>
                     <SimplePicker ref={ref => (this._simplePicker = ref)} option={this.initIsLeftoverProblem()} style={[{ width: 200 }]} />
                 </View>
                 <TouchableOpacity
@@ -471,7 +471,7 @@ export default class AlarmList extends Component {
                         this._simplePicker.setSelectItem({ code: '0', name: '否' });
                     }}
                 >
-                    <Text>设置单选为否</Text>
+                    <Text style={[{ color: '#333333' }]}>设置单选为否</Text>
                 </TouchableOpacity>
                 <SDLText style={[{ color: 'red' }]} fontType={'small'}>
                     SmallText
@@ -485,7 +485,7 @@ export default class AlarmList extends Component {
                 <SDLText style={[{ color: 'green' }]}>123</SDLText>
                 <SDLText style={{ fontSize: 20, color: 'red' }}>123</SDLText>
                 <SDLText>NormalText</SDLText>
-                <Text> TestView1 </Text>
+                <Text style={[{ color: '#333333' }]}> TestView1 </Text>
             </ScrollView>
         );
     }

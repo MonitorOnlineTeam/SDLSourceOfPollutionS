@@ -2,8 +2,8 @@
  * @Description: 表单两项切换
  * @LastEditors: hxf
  * @Date: 2022-01-09 14:46:49
- * @LastEditTime: 2024-06-03 11:18:50
- * @FilePath: /SDLMainProject37/app/operationContainers/taskViews/taskExecution/components/Form2Switch.js
+ * @LastEditTime: 2024-11-04 17:06:46
+ * @FilePath: /SDLSourceOfPollutionS/app/operationContainers/taskViews/taskExecution/components/Form2Switch.js
  */
 
 import React, { Component } from 'react'
@@ -58,7 +58,7 @@ export default class Form2Switch extends Component {
                                     : null
                             }
                         </View>
-                        <Text>{data[0][showField]}</Text>
+                        <Text style={[{ color: '#333333' }]}>{data[0][showField]}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => {
@@ -77,7 +77,7 @@ export default class Form2Switch extends Component {
                                     : null
                             }
                         </View>
-                        <Text>{data[1][showField]}</Text>
+                        <Text style={[{ color: '#333333' }]}>{data[1][showField]}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

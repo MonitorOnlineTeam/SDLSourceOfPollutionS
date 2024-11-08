@@ -2,8 +2,8 @@
  * @Description: 安装照片
  * @LastEditors: hxf
  * @Date: 2023-09-20 14:26:06
- * @LastEditTime: 2024-08-29 19:35:03
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/EquipmentInstallationPic.js
+ * @LastEditTime: 2024-11-01 16:22:27
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/EquipmentInstallationPic.js
  */
 import React, { Component } from 'react';
 import { Platform, ScrollView, Text, TouchableOpacity, View, Image, TextInput } from 'react-native';
@@ -914,6 +914,7 @@ export default class EquipmentInstallationPic extends Component {
                                                 <Text
                                                     numberOfLines={1}
                                                     style={[{
+                                                        color: '#333333',
                                                         width: SCREEN_WIDTH - 140
                                                     }]}
                                                 >{`${item.EntName || ''}`}</Text>
@@ -974,7 +975,7 @@ export default class EquipmentInstallationPic extends Component {
                                                     ]}
                                                 >
                                                     {/* <Text>{`${item.PointName || '请选择'}`}</Text> */}
-                                                    <Text numberOfLines={1} style={[{ width: SCREEN_WIDTH - 150, textAlign: 'right' }]}>{`${item.PointName || ''}`}</Text>
+                                                    <Text numberOfLines={1} style={[{ color: '#333333', width: SCREEN_WIDTH - 150, textAlign: 'right' }]}>{`${item.PointName || ''}`}</Text>
                                                     <Image style={[{ height: 15, width: 15 }]} source={require('../../../images/ic_arrows_right.png')} />
                                                 </View>
                                             </PickerTouchable>
@@ -1033,7 +1034,7 @@ export default class EquipmentInstallationPic extends Component {
                                             >
                                                 <Text
                                                     numberOfLines={2}
-                                                    style={[{ width: SCREEN_WIDTH - 140 }]}>{`${SentencedToEmpty(item, ['SystemModelName'], '')}`}</Text>
+                                                    style={[{ color: '#333333', width: SCREEN_WIDTH - 140 }]}>{`${SentencedToEmpty(item, ['SystemModelName'], '')}`}</Text>
                                                 <Image style={[{ height: 15, width: 15 }]} source={require('../../../images/ic_arrows_right.png')} />
                                             </View>
                                         </MoreSelectTouchable>
@@ -1048,7 +1049,7 @@ export default class EquipmentInstallationPic extends Component {
                                                     }
                                                 ]}
                                             >
-                                                <Text>{`${SentencedToEmpty(item, ['SystemModelName'], '')}`}</Text>
+                                                <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(item, ['SystemModelName'], '')}`}</Text>
                                                 <Image style={[{ height: 15, width: 15 }]} source={require('../../../images/ic_arrows_right.png')} />
                                             </View>}
                                         {/* <PickerTouchable

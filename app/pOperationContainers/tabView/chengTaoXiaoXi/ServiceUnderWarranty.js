@@ -2,8 +2,8 @@
  * @Description: 质保内服务填报 
  * @LastEditors: hxf
  * @Date: 2024-03-22 17:03:40
- * @LastEditTime: 2024-09-26 19:00:19
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceUnderWarranty.js
+ * @LastEditTime: 2024-11-01 15:37:30
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceUnderWarranty.js
  */
 import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
@@ -1384,6 +1384,7 @@ class ProductCategory extends Component {
                                                 <Text
                                                     numberOfLines={1}
                                                     style={[{
+                                                        color: '#333333',
                                                         width: SCREEN_WIDTH - 140
                                                         , textAlign: 'right',
                                                     }]}
@@ -1445,7 +1446,7 @@ class ProductCategory extends Component {
                                                     }
                                                 ]}
                                             >
-                                                <Text>{`${SentencedToEmpty(item
+                                                <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(item
                                                     , ['InfoList', 0, 'PointName'], '')}`}</Text>
                                                 <Image style={[{ height: 15, width: 15 }]} source={require('../../../images/ic_arrows_right.png')} />
                                             </View>
@@ -1503,7 +1504,7 @@ class ProductCategory extends Component {
                                                     }
                                                 ]}
                                             >
-                                                <Text>{`${SentencedToEmpty(item
+                                                <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(item
                                                     , ['InfoList', 0, 'QuestionName'], '')}`}</Text>
                                                 <Image style={[{ height: 15, width: 15 }]} source={require('../../../images/ic_arrows_right.png')} />
                                             </View>
@@ -1519,7 +1520,7 @@ class ProductCategory extends Component {
                                                     }
                                                 ]}
                                             >
-                                                <Text>{`${SentencedToEmpty(item
+                                                <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(item
                                                     , ['InfoList', 0, 'QuestionName'], '')}`}</Text>
                                             </View>}
                                     </View>
@@ -2187,6 +2188,7 @@ class ServiceReason extends Component {
                                             <Text
                                                 numberOfLines={1}
                                                 style={[{
+                                                    color: '#333333',
                                                     width: SCREEN_WIDTH - 140
                                                     , textAlign: 'right',
                                                 }]}
@@ -2248,7 +2250,7 @@ class ServiceReason extends Component {
                                                 }
                                             ]}
                                         >
-                                            <Text>{`${SentencedToEmpty(item
+                                            <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(item
                                                 , ['InfoList', 0, 'PointName'], '')}`}</Text>
                                             <Image style={[{ height: 15, width: 15 }]} source={require('../../../images/ic_arrows_right.png')} />
                                         </View>
@@ -2306,7 +2308,7 @@ class ServiceReason extends Component {
                                                 }
                                             ]}
                                         >
-                                            <Text>{`${SentencedToEmpty(item
+                                            <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(item
                                                 , ['InfoList', 0, 'QuestionName'], '')}`}</Text>
                                             <Image style={[{ height: 15, width: 15 }]} source={require('../../../images/ic_arrows_right.png')} />
                                         </View>
@@ -2322,7 +2324,7 @@ class ServiceReason extends Component {
                                                 }
                                             ]}
                                         >
-                                            <Text>{`${SentencedToEmpty(item
+                                            <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(item
                                                 , ['InfoList', 0, 'QuestionName'], '')}`}</Text>
                                         </View>}
                                 </View>

@@ -2,8 +2,8 @@
  * @Description: 重复服务填报 
  * @LastEditors: hxf
  * @Date: 2024-03-20 09:35:41
- * @LastEditTime: 2024-07-10 10:07:11
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/chengTaoXiaoXi/DuplicateService.js
+ * @LastEditTime: 2024-11-01 16:46:42
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/DuplicateService.js
  */
 import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
@@ -577,6 +577,7 @@ export default class DuplicateService extends Component {
                                                 <Text
                                                     numberOfLines={1}
                                                     style={[{
+                                                        color: '#333333',
                                                         width: SCREEN_WIDTH - 140
                                                         , textAlign: 'right',
                                                     }]}
@@ -637,7 +638,7 @@ export default class DuplicateService extends Component {
                                                     }
                                                 ]}
                                             >
-                                                <Text>{`${SentencedToEmpty(item, ['PointName'], '')}`}</Text>
+                                                <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(item, ['PointName'], '')}`}</Text>
                                                 <Image style={[{ height: 15, width: 15 }]} source={require('../../../images/ic_arrows_right.png')} />
                                             </View>
                                         </PickerTouchable>
@@ -693,7 +694,7 @@ export default class DuplicateService extends Component {
                                                     }
                                                 ]}
                                             >
-                                                <Text>{`${SentencedToEmpty(item, ['SystemName'], '')}`}</Text>
+                                                <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(item, ['SystemName'], '')}`}</Text>
                                                 <Image style={[{ height: 15, width: 15 }]} source={require('../../../images/ic_arrows_right.png')} />
                                             </View>
                                         </MoreSelectTouchable>
@@ -708,7 +709,7 @@ export default class DuplicateService extends Component {
                                                     }
                                                 ]}
                                             >
-                                                <Text>{`${SentencedToEmpty(item, ['SystemName'], '')}`}</Text>
+                                                <Text style={[{ color: '#333333' }]}>{`${SentencedToEmpty(item, ['SystemName'], '')}`}</Text>
                                             </View>}
                                     </View>
                                     <View

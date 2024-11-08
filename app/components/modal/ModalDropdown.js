@@ -329,7 +329,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     buttonText: {
-        fontSize: 14
+        fontSize: 14,
+        color: '#333333',
     },
     modal: {
         flexGrow: 1

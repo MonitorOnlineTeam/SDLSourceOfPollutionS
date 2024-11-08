@@ -2,8 +2,8 @@
  * @Description: 参数设置照片
  * @LastEditors: hxf
  * @Date: 2023-09-20 14:10:14
- * @LastEditTime: 2023-10-20 09:52:48
- * @FilePath: /SDLMainProject36/app/pOperationContainers/tabView/chengTaoXiaoXi/ParameterSettingPic.js
+ * @LastEditTime: 2024-11-01 15:43:21
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/ParameterSettingPic.js
  */
 import React, { Component } from 'react';
 import { Platform, ScrollView, Text, TouchableOpacity, View, Image, TextInput } from 'react-native';
@@ -575,6 +575,7 @@ export default class ParameterSettingPic extends Component {
                                                     <Text
                                                         numberOfLines={1}
                                                         style={[{
+                                                            color: '#333333',
                                                             width: SCREEN_WIDTH - 140
                                                         }]}
                                                     >{`${item.EntName || '请选择'}`}</Text>
@@ -634,7 +635,7 @@ export default class ParameterSettingPic extends Component {
                                                             }
                                                         ]}
                                                     >
-                                                        <Text>{`${item.PointName || '请选择'}`}</Text>
+                                                        <Text style={[{ color: '#333333' }]}>{`${item.PointName || '请选择'}`}</Text>
                                                         <Image style={[{ height: 15, width: 15 }]} source={require('../../../images/ic_arrows_right.png')} />
                                                     </View>
                                                 </PickerTouchable>
@@ -691,7 +692,7 @@ export default class ParameterSettingPic extends Component {
                                                         }
                                                     ]}
                                                 >
-                                                    <Text>{`${item.ParameterSetterName || '请选择'}`}</Text>
+                                                    <Text style={[{ color: '#333333' }]}>{`${item.ParameterSetterName || '请选择'}`}</Text>
                                                     <Image style={[{ height: 15, width: 15 }]} source={require('../../../images/ic_arrows_right.png')} />
                                                 </View>
                                             </PickerTouchable>

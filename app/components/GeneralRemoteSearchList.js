@@ -2,8 +2,8 @@
  * @Description: 接口搜索列表
  * @LastEditors: hxf
  * @Date: 2024-05-10 15:30:38
- * @LastEditTime: 2024-07-01 18:34:27
- * @FilePath: /SDLMainProject37_1/app/components/GeneralRemoteSearchList.js
+ * @LastEditTime: 2024-11-04 19:18:59
+ * @FilePath: /SDLSourceOfPollutionS/app/components/GeneralRemoteSearchList.js
  */
 
 import React, { Component } from 'react'
@@ -34,10 +34,15 @@ export default class GeneralRemoteSearchList extends Component {
         this.state = {
             searchText: '',
             metaData: SentencedToEmpty(props
-                , ['navigation', 'state', 'params', 'data'], []),
+                , ['route', 'params', 'params', 'data'], []),
             showData: SentencedToEmpty(props
-                , ['navigation', 'state', 'params', 'data'], []),
+                , ['route', 'params', 'params', 'data'], []),
         };
+
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(props
+                , ['route', 'params', 'params', 'title'], []),
+        });
     }
 
     componentDidMount() {
@@ -46,7 +51,7 @@ export default class GeneralRemoteSearchList extends Component {
 
     onRefresh = () => {
         const doRemoteSearch = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'doRemoteSearch']
+            , ['route', 'params', 'params', 'doRemoteSearch']
             , () => { }
         );
         doRemoteSearch();
@@ -55,7 +60,7 @@ export default class GeneralRemoteSearchList extends Component {
 
     statusPageOnRefresh = () => {
         const doRemoteSearch = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'doRemoteSearch']
+            , ['route', 'params', 'params', 'doRemoteSearch']
             , () => { }
         );
         doRemoteSearch();
@@ -67,7 +72,7 @@ export default class GeneralRemoteSearchList extends Component {
 
     _renderItem = ({ item, index }) => {
         return SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'renderItem']
+            , ['route', 'params', 'params', 'renderItem']
             , (dItem, dIndex) => {
                 return (<TouchableOpacity>
                     <View
@@ -84,7 +89,7 @@ export default class GeneralRemoteSearchList extends Component {
 
     doSearch = () => {
         const doRemoteSearch = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params', 'doRemoteSearch']
+            , ['route', 'params', 'params', 'doRemoteSearch']
             , () => { }
         );
         doRemoteSearch();
@@ -92,7 +97,7 @@ export default class GeneralRemoteSearchList extends Component {
 
     render() {
         const params = SentencedToEmpty(this.props
-            , ['navigation', 'state', 'params']
+            , ['route', 'params', 'params']
             , {}
         )
         const { emptyStringShowEmpty = true } = params;
@@ -124,12 +129,12 @@ export default class GeneralRemoteSearchList extends Component {
                         />
                         <TextInput
                             style={[{
-                                flex: 1
+                                flex: 1, color: '#333333'
                                 , paddingVertical: 0
                                 , marginHorizontal: 5
                             }]}
                             placeholder={SentencedToEmpty(this.props
-                                , ['navigation', 'state', 'params', 'searchPlaceHolder']
+                                , ['route', 'params', 'params', 'searchPlaceHolder']
                                 , '企业名称、合同编号、立项号')}
                             onChangeText={(text) => {
                                 this.props.dispatch(createAction('GeneralSearchModel/updateState')({

@@ -437,7 +437,26 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                                             });
                                             return;
                                         }
-                                        this.refs.doAlert.show();
+                                        SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                                            if (err) {
+                                                // 取消选择
+                                                return;
+                                            }
+
+                                            if (selectedPhotos.length <= 0) {
+                                                return;
+                                            } else {
+                                                ShowLoadingToast('正在上传图片');
+                                                that.props.dispatch(
+                                                    createAction('imageModel/uploadimage')({
+                                                        images: selectedPhotos,
+                                                        uuid: uuid,
+                                                        callback: this.uploadImageCallBack
+                                                    })
+                                                );
+                                            }
+                                        });
+                                        // this.refs.doAlert.show();
                                     }}
                                     style={{ width: SCREEN_WIDTH / 4 - 25, height: SCREEN_WIDTH / 4 - 25 }}
                                 >

@@ -183,7 +183,7 @@ class HourRangeTime extends PureComponent {
     }
 
     render() {
-        return (<View><Text>HourRangeTime</Text></View>)
+        return (<View><Text style={[{ color: '#333333' }]}>HourRangeTime</Text></View>)
         return (
             <View style={[styles.container, { height: (72 + calendarHeight) }]}>
                 <View style={[{

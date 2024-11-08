@@ -2,8 +2,8 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2020-08-26 09:28:38
- * @LastEditTime: 2024-09-06 11:25:35
- * @FilePath: /SDLMainProject/app/components/CusWebView.js
+ * @LastEditTime: 2024-10-31 16:00:05
+ * @FilePath: /SDLSourceOfPollutionS/app/components/CusWebView.js
  */
 //import liraries
 import React, { PureComponent } from 'react';
@@ -38,6 +38,9 @@ class CusWebView extends PureComponent {
             scalingEnabled: true
             // IsSign:this.props.navigation.state.params.item.IsSign,
         };
+        this.props.navigation.setOptions({
+            title: SentencedToEmpty(this.props, ['route', 'params', 'params', 'title'], '详情')
+        });
     }
 
     render() {

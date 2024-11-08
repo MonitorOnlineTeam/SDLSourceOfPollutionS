@@ -107,7 +107,7 @@ export default class PDFcomponent extends PureComponent {
             if (!this.state.isPdfDownload) {
                 return (
                     <View style={styles.container}>
-                        <Text>Downloading</Text>
+                        <Text style={[{ color: '#333333' }]}>Downloading</Text>
                     </View>
                 );
             } else {

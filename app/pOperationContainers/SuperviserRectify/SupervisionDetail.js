@@ -2,8 +2,8 @@
  * @Description: 督查整改记录详情
  * @LastEditors: hxf
  * @Date: 2022-11-29 09:29:42
- * @LastEditTime: 2023-04-19 10:40:20
- * @FilePath: /SDLMainProject34/app/pOperationContainers/SuperviserRectify/SupervisionDetail.js
+ * @LastEditTime: 2024-11-04 08:41:42
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/SuperviserRectify/SupervisionDetail.js
  */
 import React, { Component } from 'react'
 import { Platform, ScrollView, Text, TouchableOpacity, View, Image } from 'react-native'
@@ -147,7 +147,7 @@ export default class SupervisionDetail extends Component {
                             justifyContent: 'center', alignItems: 'center'
                         }]}>
                             <Image resizeMode="contain" source={require('../../components/StatusPages/ic_contractlist_empty.png')} style={{ height: 307 / 2, width: 236 / 2 }} />
-                            <Text>{'数据已处理完，请返回上一页！'}</Text>
+                            <Text style={[{ color: '#333333' }]}>{'数据已处理完，请返回上一页！'}</Text>
                         </View>
                             : <ScrollView
                                 style={{ width: SCREEN_WIDTH }}

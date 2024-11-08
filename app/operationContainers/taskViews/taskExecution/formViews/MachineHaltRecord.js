@@ -386,7 +386,7 @@ class MachineHaltRecord extends Component {
                         }}
                     >
                         <View style={[{ width: SCREEN_WIDTH - 24, height: 48, justifyContent: 'center', alignItems: 'center', backgroundColor: globalcolor.white, borderRadius: 8 }]}>
-                            <Text style={[{ fontSize: 15 }]}>添加记录</Text>
+                            <Text style={[{ color: '#333333', fontSize: 15 }]}>添加记录</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

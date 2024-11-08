@@ -142,7 +142,7 @@ export default class MissionVerificationRectificationList extends Component {
                         </Text>
                     </View>
                 </View>
-                <Text style={[{ lineHeight: 19, marginTop: 6, width: SCREEN_WIDTH - 60, maxHeight: 63, marginLeft: 30 }]}
+                <Text style={[{ color: '#333333', lineHeight: 19, marginTop: 6, width: SCREEN_WIDTH - 60, maxHeight: 63, marginLeft: 30 }]}
                     numberOfLines={3}
                 >
                     {`${index == 1 && false ? '测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123测试文字123'
@@ -345,7 +345,7 @@ class ToBeReviewed extends Component {
                         </Text>
                     </View>
                 </View>
-                <Text style={[{ marginTop: 6, width: SCREEN_WIDTH - 60, height: 63, marginLeft: 30 }]}
+                <Text style={[{ color: '#333333', marginTop: 6, width: SCREEN_WIDTH - 60, height: 63, marginLeft: 30 }]}
                     numberOfLines={3}
                 >
                     {`核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息核实信息`}

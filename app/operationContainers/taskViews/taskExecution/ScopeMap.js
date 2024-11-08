@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @LastEditors: hxf
+ * @Date: 2024-05-13 11:51:43
+ * @LastEditTime: 2024-11-04 17:11:52
+ * @FilePath: /SDLSourceOfPollutionS/app/operationContainers/taskViews/taskExecution/ScopeMap.js
+ */
 import React, { Component } from 'react';
 import { View, StyleSheet, Platform, TouchableOpacity, Text, Image } from 'react-native';
 import Map from '../../../components/Map';
@@ -43,11 +50,11 @@ export default class ScopeMap extends Component {
                         <View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                                 <Image style={{ height: 13, width: 13, marginRight: 8 }} source={require('../../../images/userlocal.png')} />
-                                <Text>{'您的当前位置'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'您的当前位置'}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                                 <Image style={{ height: 13, width: 13, marginRight: 8 }} source={require('../../../images/enterpriselocal.png')} />
-                                <Text>{this.isChengTaoSignIn() ? '项目位置' : '监测点位置'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{this.isChengTaoSignIn() ? '项目位置' : '监测点位置'}</Text>
                             </View>
                             {/* 大家都认为标记这个位置不合适
                             <View style={{flexDirection:'row', alignItems:'center',marginBottom:10}}>
@@ -55,16 +62,16 @@ export default class ScopeMap extends Component {
                                     style={{height:13,width:13,tintColor:'#FF9912',marginRight:8}}
                                     source={require('../../../images/ic_audit_invalid.png')}
                                 />
-                                <Text>{'当前打卡可能出现打卡异常'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'当前打卡可能出现打卡异常'}</Text>
                             </View> */}
 
                             {this.isChengTaoSignIn() ? null : <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                                 <Image style={{ height: 13, width: 13, marginRight: 8 }} source={require('../../../images/ic_audit_invalid.png')} />
-                                <Text>{'打卡异常的位置'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'打卡异常的位置'}</Text>
                             </View>}
                             {this.isChengTaoSignIn() ? null : <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                                 <Image style={{ height: 13, width: 13, marginRight: 8 }} source={require('../../../images/auditselect.png')} />
-                                <Text>{'无异常的打卡位置'}</Text>
+                                <Text style={[{ color: '#333333' }]}>{'无异常的打卡位置'}</Text>
                             </View>}
                         </View>
                     </View>

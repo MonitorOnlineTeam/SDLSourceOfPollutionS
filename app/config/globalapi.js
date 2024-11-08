@@ -319,6 +319,10 @@ export default api = {
             //超标数据
             //netcore ✅ GetOverData: 'rest/PollutantSourceApi/BaseDataApi/GetOverData',
             GetOverData: 'rest/PollutantSourceApi/OverDataApi/GetOverData',
+            GetExceptionInfoList: '/rest/PollutantSourceApi/OperationWorkbenchApi/GetExceptionInfoList', // 缺失和异常 报警响应记录
+            GetExResponseInfoList: '/rest/PollutantSourceApi/OperationWorkbenchApi/GetExResponseInfoList', // 异常报警详情
+            GetOverAlarmInfoList: '/rest/PollutantSourceApi/OperationWorkbenchApi/GetOverAlarmInfoList',// 超标报警响应记录详情
+            GetOverResponseInfoList: '/rest/PollutantSourceApi/OperationWorkbenchApi/GetOverResponseInfoList',// 超标报警 报警详情
             //单点报警记录
             //报警
             //核实记录
