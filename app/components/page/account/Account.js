@@ -13,7 +13,7 @@ import { Alert } from '../../../../node_modules/react-native/types/index';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-import { ReactNativeUniappModule } from 'react-native-uniapp'
+// import { ReactNativeUniappModule } from 'react-native-uniapp'
 /**
  *个人中心
  */
@@ -128,14 +128,14 @@ class Account extends PureComponent {
                 let encryData = getEncryptData();
                 const password = getPasswordMobx();
                 const user = getToken();
-                ReactNativeUniappModule.startUniPage({
-                    token: 'Bearer ' + user.dataAnalyzeTicket,
-                    proxyCode: encryData + '',
-                    userAccount: user.UserAccount,
-                    userPwd: password,
-                    department: '污染源技术服务部',
-                    UserId: user.UserId,
-                });
+                // ReactNativeUniappModule.startUniPage({
+                //     token: 'Bearer ' + user.dataAnalyzeTicket,
+                //     proxyCode: encryData + '',
+                //     userAccount: user.UserAccount,
+                //     userPwd: password,
+                //     department: '污染源技术服务部',
+                //     UserId: user.UserId,
+                // });
             }
         } else if (routeName == 'update') {
             this._checkUpdate();
