@@ -346,11 +346,11 @@ export default class ServiceReminderCalendar extends Component {
     };
 
     showCalenderFun = (nextFun = () => { }) => {
-        if (this.state.calendarHeight._value == calenderComponentHeight) {
-            this.setState({ hideCalendar: true, calenderOpacity: 0 }, () => {
+        if (Math.ceil(this.state.calendarHeight._value / 100) * 100 == calenderComponentHeight) {
+            this.setState({ hideCalendar: true }, () => {
                 nextFun();
             });
-        } else if (this.state.calendarHeight._value == 0) {
+        } else if (Math.floor(this.state.calendarHeight._value) == 0) {
             this.setState({ hideCalendar: false }, () => {
                 nextFun();
             });
@@ -511,7 +511,7 @@ export default class ServiceReminderCalendar extends Component {
                             </View>
                         </TouchableOpacity> : null}
                     </View>
-                    {this.state.hideCalendar ? null : <View style={[{ opacity: this.state.calenderOpacity, width: SCREEN_WIDTH - 40, height: 1, backgroundColor: '#EAEAEA' }]}></View>}
+                    {/* {this.state.hideCalendar ? null : <View style={[{ opacity: this.state.calenderOpacity, width: SCREEN_WIDTH - 40, height: 1, backgroundColor: '#EAEAEA' }]}></View>} */}
                     <Animated.View style={[{ height: this.state.calendarHeight, width: SCREEN_WIDTH - 40, }]}>
                         {this.state.hideCalendar ? null : <CalendarPicker
                             ref={ref => (this.CalendarPicker = ref)}
@@ -540,25 +540,32 @@ export default class ServiceReminderCalendar extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
-                        if (this.state.calendarHeight._value == 0) {
-                            this.showCalenderFun(() => {
-                                Animated.spring(
-                                    this.state.calendarHeight, // Auto-multiplexed
-                                    { toValue: calenderComponentHeight } // Back to zero
-                                ).start(() => {
-                                    this.setState({ calenderOpacity: 1 });
-                                });
+                        // if (this.state.calendarHeight._value == 0) {
+                        //     this.showCalenderFun(() => {
+                        //         Animated.spring(
+                        //             this.state.calendarHeight, // Auto-multiplexed
+                        //             { toValue: calenderComponentHeight } // Back to zero
+                        //         ).start(() => {
+                        //             this.setState({ calenderOpacity: 1 });
+                        //         });
+                        //     });
+                        // } else if (this.state.calendarHeight._value == calenderComponentHeight) {
+                        //     this.showCalenderFun(() => {
+                        //         Animated.spring(
+                        //             this.state.calendarHeight, // Auto-multiplexed
+                        //             { toValue: 0 } // Back to zero
+                        //         ).start(() => {
+                        //             // this.setState({hideCalendar:true});
+                        //         });
+                        //     });
+                        // }
+                        this.setState({ hideCalendar: !this.state.hideCalendar }, () => {
+                            Animated.spring(
+                                this.state.calendarHeight, // Auto-multiplexed
+                                { toValue: this.state.hideCalendar ? 0 : calenderComponentHeight, useNativeDriver: false } // Back to zero
+                            ).start(() => {
                             });
-                        } else if (this.state.calendarHeight._value == calenderComponentHeight) {
-                            this.showCalenderFun(() => {
-                                Animated.spring(
-                                    this.state.calendarHeight, // Auto-multiplexed
-                                    { toValue: 0 } // Back to zero
-                                ).start(() => {
-                                    // this.setState({hideCalendar:true});
-                                });
-                            });
-                        }
+                        });
                     }}
                 >
                     <View style={[{
@@ -570,16 +577,16 @@ export default class ServiceReminderCalendar extends Component {
                         , borderBottomLeftRadius: 5
                         , borderBottomRightRadius: 5
                     }]}>
-                        <View style={[{ flex: 1, height: 1, backgroundColor: '#EAEAEA' }]}></View>
+                        <View style={[{ flex: 1, height: 1, backgroundColor: '#EAEAEA', marginBottom: 10 }]}></View>
                         {/* <View style={[{width:20,height:8,backgroundColor:'#EAEAEA'}]}></View> */}
                         <Image
-                            style={[{ width: 20, height: 8 }]}
+                            style={[{ width: 20, height: 8, marginBottom: 10 }]}
                             source={this.state.hideCalendar
                                 ? require('../../images/ic_ct_calendar_down.png')
                                 : require('../../images/ic_ct_calendar_up.png')
                             }
                         />
-                        <View style={[{ flex: 1, height: 1, backgroundColor: '#EAEAEA' }]}></View>
+                        <View style={[{ flex: 1, height: 1, backgroundColor: '#EAEAEA', marginBottom: 10 }]}></View>
                     </View>
                 </TouchableOpacity>
                 <Animated.View

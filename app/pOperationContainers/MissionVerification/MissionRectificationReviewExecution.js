@@ -35,7 +35,7 @@ export default class MissionRectificationReviewExecution extends Component {
     constructor(props) {
         super(props);
         that = this;
-        this.alarmObj = SentencedToEmpty(this.props, ['navigation', 'state', 'params'], {});
+        this.alarmObj = SentencedToEmpty(this.props, ['route', 'params', 'params'], {});
         this.state = {
             loading: false,
             encryData: '',

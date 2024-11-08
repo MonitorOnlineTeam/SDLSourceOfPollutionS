@@ -484,7 +484,7 @@ export default class CreateTask extends Component {
                     // 刷新任务企业列表
                     this.props.dispatch(createAction('taskModel/updateState')({ UnhandleTaskTypeListResult: { status: -1 } }))
                     this.props.dispatch(createAction('taskModel/getUnhandleTaskTypeList')({}))
-                    this.props.dispatch(NavigationActions.back({ routeName: 'Workbench' }));
+                    this.props.dispatch(NavigationActions.back());
                 }
             })
         );
@@ -559,7 +559,7 @@ export default class CreateTask extends Component {
         // console.log('EntName = ', this.props.selectEnterprise.EntName);
         return (
             <StatusPage
-                backRef={SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'needRefresh'], 'true') == 'true'}
+                // backRef={SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'needRefresh'], 'true') == 'true'}
                 status={this.getPageStatus()}
                 //页面是否有回调按钮，如果不传，没有按钮，
                 emptyBtnText={'重新请求'}
