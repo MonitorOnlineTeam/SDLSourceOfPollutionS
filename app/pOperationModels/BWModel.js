@@ -2,8 +2,8 @@
  * @Description: 宝武相关事件
  * @LastEditors: hxf
  * @Date: 2023-05-06 08:44:32
- * @LastEditTime: 2024-06-15 17:28:55
- * @FilePath: /SDLMainProject37_backup_2/app/pOperationModels/BWModel.js
+ * @LastEditTime: 2024-11-11 11:37:11
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/BWModel.js
  */
 import { SentencedToEmpty, ShowToast, NavigationActions, bwFormatArray, createAction } from '../utils';
 import * as authService from '../services/auth';
@@ -229,7 +229,6 @@ export default Model.extend({
             //         , 'Item', 'PLANS', 'Item'
             //     ], []
             // );
-            // console.log('planList = ',planList);
             if (result.status == 200 && result.data.IsSuccess) {
                 let data = SentencedToEmpty(result, [
                     'data', 'Datas', 'soap:Envelope', 'soap:Body', 'M_GetOperationTaskByIDResponse'

@@ -52,6 +52,7 @@ export default class RepulseCheckList extends Component {
                         value={si.ReContent}
                         multiline={true}
                         placeholder="请输入描述信息"
+                        placeholderTextColor={'#999999'}
                         style={{ width: SCREEN_WIDTH - 56, backgroundColor: 'white', marginTop: 10, minHeight: 60, borderWidth: 0.5, color: '#333', borderColor: '#999', padding: 13 }}
                     />
                 </View>

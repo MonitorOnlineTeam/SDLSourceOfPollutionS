@@ -2,7 +2,7 @@
  * @Description: 成套位置异常展示地图
  * @LastEditors: hxf
  * @Date: 2024-01-25 14:39:41
- * @LastEditTime: 2024-11-01 16:49:05
+ * @LastEditTime: 2024-11-11 14:40:03
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/CTSignInMap.js
  */
 import React, { Component } from 'react';
@@ -26,21 +26,30 @@ export default class CTSignInMap extends Component {
         });
 
     componentDidMount() {
-        this.props.navigation.setParams({
-            headerRight: (
-                <TouchableOpacity
-                    onPress={() => {
-                        this.iconDialog.showModal();
-                    }}
-                >
-                    <Text style={{ color: 'white', marginRight: 8 }}>说明</Text>
-                </TouchableOpacity>
-            )
+        // this.props.navigation.setParams({
+        //     headerRight: (
+        //         <TouchableOpacity
+        //             onPress={() => {
+        //                 this.iconDialog.showModal();
+        //             }}
+        //         >
+        //             <Text style={{ color: 'white', marginRight: 8 }}>说明</Text>
+        //         </TouchableOpacity>
+        //     )
+        // });
+        this.props.navigation.setOptions({
+            headerRight: () => <TouchableOpacity
+                onPress={() => {
+                    this.iconDialog.showModal();
+                }}
+            >
+                <Text style={{ color: 'white', marginRight: 8 }}>说明</Text>
+            </TouchableOpacity>
         });
     }
 
     isChengTaoSignIn = () => {
-        const from = SentencedToEmpty(this.props, ['navigation', 'state', 'params', 'from'], 'task')
+        const from = SentencedToEmpty(this.props, ['route', 'params', 'params', 'from'], 'task')
         if (from == 'ChengTaoSignIn') {
             return true;
         } else {

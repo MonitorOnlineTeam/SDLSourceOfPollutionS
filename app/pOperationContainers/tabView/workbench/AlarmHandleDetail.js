@@ -2,7 +2,7 @@
  * @Description: 报警处理详情
  * @LastEditors: hxf
  * @Date: 2024-10-17 18:56:00
- * @LastEditTime: 2024-10-22 16:38:54
+ * @LastEditTime: 2024-11-11 13:44:04
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbench/AlarmHandleDetail.js
  */
 import { Image, Modal, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -144,7 +144,8 @@ export default class AlarmHandleDetail extends Component {
                         }}
                         value={this.state.VerifyMessage}
                         multiline={true}
-                        placeholder="点击输入核查信息~"
+                        placeholder="点击输入核查信息"
+                        placeholderTextColor={'#999999'}
                         style={{ color: '#333', width: SCREEN_WIDTH - 28, height: 140, backgroundColor: '#f0f0f0', padding: 13, textAlignVertical: 'top' }}
                     />
                 </View>

@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-09-03 13:50:33
- * @LastEditTime: 2024-10-28 10:25:06
+ * @LastEditTime: 2024-11-11 11:34:34
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/sdlNavigateModel.js
  */
 // sdlNavigate
@@ -33,7 +33,7 @@ export default Model.extend({
          * @param {*} param1
          */
         *navigate({ payload }, { call, put, update, take, select }) {
-            console.log('payload = ', payload);
+            // console.log('payload = ', payload);
             Actions.navigate(payload.routeName, {
                 params: SentencedToEmpty(payload, ['params'], {})
             });
@@ -71,7 +71,7 @@ export default Model.extend({
          * @param {*} param1
          */
         *back({ payload }, { call, put, update, take, select }) {
-            console.log('back effect payload = ', payload);
+            // console.log('back effect payload = ', payload);
             Actions.back();
             const { routeList } = yield select(state => state.sdlNavigate);
             routeList.pop();

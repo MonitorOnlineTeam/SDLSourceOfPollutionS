@@ -11,7 +11,9 @@ class MyTextInput extends Component {
     // }
 
     render() {
-        return <TextInput {...this.props} />;
+        return <TextInput {...this.props}
+            placeholderTextColor={'#999999'}
+        />;
     }
 }
 

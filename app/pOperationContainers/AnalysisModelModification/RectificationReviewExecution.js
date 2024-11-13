@@ -2,7 +2,7 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-11-01 16:56:11
- * @LastEditTime: 2024-11-07 17:14:18
+ * @LastEditTime: 2024-11-11 17:24:30
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/AnalysisModelModification/RectificationReviewExecution.js
  */
 import {
@@ -437,6 +437,7 @@ export default class RectificationReviewExecution extends Component {
               value={this.state.approvalRemarks}
               multiline={true}
               placeholder="请输入描述信息"
+              placeholderTextColor={'#999999'}
               style={{
                 width: SCREEN_WIDTH - 26,
                 backgroundColor: 'white',
@@ -508,7 +509,7 @@ export default class RectificationReviewExecution extends Component {
                       );
                       return;
                     }
-                    SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                    SyanImagePicker.showImagePicker({ imageCount: 1 }, (err, selectedPhotos) => {
                       if (err) {
                         // 取消选择
                         return;
@@ -521,7 +522,7 @@ export default class RectificationReviewExecution extends Component {
                         that.props.dispatch(
                           createAction('imageModel/uploadimage')({
                             images: selectedPhotos,
-                            uuid: uuid,
+                            uuid: this.state.TimeS,
                             callback: this.uploadImageCallBack
                           })
                         );

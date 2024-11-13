@@ -225,6 +225,7 @@ export default class CheckDetails extends Component {
                         value={si.ReContent}
                         multiline={true}
                         placeholder="请输入描述信息"
+                        placeholderTextColor={'#999999'}
                         style={{ width: SCREEN_WIDTH - 56, backgroundColor: 'white', marginTop: 10, minHeight: 60, borderWidth: 0.5, color: '#333', borderColor: '#999', padding: 13 }}
                     />
                 </View>
@@ -260,7 +261,7 @@ export default class CheckDetails extends Component {
                                     });
                                     return;
                                 }
-                                SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                                SyanImagePicker.showImagePicker({ imageCount: 6 }, (err, selectedPhotos) => {
                                     if (err) {
                                         // 取消选择
                                         return;
@@ -273,8 +274,10 @@ export default class CheckDetails extends Component {
                                         that.props.dispatch(
                                             createAction('imageModel/uploadimage')({
                                                 images: selectedPhotos,
-                                                uuid: uuid,
-                                                callback: this.uploadImageCallBack
+                                                uuid: this.state.UuidArray[idx],
+                                                callback: (img, isSuccess) => {
+                                                    this.uploadImageCallBack(img, isSuccess, si, idx);
+                                                }
                                             })
                                         );
                                     }
@@ -307,9 +310,8 @@ export default class CheckDetails extends Component {
             this.setState({ currentPlanItems: newplanItems }, () => {
                 this.forceUpdate();
             });
-            CloseToast('上传成功');
+            ShowToast('上传成功');
         } else {
-            CloseToast();
             ShowToast('上传失败！');
         }
     };
@@ -902,6 +904,7 @@ export default class CheckDetails extends Component {
                                     value={this.state.CheckConclusion}
                                     multiline={true}
                                     placeholder="请输入核查结论"
+                                    placeholderTextColor={'#999999'}
                                     style={{ width: '100%', backgroundColor: 'white', marginTop: 10, height: 90, borderWidth: 0.5, color: '#333', borderColor: '#999', padding: 13 }}
                                 />
                             </View>

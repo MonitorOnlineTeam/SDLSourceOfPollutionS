@@ -43,7 +43,8 @@ export default class CreateTask extends Component {
             // 已领取任务提示信息配置
             calibrationTaskAlreadyClaimedOptions: {
                 hiddenTitle: true,
-                innersHeight: 120,
+                // innersHeight: 120,
+                innersHeight: 220,
                 messText: `运维工程师“***”名下存在待执行/执行中的校准工单，完成后方可申领新的校准工单。`,
                 headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
                 buttons: [
@@ -59,7 +60,8 @@ export default class CreateTask extends Component {
         // 创建任务钱最后确认信息，确认排口所属运维公司
         this.state.commitTaskOptions = {
             hiddenTitle: true,
-            innersHeight: 150,
+            // innersHeight: 150,
+            innersHeight: 220,
             messText: '该监测点是否由《雪迪龙科技股份有限公司》运维？如果不是请联系管理员进行设置。',
             headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
             buttons: [
@@ -275,7 +277,8 @@ export default class CreateTask extends Component {
                                     this.setState({
                                         calibrationTaskAlreadyClaimedOptions: {
                                             hiddenTitle: true,
-                                            innersHeight: 120,
+                                            // innersHeight: 120,
+                                            innersHeight: 220,
                                             messText: `运维工程师“${result.userName}”名下存在待执行/执行中的校准工单，完成后方可申领新的校准工单。`,
                                             headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
                                             buttons: [
@@ -311,7 +314,8 @@ export default class CreateTask extends Component {
                         this.setState({
                             calibrationTaskAlreadyClaimedOptions: {
                                 hiddenTitle: true,
-                                innersHeight: 120,
+                                // innersHeight: 120,
+                                innersHeight: 220,
                                 messText: `不允许手工申请巡检工单，系统会自动派发巡检工单`,
                                 headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
                                 buttons: [
@@ -392,7 +396,8 @@ export default class CreateTask extends Component {
                     this.setState({
                         calibrationTaskAlreadyClaimedOptions: {
                             hiddenTitle: true,
-                            innersHeight: 120,
+                            // innersHeight: 120,
+                            innersHeight: 220,
                             messText: `运维工程师“${this.state.claimTaskState.userName}”名下存在待执行/执行中的校准工单，完成后方可申领新的校准工单。`,
                             headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
                             buttons: [
@@ -437,7 +442,8 @@ export default class CreateTask extends Component {
                 this.setState({
                     calibrationTaskAlreadyClaimedOptions: {
                         hiddenTitle: true,
-                        innersHeight: 120,
+                        // innersHeight: 120,
+                        innersHeight: 220,
                         messText: `不允许手工申请巡检工单，系统会自动派发巡检工单`,
                         headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
                         buttons: [
@@ -512,7 +518,8 @@ export default class CreateTask extends Component {
     render() {
         const outContractOptions = {
             hiddenTitle: true,
-            innersHeight: 150,
+            // innersHeight: 150,
+            innersHeight: 220,
             messText: '该监测点未查询到运维信息，可能原因如下：\n1.未设置运维信息；\n2.运维服务已到期；\n请联系管理员进行设置。',
             headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
             buttons: [
@@ -526,7 +533,8 @@ export default class CreateTask extends Component {
         }
         const alreadyExistOptions = {
             hiddenTitle: true,
-            innersHeight: 150,
+            // innersHeight: 150,
+            innersHeight: 220,
             messText: '请到“工作台 - 领取工单”页面领取校准工单。',
             headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
             buttons: [
@@ -541,7 +549,8 @@ export default class CreateTask extends Component {
 
         const withoutOperationUserNameOptions = {
             hiddenTitle: true,
-            innersHeight: 150,
+            // innersHeight: 150,
+            innersHeight: 220,
             messText: '点位没有设置运维负责人，设置后才能创建任务',
             headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
             buttons: [
@@ -723,6 +732,7 @@ export default class CreateTask extends Component {
                             <Text style={[{ color: '#333333' }]}>备注</Text>
                             <TextInput
                                 placeholder={'请输入备注信息'}
+                                placeholderTextColor={'#999999'}
                                 style={{ textAlignVertical: 'top', height: 54, width: SCREEN_WIDTH - 40, backgroundColor: 'white' }}
                                 multiline={true}
                                 onChangeText={text => {
@@ -797,7 +807,8 @@ export default class CreateTask extends Component {
     // 校准任务未领取 提示信息配置
     calibrationTaskUnclaimedOptions = {
         hiddenTitle: true,
-        innersHeight: 100,
+        // innersHeight: 100,
+        innersHeight: 220,
         messText: '请到“工作台 - 领取工单”页面领取校准工单。',
         headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
         buttons: [
@@ -812,7 +823,8 @@ export default class CreateTask extends Component {
     // 校准信息测试失败 提示信息配置
     claimTaskCheckFailureOptions = {
         hiddenTitle: true,
-        innersHeight: 100,
+        // innersHeight: 100,
+        innersHeight: 220,
         messText: '校准任务状态创建失败，请重新选择。',
         headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
         buttons: [

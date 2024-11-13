@@ -2,7 +2,7 @@
  * @Description: 接口搜索列表
  * @LastEditors: hxf
  * @Date: 2024-05-10 15:30:38
- * @LastEditTime: 2024-11-04 19:18:59
+ * @LastEditTime: 2024-11-11 14:33:01
  * @FilePath: /SDLSourceOfPollutionS/app/components/GeneralRemoteSearchList.js
  */
 
@@ -136,6 +136,7 @@ export default class GeneralRemoteSearchList extends Component {
                             placeholder={SentencedToEmpty(this.props
                                 , ['route', 'params', 'params', 'searchPlaceHolder']
                                 , '企业名称、合同编号、立项号')}
+                            placeholderTextColor={'#999999'}
                             onChangeText={(text) => {
                                 this.props.dispatch(createAction('GeneralSearchModel/updateState')({
                                     keyWords: text

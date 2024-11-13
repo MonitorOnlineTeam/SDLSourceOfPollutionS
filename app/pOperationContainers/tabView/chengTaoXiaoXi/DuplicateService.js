@@ -2,7 +2,7 @@
  * @Description: 重复服务填报 
  * @LastEditors: hxf
  * @Date: 2024-03-20 09:35:41
- * @LastEditTime: 2024-11-01 16:46:42
+ * @LastEditTime: 2024-11-11 13:58:04
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/DuplicateService.js
  */
 import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -782,6 +782,7 @@ export default class DuplicateService extends Component {
                                                             , height: 21, paddingVertical: 0
                                                         }]}
                                                         placeholder={'重复服务次数'}
+                                                        placeholderTextColor={'#999999'}
                                                         onChangeText={text => {
                                                             /**
                                                              * index innerIndex
@@ -808,6 +809,7 @@ export default class DuplicateService extends Component {
                                                         , height: 70, paddingVertical: 0
                                                     }]}
                                                     placeholder={'问题详细描述'}
+                                                    placeholderTextColor={'#999999'}
                                                     onChangeText={text => {
                                                         let newItem = { ...innerItem }
                                                         newItem.Remark = text;

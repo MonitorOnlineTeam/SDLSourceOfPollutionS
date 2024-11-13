@@ -159,6 +159,7 @@ export default class TaskRecord extends Component {
                             onFocus={() => { }}
                             underlineColorAndroid="transparent"
                             placeholder={'企业、点位、工单类型'}
+                            placeholderTextColor={'#999999'}
                             style={{
                                 color: '#333333',
                                 textAlign: 'center',

@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-09-21 18:21:36
- * @LastEditTime: 2024-11-01 15:30:19
+ * @LastEditTime: 2024-11-11 13:56:11
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/SevenFormViewMultiple.js
  */
 import React, { Component } from 'react'
@@ -678,6 +678,7 @@ export default class SevenFormViewMultiple extends Component {
                                     editable={this.isEdit()}
                                     multiline={true}
                                     placeholder={true ? '请填写备注' : '暂无备注信息'}
+                                    placeholderTextColor={'#999999'}
                                     style={{
                                         width: SCREEN_WIDTH - 38 + 15
                                         , marginLeft: 19, marginRight: 4, minHeight: 40

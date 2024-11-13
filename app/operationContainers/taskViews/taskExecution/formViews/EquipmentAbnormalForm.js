@@ -122,6 +122,7 @@ class EquipmentAbnormalForm extends Component {
                                 value={this.state.condition}
                                 numberOfLines={4}
                                 placeholder={'请填写原因说明'}
+                                placeholderTextColor={'#999999'}
                             />
                         </View>
 
@@ -159,6 +160,7 @@ class EquipmentAbnormalForm extends Component {
                                 value={this.state.reason}
                                 numberOfLines={4}
                                 placeholder={'请填写原因说明'}
+                                placeholderTextColor={'#999999'}
                             />
                         </View>
 
@@ -195,6 +197,7 @@ class EquipmentAbnormalForm extends Component {
                                 multiline={true}
                                 numberOfLines={4}
                                 placeholder={'请填写原因说明'}
+                                placeholderTextColor={'#999999'}
                                 value={this.state.instructions}
                             />
                         </View>

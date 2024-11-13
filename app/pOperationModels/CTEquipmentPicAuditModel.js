@@ -2,8 +2,8 @@
  * @Description: 安装照片审核
  * @LastEditors: hxf
  * @Date: 2024-03-28 14:08:17
- * @LastEditTime: 2024-06-13 17:20:45
- * @FilePath: /SDLMainProject37/app/pOperationModels/CTEquipmentPicAuditModel.js
+ * @LastEditTime: 2024-11-11 11:37:06
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/CTEquipmentPicAuditModel.js
  */
 import { SentencedToEmpty, ShowToast, NavigationActions, CloseToast, ShowLoadingToast } from '../utils';
 import * as dataAnalyzeAuth from '../services/dataAnalyzeAuth';
@@ -151,7 +151,6 @@ export default Model.extend({
             const result = yield call(dataAnalyzeAuth.axiosAuthPost, api.pOperationApi.CTApi.EquipmentAuditRectificationSubmit
                 , params
             );
-            console.log('result = ', result);
             if (result.status == 200) {
                 CloseToast();
                 yield put(NavigationActions.back());

@@ -168,6 +168,7 @@ class ReagentRepalceRecordEdit extends Component {
                                     <TextInput
                                         style={[styles.textStyle]}
                                         placeholder={'请填写试剂名称'}
+                                        placeholderTextColor={'#999999'}
                                         value={this.state.StandardGasName}
                                         onChangeText={text => {
                                             // 动态更新组件内State记录
@@ -185,6 +186,7 @@ class ReagentRepalceRecordEdit extends Component {
                                     ref={ref => (this._inputMachineHaltReason = ref)}
                                     style={[styles.textStyle, { flex: 1 }]}
                                     placeholder={'请填写试剂规格'}
+                                    placeholderTextColor={'#999999'}
                                     onChangeText={text => {
                                         // 动态更新组件内State记录
                                         this.setState({
@@ -200,6 +202,7 @@ class ReagentRepalceRecordEdit extends Component {
                                     <TextInput
                                         style={[styles.textStyle]}
                                         placeholder={'请输入单位'}
+                                        placeholderTextColor={'#999999'}
                                         value={this.state.Unit}
                                         onChangeText={text => {
                                             // 动态更新组件内State记录
@@ -220,6 +223,7 @@ class ReagentRepalceRecordEdit extends Component {
                                             ref={ref => (this._inputMachineHaltReason = ref)}
                                             style={[styles.textStyle, { flex: 1 }]}
                                             placeholder={'请输入数量'}
+                                            placeholderTextColor={'#999999'}
                                             onChangeText={text => {
                                                 // 动态更新组件内State记录
                                                 this.setState({
@@ -237,6 +241,7 @@ class ReagentRepalceRecordEdit extends Component {
                                     <TextInput
                                         style={[styles.textStyle]}
                                         placeholder={'请填写生产商'}
+                                        placeholderTextColor={'#999999'}
                                         value={this.state.Supplier}
                                         onChangeText={text => {
                                             // 动态更新组件内State记录

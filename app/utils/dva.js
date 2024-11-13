@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2020-08-26 09:28:38
- * @LastEditTime: 2024-09-05 14:02:37
- * @FilePath: /SDLMainProject/app/utils/dva.js
+ * @LastEditTime: 2024-11-11 11:32:42
+ * @FilePath: /SDLSourceOfPollutionS/app/utils/dva.js
  */
 import React from 'react';
 import { create } from 'dva-core';
@@ -22,7 +22,6 @@ export default function (options) {
   app.start();
   // eslint-disable-next-line no-underscore-dangle
   const store = app._store;
-  console.log('store = ', store);
   const dispatch = store.dispatch;
   app.start = container => () => <Provider store={store}>{container}</Provider>;
   app.getStore = () => store;

@@ -211,9 +211,8 @@ export default class AlarmReview extends PureComponent {
 
         return { imagelist: newImagelist, refresh, imgUrls: newImgUrls };
       });
-      CloseToast('上传成功');
+      ShowToast('上传成功');
     } else {
-      CloseToast();
       ShowToast('上传失败！');
     }
   };
@@ -474,6 +473,7 @@ export default class AlarmReview extends PureComponent {
               value={approvalRemarks}
               multiline={true}
               placeholder="请输入描述信息"
+              placeholderTextColor={'#999999'}
               style={{
                 width: SCREEN_WIDTH - 26,
                 backgroundColor: 'white',
@@ -545,7 +545,7 @@ export default class AlarmReview extends PureComponent {
                       );
                       return;
                     }
-                    SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                    SyanImagePicker.showImagePicker({ imageCount: 1 }, (err, selectedPhotos) => {
                       if (err) {
                         // 取消选择
                         return;
@@ -558,7 +558,7 @@ export default class AlarmReview extends PureComponent {
                         that.props.dispatch(
                           createAction('imageModel/uploadimage')({
                             images: selectedPhotos,
-                            uuid: uuid,
+                            uuid: this.state.TimeS,
                             callback: this.uploadImageCallBack
                           })
                         );

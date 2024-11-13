@@ -443,6 +443,7 @@ class PoStandardGasReplacementRecord extends Component {
                                     ref={ref => (this._inputMachineHaltReason = ref)}
                                     style={[styles.textStyle, { flex: 1, lineHeight: 20, }]}
                                     placeholder={'请填写规格型号'}
+                                    placeholderTextColor={'#999999'}
                                     onChangeText={text => {
                                         // 动态更新组件内State记录
                                         this.setState({
@@ -468,6 +469,7 @@ class PoStandardGasReplacementRecord extends Component {
                                             ref={ref => (this._inputMachineHaltReason = ref)}
                                             style={[styles.textStyle, { flex: 1 }]}
                                             placeholder={'请输入数量'}
+                                            placeholderTextColor={'#999999'}
                                             onChangeText={text => {
                                                 // 动态更新组件内State记录
                                                 this.setState({

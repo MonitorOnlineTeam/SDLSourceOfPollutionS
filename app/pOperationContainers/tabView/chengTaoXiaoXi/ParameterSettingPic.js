@@ -2,7 +2,7 @@
  * @Description: 参数设置照片
  * @LastEditors: hxf
  * @Date: 2023-09-20 14:10:14
- * @LastEditTime: 2024-11-01 15:43:21
+ * @LastEditTime: 2024-11-11 13:57:28
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/ParameterSettingPic.js
  */
 import React, { Component } from 'react';
@@ -813,6 +813,7 @@ export default class ParameterSettingPic extends Component {
                                             editable={this.isEdit()}
                                             multiline={true}
                                             placeholder={true ? '请填写备注' : '暂无备注信息'}
+                                            placeholderTextColor={'#999999'}
                                             style={{
                                                 width: SCREEN_WIDTH - 38 + 15,
                                                 marginLeft: 19,

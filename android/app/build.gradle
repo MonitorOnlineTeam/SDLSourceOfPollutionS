@@ -1,7 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
-apply from: rootProject.file('yeshen_delete.gradle')
+//apply from: rootProject.file('yeshen_delete.gradle')
 
 
 /**
@@ -99,8 +99,8 @@ android {
 
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 73
-        versionName "1.7.3"
+        versionCode 75
+        versionName "1.7.5"
     }
     signingConfigs {
         release {

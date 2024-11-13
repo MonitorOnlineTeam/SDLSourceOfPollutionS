@@ -247,7 +247,6 @@ export default class AlarmVerifyDetail extends PureComponent {
                     <View>
                         <View style={{ width: SCREEN_WIDTH, height: 180, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
                             <TextInput
-                                style={{ color: '#333' }}
                                 autoCapitalize={'none'}
                                 autoCorrect={false}
                                 editable={false}
@@ -259,7 +258,8 @@ export default class AlarmVerifyDetail extends PureComponent {
                                 value={this.props.alarmVerifyDetailsRuslt.data.Datas[0].VerifyMessage}
                                 multiline={true}
                                 placeholder="无信息输入~"
-                                style={{ width: SCREEN_WIDTH - 28, height: 140, backgroundColor: '#f0f0f0', padding: 13, textAlignVertical: 'top' }}
+                                placeholderTextColor={'#999999'}
+                                style={{ color: '#333', width: SCREEN_WIDTH - 28, height: 140, backgroundColor: '#f0f0f0', padding: 13, textAlignVertical: 'top' }}
                             />
                         </View>
                         <View style={{ flexDirection: 'column', width: SCREEN_WIDTH, minHeight: 20, marginTop: 10, backgroundColor: '#ffffff' }}>

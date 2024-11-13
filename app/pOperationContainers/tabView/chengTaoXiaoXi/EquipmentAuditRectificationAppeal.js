@@ -2,7 +2,7 @@
  * @Description: 申诉
  * @LastEditors: hxf
  * @Date: 2024-03-29 16:56:12
- * @LastEditTime: 2024-11-01 16:45:46
+ * @LastEditTime: 2024-11-11 13:57:50
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/EquipmentAuditRectificationAppeal.js
  */
 // import { Text, View } from 'react-native'
@@ -201,6 +201,7 @@ export default class EquipmentAuditRectificationAppeal extends Component {
                                 editable={this.isEdit()}
                                 multiline={true}
                                 placeholder={true ? '请填写' : '暂无信息'}
+                                placeholderTextColor={'#999999'}
                                 style={{
                                     width: SCREEN_WIDTH - 38 + 15
                                     , marginLeft: 19, marginRight: 4, minHeight: 40

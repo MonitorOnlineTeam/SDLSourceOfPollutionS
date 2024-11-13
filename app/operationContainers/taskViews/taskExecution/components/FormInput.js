@@ -2,8 +2,8 @@
  * @Description: 表单input
  * @LastEditors: hxf
  * @Date: 2021-11-25 14:49:25
- * @LastEditTime: 2023-10-19 16:29:23
- * @FilePath: /SDLMainProject36/app/operationContainers/taskViews/taskExecution/components/FormInput.js
+ * @LastEditTime: 2024-11-11 14:26:26
+ * @FilePath: /SDLSourceOfPollutionS/app/operationContainers/taskViews/taskExecution/components/FormInput.js
  */
 
 import React, { Component } from 'react'
@@ -39,6 +39,7 @@ export default class FormInput extends Component {
                     value={value + ''}
                     style={[styles.textStyle, propsTextStyle]}
                     placeholder={placeholder}
+                    placeholderTextColor={'#999999'}
                     onChangeText={text => {
                         onChangeText(text);
                     }}

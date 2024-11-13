@@ -2,7 +2,7 @@
  * @Description: 服务记录详情和提醒
  * @LastEditors: hxf
  * @Date: 2024-04-11 18:59:17
- * @LastEditTime: 2024-11-04 09:36:10
+ * @LastEditTime: 2024-11-11 14:02:12
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/ServiceReminder/ServiceReminderDetailEditor.js
  */
 import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -618,6 +618,7 @@ export default class ServiceReminderDetailEditor extends Component {
                                         editable={this.isEdit()}
                                         multiline={true}
                                         placeholder={this.isEdit() ? '请填写服务提醒说明' : '未记录服务提醒说明'}
+                                        placeholderTextColor={'#999999'}
                                         style={{
                                             width: SCREEN_WIDTH - 38 + 15,
                                             marginLeft: 19,

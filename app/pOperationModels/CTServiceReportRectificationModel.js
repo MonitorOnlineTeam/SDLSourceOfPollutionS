@@ -2,8 +2,8 @@
  * @Description: 成套 服务报告整改
  * @LastEditors: hxf
  * @Date: 2024-03-28 14:08:17
- * @LastEditTime: 2024-06-07 14:13:32
- * @FilePath: /SDLMainProject37/app/pOperationModels/CTServiceReportRectificationModel.js
+ * @LastEditTime: 2024-11-11 11:36:38
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/CTServiceReportRectificationModel.js
  */
 import { SentencedToEmpty, ShowToast, NavigationActions, CloseToast, ShowLoadingToast, ShowResult } from '../utils';
 import * as dataAnalyzeAuth from '../services/dataAnalyzeAuth';
@@ -125,7 +125,6 @@ export default Model.extend({
             const result = yield call(dataAnalyzeAuth.axiosAuthPost, api.pOperationApi.ServiceReportRectification.GetServiceDesc
                 , params
             );
-            // console.log('result = ', result);
 
             if (result.status == 200
                 && result.data.IsSuccess

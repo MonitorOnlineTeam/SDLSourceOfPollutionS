@@ -194,7 +194,8 @@ export default Model.extend({
                     url = api.pollutionApi.Alarm.GetOperationOverData;
                     params.BeginTime = moment()
                         // .subtract(30, 'days')
-                        .subtract(7, 'days')
+                        // .subtract(7, 'days')
+                        .subtract(1, 'days')
                         .format('YYYY-MM-DD 00:00:00');
                     params.EndTime = moment().format('YYYY-MM-DD HH:mm:ss');
                     params.AlarmType = '2';
@@ -496,7 +497,8 @@ export default Model.extend({
                 case 'OverWarning': //预警 分钟报警
                     url = api.pollutionApi.Alarm.GetOperationOverData;
                     params.BeginTime = moment()
-                        .subtract(7, 'days')
+                        // .subtract(7, 'days')
+                        .subtract(1, 'days')
                         .format('YYYY-MM-DD 00:00:00');
                     params.EndTime = moment().format('YYYY-MM-DD HH:mm:ss');
                     params.AlarmType = '2';

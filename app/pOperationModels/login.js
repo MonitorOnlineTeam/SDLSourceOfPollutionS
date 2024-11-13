@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-08-21 15:00:35
- * @LastEditTime: 2024-11-05 14:09:42
+ * @LastEditTime: 2024-11-11 11:35:47
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/login.js
  */
 // import { AsyncStorage } from 'react-native';
@@ -83,7 +83,8 @@ export default Model.extend({
         menuList: [], // 可根据此数据加在工作台接口
         testFunctionStatus: true, // 未上线功能控制
         tabList: [], // 工作台Tab 常用、个人、全员
-        tabSelectIndex: 0 // 工作台Tab 选中下标
+        tabSelectIndex: 0, // 工作台Tab 选中下标
+        routerConfig: [],
     },
     reducers: {
         updateState(state, { payload }) {
@@ -157,9 +158,9 @@ export default Model.extend({
                 workerBenchMenu: SentencedToEmpty(tabList, [0, 'editWorkBenchData'], []),
                 tabList,
                 initialRouteName,
-                tabSelectIndex: 0
+                tabSelectIndex: 0,
+                routerConfig: topLevelRouter
             });
-
             yield put(NavigationActions.reset({ routeName: 'MyTab' }));
             // 获取通用配置信息
             yield put({ type: 'app/getOperationSetting', payload: {} });
@@ -174,7 +175,7 @@ export default Model.extend({
                 }
             });
 
-            yield saveRouterConfig(topLevelRouter);
+            // yield saveRouterConfig(topLevelRouter);
             yield put({ type: 'map/resetPage', payload: {} }); //清空地图
 
             let websocketToken = yield loadWebsocketToken();
@@ -327,7 +328,6 @@ export default Model.extend({
                         password: payload.User_Pwd
                     })
                 );
-                console.log('tokenData = ', tokenData);
                 login.data.Datas.dataAnalyzeTicket = SentencedToEmpty(tokenData, ['data', 'access_token'], '');
             }
             if (login.status == 200) {
@@ -335,8 +335,6 @@ export default Model.extend({
                 login.data.Datas.userSource = 'pOperation'; //运维标识 由于有些页面 污染源监控和运维是共用的 通过此标识区分开
                 yield saveToken(login.data.Datas);
                 yield update({ loginData: { status: 200 } }); //结束转圈
-                console.log('login 2');
-
                 yield put('loadglobalvariable', { user: login.data.Datas, _dispatch });
             } else {
                 if (SentencedToEmpty(login, ['data', 'Message'], '') == '请勾选阅读并接受《用户监测数据许可协议》') {
@@ -386,7 +384,6 @@ export default Model.extend({
             saveEncryptDataWithData(encrypt.encrypt(payload.AuthCode), payload.AuthCode);
 
             const result = yield authService.getUrlConfig(payload.AuthCode);
-            console.log('result = ', result);
 
             // yield saveRootUrl({
             //     JianGuanAPPName: "运维企业版",
@@ -431,7 +428,6 @@ export default Model.extend({
             saveEncryptDataWithData(encrypt.encrypt(payload.AuthCode), payload.AuthCode);
 
             const result = yield authService.getUrlConfig(payload.AuthCode);
-            console.log('result = ', result);
 
             if (result && typeof result != 'undefined' && result.status == 200) {
                 if (result.data.msg == 'authorcode faild') {

@@ -445,6 +445,7 @@ class PoConsumablesReplaceForm extends Component {
                                         editable={true}
                                         keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
                                         placeholder="请输入数量"
+                                        placeholderTextColor={'#999999'}
                                         autoCapitalize={'none'}
                                         autoCorrect={false}
                                         underlineColorAndroid={'transparent'}
@@ -471,6 +472,7 @@ class PoConsumablesReplaceForm extends Component {
                                             editable={true}
                                             keyboardType={'default'}
                                             placeholder="请输入单据号"
+                                            placeholderTextColor={'#999999'}
                                             autoCapitalize={'none'}
                                             autoCorrect={false}
                                             underlineColorAndroid={'transparent'}
@@ -522,6 +524,7 @@ class PoConsumablesReplaceForm extends Component {
                                 value={this.state.reason}
                                 numberOfLines={4}
                                 placeholder={'请填写原因说明'}
+                                placeholderTextColor={'#999999'}
                             />
                         </View>
 

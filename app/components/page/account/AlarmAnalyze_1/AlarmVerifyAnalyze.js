@@ -401,6 +401,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                             value={CheckedDes}
                             multiline={true}
                             placeholder="请输入描述信息"
+                            placeholderTextColor={'#999999'}
                             style={{ width: SCREEN_WIDTH - 26, backgroundColor: 'white', marginTop: 10, minHeight: 100, borderWidth: 0.5, color: '#333', borderColor: '#999', padding: 13 }}
                         />
                     </View>
@@ -437,7 +438,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                                             });
                                             return;
                                         }
-                                        SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                                        SyanImagePicker.showImagePicker({}, (err, selectedPhotos) => {
                                             if (err) {
                                                 // 取消选择
                                                 return;
@@ -450,7 +451,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                                                 that.props.dispatch(
                                                     createAction('imageModel/uploadimage')({
                                                         images: selectedPhotos,
-                                                        uuid: uuid,
+                                                        uuid: this.state.TimeS,
                                                         callback: this.uploadImageCallBack
                                                     })
                                                 );

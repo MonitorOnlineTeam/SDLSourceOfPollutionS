@@ -418,6 +418,7 @@ export default class ChengTaoOffSideSignIn extends Component {
                                 multiline={true}
                                 numberOfLines={5}
                                 placeholder={'请填写签到备注'}
+                                placeholderTextColor={'#999999'}
                             >{`${SentencedToEmpty(this.props, ['remark'], '')}`}</TextInput>
                         </View>
                     </View>

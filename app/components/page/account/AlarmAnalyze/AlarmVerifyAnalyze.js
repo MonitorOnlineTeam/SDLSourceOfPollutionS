@@ -224,9 +224,8 @@ export default class AlarmVerifyAnalyze extends PureComponent {
 
         return { imagelist: newImagelist, refresh, imgUrls: newImgUrls };
       });
-      CloseToast('上传成功');
+      ShowToast('上传成功');
     } else {
-      CloseToast();
       ShowToast('上传失败！');
     }
   };
@@ -235,6 +234,7 @@ export default class AlarmVerifyAnalyze extends PureComponent {
     this.props.dispatch(
       createAction('alarmAnaly/updateState')({
         alarmVerifyDetail: { status: 200 },
+        commitVerifyResult: { status: 200 },
       }),
     );
   }
@@ -621,6 +621,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
               value={CheckedDes}
               multiline={true}
               placeholder="请输入描述信息"
+              placeholderTextColor={'#999999'}
               style={{
                 width: SCREEN_WIDTH - 26,
                 backgroundColor: 'white',
@@ -692,7 +693,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                       );
                       return;
                     }
-                    SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                    SyanImagePicker.showImagePicker({}, (err, selectedPhotos) => {
                       if (err) {
                         // 取消选择
                         return;
@@ -705,7 +706,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                         that.props.dispatch(
                           createAction('imageModel/uploadimage')({
                             images: selectedPhotos,
-                            uuid: uuid,
+                            uuid: this.state.TimeS,
                             callback: this.uploadImageCallBack
                           })
                         );

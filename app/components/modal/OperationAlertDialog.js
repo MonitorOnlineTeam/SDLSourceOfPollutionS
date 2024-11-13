@@ -24,6 +24,9 @@ export default class OperationAlertDialog extends Component {
         };
     }
     render() {
+        console.log('this = ', this);
+        const { innersHeight = defaultHeight } = SentencedToEmpty(this, ['props', 'options'], {});
+        console.log('innersHeight = ', innersHeight);
         return (
             <Modal
                 animationType={this.state.animationType}
@@ -39,7 +42,7 @@ export default class OperationAlertDialog extends Component {
                         </TouchableHighlight>
                     )}
 
-                    <View style={[styles.containView, { width: this.state.innersWidth, minHeight: this.state.innersHeight }]}>
+                    <View style={[styles.containView, { width: this.state.innersWidth, minHeight: innersHeight, borderWidth: 1 }]}>
                         {!this.state.hiddenTitle && (
                             <View style={styles.headerView}>
                                 <Text style={[styles.headerTitle, this.state.headStyle]}>{this.state.headTitle}</Text>

@@ -27,6 +27,13 @@ class SelectSearchList extends Component {
         this.state = {
             targetType: '1'
         };
+        this.props.navigation.setOptions({
+            title: this.props.route.params.params.tableType == 'Storehouse' ? '仓库列表'
+                : this.props.route.params.params.tableType == 'MachineryMaintenance' ? '保养项目'
+                    : this.props.route.params.params.tableType == 'SparePart' ? '备件备件清单'
+                        : this.props.route.params.params.tableType == 'StandardGas' ? '标气清单'
+                            : this.props.route.params.params.tableType == 'StandardLiquid' ? '试剂列表' : '易耗品列表',
+        });
     }
     _renderItemList = item => {
         // 仓库

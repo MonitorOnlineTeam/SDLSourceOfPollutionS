@@ -142,6 +142,7 @@ class Contact extends Component {
                             }}
                             underlineColorAndroid="transparent"
                             placeholder={searchPlaceholder ? searchPlaceholder : secType == 'people' ? '人员名称' : '输入关键字搜索'}
+                            placeholderTextColor={'#999999'}
                             style={{
                                 textAlign: 'center',
                                 width: SCREEN_WIDTH - 90,

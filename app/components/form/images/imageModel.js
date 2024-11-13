@@ -113,12 +113,15 @@ export default Model.extend({
           'Content-Type': 'multipart/form-data',
         },
       })
-        .then(response => response.json())
+        .then(response => {
+          // console.log('response = ', response);
+          return response.json()
+        })
         .then(res => {
           if (res.StatusCode == 200) {
             //     console.log('typeof = ', typeof res);
             //     const response = res.json();
-            console.log('res = ', res);
+            // console.log('res = ', res);
             //     debugger;
             //     // let urls = JSON.parse(res._bodyInit).Datas;
             // let urls = SentencedToEmpty(response, ['_j', 'Datas'], []);
@@ -141,7 +144,7 @@ export default Model.extend({
             });
             callback(images, true);
           } else {
-            console.log('not 200 res = ', res);
+            // console.log('not 200 res = ', res);
             callback(res, false);
           }
         })

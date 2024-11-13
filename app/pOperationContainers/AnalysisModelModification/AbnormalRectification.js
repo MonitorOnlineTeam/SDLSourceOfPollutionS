@@ -2,7 +2,7 @@
  * @Description: 验收服务报告
  * @LastEditors: hxf
  * @Date: 2023-09-18 09:27:53
- * @LastEditTime: 2024-11-04 11:55:13
+ * @LastEditTime: 2024-11-11 14:05:13
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/AnalysisModelModification/AbnormalRectification.js
  */
 import React, { Component } from 'react';
@@ -220,6 +220,7 @@ export default class AbnormalRectification extends Component {
                   editable={this.isEdit()}
                   multiline={true}
                   placeholder={true ? '请填写备注' : '暂无备注信息'}
+                  placeholderTextColor={'#999999'}
                   style={{
                     width: SCREEN_WIDTH - 38 + 15,
                     marginLeft: 19,

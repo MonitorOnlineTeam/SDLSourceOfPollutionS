@@ -341,6 +341,7 @@ export default class TaskProduce extends PureComponent {
                             }}
                             value={si.planItemContent}
                             placeholder="请输入内容标题"
+                            placeholderTextColor={'#999999'}
                             style={{ backgroundColor: 'white', color: '#333', borderColor: '#999', marginRight: 15, borderWidth: 0.5, paddingVertical: 2, paddingHorizontal: 13, maxWidth: SCREEN_WIDTH - 150 }}
                         />
                         <TouchableOpacity
@@ -377,6 +378,7 @@ export default class TaskProduce extends PureComponent {
                         value={si.planItemDesc}
                         multiline={true}
                         placeholder="请输入描述信息"
+                        placeholderTextColor={'#999999'}
                         style={{ width: SCREEN_WIDTH - 26, backgroundColor: 'white', marginTop: 10, minHeight: 60, borderWidth: 0.5, color: '#333', borderColor: '#999', padding: 13 }}
                     />
                 </View>
@@ -411,7 +413,7 @@ export default class TaskProduce extends PureComponent {
                                     });
                                     return;
                                 }
-                                SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                                SyanImagePicker.showImagePicker({ imageCount: 6 }, (err, selectedPhotos) => {
                                     if (err) {
                                         // 取消选择
                                         return;
@@ -424,8 +426,10 @@ export default class TaskProduce extends PureComponent {
                                         that.props.dispatch(
                                             createAction('imageModel/uploadimage')({
                                                 images: selectedPhotos,
-                                                uuid: uuid,
-                                                callback: this.uploadImageCallBack
+                                                uuid: that.state.FileUuidArray[idx],
+                                                callback: (img, isSuccess) => {
+                                                    that.uploadImageCallBack(img, isSuccess, si, idx);
+                                                }
                                             })
                                         );
                                     }
@@ -705,6 +709,7 @@ export default class TaskProduce extends PureComponent {
                                 value={this.state.CheckConclusion}
                                 multiline={true}
                                 placeholder="请输入核查结论"
+                                placeholderTextColor={'#999999'}
                                 style={{ width: SCREEN_WIDTH - 26, backgroundColor: 'white', marginTop: 10, minHeight: 60, borderWidth: 0.5, color: '#333', borderColor: '#999', padding: 13 }}
                             />
                         </View>

@@ -159,7 +159,7 @@ export const secondlevelDataHandle = tabDataItem => {
                     menuList.push({ ...innerItem, dcountkey: 'serviceStatusNum', label: SentencedToEmpty(innerItem, ['name'], '服务报告整改'), img: require('../images/renwujilu.png'), numkey: 'ServiceReportRectificationList' });
                     break;
                 case '2273c00d-7594-4f85-8174-b46903a93ff7':
-                    //  "任务记录"
+                    // 异常识别2.0 核查任务  "任务记录"
                     secondlevel.push({ ...innerItem, dcountkey: 'checkTaskCount', label: SentencedToEmpty(innerItem, ['name'], '任务记录'), img: require('../images/ic_ct_sign_in.png'), numkey: 'TaskToBeVerifiedList' });
                     menuList.push({ ...innerItem, dcountkey: 'checkTaskCount', label: SentencedToEmpty(innerItem, ['name'], '任务记录'), img: require('../images/ic_ct_sign_in.png'), numkey: 'TaskToBeVerifiedList' });
 
@@ -172,7 +172,7 @@ export const secondlevelDataHandle = tabDataItem => {
                     // menuList.push({ ...innerItem, id: 123, dcountkey: 'checkedRectificationListCount', name: '异常整改', label: '异常整改', img: require('../images/ic_ct_sign_in.png'), numkey: 'MissionVerificationRectificationList' });
                     break;
                 case '9475d452-e408-43cc-99f8-05237ddeaf38':
-                    //  "异常识别2.0整改"
+                    //  "异常识别2.0整改" 异常整改
                     secondlevel.push({ ...innerItem, id: 123, dcountkey: 'checkedRectificationListCount', label: SentencedToEmpty(innerItem, ['name'], '异常整改'), img: require('../images/ic_ct_sign_in.png'), numkey: 'MissionVerificationRectificationList' });
                     menuList.push({ ...innerItem, id: 123, dcountkey: 'checkedRectificationListCount', label: SentencedToEmpty(innerItem, ['name'], '异常整改'), img: require('../images/ic_ct_sign_in.png'), numkey: 'MissionVerificationRectificationList' });
                     break;
@@ -183,6 +183,7 @@ export const secondlevelDataHandle = tabDataItem => {
                     break;
                 case '740171a4-a61d-4c14-bfa8-af32466574cc':
                     //  "数据报警/异常识别企业列表"
+                    // 异常识别2.0
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '异常识别'), img: require('../images/tongzhi.png'), numkey: 'AbnormalEnterpriseList' });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '异常识别'), img: require('../images/tongzhi.png'), numkey: 'AbnormalEnterpriseList' });
                     // secondlevel.push({ ...innerItem, label: '异常识别', img: require('../images/tongzhi.png'), numkey: 'AlarmSectionList' });

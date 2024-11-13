@@ -2,8 +2,8 @@
  * @Description: CEMS校验测试记录 标气记录/设备 编辑页面
  * @LastEditors: hxf
  * @Date: 2022-01-04 10:52:26
- * @LastEditTime: 2024-09-24 14:30:04
- * @FilePath: /SDLMainProject/app/operationContainers/taskViews/taskExecution/formViews/BdSelectedEdit.js
+ * @LastEditTime: 2024-11-11 14:25:08
+ * @FilePath: /SDLSourceOfPollutionS/app/operationContainers/taskViews/taskExecution/formViews/BdSelectedEdit.js
  */
 import React, { Component } from 'react'
 import { Platform, Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
@@ -137,6 +137,7 @@ export default class BdSelectedEdit extends Component {
                                             value={SentencedToEmpty(this, ['state', comlumn.code], '') + ''}
                                             style={[styles.textStyle, { flex: 1 }]}
                                             placeholder={'未填写'}
+                                            placeholderTextColor={'#999999'}
                                             onChangeText={text => {
                                                 let newData = {};
                                                 newData[comlumn.code] = `${text}`;

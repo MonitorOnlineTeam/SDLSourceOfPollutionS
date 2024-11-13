@@ -6,10 +6,11 @@ import { MessageBar, MessageBarManager } from 'react-native-message-bar';
 import LoadingManager from './LoadingManager'
 
 import { createAction, getCommonHeaderStyle, SentencedToEmpty } from '../utils';
-import { SimpleLoadingView } from '../components';
+import { SimpleLoadingView, StatusPage } from '../components';
 import GlobalLoadingView from './GlobalLoadingView';
 import { useSelector } from 'react-redux';
 import { useNavigationState, useRoute } from '@react-navigation/native';
+import Account from '../components/page/account/Account';
 // import SimpleLoadingView from '@oldProjectComponent/SimpleLoadingView';
 
 const Stack = createNativeStackNavigator();
@@ -34,9 +35,7 @@ export default function RootView({ navigation }) {
         }
     }, [])
     exportNavigation = navigation;
-    console.log('hideStatusBar = ', hideStatusBar);
     const _myRoute = useRoute();
-    console.log('_myRoute = ', _myRoute);
     return (<View style={[{ width: "100%", flex: 1 }]}>
         <StatusBar hidden={hideStatusBar} />
         <Stack.Navigator >
@@ -58,7 +57,6 @@ export const getNavigation = () => {
 
 export class MyActions {
     getState = () => {
-        console.log('exportNavigation = ', exportNavigation);
         const routeState = exportNavigation.getState();
         return routeState;
     }
@@ -82,8 +80,6 @@ export class MyActions {
         ViewList.push({ view, options });
     }
     setOptions = (options = {}) => {
-        console.log('setOptions options = ', options);
-        console.log('setOptions exportNavigation = ', exportNavigation);
         exportNavigation.setOptions(options);
     }
     pushViewWithName = (view, name, options = {}) => {
@@ -109,33 +105,54 @@ export class MyActions {
 
                 }
             } = option;
-            return (
-                <Tab.Navigator
-                    initialRouteName={SentencedToEmpty(option, ['initTabName'], views[0].view.name)}
-                    screenOptions={({ route }) => ({
-                        tabBarLabel: ({ focused, color, size }) => {
-                            return _tabBarLabel(route, focused);
-                        },
-                        tabBarIcon: ({ focused, color, size }) => {
-                            return _tabBarIcon(route, focused);
-                        },
-                        tabBarActiveTintColor: 'tomato',
-                        tabBarInactiveTintColor: 'gray',
-                    })}
-                >
-                    {
-                        views.map((item, index) => {
-                            let optionsObject = SentencedToEmpty(item, ['options'], null);
-                            if (optionsObject) {
-                                console.log('item.view.name = ', item.view.name);
-                                return <Tab.Screen options={item.options} key={`Tab${index}`} name={item.view.name} component={item.view} />
-                            } else {
-                                return <Tab.Screen options={options} key={`Tab${index}`} name={item.view.name} component={item.view} />
-                            }
-                        })
+            let showView = [];
+            if (views.length == 0) {
+                Account.name = 'Account';
+                showView = [{
+                    view: Account
+                    , options: {
+                        headerShown: false
                     }
-                </Tab.Navigator>
-            )
+                }];
+            } else {
+                showView = views;
+            }
+            if (views.length == 0) {
+                return (
+                    <StatusPage
+                        status={-1}
+                    >
+                        <View></View>
+                    </StatusPage>
+                )
+            } else {
+                return (
+                    <Tab.Navigator
+                        initialRouteName={SentencedToEmpty(option, ['initTabName'], showView[0].view.name)}
+                        screenOptions={({ route }) => ({
+                            tabBarLabel: ({ focused, color, size }) => {
+                                return _tabBarLabel(route, focused);
+                            },
+                            tabBarIcon: ({ focused, color, size }) => {
+                                return _tabBarIcon(route, focused);
+                            },
+                            tabBarActiveTintColor: 'tomato',
+                            tabBarInactiveTintColor: 'gray',
+                        })}
+                    >
+                        {
+                            showView.map((item, index) => {
+                                let optionsObject = SentencedToEmpty(item, ['options'], null);
+                                if (optionsObject) {
+                                    return <Tab.Screen options={item.options} key={`Tab${index}`} name={item.view.name} component={item.view} />
+                                } else {
+                                    return <Tab.Screen options={options} key={`Tab${index}`} name={item.view.name} component={item.view} />
+                                }
+                            })
+                        }
+                    </Tab.Navigator>
+                )
+            }
         }
     }
 }

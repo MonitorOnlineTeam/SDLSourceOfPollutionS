@@ -215,7 +215,7 @@ export default class TaskDetail extends Component {
                             this.props.navigation.setOptions({
                                 headerRight: () => <TouchableOpacity
                                     onPress={() => {
-                                        console.log('taskDetail = ', this.props.taskDetail);
+                                        // console.log('taskDetail = ', this.props.taskDetail);
                                         if (!this.props.isMyTask) {
                                             ShowToast('该任务无执行权限');
                                         } else if (this.props.taskStatus == '3') {

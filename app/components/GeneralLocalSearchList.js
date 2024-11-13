@@ -2,7 +2,7 @@
  * @Description: 本地搜索列表
  * @LastEditors: hxf
  * @Date: 2024-05-10 15:30:38
- * @LastEditTime: 2024-11-05 11:14:01
+ * @LastEditTime: 2024-11-11 14:33:13
  * @FilePath: /SDLSourceOfPollutionS/app/components/GeneralLocalSearchList.js
  */
 // import { Text, View } from 'react-native'
@@ -214,6 +214,7 @@ export default class GeneralLocalSearchList extends Component {
                             placeholder={SentencedToEmpty(this.props
                                 , ['route', 'params', 'params', 'searchPlaceHolder']
                                 , '企业名称、合同编号、立项号1')}
+                            placeholderTextColor={'#999999'}
                             onChangeText={(text) => {
 
                                 this.props.dispatch(createAction('GeneralSearchModel/updateState')({

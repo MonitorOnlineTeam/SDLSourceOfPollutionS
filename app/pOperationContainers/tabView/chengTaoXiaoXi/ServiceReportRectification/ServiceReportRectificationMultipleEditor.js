@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-04-30 17:16:34
- * @LastEditTime: 2024-11-01 15:12:22
+ * @LastEditTime: 2024-11-11 13:46:28
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceReportRectification/ServiceReportRectificationMultipleEditor.js
  */
 import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -511,6 +511,7 @@ export default class ServiceReportRectificationMultipleEditor extends Component 
                                         editable={this.isEdit()}
                                         multiline={true}
                                         placeholder={true ? '请填写备注' : '暂无备注信息'}
+                                        placeholderTextColor={'#999999'}
                                         style={{
                                             width: SCREEN_WIDTH - 38 + 15
                                             , marginLeft: 19, marginRight: 4, minHeight: 40

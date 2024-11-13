@@ -30,13 +30,13 @@ class MachineryMaintenanceForm extends Component {
             AnotherTimeOfChange: this.props.navigation.state.params
                 ? this.props.navigation.state.params.item.AnotherTimeOfChange + ''
                 : moment()
-                      .add(1, 'month')
-                      .format('YYYY-MM-DD 00:00:00'), //下次更换时间
+                    .add(1, 'month')
+                    .format('YYYY-MM-DD 00:00:00'), //下次更换时间
             reason: this.props.navigation.state.params ? this.props.navigation.state.params.item.Remark : '' //更换原因
         };
         _me = this;
     }
-    componentWillMount() {}
+    componentWillMount() { }
 
     getTimeSelectOption = () => {
         let type = 'day';
@@ -84,7 +84,7 @@ class MachineryMaintenanceForm extends Component {
 
     render() {
         return (
-            <StatusPage style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }} status={this.props.machineryMaintenanceReplace.status} button={{ name: '重新加载', callback: () => {} }}>
+            <StatusPage style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }} status={this.props.machineryMaintenanceReplace.status} button={{ name: '重新加载', callback: () => { } }}>
                 <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : ''} style={styles.container}>
                     <ScrollView style={styles.container}>
                         <View style={{ borderRadius: 2, width: SCREEN_WIDTH - 20, minHeight: 100, marginLeft: 10, marginTop: 20, backgroundColor: 'white' }}>
@@ -181,6 +181,7 @@ class MachineryMaintenanceForm extends Component {
                                 value={this.state.reason}
                                 numberOfLines={4}
                                 placeholder={'请填写原因说明'}
+                                placeholderTextColor={'#999999'}
                             />
                         </View>
 
@@ -250,23 +251,23 @@ class MachineryMaintenanceForm extends Component {
                                  */
                                 this.props.navigation.state.params
                                     ? (lst[this.props.navigation.state.params.key] = {
-                                          DateOfChange: this.state.chooseTime,
-                                          MaintainName: this.state.consumablesName,
-                                          MaintainCode: this.state.modelH,
-                                          //   Unit: this.state.unit,
-                                          //   Num: this.state.num,
-                                          Remark: this.state.reason,
-                                          AnotherTimeOfChange: this.state.AnotherTimeOfChange
-                                      })
+                                        DateOfChange: this.state.chooseTime,
+                                        MaintainName: this.state.consumablesName,
+                                        MaintainCode: this.state.modelH,
+                                        //   Unit: this.state.unit,
+                                        //   Num: this.state.num,
+                                        Remark: this.state.reason,
+                                        AnotherTimeOfChange: this.state.AnotherTimeOfChange
+                                    })
                                     : lst.push({
-                                          DateOfChange: this.state.chooseTime,
-                                          MaintainName: this.state.consumablesName,
-                                          MaintainCode: this.state.modelH,
-                                          //   Unit: this.state.unit,
-                                          //   Num: this.state.num,
-                                          Remark: this.state.reason,
-                                          AnotherTimeOfChange: this.state.AnotherTimeOfChange
-                                      });
+                                        DateOfChange: this.state.chooseTime,
+                                        MaintainName: this.state.consumablesName,
+                                        MaintainCode: this.state.modelH,
+                                        //   Unit: this.state.unit,
+                                        //   Num: this.state.num,
+                                        Remark: this.state.reason,
+                                        AnotherTimeOfChange: this.state.AnotherTimeOfChange
+                                    });
                                 this.props.dispatch(
                                     createAction('machineryMaintenanceModel/commitMaintainRecord')({
                                         params: {

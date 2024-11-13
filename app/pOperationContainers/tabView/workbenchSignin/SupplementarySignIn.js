@@ -2,8 +2,8 @@
  * @Description: 补签
  * @LastEditors: hxf
  * @Date: 2024-02-01 14:59:20
- * @LastEditTime: 2024-09-19 11:44:27
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbenchSignin/SupplementarySignIn.js
+ * @LastEditTime: 2024-11-11 11:40:13
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbenchSignin/SupplementarySignIn.js
  */
 import { Image, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
@@ -156,7 +156,6 @@ export default class SupplementarySignIn extends Component {
     };
 
     getLoadStatus = () => {
-        console.log('getLoadStatus this.props = ', this.props);
         const allSignInEntListStatus = SentencedToEmpty(
             this.props, ['allSignInEntListResult', 'status'], 1000
         );

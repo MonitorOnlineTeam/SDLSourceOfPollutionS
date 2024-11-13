@@ -2,8 +2,8 @@
  * @Description: 成套待办
  * @LastEditors: hxf
  * @Date: 2023-09-14 13:55:06
- * @LastEditTime: 2024-09-26 09:57:20
- * @FilePath: /SDLMainProject/app/pOperationModels/CTModel.js
+ * @LastEditTime: 2024-11-11 11:36:45
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/CTModel.js
  */
 import { SentencedToEmpty, ShowToast, NavigationActions, EncodeUtf8, createAction, CloseToast } from '../utils';
 import * as authService from '../services/auth';
@@ -252,9 +252,7 @@ export default Model.extend({
                 }
             })
                 .then(res => {
-                    console.log('res = ', res);
                     let url = JSON.parse(res._bodyInit).Datas;
-                    console.log('url = ', url);
                     // let url = SentencedToEmpty(JSON.parse(res._bodyInit), ['Datas', 'fNameList', 0], '');
 
                     for (let index = 0; index < images.length; index++) {
@@ -271,7 +269,6 @@ export default Model.extend({
         },
         //反馈上传图片 测试
         *uploadimage_test({ payload: { image, images = [], callback, uuid } }, { call }) {
-            console.log('uploadimage_test');
             const user = yield loadToken();
             let formdata = new FormData();
             // 单张
@@ -290,7 +287,6 @@ export default Model.extend({
                 }
             })
                 .then(res => {
-                    console.log('success res = ', res);
                     let url = JSON.parse(res._bodyInit).Datas;
 
                     for (let index = 0; index < images.length; index++) {
@@ -355,7 +351,6 @@ export default Model.extend({
                     callback(file, true);
                 })
                 .catch(error => {
-                    // console.log(error);
                     callback('上传失败' + error, false);
                 });
         },

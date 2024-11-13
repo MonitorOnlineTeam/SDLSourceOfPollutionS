@@ -156,7 +156,6 @@ export default class SuspendReport extends PureComponent {
               : `${ImageUrlPrefix}${ProxyCode}/thumb_${item.attachID}`,
           }
           : require('../../images/addpic.png');
-      console.log('source', source);
       rtnVal.push(
         <View
           key={item.attachID}
@@ -224,7 +223,6 @@ export default class SuspendReport extends PureComponent {
     return rtnVal;
   };
   uploadImageCallBack = (img, isSuccess) => {
-    console.log('img', img);
     if (isSuccess) {
       const ProxyCode = getEncryptData();
       let encryData = getEncryptData();
@@ -447,6 +445,7 @@ export default class SuspendReport extends PureComponent {
               value={this.state.VerifyMessage}
               multiline={true}
               placeholder="请输入原因备注"
+              placeholderTextColor={'#999999'}
               style={{
                 width: SCREEN_WIDTH - 28,
                 height: 44,
@@ -511,7 +510,7 @@ export default class SuspendReport extends PureComponent {
                     );
                     return;
                   }
-                  SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                  SyanImagePicker.showImagePicker({}, (err, selectedPhotos) => {
                     if (err) {
                       // 取消选择
                       return;
@@ -524,7 +523,7 @@ export default class SuspendReport extends PureComponent {
                       that.props.dispatch(
                         createAction('imageModel/uploadimage')({
                           images: selectedPhotos,
-                          uuid: uuid,
+                          uuid: this.state.TimeS,
                           callback: this.uploadImageCallBack
                         })
                       );

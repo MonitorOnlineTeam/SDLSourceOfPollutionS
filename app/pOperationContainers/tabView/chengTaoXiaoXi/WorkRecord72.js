@@ -2,7 +2,7 @@
  * @Description: 多条 工作记录 支持 指导安装和72小时调试的特殊属性
  * @LastEditors: hxf
  * @Date: 2023-09-19 19:33:41
- * @LastEditTime: 2024-11-01 15:27:37
+ * @LastEditTime: 2024-11-11 13:51:34
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/WorkRecord72.js
  */
 import moment from 'moment';
@@ -1180,6 +1180,7 @@ export default class WorkRecord72 extends Component {
                                                 editable={this.isEdit()}
                                                 multiline={true}
                                                 placeholder={this.isEdit() ? '请填写工作内容' : '未记录工作内容'}
+                                                placeholderTextColor={'#999999'}
                                                 style={{
                                                     width: SCREEN_WIDTH - 38 + 15,
                                                     marginLeft: 19,

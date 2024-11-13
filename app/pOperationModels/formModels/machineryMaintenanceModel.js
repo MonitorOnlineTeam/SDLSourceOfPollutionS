@@ -38,7 +38,6 @@ export default Model.extend({
             yield update({ machineryMaintenanceReplace: { status: -1 } });
             //post请求
             const result = yield call(authService.axiosAuthPost, api.pOperationApi.OperationForm.MaintainRecordDetail, params);
-            console.log('result = ', result.data);
             if (result.status == 200) {
                 yield update({ machineryMaintenanceRecord: result.data.Datas.Record, machineryMaintenanceReplace: result });
             } else {

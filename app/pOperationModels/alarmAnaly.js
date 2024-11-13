@@ -137,9 +137,6 @@ export default Model.extend({
         *uploadimage({ payload: { image, images = [], callback, uuid } }, { call }) {
             const user = yield loadToken();
             let formdata = new FormData();
-            console.log('images = ', images);
-            console.log('uuid = ', uuid);
-            console.log('callback = ', callback);
             // 单张
             var file = { uri: image.uri, type: 'multipart/form-data', name: 'image.jpg' };
             formdata.append('file', file);
@@ -147,7 +144,6 @@ export default Model.extend({
             formdata.append('FileUuid', uuid);
             formdata.append('type', '2');
             formdata.append('FileTypes', '2');
-            // console.log('uuid = ',uuid);
             fetch(UrlInfo.DataAnalyze + api.DataAnalyze.UploadFiles, {
                 method: 'POST',
                 bodyType: 'file', //后端接收的类型

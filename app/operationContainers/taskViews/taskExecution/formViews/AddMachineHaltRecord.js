@@ -222,6 +222,7 @@ class AddMachineHaltRecord extends Component {
                             multiline={true}
                             numberOfLines={4}
                             placeholder={'请填写原因说明'}
+                            placeholderTextColor={'#999999'}
                             onChangeText={text => {
                                 // 动态更新组件内State记录用户名
                                 this.setState({

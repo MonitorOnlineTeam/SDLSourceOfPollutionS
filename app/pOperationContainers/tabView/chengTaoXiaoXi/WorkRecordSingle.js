@@ -2,7 +2,7 @@
  * @Description: 工作记录 单条
  * @LastEditors: hxf
  * @Date: 2023-09-24 09:16:27
- * @LastEditTime: 2024-11-01 15:25:03
+ * @LastEditTime: 2024-11-11 13:51:27
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/WorkRecordSingle.js
  */
 import moment from 'moment';
@@ -628,6 +628,7 @@ export default class WorkRecordSingle extends Component {
                             editable={this.isEdit()}
                             multiline={true}
                             placeholder={this.isEdit() ? '请填写备注' : '未记录备注'}
+                            placeholderTextColor={'#999999'}
                             style={{
                                 width: SCREEN_WIDTH - 38 + 15,
                                 marginLeft: 19,

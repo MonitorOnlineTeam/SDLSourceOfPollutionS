@@ -139,7 +139,6 @@ export default class TaskHandle extends Component {
                                             selectType: 'people',
                                             callFrom: 'addHelper',
                                             callback: item => {
-                                                console.log('item = ', item);
                                                 this.props.dispatch(createAction('taskDetailModel/updateState')({ helperOperator: item }));
                                                 this.props.dispatch(createAction('taskDetailModel/addTaskHelpers')({}));
                                             }
@@ -644,6 +643,7 @@ export default class TaskHandle extends Component {
                                     editable={this.isEdit()}
                                     multiline={true}
                                     placeholder={this.isEdit() ? '请填写任务处理说明' : '暂无任务处理说明'}
+                                    placeholderTextColor={'#999999'}
                                     style={{ marginHorizontal: 13, minHeight: 40, marginTop: 4, marginBottom: 15, borderBottomWidth: 1, borderBottomColor: '#e7e7e7', textAlignVertical: 'top', color: '#666666' }}
                                     onChangeText={text => this.setState({ TaskContent: text })}
                                 >

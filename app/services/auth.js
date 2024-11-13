@@ -10,14 +10,14 @@ import moment from 'moment';
 async function geturl(url, tooken, headers) {
     const user = await loadToken();
     // if (user && user.Ticket != null) {
-    console.log('user = ', user);
+    // console.log('user = ', user);
     if (user && user.dataAnalyzeTicket != null) {
         //使用Ticket不需要authorcode
         if (headers) {
             url += `?${headers}`;
         }
     } else {
-        console.log('tooken = ', tooken);
+        // console.log('tooken = ', tooken);
         if (!tooken) {
             if (user != null) {
                 // url += `?authorCode=${user.User_ID}`;

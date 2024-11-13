@@ -15,7 +15,6 @@ import moment from 'moment';
 export default class SupplementarySignInApprove extends Component {
 
     static navigationOptions = ({ navigation }) => {
-        console.log('navigation = ', navigation);
         const editType = SentencedToEmpty(navigation
             , [
                 'state', 'params', 'item', 'editType'
@@ -85,7 +84,6 @@ export default class SupplementarySignInApprove extends Component {
         // params.appID = this.props.currentApproval.ID;
         params.appID = SentencedToEmpty(this.props
             , ['route', 'params', 'params', 'item', 'ID'], '');
-        console.log('params.appID = ', params.appID);
         if (isConsent) {
             params.examStaus = 1;
             params.examMsg = SentencedToEmpty(this.state, ['refusalCause'], '同意') || '同意';
@@ -158,7 +156,6 @@ export default class SupplementarySignInApprove extends Component {
             , ['route', 'params', 'params', 'item'], {});
         const editType = SentencedToEmpty(this.props
             , ['route', 'params', 'params', 'item', 'editType'], '');
-        console.log('props = ', this.props);
         const withdrawApplicationOptions = {
             headTitle: '提示',
             messText: '是否确定要撤销这条申请？',
@@ -390,6 +387,7 @@ export default class SupplementarySignInApprove extends Component {
                                 multiline={true}
                                 value={this.state.refusalCause}
                                 placeholder={'请输入拒绝原因'}
+                                placeholderTextColor={'#999999'}
                             />
                         </View>
                     </View>

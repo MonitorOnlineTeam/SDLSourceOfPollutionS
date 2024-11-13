@@ -2,8 +2,8 @@
  * @Description: 运维计划 Model
  * @LastEditors: hxf
  * @Date: 2024-03-28 14:08:17
- * @LastEditTime: 2024-06-03 14:50:52
- * @FilePath: /SDLMainProject37/app/pOperationModels/operationPlanModel.js
+ * @LastEditTime: 2024-11-11 11:34:55
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/operationPlanModel.js
  */
 import { SentencedToEmpty, ShowToast, NavigationActions, CloseToast, ShowLoadingToast, ShowResult, SentencedToEmptyTimeString } from '../utils';
 import * as dataAnalyzeAuth from '../services/dataAnalyzeAuth';
@@ -109,7 +109,6 @@ export default Model.extend({
                 })
                 item.data = list2;
             })
-            console.log('sectionlist = ', sectionlist);
             yield update({
                 appOperationPlanListResult: result,
                 appOperationPlanList: sectionlist

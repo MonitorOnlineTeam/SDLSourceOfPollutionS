@@ -2,7 +2,7 @@
  * @Description: 督查 申诉
  * @LastEditors: hxf
  * @Date: 2022-11-29 11:32:39
- * @LastEditTime: 2024-11-04 08:40:44
+ * @LastEditTime: 2024-11-11 14:01:29
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/SuperviserRectify/SupervisionItemAppeal.js
  */
 import React, { Component } from 'react'
@@ -209,6 +209,7 @@ export default class SupervisionItemAppeal extends Component {
                                 <TextInput
                                     multiline={true}
                                     placeholder="请输入"
+                                    placeholderTextColor={'#999999'}
                                     style={{
                                         color: '#333333',
                                         width: SCREEN_WIDTH - 40

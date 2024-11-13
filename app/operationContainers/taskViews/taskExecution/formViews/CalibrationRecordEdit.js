@@ -554,6 +554,7 @@ class CalibrationRecordEdit extends Component {
                                     value={this.state.LdCalibrationPreValue}
                                     ref={ref => (this._inputMachineHaltReason = ref)}
                                     placeholder={'请填写校前测试值'}
+                                    placeholderTextColor={'#999999'}
                                     onChangeText={text => {
                                         // 动态更新组件内State记录
                                         this.setState({
@@ -622,6 +623,7 @@ class CalibrationRecordEdit extends Component {
                                     ref={ref => (this._inputMachineHaltReason = ref)}
                                     style={[styles.textStyle, { flex: 1 }]}
                                     placeholder={'请填写测试值'}
+                                    placeholderTextColor={'#999999'}
                                     onChangeText={text => {
                                         // 动态更新组件内State记录
                                         this.setState({

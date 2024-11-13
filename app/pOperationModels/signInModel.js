@@ -2,7 +2,7 @@
  * @Description: 宝武相关事件
  * @LastEditors: hxf
  * @Date: 2023-05-06 08:44:32
- * @LastEditTime: 2024-11-06 10:46:09
+ * @LastEditTime: 2024-11-11 11:34:22
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/signInModel.js
  */
 import { SentencedToEmpty, ShowToast, NavigationActions, bwFormatArray, CloseToast, createAction } from '../utils';
@@ -349,9 +349,6 @@ export default Model.extend({
             const result = yield call(dataAnalyzeAuth.axiosAuthPost, api.pOperationApi.CommonSignIn.GetSignStatus, params);
             // 关闭提交loading
 
-            console.log('result.status == 200 = ', result.status == 200);
-            console.log('IsSuccess = ', SentencedToEmpty(result, ['data', 'IsSuccess'], false));
-            console.log('IsSuccess = ', result.data.IsSuccess);
             if (result.status == 200
                 && SentencedToEmpty(result, ['data', 'IsSuccess'], false)) {
                 successCallBack(SentencedToEmpty(result, ['data', 'Datas'], {}));

@@ -2,8 +2,8 @@
  * @Description: 试剂更换记录编辑页面
  * @LastEditors: hxf
  * @Date: 2021-11-22 16:18:28
- * @LastEditTime: 2024-09-25 21:01:47
- * @FilePath: /SDLMainProject/app/operationContainers/taskViews/taskExecution/formViews/PoStandardLiquidReplaceForm.js
+ * @LastEditTime: 2024-11-11 14:12:37
+ * @FilePath: /SDLSourceOfPollutionS/app/operationContainers/taskViews/taskExecution/formViews/PoStandardLiquidReplaceForm.js
  */
 
 //import liraries
@@ -418,6 +418,7 @@ class PoStandardLiquidReplaceForm extends Component {
                                             ref={ref => (this._inputMachineHaltReason = ref)}
                                             style={[styles.textStyle, { flex: 1 }]}
                                             placeholder={'请输入数量'}
+                                            placeholderTextColor={'#999999'}
                                             onChangeText={text => {
                                                 // 动态更新组件内State记录
                                                 this.setState({

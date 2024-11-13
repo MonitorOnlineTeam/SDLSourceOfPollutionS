@@ -189,10 +189,10 @@ class Workbench extends Component {
     componentWillUnmount() {
         // 移除监听
         // this.viewDidAppear.remove();
-        this.subscription.remove();
+        SentencedToEmpty(this, ['subscription', 'remove'], () => { })();
+        // this.subscription.remove();
     }
     onFreshData = (pullToRefreshCallback = () => { }) => {
-        console.log('refresh');
         SentencedToEmpty(this.props, ['workerBenchMenu'], []).map((item, index) => {
             /**
              * "工单执行统计" executiveStatisticsParams
@@ -232,7 +232,6 @@ class Workbench extends Component {
         this.loadAdvertisement(false);
         let haveGTaskOfEnterprise = false;
         SentencedToEmpty(this.props, ['menuList'], []).map((item, index) => {
-            console.log('refresh item = ', item);
 
             if (SentencedToEmpty(item, ['numkey'], '') == 'ServiceReportRectificationList') {
                 // 服务报告整改
@@ -421,12 +420,10 @@ class Workbench extends Component {
         this.loadAdvertisement(false);
         let haveGTaskOfEnterprise = false;
         menuList.map((item, index) => {
-            console.log('onFreshDataWithParams item = ', item);
 
             if (SentencedToEmpty(item, ['numkey'], '') == "TaskToBeVerifiedList") {
                 // 2273c00d-7594-4f85-8174-b46903a93ff7
                 // 异常识别2.0任务待核查
-                console.log('TaskToBeVerifiedList item = ', item);
                 let buttons = [];
                 SentencedToEmpty(item, ['buttonList'], [])
                     .map(btn => {
@@ -462,7 +459,7 @@ class Workbench extends Component {
             }
             if (SentencedToEmpty(item, ['numkey'], '') == 'MissionVerificationRectificationList') {
                 // 异常识别2.0刷新
-                console.log('异常识别2.0刷新 item = ', item);
+                // console.log('异常识别2.0刷新 item = ', item);
                 this.props.dispatch(createAction('abnormalTask/getCheckedRectificationList')({
                     params: {
                         pageIndex: 1, pageSize: 1000,
@@ -580,179 +577,30 @@ class Workbench extends Component {
         }
     };
     componentDidMount() {
-        this.props.dispatch(
-            createAction('notice/updateState')({
-                messageCount: 0
-            })
-        );
-        this.props.dispatch(
-            createAction('app/updateState')({
-                homeData: { status: 200 }
-            })
-        );
-        this.noticeCallback(false);
-        // 添加监听 
-        this.subscription = DeviceEventEmitter.addListener('refresh', this.onFreshData);
-        // this.viewDidAppear = this.props.navigation.addListener('didFocus', obj => {
-        //     console.log('didFocus');
-        //     this.props.dispatch(
-        //         createAction('alarm/updateState')({
-        //             sourceType: ''
-        //         })
-        //     );
-        //     this.props.dispatch(
-        //         createAction('pointDetails/updateState')({
-        //             sourceType: ''
-        //         })
-        //     );
+        // 延迟加载，避免影响页面跳转
+        setTimeout(() => {
+            this.props.dispatch(
+                createAction('notice/updateState')({
+                    messageCount: 0
+                })
+            );
+            this.props.dispatch(
+                createAction('app/updateState')({
+                    homeData: { status: 200 }
+                })
+            );
+            this.noticeCallback(false);
+            // 添加监听 
+            this.subscription = DeviceEventEmitter.addListener('refresh', this.onFreshData);
+            this.loadAdvertisement(false);
+            //刷新消息计数器
+            this.props.dispatch(createAction('notice/getNewPushMessageList')({}));
+            this.onFreshData();
+        }, 100);
 
-        //     // let user = getToken();
-        //     // if (user.IsShowTask == false) {
-        //     //     // 获取异常识别 计数
-        //     //     this.props.dispatch(
-        //     //         createAction('alarmAnaly/getOperationKeyParameterCount')({
-        //     //             beginTime: moment()
-        //     //                 .subtract(1, 'month')
-        //     //                 .format('YYYY-MM-DD 00:00:00'),
-        //     //             endTime: moment().format('YYYY-MM-DD 23:59:59')
-        //     //         })
-        //     //     );
-        //     // }
-
-        this.loadAdvertisement(false);
-        //     SentencedToEmpty(this.props, ['menuList'], []).map((item, index) => {
-        //         console.log('didFocus item = ', item);
-        //         if (SentencedToEmpty(item, ['numkey'], '') == 'ServiceReportRectificationList') {
-        //             // 服务报告整改
-        //             // this.props.dispatch(createAction('CTEquipmentPicAuditModel/updateState')({
-        //             //     equipmentAuditRectificationNum: '-'
-        //             // }));
-        //             this.props.dispatch(createAction('CTServiceReportRectificationModel/GetServiceStatusNum')({}));
-        //         }
-        //         if (SentencedToEmpty(item, ['numkey'], '') == 'GTaskOfEnterprise') {
-        //             // 待办任务和一些报警工作台计数
-        //             this.props.dispatch(
-        //                 createAction('app/getWorkbenchInfo')({
-        //                     params: {
-        //                         showRef: true,
-        //                         noticeCallback: this.noticeCallback
-        //                     }
-        //                 })
-        //             );
-        //         }
-        //         if (SentencedToEmpty(item, ['numkey'], '') == 'EquipmentInstallationPicAudit') {
-        //             // 安装照片整改
-        //             this.props.dispatch(createAction('CTEquipmentPicAuditModel/updateState')({
-        //                 equipmentAuditRectificationNum: '-'
-        //             }));
-        //             this.props.dispatch(createAction('CTEquipmentPicAuditModel/getEquipmentAuditRectificationNum')({}));
-        //         }
-        //         if (SentencedToEmpty(item, ['numkey'], '') == 'ChengTaoGTask') {
-        //             // 获取成套代办数量
-        //             this.props.dispatch(createAction('CTModel/getServiceDispatch')({}));
-        //         }
-        //         if (SentencedToEmpty(item, ['numkey'], '') == 'AnalysisModelAbnormalRectificationList') {
-        //             // 获取模型整改数量
-        //             this.props.dispatch(createAction('modelAnalysisAectificationModel/getCheckedRectificationList')({}));
-        //         }
-        //         if (SentencedToEmpty(item, ['numkey'], '') == 'AlarmSectionList') {
-        //             // 获取异常识别数量
-        //             this.props.dispatch(
-        //                 createAction('alarmAnaly/getOperationKeyParameterCount')({
-        //                     beginTime: moment()
-        //                         .subtract(1, 'month')
-        //                         .format('YYYY-MM-DD 00:00:00'),
-        //                     endTime: moment().format('YYYY-MM-DD 23:59:59')
-        //                 })
-        //             );
-        //         }
-        //         if (SentencedToEmpty(item, ['numkey'], '') == 'KeyParameterVerificationList') {
-        //             // 获取关键参数核查 计数
-        //             this.props.dispatch(createAction('keyParameterVerificationModel/getOperationKeyParameterCount')({}));
-        //         }
-        //         if (SentencedToEmpty(item, ['numkey'], '') == 'SuperviserRectifyList') {
-        //             // 设施核查整改 计数
-        //             this.props.dispatch(createAction('supervision/GetInspectorRectificationNum')({}));
-        //         }
-
-        //         if (SentencedToEmpty(item, ['numkey'], '') == "TaskToBeVerifiedList") {
-        //             // 2273c00d-7594-4f85-8174-b46903a93ff7
-        //             // 异常识别2.0任务待核查
-        //             // console.log('TaskToBeVerifiedList item = ', item);
-        //             let buttons = [];
-        //             SentencedToEmpty(item, ['buttonList'], [])
-        //                 .map(btn => {
-        //                     buttons.push({ ModelGuid: btn.code.replace(/[^0-9]/g, ''), ModelName: btn.name });
-        //                 });
-        //             buttons = buttons.sort((a, b) => {
-        //                 return a.ModelGuid - b.ModelGuid;
-        //             });
-        //             this.props.dispatch(
-        //                 createAction('abnormalTask/updateState')({
-        //                     getCheckedListParams: {
-        //                         IsTotal: true,
-        //                         CheckStatus: SentencedToEmpty(buttons, [0, 'ModelGuid'], ''),
-        //                         beginTime: moment().subtract(1, 'months').format('YYYY-MM-DD 00:00:00'),
-        //                         endTime: moment().format('YYYY-MM-DD HH:mm:ss'),
-        //                         serchName: '',
-        //                         pageSize: 200,
-        //                         pageIndex: 1
-        //                     }
-        //                 })
-        //             );
-        //             this.props.dispatch(
-        //                 createAction('abnormalTask/GetCheckedList')({
-        //                     IsTotal: true,
-        //                     CheckStatus: SentencedToEmpty(buttons, [0, 'ModelGuid'], ''),
-        //                     beginTime: moment().subtract(1, 'months').format('YYYY-MM-DD 00:00:00'),
-        //                     endTime: moment().format('YYYY-MM-DD HH:mm:ss'),
-        //                     serchName: '',
-        //                     pageSize: 200,
-        //                     pageIndex: 1
-        //                 })
-        //             );
-        //         }
-        //         // 异常识别2.0刷新
-        //         if (SentencedToEmpty(item, ['numkey'], '') == 'MissionVerificationRectificationList') {
-        //             // 异常识别2.0刷新
-        //             // console.log('异常识别2.0刷新 item = ', item);
-        //             // this.props.dispatch(createAction('supervision/GetInspectorRectificationNum')({}));
-        //             this.props.dispatch(createAction('abnormalTask/getCheckedRectificationList')({
-        //                 params: {
-        //                     pageIndex: 1, pageSize: 1000,
-        //                     IsTotal: true
-        //                 }
-        //             }));
-        //         }
-        //     });
-        //     SentencedToEmpty(this.props, ['workerBenchMenu'], []).map((item, index) => {
-        //         /**
-        //          * "工单执行统计" executiveStatisticsParams
-        //          * "322ac13e-fadf-43ed-a7a6-b2ccde37f390"
-        //          * "完成工单统计" completeTaskCountParams
-        //          * "0c8da383-b312-431b-8ff5-f24f75c7f933"
-        //          */
-        //         if (item.id == "322ac13e-fadf-43ed-a7a6-b2ccde37f390") {
-        //             // 工单执行统计
-        //             this.props.dispatch(createAction('BWModel/getOperationTaskStatisticsInfoByDay')({
-        //                 params: this.props.executiveStatisticsParams
-        //             }));
-
-        //         } else if (item.id == "0c8da383-b312-431b-8ff5-f24f75c7f933") {
-        //             // 完成工单统计
-        //             this.props.dispatch(createAction('BWModel/getCompleteTaskCount')({
-        //                 params: this.props.completeTaskCountParams
-        //             }));
-        //         }
-        //     })
-        // });
-        //刷新消息计数器
-        this.props.dispatch(createAction('notice/getNewPushMessageList')({}));
-        this.onFreshData();
     }
 
     loadAdvertisement = isInit => {
-        console.log('loadAdvertisement');
         if (isInit) {
             this.props.dispatch(
                 createAction('helpCenter/updateState')({
@@ -863,7 +711,6 @@ class Workbench extends Component {
         } else if (item.numkey == 'KeyParameterVerificationList') {
             this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({ listTabIndex: 0 }));
         }
-        console.log('routeName = ', item.numkey);
         this.props.dispatch(NavigationActions.navigate({ routeName: item.numkey, params: item.params }));
     };
 
@@ -1231,7 +1078,6 @@ class Workbench extends Component {
     getTaskExecutiveStatisticsView = () => {
         const tabList = SentencedToEmpty(this.props
             , ['tabList'], [])
-        console.log('tabList = ', tabList);
         // if (tabList.length > 0
         //     && tabList[this.props.tabIndex].name == '全员'
         // ) {
@@ -1251,7 +1097,6 @@ class Workbench extends Component {
         if (tabLength > 0) {
             topButtonWidth = SCREEN_WIDTH / tabLength;
         }
-        console.log('123');
         return (
             <View style={[{ width: SCREEN_WIDTH, flex: 1 }]}>
                 {SentencedToEmpty(this.props, ['noticeContentResult', 'status'], -1) == 200 && SentencedToEmpty(this.props, ['noticeContentResult', 'data', 'Datas'], []).length > 0 ? (
@@ -1319,7 +1164,6 @@ class Workbench extends Component {
                             {
                                 SentencedToEmpty(this.props
                                     , ['tabList'], []).map((tabItem, tabIndex) => {
-                                        console.log('tabList tabItem = ', tabItem);
                                         return (<View style={[{ flex: 1, height: 44, flexDirection: 'row' }]}>
                                             <TouchableOpacity style={[{ flex: 1, height: 44 }]}
                                                 onPress={() => {
@@ -1394,7 +1238,7 @@ class Workbench extends Component {
                                  * "完成工单统计"
                                  * "0c8da383-b312-431b-8ff5-f24f75c7f933"
                                  */
-                                console.log('item.id = ', item.id);
+                                // console.log('item.id = ', item.id);
                                 if (item.id == "322ac13e-fadf-43ed-a7a6-b2ccde37f390") {
                                     // 工单执行统计
                                     return (<ExecutiveStatistics />);
@@ -1438,7 +1282,6 @@ class ExecutiveLoadingView extends PureComponent {
 class ExecutiveStatistics extends Component {
 
     render() {
-        console.log('executiveStatisticsSelected = ', this.props.executiveStatisticsSelected);
         let _paramsList = [{ label: '完成工单', code: 'completeCount' },
         { label: '超时完成工单', code: 'overTimeCompleteCount' },
         ];
@@ -1456,7 +1299,6 @@ class ExecutiveStatistics extends Component {
                 label={'工单执行统计'}
                 data={SentencedToEmpty(this.props, ['executiveStatisticsResult', 'data', 'Datas'], {})}
                 getNewData={(item) => {
-                    console.log('ExecutiveStatistics item = ', item);
                     // { code: '1', name: '今天' }, { code: '2', name: '昨天' }, { code: '3', name: '前天' }, { code: '4', name: '近7天' }
 
                     let beginTime = '', // 开始时间   
@@ -1884,7 +1726,6 @@ class WorkbenchStatistics extends Component {
                             defaultCode: this.props.selected,
                             dataArr: pickerItems,
                             onSelectListener: item => {
-                                console.log('item = ', item);
                                 this.props.getNewData(item)
                             }
                         }}

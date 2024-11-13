@@ -116,11 +116,6 @@ export default Model.extend({
                     "isComplete": 3
                 }
             );
-            console.log('getCheckedRectificationCompleteList result = ', result);
-            // checkedRectificationCompleteListResult: { status: -1 },
-            // checkedRectificationCompleteListData: [],
-            // completeIndex: 1,
-            // completePageSize: 20,
             if (result.status == 200) {
                 let newData
                 if (completeIndex == 1) {
@@ -170,7 +165,6 @@ export default Model.extend({
             const result = yield call(dataAnalyzeAuth.axiosAuthPost, api.ClueDetails.CheckedRectification
                 , params
             );
-            console.log('CheckedRectification result = ', result);
             if (result.status == 200
                 && SentencedToEmpty(result, ['data', 'IsSuccess'], false)
                 && SentencedToEmpty(result, ['data', 'Datas'], false)) {
@@ -255,12 +249,10 @@ export default Model.extend({
              * //"completeTime": "2023-10-31T09:29:38.730Z"
              */
             const { recheckItemId } = yield select(state => state.abnormalTask);
-            console.log('GetCheckedRectificationApprovals params = ', params);
             const result = yield call(dataAnalyzeAuth.axiosAuthPost, api.ClueDetails.GetCheckedRectificationApprovals
                 // , params
                 , { id: recheckItemId }
             );
-            console.log('GetCheckedRectificationApprovals result = ', result);
             if (result.status == 200
                 && SentencedToEmpty(result, ['data', 'IsSuccess'], false)
             ) {
@@ -482,7 +474,6 @@ export default Model.extend({
          */
         *GetCheckedList({ payload }, { call, put, take, update, select }) {
             const { getCheckedListParams } = yield select(state => state.abnormalTask);
-            console.log('getCheckedListParams = ', getCheckedListParams);
             if (getCheckedListParams) {
                 // const result = yield call(dataAnalyzeAuth.axiosAuthPost, api.AbnormalDataTask.GetCheckedList, payload);
                 const result = yield call(
@@ -569,9 +560,6 @@ export default Model.extend({
         *uploadimage({ payload: { image, images = [], callback, uuid } }, { call }) {
             const user = yield loadToken();
             let formdata = new FormData();
-            console.log('images = ', images);
-            console.log('uuid = ', uuid);
-            console.log('callback = ', callback);
             // 单张
             var file = { uri: image.uri, type: 'multipart/form-data', name: 'image.jpg' };
             formdata.append('file', file);

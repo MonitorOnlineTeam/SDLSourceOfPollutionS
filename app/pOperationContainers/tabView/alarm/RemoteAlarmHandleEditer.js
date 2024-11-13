@@ -2,8 +2,8 @@
  * @Description: 处理 异常和缺失报警
  * @LastEditors: hxf
  * @Date: 2023-04-28 10:51:41
- * @LastEditTime: 2024-10-11 14:41:59
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/alarm/RemoteAlarmHandleEditer.js
+ * @LastEditTime: 2024-11-11 13:59:32
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/alarm/RemoteAlarmHandleEditer.js
  */
 import moment from 'moment';
 import React, { Component } from 'react'
@@ -108,6 +108,7 @@ export default class RemoteAlarmHandleEditer extends Component {
                             editable={true}
                             multiline={true}
                             placeholder={'请填写任务处理说明'}
+                            placeholderTextColor={'#999999'}
                             style={{ marginHorizontal: 13, minHeight: 40, marginTop: 4, marginBottom: 15, borderBottomWidth: 1, borderBottomColor: '#e7e7e7', textAlignVertical: 'top', color: '#666666' }}
                             onChangeText={text => {
                                 this.setState({ TaskContent: text });

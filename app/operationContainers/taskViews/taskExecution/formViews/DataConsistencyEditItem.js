@@ -2,8 +2,8 @@
  * @Description: 数据一致性（实时数据）记录 编辑页面
  * @LastEditors: hxf
  * @Date: 2021-12-13 17:00:21
- * @LastEditTime: 2024-09-25 18:39:05
- * @FilePath: /SDLMainProject/app/operationContainers/taskViews/taskExecution/formViews/DataConsistencyEditItem.js
+ * @LastEditTime: 2024-11-11 14:18:30
+ * @FilePath: /SDLSourceOfPollutionS/app/operationContainers/taskViews/taskExecution/formViews/DataConsistencyEditItem.js
  */
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Platform, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native';
@@ -251,6 +251,7 @@ export class FormInputWidthUnit extends Component {
                                 }
                             ]}
                             placeholder={textPlaceHolder}
+                            placeholderTextColor={'#999999'}
                             onChangeText={text => {
                                 onChangeText(text);
                             }}
@@ -350,6 +351,7 @@ class SystemPlatformData extends Component {
                             value={textValue + ''}
                             style={[styles.textStyle, { flex: 1 }]}
                             placeholder={textPlaceHolder}
+                            placeholderTextColor={'#999999'}
                             onChangeText={text => {
                                 onChangeText(text);
                             }}
@@ -457,6 +459,7 @@ export class SystemPlatformDataWidthUnit extends Component {
                             value={textValue + ''}
                             style={[styles.textStyle]}
                             placeholder={textPlaceHolder}
+                            placeholderTextColor={'#999999'}
                             onChangeText={text => {
                                 onChangeText(text);
                             }}

@@ -97,7 +97,6 @@ export default Model.extend({
         *GetModelExceptionNumsByPointAuth({ payload }, { call, put, take, update, select }) {
             let result;
             const { proFlag, alarmAnalyBeginTime, alarmAnalyEndTime } = yield select(state => state.alarmAnaly);
-            console.log('proFlag = ', proFlag);
             payload.beginTime = alarmAnalyBeginTime;
             payload.endTime = alarmAnalyEndTime;
             if (proFlag == 1) {
@@ -141,9 +140,6 @@ export default Model.extend({
         *uploadimage({ payload: { image, images = [], callback, uuid } }, { call }) {
             const user = yield loadToken();
             let formdata = new FormData();
-            console.log('images = ', images);
-            console.log('uuid = ', uuid);
-            console.log('callback = ', callback);
             // 单张
             var file = { uri: image.uri, type: 'multipart/form-data', name: 'image.jpg' };
             formdata.append('file', file);
@@ -151,7 +147,7 @@ export default Model.extend({
             formdata.append('FileUuid', uuid);
             // formdata.append('type', '2');
             // console.log('uuid = ',uuid);
-            console.log('formdata = ', formdata);
+            // console.log('formdata = ', formdata);
             let encryData = getEncryptData();
             // fetch(UrlInfo.DataAnalyze + api.DataAnalyze.UploadFiles, {
             fetch(UrlInfo.BaseUrl + api.pollutionApi.Alarm.uploadimage, {
@@ -164,7 +160,6 @@ export default Model.extend({
                 }
             })
                 .then(res => {
-                    console.log('res = ', res);
                     let url = JSON.parse(res._bodyInit).Datas[0];
 
                     for (let index = 0; index < images.length; index++) {

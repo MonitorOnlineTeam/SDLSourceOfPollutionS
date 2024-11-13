@@ -2,7 +2,7 @@
  * @Description: 验收服务报告
  * @LastEditors: hxf
  * @Date: 2023-09-18 09:27:53
- * @LastEditTime: 2024-11-04 10:07:26
+ * @LastEditTime: 2024-11-11 14:03:41
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/MissionVerification/MissionAbnormalRectification.js
  */
 import React, { Component } from 'react'
@@ -176,6 +176,7 @@ export default class MissionAbnormalRectification extends Component {
                                 editable={this.isEdit()}
                                 multiline={true}
                                 placeholder={true ? '请填写备注' : '暂无备注信息'}
+                                placeholderTextColor={'#999999'}
                                 style={{
                                     width: SCREEN_WIDTH - 38 + 15
                                     , marginLeft: 19, marginRight: 4, minHeight: 40

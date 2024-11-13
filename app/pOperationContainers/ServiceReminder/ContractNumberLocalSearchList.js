@@ -2,7 +2,7 @@
  * @Description: 合同编号本地搜索
  * @LastEditors: hxf
  * @Date: 2024-04-14 18:22:05
- * @LastEditTime: 2024-11-04 09:38:19
+ * @LastEditTime: 2024-11-11 14:02:18
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/ServiceReminder/ContractNumberLocalSearchList.js
  */
 import React, { Component } from 'react'
@@ -181,6 +181,7 @@ export default class ContractNumberLocalSearchList extends Component {
                                 , marginHorizontal: 5
                             }]}
                             placeholder={'企业名称、合同编号、立项号'}
+                            placeholderTextColor={'#999999'}
                             onChangeText={(text) => {
                                 this.props.dispatch(createAction('CTServiceReminderModel/updateState')({
                                     contractNumberSearchString: text

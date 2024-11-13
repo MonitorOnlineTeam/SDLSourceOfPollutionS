@@ -2,8 +2,8 @@
  * @Description: 非现场签到 微调地图
  * @LastEditors: hxf
  * @Date: 2024-02-02 09:34:42
- * @LastEditTime: 2024-10-10 14:47:54
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbenchSignin/SignInAddressMap.js
+ * @LastEditTime: 2024-11-11 11:41:05
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbenchSignin/SignInAddressMap.js
  */
 import {
     Image, Text, TouchableOpacity, View
@@ -154,8 +154,6 @@ export default class SignInAddressMap extends Component {
                 pageIndex: 1
             },
             callback = (result) => {
-                console.log(result);
-
                 this.props.dispatch(createAction('signInModel/updateState')({
                     listStatus: 200,
                     selectedPoint: null,
@@ -226,11 +224,8 @@ export default class SignInAddressMap extends Component {
 
 
     showPiont = () => {
-        console.log('this.props = ', this.props);
         const latitude = SentencedToEmpty(this.props, ['selectedPoint', 'LatLon', 'Latitude'], '');
         const longitude = SentencedToEmpty(this.props, ['selectedPoint', 'LatLon', 'Longitude'], '');
-        console.log('showPiont latitude = ', latitude);
-        console.log('showPiont longitude = ', longitude);
         let numberLatitude = Number(latitude);
         let numberLongitude = Number(longitude);
         if (latitude != ''
@@ -425,7 +420,6 @@ class SignInAddressList extends Component {
                 pageIndex: pageIndex
             },
             callback = (result) => {
-                console.log(result);
                 if (result.errorCode == 0) {
 
                     this.props.dispatch(createAction('signInModel/updateState')({
@@ -480,7 +474,6 @@ class SignInAddressList extends Component {
                 pageIndex: 1
             },
             callback = (result) => {
-                console.log(result);
                 this.props.dispatch(createAction('signInModel/updateState')({
                     listStatus: 200,
                     selectedPoint: null,
@@ -548,7 +541,6 @@ class SignInAddressList extends Component {
     renderItem = ({ item, index }) => {
         return (<TouchableOpacity
             onPress={() => {
-                console.log('item = ', item);
                 // this.setState({
                 //     selectedPoint: item,
                 //     selectedIndex: index

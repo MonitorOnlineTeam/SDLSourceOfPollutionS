@@ -2,7 +2,7 @@
  * @Description: 督查整改单条问题编辑
  * @LastEditors: hxf
  * @Date: 2022-11-29 11:32:39
- * @LastEditTime: 2024-11-01 14:06:58
+ * @LastEditTime: 2024-11-11 13:42:37
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbench/SupervisionItemEditor.js
  */
 import React, { Component } from 'react'
@@ -207,6 +207,7 @@ export default class SupervisionItemEditor extends Component {
                                 <TextInput
                                     multiline={true}
                                     placeholder="请输入"
+                                    placeholderTextColor={'#999999'}
                                     style={{
                                         color: '#333333',
                                         width: SCREEN_WIDTH - 40

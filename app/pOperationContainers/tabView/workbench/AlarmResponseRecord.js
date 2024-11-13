@@ -2,7 +2,7 @@
  * @Description: 报警响应记录
  * @LastEditors: hxf
  * @Date: 2024-10-16 11:08:33
- * @LastEditTime: 2024-11-01 14:50:11
+ * @LastEditTime: 2024-11-11 13:43:51
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbench/AlarmResponseRecord.js
  */
 import { Image, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -467,6 +467,7 @@ export default class AlarmResponseRecord extends Component {
                             placeholder={SentencedToEmpty(this.props
                                 , ['route', 'params', 'params', 'searchPlaceHolder']
                                 , '搜索企业名称、点位名称')}
+                            placeholderTextColor={'#999999'}
                             onChangeText={(text) => {
                                 if (this.props.responseRecordType == 'WorkbenchMiss') {
                                     this.props.dispatch(createAction('alarm/updateState')({

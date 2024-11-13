@@ -2,7 +2,7 @@
  * @Description: 修改
  * @LastEditors: hxf
  * @Date: 2024-04-26 11:47:43
- * @LastEditTime: 2024-11-05 11:26:59
+ * @LastEditTime: 2024-11-11 13:44:16
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeUpdate.js
  */
 import { Image, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
@@ -595,6 +595,7 @@ export default class SparePartsChangeUpdate extends Component {
                             // last={true}
                             label="项目名称"
                             placeholder="请填写项目名称"
+                            placeholderTextColor={'#999999'}
                             // keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
                             value={SentencedToEmpty(comiteParamsData, ['projectName'], '')}
                             onChangeText={text => {

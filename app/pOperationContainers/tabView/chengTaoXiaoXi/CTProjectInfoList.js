@@ -2,7 +2,7 @@
  * @Description: 成套签到项目列表
  * @LastEditors: hxf
  * @Date: 2023-09-21 09:19:56
- * @LastEditTime: 2024-11-01 16:50:26
+ * @LastEditTime: 2024-11-11 13:39:49
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/CTProjectInfoList.js
  */
 import React, { Component } from 'react'
@@ -135,6 +135,7 @@ export default class CTProjectInfoList extends Component {
                                 , marginHorizontal: 5
                             }]}
                             placeholder={'企业名称、合同编号、立项号'}
+                            placeholderTextColor={'#999999'}
                             onChangeText={(text) => {
                                 this.props.dispatch(createAction('CTModel/updateState')({
                                     projectInfoListSearchStr: text

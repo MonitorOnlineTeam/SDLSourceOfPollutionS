@@ -413,6 +413,7 @@ class RecordResult extends PureComponent {
                         }}
                         underlineColorAndroid="transparent"
                         placeholder="如校验合格前对系统进行过处理、调整、参数修改，请说明："
+                        placeholderTextColor={'#999999'}
                         multiline={true}
                         numberOfLines={2}
                     >
@@ -428,6 +429,7 @@ class RecordResult extends PureComponent {
                         }}
                         underlineColorAndroid="transparent"
                         placeholder="如校验后，颗粒物测量仪、流速仪的原校正系统改动，请说明："
+                        placeholderTextColor={'#999999'}
                         multiline={true}
                         numberOfLines={2}
                     >

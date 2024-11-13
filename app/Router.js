@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2024-11-08 11:50:18
+ * @LastEditTime: 2024-11-08 18:02:22
  * @FilePath: /SDLSourceOfPollutionS/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
@@ -11,7 +11,7 @@ import { NavigationContainer, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { init, Geolocation } from 'react-native-amap-geolocation';
 
-import { ReactNativeUniappModule } from 'react-native-uniapp'
+// import { ReactNativeUniappModule } from 'react-native-uniapp'
 
 
 import RootView from './framework/RootView';
@@ -231,6 +231,7 @@ import ScopeMap from './operationContainers/taskViews/taskExecution/ScopeMap';
 import GeneralLocalSearchList from './components/GeneralLocalSearchList';
 import SparePartsChangeDetail from './pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeDetail';
 import SparePartsChangeUpdate from './pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeUpdate';
+import CTSignInMap from './pOperationContainers/tabView/chengTaoXiaoXi/CTSignInMap';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
 function Test() {
     return (
@@ -427,6 +428,7 @@ Actions.pushViewWithName(MissionRectificationReviewExecution, 'MissionRectificat
 
 //成套签到
 Actions.pushViewWithName(ChengTaoSignIn, 'ChengTaoSignIn', { title: '签到' });
+Actions.pushViewWithName(CTSignInMap, 'CTSignInMap', { title: '查看打卡范围' });
 Actions.pushViewWithName(CTProjectInfoList, 'CTProjectInfoList', { title: '项目信息' });
 
 // 成套备件更换
@@ -566,7 +568,7 @@ export default function Router() {
             }); //后台定位~
         }
         initf();
-        ReactNativeUniappModule.init();
+        // ReactNativeUniappModule.init();
         //监听401 重新登录
         const listener401 = DeviceEventEmitter.addListener('net401', () => {
             Actions.reset({

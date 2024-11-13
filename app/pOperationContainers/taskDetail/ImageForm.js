@@ -573,7 +573,6 @@ export default class ImageForm extends Component {
         );
     };
     render() {
-        console.log('ImageForm = ', this.props.ImageForm);
         var options = {
             headTitle: '提示',
             messText: '是否确定要删除此表单',

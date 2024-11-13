@@ -149,6 +149,79 @@ export default class ImageUploadTouch extends Component {
         }
     };
 
+    requestPermission = async () => {
+        console.log('SyanImagePicker = ', SyanImagePicker);
+        SyanImagePicker.checkPermisson({}, (res) => {
+            console.log('res = ', res);
+            const { hasPermission } = res;
+            if (hasPermission) {
+                // SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                //     if (err) {
+                //         // 取消选择
+                //         return;
+                //     }
+
+                //     if (selectedPhotos.length <= 0) {
+                //         return;
+                //     } else {
+                //         ShowLoadingToast('正在上传图片');
+                //         that.props.dispatch(
+                //             createAction('imageModel/uploadimage')({
+                //                 images: selectedPhotos,
+                //                 uuid: uuid,
+                //                 callback: this.uploadImageCallBack
+                //             })
+                //         );
+                //     }
+                // });
+            }
+        })
+        // try {
+        //     const granted = await PermissionsAndroid.request(
+        //         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        //         {
+        //             title: '申请读写手机存储权限',
+        //             message:
+        //                 '一个很牛逼的应用想借用你的摄像头，' +
+        //                 '然后你就可以拍出酷炫的皂片啦。',
+        //             buttonNeutral: '等会再问我',
+        //             buttonNegative: '不行',
+        //             buttonPositive: '好吧',
+        //         },
+        //     );
+        //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        //         // console.log('现在你获得摄像头权限了');
+        //         SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+        //             if (err) {
+        //                 // 取消选择
+        //                 return;
+        //             }
+
+        //             if (selectedPhotos.length <= 0) {
+        //                 return;
+        //             } else {
+        //                 ShowLoadingToast('正在上传图片');
+        //                 that.props.dispatch(
+        //                     createAction('imageModel/uploadimage')({
+        //                         images: selectedPhotos,
+        //                         uuid: uuid,
+        //                         callback: this.uploadImageCallBack
+        //                     })
+        //                 );
+        //             }
+        //         });
+        //     } else {
+        //         // console.log('用户并不给你');
+        //         ShowToast({
+        //             message: '您拒绝了权限申请，无法使用该功能',
+        //             alertType: 'success',
+        //         });
+        //     }
+        // } catch (err) {
+        //     console.warn(err);
+        // }
+    };
+
     render() {
         const { hasOffline = false, interfaceName = '', style, children, uploadMethods, uuid, delegate, onPress = () => { }, componentType, extraInfo } = this.props;
         const user = getToken();
@@ -454,6 +527,7 @@ export default class ImageUploadTouch extends Component {
                     btnStyle: { backgroundColor: '#fff' },
                     txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
                     onpress: () => {
+                        // this.requestPermission();
                         SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
                             if (err) {
                                 // 取消选择
@@ -467,13 +541,15 @@ export default class ImageUploadTouch extends Component {
                                 that.props.dispatch(
                                     createAction('imageModel/uploadimage')({
                                         images: selectedPhotos,
-                                        uuid: uuid,
+                                        uuid: this.props.uuid,
                                         callback: this.uploadImageCallBack
                                     })
                                 );
                             }
                         });
+
                         // launchImageLibrary(options, response => {
+                        //     console.log('response = ', response);
                         //     const { assets = [] } = response;
                         //     let imageObj = null;
                         //     if (assets.length <= 0) {
@@ -511,7 +587,7 @@ export default class ImageUploadTouch extends Component {
                                                 that.props.dispatch(
                                                     createAction('imageModel/uploadimage')({
                                                         images: [img],
-                                                        uuid: uuid,
+                                                        uuid: this.props.uuid,
                                                         callback: this.uploadImageCallBack
                                                     })
                                                 );
@@ -533,7 +609,7 @@ export default class ImageUploadTouch extends Component {
                                                     that.props.dispatch(
                                                         createAction('imageModel/uploadimage')({
                                                             images: selectedPhotos,
-                                                            uuid: uuid,
+                                                            uuid: this.props.uuid,
                                                             callback: this.uploadImageCallBack
                                                         })
                                                     );
@@ -560,7 +636,7 @@ export default class ImageUploadTouch extends Component {
                                         that.props.dispatch(
                                             createAction('imageModel/uploadimage')({
                                                 images: selectedPhotos,
-                                                uuid: uuid,
+                                                uuid: this.props.uuid,
                                                 callback: this.uploadImageCallBack
                                             })
                                         );
@@ -570,6 +646,7 @@ export default class ImageUploadTouch extends Component {
 
                             return;
                         }
+                        // 下面是Android逻辑
                         if (componentType == 'taskhandle' || componentType == 'signIn') {
                             this.refs.doAlert.show();
                         } else {
@@ -586,7 +663,7 @@ export default class ImageUploadTouch extends Component {
                                     that.props.dispatch(
                                         createAction('imageModel/uploadimage')({
                                             images: selectedPhotos,
-                                            uuid: uuid,
+                                            uuid: this.props.uuid,
                                             callback: this.uploadImageCallBack
                                         })
                                     );

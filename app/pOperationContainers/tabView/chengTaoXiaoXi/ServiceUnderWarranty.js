@@ -2,7 +2,7 @@
  * @Description: 质保内服务填报 
  * @LastEditors: hxf
  * @Date: 2024-03-22 17:03:40
- * @LastEditTime: 2024-11-01 15:37:30
+ * @LastEditTime: 2024-11-11 13:56:32
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceUnderWarranty.js
  */
 import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -417,6 +417,7 @@ export default class ServiceUnderWarranty extends Component {
                                         , textAlign: 'right'
                                     }]}
                                     placeholder={'服务时长(小时)'}
+                                    placeholderTextColor={'#999999'}
                                     onChangeText={text => {
                                         let params = {
                                             serviceUnderWarrantySubmitParams: {
@@ -1554,6 +1555,7 @@ class ProductCategory extends Component {
                                             , textAlign: 'right'
                                         }]}
                                         placeholder={'服务时长(小时)'}
+                                        placeholderTextColor={'#999999'}
                                         onChangeText={text => {
                                             let newServiceUnderWarrantySubmitParams = { ...this.props.serviceUnderWarrantySubmitParams };
                                             let newData = newServiceUnderWarrantySubmitParams
@@ -2368,6 +2370,7 @@ class ServiceReason extends Component {
                                             , textAlign: 'right'
                                         }]}
                                         placeholder={'服务时长(小时)'}
+                                        placeholderTextColor={'#999999'}
                                         onChangeText={text => {
                                             let newServiceUnderWarrantySubmitParams = { ...this.props.serviceUnderWarrantySubmitParams };
                                             let newData = newServiceUnderWarrantySubmitParams

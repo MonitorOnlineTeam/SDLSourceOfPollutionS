@@ -29,7 +29,7 @@ class SparePartsForm extends Component {
         };
         _me = this;
     }
-    componentWillMount() {}
+    componentWillMount() { }
 
     getTimeSelectOption = () => {
         let type = 'day';
@@ -46,7 +46,7 @@ class SparePartsForm extends Component {
 
     render() {
         return (
-            <StatusPage style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }} status={this.props.commitstatus} button={{ name: '重新加载', callback: () => {} }}>
+            <StatusPage style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }} status={this.props.commitstatus} button={{ name: '重新加载', callback: () => { } }}>
                 <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : ''} style={styles.container}>
                     <ScrollView style={styles.container}>
                         <View style={{ borderRadius: 2, width: SCREEN_WIDTH - 20, minHeight: 250, marginLeft: 10, marginTop: 20, backgroundColor: 'white' }}>
@@ -195,6 +195,7 @@ class SparePartsForm extends Component {
                                 value={this.state.reason}
                                 numberOfLines={4}
                                 placeholder={'请填写原因说明'}
+                                placeholderTextColor={'#999999'}
                             />
                         </View>
 
@@ -235,21 +236,21 @@ class SparePartsForm extends Component {
                                 const user = getToken();
                                 this.props.navigation.state.params
                                     ? (lst[this.props.navigation.state.params.key] = {
-                                          ReplaceDate: this.state.chooseTime,
-                                          SparePartName: this.state.consumablesName,
-                                          Model: this.state.modelH,
-                                          Unit: this.state.unit,
-                                          Num: this.state.num,
-                                          Remark: this.state.reason
-                                      })
+                                        ReplaceDate: this.state.chooseTime,
+                                        SparePartName: this.state.consumablesName,
+                                        Model: this.state.modelH,
+                                        Unit: this.state.unit,
+                                        Num: this.state.num,
+                                        Remark: this.state.reason
+                                    })
                                     : lst.push({
-                                          ReplaceDate: this.state.chooseTime,
-                                          SparePartName: this.state.consumablesName,
-                                          Model: this.state.modelH,
-                                          Unit: this.state.unit,
-                                          Num: this.state.num,
-                                          Remark: this.state.reason
-                                      });
+                                        ReplaceDate: this.state.chooseTime,
+                                        SparePartName: this.state.consumablesName,
+                                        Model: this.state.modelH,
+                                        Unit: this.state.unit,
+                                        Num: this.state.num,
+                                        Remark: this.state.reason
+                                    });
 
                                 this.props.dispatch(
                                     createAction('taskModel/commitSpareParts')({

@@ -31,7 +31,7 @@ class ConsumablesReplaceForm extends Component {
         };
         _me = this;
     }
-    componentWillMount() {}
+    componentWillMount() { }
 
     getTimeSelectOption = () => {
         let type = 'day';
@@ -48,7 +48,7 @@ class ConsumablesReplaceForm extends Component {
 
     render() {
         return (
-            <StatusPage style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }} status={this.props.commitstatus} button={{ name: '重新加载', callback: () => {} }}>
+            <StatusPage style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }} status={this.props.commitstatus} button={{ name: '重新加载', callback: () => { } }}>
                 <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : ''} style={styles.container}>
                     <ScrollView style={styles.container}>
                         <View style={{ borderRadius: 2, width: SCREEN_WIDTH - 20, minHeight: 250, marginLeft: 10, marginTop: 20, backgroundColor: 'white' }}>
@@ -197,6 +197,7 @@ class ConsumablesReplaceForm extends Component {
                                 value={this.state.reason}
                                 numberOfLines={4}
                                 placeholder={'请填写原因说明'}
+                                placeholderTextColor={'#999999'}
                             />
                         </View>
 
@@ -237,21 +238,21 @@ class ConsumablesReplaceForm extends Component {
                                 const user = getToken();
                                 this.props.navigation.state.params
                                     ? (lst[this.props.navigation.state.params.key] = {
-                                          ReplaceDate: moment(this.state.chooseTime).format('YYYY-MM-DD 00:00:00'),
-                                          ConsumablesName: this.state.consumablesName,
-                                          Model: this.state.modelH,
-                                          Unit: this.state.unit,
-                                          Num: this.state.num,
-                                          Remark: this.state.reason
-                                      })
+                                        ReplaceDate: moment(this.state.chooseTime).format('YYYY-MM-DD 00:00:00'),
+                                        ConsumablesName: this.state.consumablesName,
+                                        Model: this.state.modelH,
+                                        Unit: this.state.unit,
+                                        Num: this.state.num,
+                                        Remark: this.state.reason
+                                    })
                                     : lst.push({
-                                          ReplaceDate: moment(this.state.chooseTime).format('YYYY-MM-DD 00:00:00'),
-                                          ConsumablesName: this.state.consumablesName,
-                                          Model: this.state.modelH,
-                                          Unit: this.state.unit,
-                                          Num: this.state.num,
-                                          Remark: this.state.reason
-                                      });
+                                        ReplaceDate: moment(this.state.chooseTime).format('YYYY-MM-DD 00:00:00'),
+                                        ConsumablesName: this.state.consumablesName,
+                                        Model: this.state.modelH,
+                                        Unit: this.state.unit,
+                                        Num: this.state.num,
+                                        Remark: this.state.reason
+                                    });
 
                                 this.props.dispatch(
                                     createAction('taskModel/commitConsumablesReplace')({

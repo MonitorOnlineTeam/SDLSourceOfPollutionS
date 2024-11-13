@@ -2,7 +2,7 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-09-20 14:55:47
- * @LastEditTime: 2024-11-01 16:18:37
+ * @LastEditTime: 2024-11-11 13:57:38
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/EquipmentInstallationPicItemEditor.js
  */
 import React, { Component } from 'react';
@@ -436,6 +436,7 @@ export default class EquipmentInstallationPicItemEditor extends Component {
                                 editable={this.isEdit()}
                                 multiline={true}
                                 placeholder={this.isEdit() ? '请填写备注' : '未填写备注信息'}
+                                placeholderTextColor={'#999999'}
                                 style={{
                                     width: SCREEN_WIDTH - 38 + 15,
                                     marginLeft: 19,

@@ -2,8 +2,8 @@
  * @Description: 模型整改 model
  * @LastEditors: hxf
  * @Date: 2023-10-30 11:16:16
- * @LastEditTime: 2023-11-03 13:34:54
- * @FilePath: /SDLMainProject36/app/pOperationModels/modelAnalysisAectificationModel.js
+ * @LastEditTime: 2024-11-11 11:35:10
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/modelAnalysisAectificationModel.js
  */
 import { SentencedToEmpty, ShowToast, NavigationActions } from '../utils';
 import * as dataAnalyzeAuth from '../services/dataAnalyzeAuth';
@@ -51,7 +51,6 @@ export default Model.extend({
             const result = yield call(dataAnalyzeAuth.axiosAuthPost, api.ModelAnalysisAectification.GetCheckedRectificationList
                 , params
             );
-            // console.log('getCheckedRectificationList result = ', result);
             if (result.status == 200) {
                 // callback(SentencedToEmpty(result,['data','Datas',0],{}));
                 const handleResult = callback(result);
@@ -89,11 +88,6 @@ export default Model.extend({
                     "isComplete": true
                 }
             );
-            console.log('getCheckedRectificationCompleteList result = ', result);
-            // checkedRectificationCompleteListResult: { status: -1 },
-            // checkedRectificationCompleteListData: [],
-            // completeIndex: 1,
-            // completePageSize: 20,
             if (result.status == 200) {
                 let newData
                 if (completeIndex == 1) {
@@ -132,12 +126,10 @@ export default Model.extend({
              * "rectificationMaterial": "string", // 图片id
              * "completeTime": "2023-10-31T02:30:39.978Z" // 完成时间 精确到小时
              */
-            // console.log('UpdateCheckedRectification params = ', params);
             yield update({ updateCheckedRectificationResult: { status: -1 } });
             const result = yield call(dataAnalyzeAuth.axiosAuthPost, api.ModelAnalysisAectification.UpdateCheckedRectification
                 , params
             );
-            // console.log('UpdateCheckedRectification result = ', result);
             if (result.status == 200
                 && SentencedToEmpty(result, ['data', 'IsSuccess'], false)
                 && SentencedToEmpty(result, ['data', 'Datas'], false)) {
@@ -171,12 +163,10 @@ export default Model.extend({
              * //"completeTime": "2023-10-31T09:29:38.730Z"
              */
             const { recheckItemId } = yield select(state => state.modelAnalysisAectificationModel);
-            console.log('GetCheckedRectificationApprovals params = ', params);
             const result = yield call(dataAnalyzeAuth.axiosAuthPost, api.ModelAnalysisAectification.GetCheckedRectificationApprovals
                 // , params
                 , { id: recheckItemId }
             );
-            console.log('GetCheckedRectificationApprovals result = ', result);
             if (result.status == 200
                 && SentencedToEmpty(result, ['data', 'IsSuccess'], false)
             ) {
@@ -213,7 +203,6 @@ export default Model.extend({
             });
             const { recheckItemId } = yield select(state => state.modelAnalysisAectificationModel);
 
-            // console.log('CheckedRectification params = ', params);
             const result = yield call(dataAnalyzeAuth.axiosAuthPost, api.ModelAnalysisAectification.CheckedRectification
                 , params
                 // , {
@@ -223,7 +212,6 @@ export default Model.extend({
                 //     approvalStatus: 1
                 // }
             );
-            console.log('CheckedRectification result = ', result);
             if (result.status == 200
                 && SentencedToEmpty(result, ['data', 'IsSuccess'], false)
                 && SentencedToEmpty(result, ['data', 'Datas'], false)) {

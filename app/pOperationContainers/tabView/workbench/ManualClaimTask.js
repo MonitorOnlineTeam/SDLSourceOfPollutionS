@@ -2,7 +2,7 @@
  * @Description: 手动领取工单
  * @LastEditors: hxf
  * @Date: 2021-09-29 16:40:17
- * @LastEditTime: 2024-11-01 14:29:50
+ * @LastEditTime: 2024-11-11 13:42:42
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbench/ManualClaimTask.js
  */
 
@@ -243,6 +243,7 @@ export default class ManualClaimTask extends Component {
                     <TextInput
                         underlineColorAndroid="transparent"
                         placeholder={'输入企业、点位搜索'}
+                        placeholderTextColor={'#999999'}
                         style={{
                             color: '#333333',
                             textAlign: 'center',

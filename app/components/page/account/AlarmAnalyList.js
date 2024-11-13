@@ -1,4 +1,4 @@
-import React, {PureComponent, Component} from 'react';
+import React, { PureComponent, Component } from 'react';
 import {
   Text,
   View,
@@ -10,7 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import moment from 'moment';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import {
   StatusPage,
@@ -28,13 +28,13 @@ import {
   SentencedToEmpty,
   ShowToast,
 } from '../../../utils';
-import {SCREEN_WIDTH} from '../../../config/globalsize';
+import { SCREEN_WIDTH } from '../../../config/globalsize';
 import FlatListWithHeaderAndFooter from '../../../components/FlatListWithHeaderAndFooter';
 let alertContent = [];
 /**
  * 报警记录
  */
-@connect(({alarmAnaly}) => ({
+@connect(({ alarmAnaly }) => ({
   alarmAnalyListData: alarmAnaly.alarmAnalyListData,
   alarmAnalyListResult: alarmAnaly.alarmAnalyListResult,
   alarmAnalyIndex: alarmAnaly.alarmAnalyIndex,
@@ -101,27 +101,47 @@ export default class AlarmAnalyList extends PureComponent {
           params: {
             callback: re => {
               if (re == false) {
-                this.props.navigation.setParams({
-                  headerRight: (
-                    <TouchableOpacity
-                      onPress={() => {
-                        if (Platform.OS == 'ios') {
-                          Alert.alert(
-                            '提示',
-                            '请选择暂停报警时间',
-                            alertContent,
-                          );
-                        } else {
-                          this.refs.doAlert3.show();
-                        }
-                      }}>
-                      {/* <Image style={{ height: 20, width: 20, marginHorizontal: 16 }} source={require('../../../images/icon_transmit.png')} /> */}
-                      <SDLText style={{color: '#fff', marginHorizontal: 16}}>
-                        {'暂停报警'}
-                      </SDLText>
-                    </TouchableOpacity>
-                  ),
+                this.props.navigation.setOptions({
+                  headerRight: () => <TouchableOpacity
+                    onPress={() => {
+                      if (Platform.OS == 'ios') {
+                        Alert.alert(
+                          '提示',
+                          '请选择暂停报警时间',
+                          alertContent,
+                        );
+                      } else {
+                        this.refs.doAlert3.show();
+                      }
+                    }}>
+                    {/* <Image style={{ height: 20, width: 20, marginHorizontal: 16 }} source={require('../../../images/icon_transmit.png')} /> */}
+                    <SDLText style={{ color: '#fff', marginHorizontal: 16 }}>
+                      {'暂停报警'}
+                    </SDLText>
+                  </TouchableOpacity>
                 });
+
+                // this.props.navigation.setParams({
+                //   headerRight: (
+                //     <TouchableOpacity
+                //       onPress={() => {
+                //         if (Platform.OS == 'ios') {
+                //           Alert.alert(
+                //             '提示',
+                //             '请选择暂停报警时间',
+                //             alertContent,
+                //           );
+                //         } else {
+                //           this.refs.doAlert3.show();
+                //         }
+                //       }}>
+                //       {/* <Image style={{ height: 20, width: 20, marginHorizontal: 16 }} source={require('../../../images/icon_transmit.png')} /> */}
+                //       <SDLText style={{ color: '#fff', marginHorizontal: 16 }}>
+                //         {'暂停报警'}
+                //       </SDLText>
+                //     </TouchableOpacity>
+                //   ),
+                // });
               }
             },
             dgimn: currentItem.DGIMN,
@@ -203,7 +223,7 @@ export default class AlarmAnalyList extends PureComponent {
   };
 
   onRefresh = index => {
-    this.setState({selectItems: []});
+    this.setState({ selectItems: [] });
     let item = SentencedToEmpty(
       this.props,
       ['route', 'params', 'params', 'item'],
@@ -239,7 +259,7 @@ export default class AlarmAnalyList extends PureComponent {
       createAction('alarmAnaly/updateState')({
         alarmAnalyIndex: 1,
         alarmAnalyTotal: 0,
-        alarmAnalyListResult: {status: -1},
+        alarmAnalyListResult: { status: -1 },
       }),
     );
     this.props.dispatch(
@@ -259,10 +279,10 @@ export default class AlarmAnalyList extends PureComponent {
       codeKey: 'ModelGuid',
       nameKey: 'ModelName',
       placeHolder: '全部类型',
-      dataArr: [{ModelGuid: '', ModelName: '全部类型'}, ...this.props.MoldList],
+      dataArr: [{ ModelGuid: '', ModelName: '全部类型' }, ...this.props.MoldList],
       defaultCode: '',
       onSelectListener: item => {
-        this.setState({warningTypeCode: item.ModelGuid}, () => {
+        this.setState({ warningTypeCode: item.ModelGuid }, () => {
           this.onRefresh();
         });
       },
@@ -275,14 +295,14 @@ export default class AlarmAnalyList extends PureComponent {
       this.props.dispatch(
         NavigationActions.navigate({
           routeName: 'AlarmDetails',
-          params: {...item, onRefresh: this.onRefresh},
+          params: { ...item, onRefresh: this.onRefresh },
         }),
       );
     } else {
       this.props.dispatch(
         NavigationActions.navigate({
           routeName: 'VerifyProgress',
-          params: {...item, onRefresh: this.onRefresh},
+          params: { ...item, onRefresh: this.onRefresh },
         }),
       );
     }
@@ -338,7 +358,7 @@ export default class AlarmAnalyList extends PureComponent {
                 this.onRefresh(index);
               }}
               ItemSeparatorComponent={() => {
-                return <View style={{height: 1, backgroundColor: '#d9d9d9'}} />;
+                return <View style={{ height: 1, backgroundColor: '#d9d9d9' }} />;
               }}
               onEndReached={index => {
                 this.props.dispatch(
@@ -358,7 +378,7 @@ export default class AlarmAnalyList extends PureComponent {
                   }),
                 );
               }}
-              renderItem={({item, index}) => {
+              renderItem={({ item, index }) => {
                 return (
                   <Touchable onPress={() => this._onItemClick(item)}>
                     <View
@@ -402,10 +422,10 @@ export default class AlarmAnalyList extends PureComponent {
                                 } else {
                                   newSelect.push(item);
                                 }
-                                this.setState({selectItems: newSelect});
+                                this.setState({ selectItems: newSelect });
                               }}>
                               <Image
-                                style={{width: 25, height: 25, marginRight: 3}}
+                                style={{ width: 25, height: 25, marginRight: 3 }}
                                 source={
                                   this.state.selectItems.findIndex(
                                     sitem => sitem.ID == item.ID,
@@ -418,7 +438,7 @@ export default class AlarmAnalyList extends PureComponent {
                           )}
                         {item.IsCheck == 1 && naviItem.status == 1 && (
                           <Image
-                            style={{width: 25, height: 25, marginRight: 3}}
+                            style={{ width: 25, height: 25, marginRight: 3 }}
                             source={require('../../../images/chehui.png')}
                           />
                         )}
@@ -431,9 +451,8 @@ export default class AlarmAnalyList extends PureComponent {
                               maxWidth: SCREEN_WIDTH - 150,
                               lineHight: 45,
                             },
-                          ]}>{`${item.ParentName || ''}-${
-                          item.PointName || ''
-                        }`}</Text>
+                          ]}>{`${item.ParentName || ''}-${item.PointName || ''
+                            }`}</Text>
                         <View
                           style={{
                             alignItems: 'center',
@@ -443,8 +462,8 @@ export default class AlarmAnalyList extends PureComponent {
                               item.CheckResult == '未核实'
                                 ? 'rgba(102,102,102,0.1)'
                                 : item.CheckResult == '有异常'
-                                ? 'rgba(255,87,74,0.1)'
-                                : 'rgba(38,193,154,0.1)',
+                                  ? 'rgba(255,87,74,0.1)'
+                                  : 'rgba(38,193,154,0.1)',
                             marginLeft: 3,
 
                             height: 20,
@@ -458,8 +477,8 @@ export default class AlarmAnalyList extends PureComponent {
                                   item.CheckResult == '未核实'
                                     ? '#666666'
                                     : item.CheckResult == '有异常'
-                                    ? '#FF574A'
-                                    : '#26C19A',
+                                      ? '#FF574A'
+                                      : '#26C19A',
                                 textAlign: 'center',
                                 fontSize: 11,
                               },
@@ -476,8 +495,8 @@ export default class AlarmAnalyList extends PureComponent {
                               item.Status == '待核实'
                                 ? 'rgba(47, 169, 255, 0.1)'
                                 : item.Status == '待复核'
-                                ? 'rgba(47, 169, 255, 0.1)'
-                                : 'rgba(38,193,154,0.1)',
+                                  ? 'rgba(47, 169, 255, 0.1)'
+                                  : 'rgba(38,193,154,0.1)',
                             marginLeft: 3,
 
                             height: 20,
@@ -491,8 +510,8 @@ export default class AlarmAnalyList extends PureComponent {
                                   item.Status == '待核实'
                                     ? '#666666'
                                     : item.Status == '待复核'
-                                    ? '#2FA9FF'
-                                    : '#26C19A',
+                                      ? '#2FA9FF'
+                                      : '#26C19A',
                                 textAlign: 'center',
                                 fontSize: 11,
                               },
@@ -512,7 +531,7 @@ export default class AlarmAnalyList extends PureComponent {
                         ]}>
                         <SDLText
                           fontType={'normal'}
-                          style={[{color: '#666666', lineHeight: 18}]}>
+                          style={[{ color: '#666666', lineHeight: 18 }]}>
                           {item.WarningContent}
                         </SDLText>
                       </View>
@@ -546,7 +565,7 @@ export default class AlarmAnalyList extends PureComponent {
                                 height: 18,
                               },
                             ]}>
-                            <Text style={[{color: '#fff', fontSize: 11}]}>
+                            <Text style={[{ color: '#fff', fontSize: 11 }]}>
                               {'核'}
                             </Text>
                           </View>
@@ -568,12 +587,12 @@ export default class AlarmAnalyList extends PureComponent {
                             justifyContent: 'center',
                           }}>
                           <Image
-                            style={{width: 16, height: 16, marginRight: 3}}
+                            style={{ width: 16, height: 16, marginRight: 3 }}
                             source={require('../../../images/ic_tab_statistics_selected.png')}
                           />
                           <SDLText
                             fontType={'normal'}
-                            style={[{color: '#666666'}]}>
+                            style={[{ color: '#666666' }]}>
                             {item.WarningTime}
                           </SDLText>
                         </View>
@@ -635,7 +654,7 @@ export default class AlarmAnalyList extends PureComponent {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                <Text style={{color: '#fff'}}>批量核实</Text>
+                <Text style={{ color: '#fff' }}>批量核实</Text>
               </TouchableOpacity>
             )}
           <AlertDialog

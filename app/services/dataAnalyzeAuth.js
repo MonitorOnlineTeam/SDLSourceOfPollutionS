@@ -41,14 +41,6 @@ export const axiosPost = async (api, param, headers) => {
     logdebug('================');
     logdebug('result-->');
     logdebug(result);
-    // console.log('status = ', result.status);
-    // console.log('url = ', result.config.url);
-    // console.log('params = ', result.config.data);
-    // if (typeof result.beforeRequest != 'undefined') {
-    //     console.log('beforeRequest = ', result.beforeRequest);
-    // }
-    // console.log('castTime = ', result.castTime);
-    // console.log('method = POST');
     logdebug('================');
     return result;
 };

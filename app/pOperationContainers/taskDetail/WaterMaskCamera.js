@@ -2,7 +2,7 @@
  * @Description: 水印相机
  * @LastEditors: hxf
  * @Date: 2023-06-01 14:09:24
- * @LastEditTime: 2024-11-07 11:43:57
+ * @LastEditTime: 2024-11-11 11:38:40
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/taskDetail/WaterMaskCamera.js
  */
 import React, { Component } from 'react'
@@ -50,7 +50,6 @@ export default class WaterMaskCamera extends Component {
 
     uploadImageCallBack = (images, isSuccess) => {
         CloseToast();
-        console.log('uploadImageCallBack isSuccess = ', isSuccess);
         if (isSuccess) {
             // this.props.callback(img);
             const { taskDetail } = this.props;
@@ -106,11 +105,9 @@ export default class WaterMaskCamera extends Component {
     }
 
     render() {
-        console.log('props = ', this.props);
         const saveType = SentencedToEmpty(this.props
             , ['route', 'params', 'params', 'saveType'], 'online'
         )
-        console.log('saveType = ', saveType);
         // `${SentencedToEmpty(this.props.taskDetail, ['EnterpriseName'], '')}-${SentencedToEmpty(this.props.taskDetail, ['PointName'], '')}`
         // console.log('WaterMaskCamera EnterpriseName = '
         //     , SentencedToEmpty(this.props.taskDetail, ['EnterpriseName'], ''));
@@ -193,7 +190,6 @@ export default class WaterMaskCamera extends Component {
                                                         imageObj = assets[0];
                                                         ShowLoadingToast('正在上传图片');
                                                         if (saveType == 'offline') {
-                                                            console.log('imageObj = ', imageObj);
                                                             setTimeout(() => {
                                                                 const time = moment().format('YYYY-MM-DD HH:mm:ss');
                                                                 const user = getToken();

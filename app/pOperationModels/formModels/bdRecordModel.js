@@ -273,7 +273,6 @@ export default Model.extend({
                     let newList = GetBdList(RecordList, Code); //将码表数据和已经填写的项目组合成界面需要的数据
                     if (!initPage) {
                         newList.map((nItem, nIndex) => {
-                            // console.log('nItem = ',nItem);
                             List.map((oItem, oIndex) => {
                                 if (nItem.ItemID == oItem.ItemID
                                     && !nItem.IsComplete

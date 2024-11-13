@@ -2,8 +2,8 @@
  * @Description: 表单文本输入区域
  * @LastEditors: hxf
  * @Date: 2021-11-25 18:21:52
- * @LastEditTime: 2024-03-23 14:14:50
- * @FilePath: /SDLMainProject37/app/operationContainers/taskViews/taskExecution/components/FormTextArea.js
+ * @LastEditTime: 2024-11-11 14:25:52
+ * @FilePath: /SDLSourceOfPollutionS/app/operationContainers/taskViews/taskExecution/components/FormTextArea.js
  */
 import React, { Component } from 'react'
 import { Text, View, TextInput, StyleSheet } from 'react-native'
@@ -65,6 +65,7 @@ export default class FormTextArea extends Component {
                     value={value}
                     numberOfLines={numberOfLines}
                     placeholder={placeholder}
+                    placeholderTextColor={'#999999'}
                 />
             </View>
         )

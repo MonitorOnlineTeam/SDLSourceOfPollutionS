@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-09-18 09:29:20
- * @LastEditTime: 2024-11-04 08:24:39
+ * @LastEditTime: 2024-11-11 13:59:27
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/AcceptanceServiceReportMultiple.js
  */
 
@@ -651,6 +651,7 @@ export default class AcceptanceServiceReportMultiple extends Component {
                                     editable={this.isEdit()}
                                     multiline={true}
                                     placeholder={true ? '请填写备注' : '暂无备注信息'}
+                                    placeholderTextColor={'#999999'}
                                     style={{
                                         width: SCREEN_WIDTH - 38 + 15
                                         , marginLeft: 19, marginRight: 4, minHeight: 40

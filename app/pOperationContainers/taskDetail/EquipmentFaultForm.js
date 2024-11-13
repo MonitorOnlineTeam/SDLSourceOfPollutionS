@@ -495,6 +495,7 @@ export default class EquipmentFaultForm extends PureComponent {
                             this.setState({ recordLst: array });
                         }}
                         placeholder={'请输入故障原因描述'}
+                        placeholderTextColor={'#999999'}
                         multiline={true}
                         style={{ color: '#333333', width: SCREEN_WIDTH - 28, height: 80, padding: 15, textAlignVertical: 'top' }}
                     >

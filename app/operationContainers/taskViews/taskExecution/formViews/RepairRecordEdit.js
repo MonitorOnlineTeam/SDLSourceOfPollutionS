@@ -125,6 +125,7 @@ class RepairRecordEdit extends PureComponent {
                                     }}
                                     underlineColorAndroid="transparent"
                                     placeholder="请输入维修情况描述"
+                                    placeholderTextColor={'#999999'}
                                     multiline={true}
                                 />
                             </View>
@@ -172,6 +173,7 @@ class RepairRecordEdit extends PureComponent {
                                     }}
                                     underlineColorAndroid="transparent"
                                     placeholder="请填写维修状况总结"
+                                    placeholderTextColor={'#999999'}
                                     multiline={true}
                                 />
                             </View>

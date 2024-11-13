@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -7,7 +7,7 @@ import {
   Platform,
   DeviceEventEmitter,
 } from 'react-native';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
   StatusPage,
   FlatListWithHeaderAndFooter,
@@ -15,7 +15,7 @@ import {
   SimplePickerRangeDay,
   SimplePicker,
 } from '../../../components';
-import {SCREEN_WIDTH} from '../../../config/globalsize';
+import { SCREEN_WIDTH } from '../../../config/globalsize';
 import {
   createAction,
   createNavigationOptions,
@@ -24,7 +24,8 @@ import {
 } from '../../../utils';
 import moment from 'moment';
 
-@connect(({alarmAnaly, login}) => {
+// 异常识别1.0
+@connect(({ alarmAnaly, login }) => {
   return {
     ExceptionNumsByPointAuth: alarmAnaly.ExceptionNumsByPointAuth,
     MoldList: alarmAnaly.MoldList,
@@ -62,7 +63,7 @@ export default class AlarmSectionList extends Component {
       }),
     );
   }
-  renderItem = ({item, index}) => {
+  renderItem = ({ item, index }) => {
     return (
       <View
         key={index}
@@ -95,7 +96,7 @@ export default class AlarmSectionList extends Component {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Text style={{fontSize: 10, color: '#FFFFFF'}}>企</Text>
+              <Text style={{ fontSize: 10, color: '#FFFFFF' }}>企</Text>
             </View>
             <Text
               numberOfLines={1}
@@ -104,10 +105,10 @@ export default class AlarmSectionList extends Component {
                 fontSize: 14,
                 color: '#333333',
               }}>{`${SentencedToEmpty(
-              item,
-              [0, 'EntName'],
-              '--',
-            )}-${SentencedToEmpty(item, [0, 'PointName'], '--')}`}</Text>
+                item,
+                [0, 'EntName'],
+                '--',
+              )}-${SentencedToEmpty(item, [0, 'PointName'], '--')}`}</Text>
             {/* <Text style={{ marginLeft: 4, fontSize: 12, color: '#4AA0FF' }}>{`(${SentencedToEmpty(item, ['Count'], '0')})`}</Text> */}
           </View>
           <View
@@ -161,10 +162,10 @@ export default class AlarmSectionList extends Component {
                         fontSize: 12,
                         color: '#4AA0FF',
                       }}>{`${SentencedToEmpty(
-                      typeItem,
-                      ['Count'],
-                      '0',
-                    )}个`}</Text>
+                        typeItem,
+                        ['Count'],
+                        '0',
+                      )}个`}</Text>
                   </View>
                 </TouchableOpacity>
               );
@@ -177,7 +178,7 @@ export default class AlarmSectionList extends Component {
   statusPageOnRefresh = () => {
     this.props.dispatch(
       createAction('alarmAnaly/updateState')({
-        ExceptionNumsByPointAuth: {status: -1},
+        ExceptionNumsByPointAuth: { status: -1 },
       }),
     );
     this.props.dispatch(
@@ -219,16 +220,16 @@ export default class AlarmSectionList extends Component {
       dataArr:
         this.props.proFlag == 1
           ? [
-              {ModelGuid: 2, ModelName: '待复核'},
-              {ModelGuid: 3, ModelName: '核实完成'},
-            ]
+            { ModelGuid: 2, ModelName: '待复核' },
+            { ModelGuid: 3, ModelName: '核实完成' },
+          ]
           : [
-              {ModelGuid: 1, ModelName: '待核实'},
-              {ModelGuid: 2, ModelName: '待复核'},
-              {ModelGuid: 3, ModelName: '核实完成'},
-            ],
+            { ModelGuid: 1, ModelName: '待核实' },
+            { ModelGuid: 2, ModelName: '待复核' },
+            { ModelGuid: 3, ModelName: '核实完成' },
+          ],
       onSelectListener: item => {
-        this.setState({warningTypeCode: item.ModelGuid}, () => {
+        this.setState({ warningTypeCode: item.ModelGuid }, () => {
           this.statusPageOnRefresh();
         });
       },
@@ -249,7 +250,7 @@ export default class AlarmSectionList extends Component {
       return acc;
     }, {});
     return (
-      <View style={{width: SCREEN_WIDTH, flex: 1}}>
+      <View style={{ width: SCREEN_WIDTH, flex: 1 }}>
         <View
           style={[
             {
@@ -266,7 +267,7 @@ export default class AlarmSectionList extends Component {
           <SimplePickerRangeDay option={this.getRangeDaySelectOption()} />
           <SimplePicker
             option={this.getDataTypeSelectOption()}
-            style={[{width: 150}]}
+            style={[{ width: 150 }]}
           />
         </View>
 
@@ -291,12 +292,12 @@ export default class AlarmSectionList extends Component {
             this.statusPageOnRefresh();
           }}>
           <FlatListWithHeaderAndFooter
-            style={[{backgroundColor: '#f2f2f2'}]}
+            style={[{ backgroundColor: '#f2f2f2' }]}
             ref={ref => (this.list = ref)}
             ItemSeparatorComponent={() => (
               <View
                 style={[
-                  {width: SCREEN_WIDTH, height: 10, backgroundColor: '#f2f2f2'},
+                  { width: SCREEN_WIDTH, height: 10, backgroundColor: '#f2f2f2' },
                 ]}
               />
             )}

@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-08-26 10:59:39
- * @LastEditTime: 2024-08-27 09:36:16
- * @FilePath: /SDLMainProject37/app/pOperationContainers/MissionVerification/repulseMissionVerification.js
+ * @LastEditTime: 2024-11-12 16:40:50
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/MissionVerification/RepulseMissionVerification.js
  */
 import { Image, Platform, Text, TextInput, TouchableOpacity, View, ScrollView } from 'react-native'
 import React, { Component } from 'react'
@@ -105,6 +105,7 @@ export default class RepulseMissionVerification extends Component {
                             }}
                             value={si.planItemContent}
                             placeholder="请输入内容标题"
+                            placeholderTextColor={'#999999'}
                             style={{ backgroundColor: 'white', color: '#333', borderColor: '#999', marginRight: 15, borderWidth: 0.5, paddingVertical: 2, paddingHorizontal: 13, maxWidth: SCREEN_WIDTH - 150 }}
                         />
                         <TouchableOpacity
@@ -141,6 +142,7 @@ export default class RepulseMissionVerification extends Component {
                         value={si.planItemDesc}
                         multiline={true}
                         placeholder="请输入描述信息"
+                        placeholderTextColor={'#999999'}
                         style={{ width: SCREEN_WIDTH - 26, backgroundColor: 'white', marginTop: 10, minHeight: 60, borderWidth: 0.5, color: '#333', borderColor: '#999', padding: 13 }}
                     />
                 </View>
@@ -175,7 +177,7 @@ export default class RepulseMissionVerification extends Component {
                                     });
                                     return;
                                 }
-                                SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                                SyanImagePicker.showImagePicker({ imageCount: 6 }, (err, selectedPhotos) => {
                                     if (err) {
                                         // 取消选择
                                         return;
@@ -188,8 +190,10 @@ export default class RepulseMissionVerification extends Component {
                                         that.props.dispatch(
                                             createAction('imageModel/uploadimage')({
                                                 images: selectedPhotos,
-                                                uuid: uuid,
-                                                callback: this.uploadImageCallBack
+                                                uuid: that.state.FileUuidArray[idx],
+                                                callback: (img, isSuccess) => {
+                                                    that.uploadImageCallBack(img, isSuccess, si, idx);
+                                                }
                                             })
                                         );
                                     }

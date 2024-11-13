@@ -2,8 +2,8 @@
  * @Description: 搜索列表 无加载
  * @LastEditors: hxf
  * @Date: 2023-11-07 10:06:19
- * @LastEditTime: 2024-09-12 09:38:26
- * @FilePath: /SDLMainProject/app/components/page/SearchListWithoutLoad.js
+ * @LastEditTime: 2024-11-11 14:29:02
+ * @FilePath: /SDLSourceOfPollutionS/app/components/page/SearchListWithoutLoad.js
  */
 import { Text, View, TouchableOpacity, TextInput, Image, Platform } from 'react-native'
 import React, { Component } from 'react'
@@ -54,6 +54,7 @@ export default class SearchListWithoutLoad extends Component {
                         onFocus={() => { }}
                         underlineColorAndroid="transparent"
                         placeholder={searchPlaceHolder}
+                        placeholderTextColor={'#999999'}
                         style={{
                             textAlign: 'center',
                             width: SCREEN_WIDTH - 40,

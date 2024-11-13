@@ -344,7 +344,6 @@ export default Model.extend({
                     noticeMessageInfoListResult: result
                 });
             }
-            console.log('newMoData = ', newMoData);
             let requestEnd = new Date().getTime();
             setListData(newMoData, requestEnd - requestBegin);
         },

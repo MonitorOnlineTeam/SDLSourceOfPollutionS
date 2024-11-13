@@ -2,8 +2,8 @@
  * @Description: 超时服务填报 
  * @LastEditors: hxf
  * @Date: 2024-03-18 15:50:31
- * @LastEditTime: 2024-09-26 19:04:36
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/TimeoutService.js
+ * @LastEditTime: 2024-11-11 13:51:50
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/TimeoutService.js
  */
 import { Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
@@ -299,6 +299,7 @@ export default class TimeoutService extends Component {
                                                     , textAlign: 'right'
                                                 }]}
                                                 placeholder={'服务时长(小时)'}
+                                                placeholderTextColor={'#999999'}
                                                 onChangeText={text => {
                                                     let newItem = { ...item }
                                                     newItem.OverTime = text;
@@ -337,6 +338,7 @@ export default class TimeoutService extends Component {
                                                     , textAlign: 'right'
                                                 }]}
                                                 placeholder={'服务时长(小时)'}
+                                                placeholderTextColor={'#999999'}
                                                 onChangeText={text => {
                                                     let newItem = { ...item }
                                                     newItem.OverTime = text;

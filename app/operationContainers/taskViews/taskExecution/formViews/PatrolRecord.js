@@ -206,6 +206,7 @@ class ExceptionHandlingInput extends PureComponent {
                     }}
                     underlineColorAndroid="transparent"
                     placeholder={'请输入异常处理情况'}
+                    placeholderTextColor={'#999999'}
                     multiline={true}
                 >
                     {this.state.content}
@@ -266,6 +267,7 @@ class ItemInput extends PureComponent {
                     }}
                     underlineColorAndroid="transparent"
                     placeholder={'请输入' + this.props.itemData.Parent + '的巡检备注'}
+                    placeholderTextColor={'#999999'}
                     multiline={true}
                 >
                     {this.state.content}

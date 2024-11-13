@@ -64,7 +64,6 @@ export default class SignInAddressSearchListView extends Component {
                 pageIndex: pageIndex
             },
             callback = (result) => {
-                console.log(result);
                 if (result.errorCode == 0) {
                     // _me.setState({
                     //     hasMore: false
@@ -131,7 +130,6 @@ export default class SignInAddressSearchListView extends Component {
                 pageIndex: 1
             },
             callback = (result) => {
-                console.log(result);
                 // this.setState({
                 //     selectedPoint: null,
                 //     selectedIndex: -1,
@@ -265,7 +263,6 @@ export default class SignInAddressSearchListView extends Component {
                 pageIndex: 1
             },
             callback = (result) => {
-                console.log(result);
                 this.props.dispatch(createAction('signInModel/updateState')({
                     listStatus: 200,
                     selectedPoint: null,
@@ -290,7 +287,6 @@ export default class SignInAddressSearchListView extends Component {
                 pageIndex: 1
             },
             callback = (result) => {
-                console.log(result);
                 this.props.dispatch(createAction('signInModel/updateState')({
                     listStatus: 200,
                     selectedPoint: null,
@@ -325,8 +321,6 @@ export default class SignInAddressSearchListView extends Component {
                                 pageIndex: 1
                             },
                             callback = (result) => {
-                                console.log(result);
-
                                 this.props.dispatch(createAction('signInModel/updateState')({
                                     listStatus: 200,
                                     selectedPoint: null,
@@ -368,6 +362,7 @@ export default class SignInAddressSearchListView extends Component {
                         style={{ color: '#333333', marginLeft: 8, textAlign: 'left', flex: 1, height: 30, paddingVertical: 0 }}
                         underlineColorAndroid="transparent"
                         placeholder="请输入点位名称"
+                        placeholderTextColor={'#999999'}
                     />
                     {this.state.keywords != '' ? (
                         <TouchableOpacity
@@ -394,7 +389,6 @@ export default class SignInAddressSearchListView extends Component {
                                 pageIndex: 1
                             },
                             callback = (result) => {
-                                console.log(result);
                                 this.props.dispatch(createAction('signInModel/updateState')({
                                     listStatus: 200,
                                     selectedPoint: null,

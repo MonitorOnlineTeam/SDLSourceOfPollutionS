@@ -2,7 +2,7 @@
  * @Description: 72小时调试检测
  * @LastEditors: hxf
  * @Date: 2023-09-20 09:46:44
- * @LastEditTime: 2024-11-01 16:48:02
+ * @LastEditTime: 2024-11-11 13:58:19
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/DebuggingDetection72.js
  */
 import moment from 'moment';
@@ -613,6 +613,7 @@ export default class DebuggingDetection72 extends Component {
                                         editable={this.isEdit()}
                                         multiline={true}
                                         placeholder={true ? '请填写备注' : '暂无备注信息'}
+                                        placeholderTextColor={'#999999'}
                                         style={{
                                             width: SCREEN_WIDTH - 38 + 15
                                             , marginLeft: 19, marginRight: 4, minHeight: 40

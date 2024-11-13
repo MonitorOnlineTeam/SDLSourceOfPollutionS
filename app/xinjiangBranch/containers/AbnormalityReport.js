@@ -550,6 +550,7 @@ export default class AbnormalityReport extends PureComponent {
               value={this.state.ExceptionMsg}
               multiline={true}
               placeholder="请输入原因备注"
+              placeholderTextColor={'#999999'}
               style={{
                 color: '#333',
                 width: SCREEN_WIDTH - 28,
@@ -614,7 +615,7 @@ export default class AbnormalityReport extends PureComponent {
                     );
                     return;
                   }
-                  SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                  SyanImagePicker.showImagePicker({}, (err, selectedPhotos) => {
                     if (err) {
                       // 取消选择
                       return;
@@ -627,7 +628,7 @@ export default class AbnormalityReport extends PureComponent {
                       that.props.dispatch(
                         createAction('imageModel/uploadimage')({
                           images: selectedPhotos,
-                          uuid: uuid,
+                          uuid: this.state.AttachmentsID,
                           callback: this.uploadImageCallBack
                         })
                       );

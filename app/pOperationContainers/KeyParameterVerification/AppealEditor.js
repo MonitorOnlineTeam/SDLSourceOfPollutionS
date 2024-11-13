@@ -2,8 +2,8 @@
  * @Description: 关键参数核查 申诉编辑
  * @LastEditors: hxf
  * @Date: 2023-02-08 16:16:59
- * @LastEditTime: 2023-04-18 17:21:16
- * @FilePath: /SDLMainProject34/app/pOperationContainers/KeyParameterVerification/AppealEditor.js
+ * @LastEditTime: 2024-11-13 16:46:00
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/KeyParameterVerification/AppealEditor.js
  */
 import React, { Component } from 'react'
 import { Platform, Text, TouchableOpacity, View, TextInput } from 'react-native'
@@ -20,8 +20,8 @@ import { AlertDialog } from '../../components';
  * 
  */
 
-@connect(({ keyParameterVerificationModel })=>({
-    rectifyVerificationProblemParams:keyParameterVerificationModel.rectifyVerificationProblemParams
+@connect(({ keyParameterVerificationModel }) => ({
+    rectifyVerificationProblemParams: keyParameterVerificationModel.rectifyVerificationProblemParams
 }))
 export default class AppealEditor extends Component {
 
@@ -34,7 +34,7 @@ export default class AppealEditor extends Component {
         return true;
     }
 
-    cancelButton = () => {}
+    cancelButton = () => { }
     confirm = () => {
         this.props.dispatch(createAction('keyParameterVerificationModel/rectifyVerificationProblem')({}));
     }
@@ -59,35 +59,34 @@ export default class AppealEditor extends Component {
                 }
             ]
         };
-        let record = SentencedToEmpty(this.props,['navigation','state','params'],{})
-        console.log('record = ',record);
+        let record = SentencedToEmpty(this.props, ['route', 'params', 'params'], {})
         return (
-            <View style={{width:SCREEN_WIDTH,flex:1}}>
+            <View style={{ width: SCREEN_WIDTH, flex: 1 }}>
                 <KeyboardAwareScrollView ref="scroll" style={{ flex: 1, width: SCREEN_WIDTH }}>
-                    <View style={{width:SCREEN_WIDTH,height:44, backgroundColor:'white', marginBottom:10}}>
-                        <View style={{width:SCREEN_WIDTH-42, marginLeft:21}}>
-                            <FormLabel label={`${SentencedToEmpty(record,['typeName'],'整改问题')}`} last={true} />
+                    <View style={{ width: SCREEN_WIDTH, height: 44, backgroundColor: 'white', marginBottom: 10 }}>
+                        <View style={{ width: SCREEN_WIDTH - 42, marginLeft: 21 }}>
+                            <FormLabel label={`${SentencedToEmpty(record, ['typeName'], '整改问题')}`} last={true} />
                         </View>
                     </View>
-                    <View style={{width:SCREEN_WIDTH,minHeight:167, backgroundColor:'white', marginBottom:10}}>
-                        <View style={{width:SCREEN_WIDTH-42, marginLeft:21}}>
+                    <View style={{ width: SCREEN_WIDTH, minHeight: 167, backgroundColor: 'white', marginBottom: 10 }}>
+                        <View style={{ width: SCREEN_WIDTH - 42, marginLeft: 21 }}>
                             <FormLabel required={true} label={'申诉描述'} />
                         </View>
                         <TextInput
                             editable={true}
                             onChangeText={text => {
                                 //动态更新组件内state 记录输入内容
-                                let rectifyParams = {...this.props.rectifyVerificationProblemParams};
+                                let rectifyParams = { ...this.props.rectifyVerificationProblemParams };
                                 rectifyParams.list[0].Remark = text;
                                 this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
-                                    rectifyVerificationProblemParams:rectifyParams
+                                    rectifyVerificationProblemParams: rectifyParams
                                 }))
                             }}
                             style={[
                                 {
                                     minHeight: 110,
-                                    width: SCREEN_WIDTH-38,
-                                    marginLeft:19,
+                                    width: SCREEN_WIDTH - 38,
+                                    marginLeft: 19,
                                     marginBottom: 20,
                                     color: globalcolor.datepickerGreyText,
                                     fontSize: 15,
@@ -98,49 +97,51 @@ export default class AppealEditor extends Component {
                             ]}
                             multiline={true}
                             value={SentencedToEmpty(this.props
-                                ,['rectifyVerificationProblemParams','list',0,'Remark'],'')}
+                                , ['rectifyVerificationProblemParams', 'list', 0, 'Remark'], '')}
                             numberOfLines={4}
                             placeholder={'请输入'}
+                            placeholderTextColor={'#999999'}
                         />
                     </View>
-                    <View style={{width:SCREEN_WIDTH,minHeight:167, backgroundColor:'white', marginBottom:10}}>
-                        <View style={{width:SCREEN_WIDTH-42, marginLeft:21, marginBottom:10}}>
+                    <View style={{ width: SCREEN_WIDTH, minHeight: 167, backgroundColor: 'white', marginBottom: 10 }}>
+                        <View style={{ width: SCREEN_WIDTH - 42, marginLeft: 21, marginBottom: 10 }}>
                             <FormLabel label={'申诉图片'} />
                         </View>
-                        <ImageGrid 
-                            uploadCallback={(imageItems)=>{
-                                let newDataUpdateImage = {...this.props.rectifyVerificationProblemParams};
-                                let imageList = SentencedToEmpty(newDataUpdateImage,['list',0,'fileList'],[]);
+                        <ImageGrid
+                            uploadCallback={(imageItems) => {
+                                let newDataUpdateImage = { ...this.props.rectifyVerificationProblemParams };
+                                let imageList = SentencedToEmpty(newDataUpdateImage, ['list', 0, 'fileList'], []);
                                 // imageList.push(imageItem);
                                 let newImageList = imageList.concat(imageItems);
                                 newDataUpdateImage.list[0].fileList = newImageList;
                                 this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
-                                    rectifyVerificationProblemParams:newDataUpdateImage
+                                    rectifyVerificationProblemParams: newDataUpdateImage
                                 }));
                             }}
-                            delCallback={(imageIndex)=>{
-                                let newDataUpdateImage = {...this.props.rectifyVerificationProblemParams};
-                                let imageList = SentencedToEmpty(newDataUpdateImage,['list',0,'fileList'],[]);
+                            delCallback={(imageIndex) => {
+                                let newDataUpdateImage = { ...this.props.rectifyVerificationProblemParams };
+                                let imageList = SentencedToEmpty(newDataUpdateImage, ['list', 0, 'fileList'], []);
                                 imageList.splice(imageIndex, 1);
                                 newDataUpdateImage.list[0].fileList = imageList;
-                                console.log('RectifyEditor del newDataUpdateImage = ',newDataUpdateImage);
+                                console.log('RectifyEditor del newDataUpdateImage = ', newDataUpdateImage);
                                 this.props.dispatch(createAction('keyParameterVerificationModel/updateState')({
-                                    rectifyVerificationProblemParams:newDataUpdateImage
+                                    rectifyVerificationProblemParams: newDataUpdateImage
                                 }));
                             }}
-                            style={{ paddingHorizontal:11, paddingBottom: 10, backgroundColor: '#fff' }} 
+                            style={{ paddingHorizontal: 11, paddingBottom: 10, backgroundColor: '#fff' }}
                             Imgs={SentencedToEmpty(this.props
-                                ,['rectifyVerificationProblemParams','list'
-                                    ,0,'fileList'],[])} isUpload={this.isEdit()} isDel={this.isEdit()} 
+                                , ['rectifyVerificationProblemParams', 'list'
+                                    , 0, 'fileList'], [])} isUpload={this.isEdit()} isDel={this.isEdit()}
                             UUID={`${SentencedToEmpty(this.props,
-                                ['rectifyVerificationProblemParams','list',0,'File']
-                                ,'empty_image_id'
+                                ['rectifyVerificationProblemParams', 'list', 0, 'File']
+                                , 'empty_image_id'
                             )}`} />
                     </View>
                 </KeyboardAwareScrollView>
-                <View style={{width:SCREEN_WIDTH, height:74
-                    , flexDirection:'row', justifyContent:'center'
-                    , alignItems:'center'
+                <View style={{
+                    width: SCREEN_WIDTH, height: 74
+                    , flexDirection: 'row', justifyContent: 'center'
+                    , alignItems: 'center'
                 }}>
                     {/* <TouchableOpacity>
                         <View style={{
@@ -153,9 +154,9 @@ export default class AppealEditor extends Component {
                         </View>
                     </TouchableOpacity> */}
                     <TouchableOpacity
-                        onPress={()=>{
+                        onPress={() => {
                             if (SentencedToEmpty(this.props
-                                ,['rectifyVerificationProblemParams','list',0,'Remark'],'')=='') {
+                                , ['rectifyVerificationProblemParams', 'list', 0, 'Remark'], '') == '') {
                                 ShowToast('申诉描述不能为空！');
                             } else {
                                 this.refs.doAlert.show();
@@ -163,12 +164,12 @@ export default class AppealEditor extends Component {
                         }}
                     >
                         <View style={{
-                            width:270, height:44
-                            , justifyContent:'center'
-                            , alignItems:'center', borderRadius:5
-                            , backgroundColor:'#4DA9FF'
+                            width: 270, height: 44
+                            , justifyContent: 'center'
+                            , alignItems: 'center', borderRadius: 5
+                            , backgroundColor: '#4DA9FF'
                         }}>
-                            <Text style={{fontSize:17,color:'white'}}>{'提交'}</Text>
+                            <Text style={{ fontSize: 17, color: 'white' }}>{'提交'}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

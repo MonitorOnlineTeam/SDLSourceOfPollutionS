@@ -167,6 +167,7 @@ class StandardGasReplacementRecord extends Component {
                                     <TextInput
                                         style={[styles.textStyle]}
                                         placeholder={'请选择标准物质名称'}
+                                        placeholderTextColor={'#999999'}
                                         value={this.state.StandardGasName}
                                         onChangeText={text => {
                                             // 动态更新组件内State记录
@@ -184,6 +185,7 @@ class StandardGasReplacementRecord extends Component {
                                     ref={ref => (this._inputMachineHaltReason = ref)}
                                     style={[styles.textStyle, { flex: 1 }]}
                                     placeholder={'请填写气体浓度'}
+                                    placeholderTextColor={'#999999'}
                                     onChangeText={text => {
                                         // 动态更新组件内State记录
                                         this.setState({
@@ -198,6 +200,7 @@ class StandardGasReplacementRecord extends Component {
                                     <TextInput
                                         style={[styles.textStyle]}
                                         placeholder={'请输入单位'}
+                                        placeholderTextColor={'#999999'}
                                         value={this.state.Unit}
                                         onChangeText={text => {
                                             // 动态更新组件内State记录
@@ -218,6 +221,7 @@ class StandardGasReplacementRecord extends Component {
                                             ref={ref => (this._inputMachineHaltReason = ref)}
                                             style={[styles.textStyle, { flex: 1 }]}
                                             placeholder={'请输入数量'}
+                                            placeholderTextColor={'#999999'}
                                             onChangeText={text => {
                                                 // 动态更新组件内State记录
                                                 this.setState({
@@ -234,6 +238,7 @@ class StandardGasReplacementRecord extends Component {
                                     <TextInput
                                         style={[styles.textStyle]}
                                         placeholder={'请填写生产商'}
+                                        placeholderTextColor={'#999999'}
                                         value={this.state.Supplier}
                                         onChangeText={text => {
                                             // 动态更新组件内State记录

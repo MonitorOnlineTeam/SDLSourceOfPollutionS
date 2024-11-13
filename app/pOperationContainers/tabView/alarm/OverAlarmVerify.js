@@ -461,6 +461,7 @@ export default class OverAlarmVerify extends PureComponent {
                             value={this.state.VerifyMessage}
                             multiline={true}
                             placeholder="点击输入核查信息~"
+                            placeholderTextColor={'#999999'}
                             style={{ color: '#333', width: SCREEN_WIDTH - 28, height: 140, backgroundColor: '#f0f0f0', padding: 13, textAlignVertical: 'top' }}
                         />
                         <TouchableOpacity
@@ -486,7 +487,7 @@ export default class OverAlarmVerify extends PureComponent {
                                     });
                                     return;
                                 }
-                                SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {
+                                SyanImagePicker.showImagePicker({}, (err, selectedPhotos) => {
                                     if (err) {
                                         // 取消选择
                                         return;
@@ -499,7 +500,7 @@ export default class OverAlarmVerify extends PureComponent {
                                         that.props.dispatch(
                                             createAction('imageModel/uploadimage')({
                                                 images: selectedPhotos,
-                                                uuid: uuid,
+                                                uuid: this.state.TimeS,
                                                 callback: this.uploadImageCallBack
                                             })
                                         );

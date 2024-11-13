@@ -187,6 +187,7 @@ export default class DistributeTask extends PureComponent {
                         <Text style={{ fontSize: 14, color: '#333' }}>任务描述</Text>
                         <TextInput
                             placeholder={'请输入批注内容'}
+                            placeholderTextColor={'#999999'}
                             style={{
                                 color: '#333333',
                                 textAlignVertical: 'top', height: 54

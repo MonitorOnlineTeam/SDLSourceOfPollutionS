@@ -1435,8 +1435,6 @@ export const repairRecordNewModel = Model.extend({
                 requireStatus = false;
             }
             dataArray.map((item, index) => {
-                console.log('item = ', item);
-                console.log('FaultUnitID = ', item.FaultUnitID);
                 if (SentencedToEmpty(item, ['FaultUnitID'], '') == '') {
                     requireStatus = false;
                 }

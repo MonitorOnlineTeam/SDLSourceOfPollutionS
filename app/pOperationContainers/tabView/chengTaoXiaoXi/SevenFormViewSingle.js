@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-09-18 09:27:53
- * @LastEditTime: 2024-11-01 15:29:35
+ * @LastEditTime: 2024-11-11 13:52:37
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/SevenFormViewSingle.js
  */
 import React, { Component } from 'react'
@@ -247,6 +247,7 @@ export default class SevenFormViewSingle extends Component {
                                 editable={this.isEdit()}
                                 multiline={true}
                                 placeholder={true ? '请填写备注' : '暂无备注信息'}
+                                placeholderTextColor={'#999999'}
                                 style={{
                                     width: SCREEN_WIDTH - 38 + 15
                                     , marginLeft: 19, marginRight: 4, minHeight: 40

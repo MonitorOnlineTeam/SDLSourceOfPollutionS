@@ -2,7 +2,7 @@
  * @Description: 备件更换历史记录 成套
  * @LastEditors: hxf
  * @Date: 2024-04-28 14:01:42
- * @LastEditTime: 2024-11-01 15:00:15
+ * @LastEditTime: 2024-11-11 13:45:08
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeRecords.js
  */
 import { Image, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -422,6 +422,7 @@ export default class SparePartsChangeRecords extends Component {
                             placeholder={SentencedToEmpty(this.props
                                 , ['navigation', 'state', 'params', 'searchPlaceHolder']
                                 , '企业名称、合同编号、立项号')}
+                            placeholderTextColor={'#999999'}
                             onChangeText={(text) => {
                                 this.props.dispatch(createAction('CTSparePartsChangeModel/updateState')({
                                     SpareReplacementRecordKeyVal: text
