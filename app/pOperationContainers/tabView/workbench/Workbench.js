@@ -1361,7 +1361,7 @@ class CompleteTaskStatistics extends Component {
                 count++;
             }
         }
-        if (count == 0 && false) {
+        if (count == 0) {
             return null;
         } else {
             return (<WorkbenchStatistics

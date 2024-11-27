@@ -32,7 +32,8 @@ export default class ChengTaoTaskDetail extends Component {
 
     getBaseInfo = () => {
         const content = SentencedToEmpty(this.props, ['route', 'params', 'params'], null);
-        if (content) {
+        const Num = SentencedToEmpty(this.props, ['route', 'params', 'params', 'Num'], '');
+        if (Num != '') {
             return content;
         } else {
             return SentencedToEmpty(this.props, ['OneServiceDispatchResult', 'data', 'Datas', 0], {});
@@ -163,12 +164,12 @@ class BaseInfo extends Component {
             repeatRecord = false,
             warrantyRecord = false
         } = SentencedToEmpty(this.props, ['serviceRecordStatusResult', 'data', 'Datas'], {});
-        console.log(
-            'overTimeRecord = ', overTimeRecord
-            , ',problemsRecord = ', problemsRecord
-            , ',repeatRecord = ', repeatRecord
-            , ',warrantyRecord = ', warrantyRecord
-        );
+        // console.log(
+        //     'overTimeRecord = ', overTimeRecord
+        //     , ',problemsRecord = ', problemsRecord
+        //     , ',repeatRecord = ', repeatRecord
+        //     , ',warrantyRecord = ', warrantyRecord
+        // );
         if (overTimeRecord && problemsRecord
             && repeatRecord && warrantyRecord
         ) {
@@ -327,6 +328,18 @@ class BaseInfo extends Component {
                     </Text>
                 </View>
                 <View style={[{ flex: 1 }]} />
+                <Text
+                    style={[{
+                        fontSize: 14, color: 'red'
+                        , width: SCREEN_WIDTH - 20, marginLeft: 10
+                        , lineHeight: 20, marginBottom: 8
+                    }]}
+                >
+                    {`说明：
+1、填写该工单前，请先在CIS上填写完成该工单。
+2、该工单中填写的工时加一块应等于CIS上该工单
+填写的实际工时。`}
+                </Text>
                 {SentencedToEmpty(this.props, ['TaskStatus'], 3) != 3 ? <TouchableOpacity
                     onPress={() => {
                         this.refs.completedFormAlert.show();

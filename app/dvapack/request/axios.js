@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { UrlInfo } from '../../config/globalconst';
 import { loadToken, getToken, getRootUrl, getEncryptData, getPhoneUDID } from '../storage';
-import { ShowToast, NavigationActions, Storage, StackActions, SentencedToEmpty } from '../../utils';
+import { ShowToast, NavigationActions, Storage, StackActions, SentencedToEmpty, CloseToast } from '../../utils';
 
 let axiosSource = axios.CancelToken.source();
 let pending = []; //声明一个数组用于存储每个ajax请求的取消函数和ajax标识

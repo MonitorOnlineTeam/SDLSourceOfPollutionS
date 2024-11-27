@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-04-26 11:47:43
- * @LastEditTime: 2024-11-01 15:05:56
+ * @LastEditTime: 2024-11-25 11:20:10
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeEditorTask.js
  */
 import { Image, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
@@ -1011,7 +1011,6 @@ export default class SparePartsChangeEditor extends Component {
                                 onPress={() => {
                                     ShowLoadingToast('正在提交');
                                     const comiteParams = this.state.comiteParams;
-                                    console.log('comiteParams = ', comiteParams);
                                     const checkResult = this.checkParams();
                                     if (checkResult.checkStatus) {
                                         this.props.dispatch(createAction('CTSparePartsChangeModel/updateState')({

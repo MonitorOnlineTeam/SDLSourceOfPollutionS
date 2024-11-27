@@ -2,7 +2,7 @@
  * @Description: 质保内服务填报 
  * @LastEditors: hxf
  * @Date: 2024-03-22 17:03:40
- * @LastEditTime: 2024-11-11 13:56:32
+ * @LastEditTime: 2024-11-25 14:14:13
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/ServiceUnderWarranty.js
  */
 import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -707,6 +707,7 @@ export default class ServiceUnderWarranty extends Component {
                                                 params: {}
                                             }));
                                     } else if (HasData == '') {
+                                        CloseToast();
                                         ShowToast('是否有质保内服务表单为必选项！');
                                         return;
                                     } else {

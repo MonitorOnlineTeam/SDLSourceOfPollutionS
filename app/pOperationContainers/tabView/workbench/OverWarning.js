@@ -2,8 +2,8 @@
  * @Description: 超标预警
  * @LastEditors: hxf
  * @Date: 2022-08-22 11:58:18
- * @LastEditTime: 2024-09-19 17:21:56
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/workbench/OverWarning.js
+ * @LastEditTime: 2024-11-25 09:50:38
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbench/OverWarning.js
  */
 import moment from 'moment';
 import React, { Component } from 'react'
@@ -81,7 +81,7 @@ export default class OverWarning extends Component {
             createAction('alarm/getAlarmRecords')({
                 params: {
                     BeginTime: moment()
-                        // .subtract(1, 'days')
+                        .subtract(1, 'days')
                         .format('YYYY-MM-DD 00:00:00'),
                     EndTime: moment().format('YYYY-MM-DD HH:mm:ss'),
                     AlarmType: '2',
@@ -98,7 +98,7 @@ export default class OverWarning extends Component {
             createAction('alarm/getAlarmRecords')({
                 params: {
                     BeginTime: moment()
-                        // .subtract(1, 'days')
+                        .subtract(1, 'days')
                         .format('YYYY-MM-DD 00:00:00'),
                     EndTime: moment().format('YYYY-MM-DD HH:mm:ss'),
                     AlarmType: '2',

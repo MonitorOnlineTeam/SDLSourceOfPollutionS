@@ -2,7 +2,7 @@
  * @Description: 成套 服务报告整改
  * @LastEditors: hxf
  * @Date: 2024-03-28 14:08:17
- * @LastEditTime: 2024-11-11 11:36:38
+ * @LastEditTime: 2024-11-25 11:11:28
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/CTServiceReportRectificationModel.js
  */
 import { SentencedToEmpty, ShowToast, NavigationActions, CloseToast, ShowLoadingToast, ShowResult } from '../utils';
@@ -167,12 +167,6 @@ export default Model.extend({
                 && result.data.IsSuccess) {
                 CloseToast();
                 callback();
-                // yield put(NavigationActions.back());
-                // yield put(NavigationActions.back());
-                // yield put({
-                //     type: 'getEquipmentAuditRectificationList'
-                //     , payload: { params: { "auditType": tabSelectedIndex } }
-                // });
             } else {
                 CloseToast();
                 ShowToast(SentencedToEmpty(result, ['data', 'Message'], ''));

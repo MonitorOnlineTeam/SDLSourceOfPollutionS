@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-04-26 11:47:43
- * @LastEditTime: 2024-11-01 15:06:59
+ * @LastEditTime: 2024-11-25 11:20:20
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeEditor.js
  */
 import { Image, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
@@ -432,7 +432,6 @@ export default class SparePartsChangeEditor extends Component {
         const from = SentencedToEmpty(this.props
             , ['route', 'params', 'params', 'from'], '');
         const comiteParams = this.state.comiteParams;
-        console.log('comiteParams = ', comiteParams);
         const checkResult = this.checkParams();
         if (checkResult.checkStatus) {
             this.props.dispatch(createAction('CTSparePartsChangeModel/updateState')({
