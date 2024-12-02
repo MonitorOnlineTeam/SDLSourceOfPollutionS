@@ -6,13 +6,14 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { getEncryptData, getRootUrl, getToken, loadStorage } from '../../../dvapack/storage';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import { StatusPage, SelectButton, SimplePickerSingleTime, SDLText, SimplePicker, SimpleLoadingComponent, OperationAlertDialog } from '../../../components';
+import { StatusPage, SelectButton, SimplePickerSingleTime, SDLText, SimplePicker, SimpleLoadingComponent, OperationAlertDialog, AlertDialog } from '../../../components';
 import { createNavigationOptions, NavigationActions, createAction, ShowLoadingToast, CloseToast, ShowToast, SentencedToEmpty } from '../../../utils';
 import { SCREEN_WIDTH } from '../../../config/globalsize';
 import { IMAGE_DEBUG, ImageUrlPrefix, UrlInfo } from '../../../config/globalconst';
 const ic_arrows_down = require('../../../images/ic_arrows_down.png');
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import globalcolor from '../../../config/globalcolor';
 const options = {
     mediaType: 'photo',
     quality: 0.7,
@@ -123,24 +124,6 @@ export default class OverAlarmVerify extends PureComponent {
         this.props.navigation.setOptions({
             headerRight: () => <TouchableOpacity
                 onPress={() => {
-                    // 确认核实
-                    let ExceptionProcessingIDStr = '';
-                    this.props.route.params.params.alramData.map(item => {
-                        ExceptionProcessingIDStr = ExceptionProcessingIDStr + item.ID + ',';
-                    });
-                    let formdataJson = {
-                        cuid: that.state.TimeS,
-                        EntCode: that.props.alarmRecordsPointInfo.TargetId,
-                        DGIMN: this.props.route.params.params.alramData[0].DGIMN,
-                        VerifyState: that.state.selectedOverDataType.code,
-                        VerifyType: that.state.selectedOverDataType.code,
-                        RecoveryDateTime: that.state.recoverTime,
-                        VerifyImage: that.state.TimeS,
-                        VerifyTime: moment().format('YYYY-MM-DD HH:mm:ss'),
-                        VerifyPerSon: getToken().User_Name,
-
-                        VerifyMessage: that.state.VerifyMessage
-                    };
                     let verifyState = SentencedToEmpty(that.state, ['selectedOverDataType', 'code'], -1);
                     if (verifyState == -1) {
                         ShowToast('请选择检查状态！');
@@ -148,25 +131,11 @@ export default class OverAlarmVerify extends PureComponent {
                     }
 
                     // 备注
-                    if (SentencedToEmpty(that.state, ['VerifyMessage'], '') == '') {
+                    if (SentencedToEmpty(that.state, ['VerifyMessage'], '').trim() == '') {
                         ShowToast('备注信息不能为空！');
                         return;
                     }
-                    that.setState({ loading: true });
-
-                    that.props.dispatch(
-                        createAction('alarm/operationVerifyAdd')({
-                            params: {
-                                ExceptionProcessingID: ExceptionProcessingIDStr,
-                                // 选择的检查状态，接口获取
-                                State: that.state.selectedOverDataType.code,
-                                Remark: that.state.VerifyMessage,
-                                // TechnologyOverType: that.state.selectedOverDataType.ID,
-                                Data: formdataJson
-                            },
-                            callback: that.callback
-                        })
-                    );
+                    this.refs.doAlert.show();
                 }}
             >
                 <Image source={require('../../../images/ic_ok.png')} style={{ width: 24, height: 24, marginRight: 16 }} />
@@ -369,7 +338,75 @@ export default class OverAlarmVerify extends PureComponent {
         };
     };
 
+    cancelButton = () => { }
+    confirm = () => {
+        that = this;
+        // 确认核实
+        let ExceptionProcessingIDStr = '';
+        this.props.route.params.params.alramData.map(item => {
+            ExceptionProcessingIDStr = ExceptionProcessingIDStr + item.ID + ',';
+        });
+        let formdataJson = {
+            cuid: that.state.TimeS,
+            EntCode: that.props.alarmRecordsPointInfo.TargetId,
+            DGIMN: this.props.route.params.params.alramData[0].DGIMN,
+            VerifyState: that.state.selectedOverDataType.code,
+            VerifyType: that.state.selectedOverDataType.code,
+            RecoveryDateTime: that.state.recoverTime,
+            VerifyImage: that.state.TimeS,
+            VerifyTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+            VerifyPerSon: getToken().User_Name,
+
+            VerifyMessage: that.state.VerifyMessage
+        };
+        let verifyState = SentencedToEmpty(that.state, ['selectedOverDataType', 'code'], -1);
+        if (verifyState == -1) {
+            ShowToast('请选择检查状态！');
+            return;
+        }
+
+        // 备注
+        if (SentencedToEmpty(that.state, ['VerifyMessage'], '') == '') {
+            ShowToast('备注信息不能为空！');
+            return;
+        }
+        that.setState({ loading: true });
+
+        that.props.dispatch(
+            createAction('alarm/operationVerifyAdd')({
+                params: {
+                    ExceptionProcessingID: ExceptionProcessingIDStr,
+                    // 选择的检查状态，接口获取
+                    State: that.state.selectedOverDataType.code,
+                    Remark: that.state.VerifyMessage,
+                    // TechnologyOverType: that.state.selectedOverDataType.ID,
+                    Data: formdataJson
+                },
+                callback: that.callback
+            })
+        );
+    }
+
     render() {
+        let alertOptions = {
+            headTitle: '提示',
+            messText: `确定要核实该报警吗？`,
+            headStyle: { backgroundColor: globalcolor.headerBackgroundColor, color: '#ffffff', fontSize: 18 },
+            buttons: [
+                {
+                    txt: '取消',
+                    btnStyle: { backgroundColor: 'transparent' },
+                    txtStyle: { color: globalcolor.headerBackgroundColor },
+                    onpress: this.cancelButton
+                },
+                {
+                    txt: '确定',
+                    btnStyle: { backgroundColor: globalcolor.headerBackgroundColor },
+                    txtStyle: { color: '#ffffff' },
+                    onpress: this.confirm
+                }
+            ]
+        };
         const dialogOptions = {
             headTitle: '选择照片',
             messText: null,
@@ -565,6 +602,7 @@ export default class OverAlarmVerify extends PureComponent {
                         />
                     </Modal>
                     <OperationAlertDialog options={dialogOptions} ref="doAlert" />
+                    <AlertDialog options={alertOptions} ref="doAlert" />
                 </ScrollView>
             </StatusPage>
         );

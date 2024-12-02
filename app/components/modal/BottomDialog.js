@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @LastEditors: hxf
+ * @Date: 2023-12-29 11:36:14
+ * @LastEditTime: 2024-11-28 13:32:51
+ * @FilePath: /SDLSourceOfPollutionS/app/components/modal/BottomDialog.js
+ */
 import React, { Component } from 'react'
 import { Modal, Text, View } from 'react-native'
 import globalcolor from '../../config/globalcolor';
@@ -21,11 +28,13 @@ export default class BottomDialog extends Component {
     showModal = () => {
         this.setState({ modalVisible: true });
     };
-    hideModal = () => {
+    hideModal = (callback = () => { }) => {
         if (this.props.ForcedUpdate == true) {
             return;
         } else {
-            this.setState({ modalVisible: false });
+            this.setState({ modalVisible: false }, () => {
+                callback();
+            });
         }
     };
 
@@ -50,10 +59,12 @@ export default class BottomDialog extends Component {
                 {
                     this.props.children ? (
                         this.props.children
-                    ):(
-                        <View style={{width:SCREEN_WIDTH-30,height:80,borderRadius:12
-                        , alignItems:'center', justifyContent:'center',backgroundColor:globalcolor.lightGreyBackground}}>
-                            <Text style={{fontSize:15,color:'#666'}}>{'空的Dialog'}</Text>
+                    ) : (
+                        <View style={{
+                            width: SCREEN_WIDTH - 30, height: 80, borderRadius: 12
+                            , alignItems: 'center', justifyContent: 'center', backgroundColor: globalcolor.lightGreyBackground
+                        }}>
+                            <Text style={{ fontSize: 15, color: '#666' }}>{'空的Dialog'}</Text>
                         </View>
                     )
                 }

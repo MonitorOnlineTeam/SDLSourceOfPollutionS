@@ -2,7 +2,7 @@
  * @Description:对成套打卡功能进行升级
  * @LastEditors: hxf
  * @Date: 2023-09-06 14:20:53
- * @LastEditTime: 2024-11-01 16:56:17
+ * @LastEditTime: 2024-11-29 14:36:30
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoSignIn2.js
  */
 import moment from 'moment';
@@ -23,9 +23,10 @@ import ImageUploadTouch from '../../../components/form/images/ImageUploadTouch';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import ImageDeleteTouch from '../../../components/form/images/ImageDeleteTouch';
 import AutoTimerText from '../../components/AutoTimerText';
+import { StatusPage } from '../../../components';
 const AMapGeolocation = NativeModules.AMapGeolocation;
 // const calenderComponentHeight = 300;
-const calenderComponentHeight = 260;
+let calenderComponentHeight = 260;
 // 240 在部分手机上显示过窄
 const SWIPE_LEFT = 'SWIPE_LEFT';
 const SWIPE_RIGHT = 'SWIPE_RIGHT';
@@ -1154,11 +1155,46 @@ class ChengTaoSigninStatistics extends Component {
             listType: 0,
             largImage: [],
             index: 0,
-            modalVisible: false
+            modalVisible: false,
+            loadingStatus: -1,
         };
     }
 
+    getCalenderRows = (currentMonth) => {
+        console.log('calenderCurrentMonth = ', currentMonth);
+        let oDateMoment = moment(currentMonth).date(1);
+        console.log('oDateMoment = ', oDateMoment);
+        console.log('oDateMoment = ', oDateMoment.format('YYYY-MM-DD'));
+        console.log('day = ', oDateMoment.day());
+        let weekDay = oDateMoment.day();
+        let dateMoment4 = moment(currentMonth).date(4);
+        let dateMoment3 = moment(currentMonth).date(3);
+        console.log('dateMoment4 = ', dateMoment4.day());
+        console.log('dateMoment3 = ', dateMoment3.day());
+        let dateMoment10 = moment(currentMonth).date(10);
+        console.log('dateMoment10 = ', dateMoment10.day());
+        let firstRowLength = 1;
+        if (weekDay == 0) {
+            firstRowLength = 1;
+        } else {
+            firstRowLength = 8 - weekDay;
+        }
+        let dateLength = moment(currentMonth).add('months', 1).date(0).date();
+        console.log('dateLength = ', dateLength);
+        let a = moment().month(2).date(0).date();
+        console.log('a = ', a);
+
+        let remainder = (dateLength - firstRowLength) % 7;
+        let rowsNumber = 1 + Math.floor((dateLength - firstRowLength) / 7);
+        if (remainder > 0) {
+            rowsNumber = rowsNumber + 1;
+        }
+        console.log('rowsNumber = ', rowsNumber);
+        return rowsNumber;
+    }
+
     componentDidMount() {
+
         this.props.dispatch(
             createAction('CTModel/getSignHistoryList')({
                 params: {
@@ -1167,32 +1203,30 @@ class ChengTaoSigninStatistics extends Component {
                 callback: result => { }
             })
         );
+        let currentMonth = moment().format('YYYY-MM-DD');
         this.props.dispatch(
             createAction('CTModel/updateState')({
-                calenderSelectedDate: moment().format('YYYY-MM-DD'),
-                calenderCurrentMonth: moment().format('YYYY-MM-DD')
+                calenderSelectedDate: currentMonth,
+                calenderCurrentMonth: currentMonth
             })
         );
-        // if (SentencedToEmpty(this, ['state', 'listType'], 0) == 0) {
-        //     this.props.dispatch(
-        //         createAction('CTModel/getCTSignInHistoryList')({
-        //             params: {
-        //                 recordDate: moment().format('YYYY-MM-DD')
-        //             },
-        //             callback: result => { }
-        //         })
-        //     );
-        // } else {
-        //     this.props.dispatch(
-        //         createAction('CTModel/getOffsiteSignHistoryList')({
-        //             params: {
-        //                 recordDate: moment().format('YYYY-MM-DD')
-        //             },
-        //             callback: result => { }
-        //         })
-        //     );
-        // }
-
+        // 动态高度 start
+        const rowLength = this.getCalenderRows(currentMonth);
+        if (rowLength > 5) {
+            let otherHeight = (rowLength - 5) * 40;
+            calenderComponentHeight = 260 + otherHeight;
+            this.setState({
+                calendarHeight: new Animated.Value(calenderComponentHeight)
+                , loadingStatus: 200
+            });
+        } else {
+            calenderComponentHeight = 260;
+            this.setState({
+                calendarHeight: new Animated.Value(calenderComponentHeight)
+                , loadingStatus: 200
+            });
+        }
+        // 动态高度 end
 
         let panResponder = PanResponder.create({
             onMoveShouldSetPanResponder: (evt, gestureState) => {
@@ -1636,6 +1670,26 @@ class ChengTaoSigninStatistics extends Component {
 
     nextDateFun = () => {
         let nextDate = moment(this.props.calenderCurrentMonth).add(1, 'months');
+        // 动态高度 start
+        this.setState({
+            loadingStatus: -1
+        });
+        const rowLength = this.getCalenderRows(nextDate);
+        if (rowLength > 5) {
+            let otherHeight = (rowLength - 5) * 40;
+            calenderComponentHeight = 260 + otherHeight;
+            this.setState({
+                calendarHeight: new Animated.Value(calenderComponentHeight)
+                , loadingStatus: 200
+            });
+        } else {
+            calenderComponentHeight = 260;
+            this.setState({
+                calendarHeight: new Animated.Value(calenderComponentHeight)
+                , loadingStatus: 200
+            });
+        }
+        // 动态高度 end
         let selectedDate = nextDate.format("YYYY-MM-01");
         if (nextDate.format('MM') == moment().format('MM')) {
             selectedDate = moment().format('YYYY-MM-DD');
@@ -1663,6 +1717,26 @@ class ChengTaoSigninStatistics extends Component {
 
     previousDateFun = () => {
         let previousDate = moment(this.props.calenderCurrentMonth).subtract(1, 'months');
+        // 动态高度 start
+        this.setState({
+            loadingStatus: -1
+        });
+        const rowLength = this.getCalenderRows(previousDate);
+        if (rowLength > 5) {
+            let otherHeight = (rowLength - 5) * 40;
+            calenderComponentHeight = 260 + otherHeight;
+            this.setState({
+                calendarHeight: new Animated.Value(calenderComponentHeight)
+                , loadingStatus: 200
+            });
+        } else {
+            calenderComponentHeight = 260;
+            this.setState({
+                calendarHeight: new Animated.Value(calenderComponentHeight)
+                , loadingStatus: 200
+            });
+        }
+        // 动态高度 end
         let selectedDate = previousDate.format("YYYY-MM-01");
         if (previousDate.format('MM') == moment().format('MM')) {
             selectedDate = moment().format('YYYY-MM-DD');
@@ -1715,206 +1789,220 @@ class ChengTaoSigninStatistics extends Component {
     }
 
     render() {
-
+        this.getCalenderRows(this.props.calenderCurrentMonth);
         // console.log(' calenderSelectedDate = ', this.props.calenderSelectedDate);
         // console.log(this.props.calenderSelectedDate + " = " + SentencedToEmpty(this.props
         //     , ['calenderDataObject', this.props.calenderSelectedDate], ''));
-
-        return (<View style={[{
-            width: SCREEN_WIDTH, flex: 1
-        }]}>
+        return (<StatusPage
+            status={this.state.loadingStatus}
+            errorText={SentencedToEmpty(this.props, ['errorMsg'], '服务器加载错误')}
+            errorTextStyle={{ width: SCREEN_WIDTH - 100, lineHeight: 20, textAlign: 'center' }}
+            //页面是否有回调按钮，如果不传，没有按钮，
+            emptyBtnText={'重新请求'}
+            errorBtnText={'点击重试'}
+            onEmptyPress={() => {
+                //空页面按钮回调
+            }}
+            onErrorPress={() => {
+                //错误页面按钮回调
+            }}
+        >
             <View style={[{
-                width: SCREEN_WIDTH - 20, marginTop: 10
-                , marginLeft: 10, backgroundColor: '#ffffff'
-                , borderRadius: 5
-                , alignItems: 'center'
+                width: SCREEN_WIDTH, flex: 1
             }]}>
                 <View style={[{
-                    width: SCREEN_WIDTH - 40, height: 40
-                    , flexDirection: 'row', alignItems: 'flex-end'
-                    , paddingBottom: 6
+                    width: SCREEN_WIDTH - 20, marginTop: 10
+                    , marginLeft: 10, backgroundColor: '#ffffff'
+                    , borderRadius: 5
+                    , alignItems: 'center'
                 }]}>
-                    <Text style={[{ fontSize: 14, color: '#333333' }]}>{`${`${moment(this.props.calenderCurrentMonth).format("YYYY")}年`}`}</Text>
-                    <Text style={[{ fontSize: 14, color: '#333333', marginLeft: 16 }]}>{`${this.getMonthAndDate()}`}</Text>
-                    <View style={[{ flex: 1 }]} />
-                    {!this.state.hideCalendar ? <TouchableOpacity
-                        onPress={() => {
-                            this.previousDateFun();
-                        }}
-                    >
-                        <View style={[{ width: 64, height: 40, justifyContent: 'flex-end', alignItems: 'flex-end' }]}>
-                            <Image style={[{ width: 28, height: 28 }]} source={require('../../../images/calenderLeft.png')} />
-                        </View>
-                    </TouchableOpacity> : null}
-                    {!this.state.hideCalendar ? <TouchableOpacity
-                        onPress={() => {
-                            this.nextDateFun();
-                        }}
-                    >
-                        <View style={[{ width: 64, height: 40, justifyContent: 'flex-end', alignItems: 'center' }]}>
-                            <Image style={[{ width: 28, height: 28 }]} source={require('../../../images/calendarRight.png')} />
-                        </View>
-                    </TouchableOpacity> : null}
-                </View>
-
-                {this.state.hideCalendar ? null : <View style={[{ opacity: this.state.calenderOpacity, width: SCREEN_WIDTH - 40, height: 1, backgroundColor: '#EAEAEA' }]}></View>}
-                <View
-                    style={[{
-                        width: SCREEN_WIDTH - 40,
-                    }]}
-                >
-                    <Animated.View style={[{ height: this.state.calendarHeight, width: SCREEN_WIDTH - 40 }]}>
-                        <View
-                            style={[{
-                                width: SCREEN_WIDTH - 40
-                            }]}
-                        >
-                            {this.state.hideCalendar ? null : <CalendarPicker
-                                ref={ref => (this.CalendarPicker = ref)}
-                                showHeader={false}
-                                startFromMonday={true}
-                                selectedStartDate={this.props.calenderSelectedDate}
-                                // selectedEndDate={this.state.selectedEndDate}
-                                initialDate={this.props.calenderSelectedDate}
-                                weekdays={['一', '二', '三', '四', '五', '六', '日']}
-                                months={['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']}
-                                previousTitle={require('../../../images/calenderLeft.png')}
-                                nextTitle={require('../../../images/calendarRight.png')}
-                                // minDate={minDate}
-                                // maxDate={maxDate}
-                                todayBackgroundColor="#EEE685"
-                                selectedDayColor="#dff0ff"
-                                selectedDayTextColor="#333333"
-                                onDateChange={this.onDateChange}
-                                onSwipe={this.onSwipe}
-                                customDotDatesStyles={this.props.calenderData}
-                            />}
-                        </View>
-                    </Animated.View>
                     <View style={[{
-                        height: 16, width: SCREEN_WIDTH - 40,
+                        width: SCREEN_WIDTH - 40, height: 40
+                        , flexDirection: 'row', alignItems: 'flex-end'
+                        , paddingBottom: 6
                     }]}>
-                        <TouchableOpacity
+                        <Text style={[{ fontSize: 14, color: '#333333' }]}>{`${`${moment(this.props.calenderCurrentMonth).format("YYYY")}年`}`}</Text>
+                        <Text style={[{ fontSize: 14, color: '#333333', marginLeft: 16 }]}>{`${this.getMonthAndDate()}`}</Text>
+                        <View style={[{ flex: 1 }]} />
+                        {!this.state.hideCalendar ? <TouchableOpacity
                             onPress={() => {
-                                if (this.state.calendarHeight._value == 0) {
-                                    this.showCalenderFun(() => {
-                                        Animated.spring(
-                                            this.state.calendarHeight, // Auto-multiplexed
-                                            { toValue: calenderComponentHeight } // Back to zero
-                                        ).start(() => {
-                                            this.setState({ calenderOpacity: 1 });
-                                        });
-                                    });
-                                } else if (this.state.calendarHeight._value == calenderComponentHeight) {
-                                    this.showCalenderFun(() => {
-                                        Animated.spring(
-                                            this.state.calendarHeight, // Auto-multiplexed
-                                            { toValue: 0 } // Back to zero
-                                        ).start(() => {
-                                            // this.setState({hideCalendar:true});
-                                        });
-                                    });
-                                }
+                                this.previousDateFun();
                             }}
                         >
-                            <View style={[{ height: 16, width: SCREEN_WIDTH - 40, flexDirection: 'row', alignItems: 'center' }]}>
-                                <View style={[{ flex: 1, height: 1, backgroundColor: '#EAEAEA' }]}></View>
-                                {/* <View style={[{width:20,height:8,backgroundColor:'#EAEAEA'}]}></View> */}
-                                <Image
-                                    style={[{ width: 20, height: 8 }]}
-                                    source={this.state.hideCalendar
-                                        ? require('../../../images/ic_ct_calendar_down.png')
-                                        : require('../../../images/ic_ct_calendar_up.png')
-                                    }
-                                />
-                                <View style={[{ flex: 1, height: 1, backgroundColor: '#EAEAEA' }]}></View>
+                            <View style={[{ width: 64, height: 40, justifyContent: 'flex-end', alignItems: 'flex-end' }]}>
+                                <Image style={[{ width: 28, height: 28 }]} source={require('../../../images/calenderLeft.png')} />
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity> : null}
+                        {!this.state.hideCalendar ? <TouchableOpacity
+                            onPress={() => {
+                                this.nextDateFun();
+                            }}
+                        >
+                            <View style={[{ width: 64, height: 40, justifyContent: 'flex-end', alignItems: 'center' }]}>
+                                <Image style={[{ width: 28, height: 28 }]} source={require('../../../images/calendarRight.png')} />
+                            </View>
+                        </TouchableOpacity> : null}
                     </View>
-                </View>
-            </View >
-            <Animated.View
-                style={[{ width: SCREEN_WIDTH - 40, flex: 1, marginBottom: 10 }]}
-            >
-                {
-                    SentencedToEmpty(this.props
-                        , ['calenderDataObject'
-                            , this.props.calenderSelectedDate
-                            , 'StatisticMsg'], '') == ''
-                        ? null
-                        : <View style={[{
-                            width: SCREEN_WIDTH - 20, marginVertical: 5
-                            , marginLeft: 10, backgroundColor: '#ffffff'
-                            , borderRadius: 5
-                            // , flex: 1
-                            , alignItems: 'center'
-                            , height: 40, justifyContent: 'center'
-                        }]}>
-                            <View style={[{
-                                width: SCREEN_WIDTH - 40
-                                , flexDirection: 'row'
-                            }]}>
-                                <Text
-                                    numberOfLines={2}
-                                    style={[{
-                                        width: SCREEN_WIDTH - 40,
-                                        fontSize: 11, color: '#666666'
-                                        // , marginTop: 17
-                                        , lineHeight: 16
-                                    }]}>{
-                                        `${this.getText()}`
-                                    }</Text>
-                            </View>
-                        </View>
-                }
 
-
-                {
-                    SentencedToEmpty(this.props
-                        , ['calenderDataObject'
-                            , this.props.calenderSelectedDate
-                            , 'DataList'], []).length == 0
-                        ? null
-                        : <View style={[{
-                            width: SCREEN_WIDTH - 20
-                            , marginLeft: 10
-                            // , backgroundColor: '#ffffff'
-                            , borderRadius: 5, flex: 1
-                            , alignItems: 'center'
-                        }]}>
-                            <ScrollView
+                    {this.state.hideCalendar ? null : <View style={[{ opacity: this.state.calenderOpacity, width: SCREEN_WIDTH - 40, height: 1, backgroundColor: '#EAEAEA' }]}></View>}
+                    <View
+                        style={[{
+                            width: SCREEN_WIDTH - 40,
+                        }]}
+                    >
+                        <Animated.View style={[{ height: this.state.calendarHeight, width: SCREEN_WIDTH - 40 }]}>
+                            <View
                                 style={[{
-                                    width: SCREEN_WIDTH - 20, flex: 1
-                                }]}>
-                                {
-                                    this.getList().map((item, index) => {
-                                        return this.renderLineItem(item, index, this.getList().length);
-                                    })
-                                }
-                            </ScrollView>
+                                    width: SCREEN_WIDTH - 40
+                                }]}
+                            >
+                                {this.state.hideCalendar ? null : <CalendarPicker
+                                    ref={ref => (this.CalendarPicker = ref)}
+                                    showHeader={false}
+                                    startFromMonday={true}
+                                    selectedStartDate={this.props.calenderSelectedDate}
+                                    // selectedEndDate={this.state.selectedEndDate}
+                                    initialDate={this.props.calenderSelectedDate}
+                                    weekdays={['一', '二', '三', '四', '五', '六', '日']}
+                                    months={['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']}
+                                    previousTitle={require('../../../images/calenderLeft.png')}
+                                    nextTitle={require('../../../images/calendarRight.png')}
+                                    // minDate={minDate}
+                                    // maxDate={maxDate}
+                                    todayBackgroundColor="#EEE685"
+                                    selectedDayColor="#dff0ff"
+                                    selectedDayTextColor="#333333"
+                                    onDateChange={this.onDateChange}
+                                    onSwipe={this.onSwipe}
+                                    customDotDatesStyles={this.props.calenderData}
+                                />}
+                            </View>
+                        </Animated.View>
+                        <View style={[{
+                            height: 16, width: SCREEN_WIDTH - 40,
+                        }]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    if (this.state.calendarHeight._value == 0) {
+                                        this.showCalenderFun(() => {
+                                            Animated.spring(
+                                                this.state.calendarHeight, // Auto-multiplexed
+                                                { toValue: calenderComponentHeight } // Back to zero
+                                            ).start(() => {
+                                                this.setState({ calenderOpacity: 1 });
+                                            });
+                                        });
+                                    } else if (this.state.calendarHeight._value == calenderComponentHeight) {
+                                        this.showCalenderFun(() => {
+                                            Animated.spring(
+                                                this.state.calendarHeight, // Auto-multiplexed
+                                                { toValue: 0 } // Back to zero
+                                            ).start(() => {
+                                                // this.setState({hideCalendar:true});
+                                            });
+                                        });
+                                    }
+                                }}
+                            >
+                                <View style={[{ height: 16, width: SCREEN_WIDTH - 40, flexDirection: 'row', alignItems: 'center' }]}>
+                                    <View style={[{ flex: 1, height: 1, backgroundColor: '#EAEAEA' }]}></View>
+                                    {/* <View style={[{width:20,height:8,backgroundColor:'#EAEAEA'}]}></View> */}
+                                    <Image
+                                        style={[{ width: 20, height: 8 }]}
+                                        source={this.state.hideCalendar
+                                            ? require('../../../images/ic_ct_calendar_down.png')
+                                            : require('../../../images/ic_ct_calendar_up.png')
+                                        }
+                                    />
+                                    <View style={[{ flex: 1, height: 1, backgroundColor: '#EAEAEA' }]}></View>
+                                </View>
+                            </TouchableOpacity>
                         </View>
-                }
-            </Animated.View>
-            <Modal visible={this.state.modalVisible} transparent={true} onRequestClose={() => this.setState({ modalVisible: false })}>
-                <ImageViewer
-                    saveToLocalByLongPress={false}
-                    menuContext={{ saveToLocal: '保存图片', cancel: '取消' }}
-                    onClick={() => {
-                        {
-                            this.setState({
-                                modalVisible: false
-                            });
-                        }
-                    }}
-                    onSave={url => {
-                        // this.savePhoto(this.state.largImage[0].url);
-                    }}
-                    imageUrls={this.state.largImage}
-                    // index={0}
-                    index={this.state.index}
-                />
-            </Modal>
-        </View >
+                    </View>
+                </View >
+                <Animated.View
+                    style={[{ width: SCREEN_WIDTH - 40, flex: 1, marginBottom: 10 }]}
+                >
+                    {
+                        SentencedToEmpty(this.props
+                            , ['calenderDataObject'
+                                , this.props.calenderSelectedDate
+                                , 'StatisticMsg'], '') == ''
+                            ? null
+                            : <View style={[{
+                                width: SCREEN_WIDTH - 20, marginVertical: 5
+                                , marginLeft: 10, backgroundColor: '#ffffff'
+                                , borderRadius: 5
+                                // , flex: 1
+                                , alignItems: 'center'
+                                , height: 40, justifyContent: 'center'
+                            }]}>
+                                <View style={[{
+                                    width: SCREEN_WIDTH - 40
+                                    , flexDirection: 'row'
+                                }]}>
+                                    <Text
+                                        numberOfLines={2}
+                                        style={[{
+                                            width: SCREEN_WIDTH - 40,
+                                            fontSize: 11, color: '#666666'
+                                            // , marginTop: 17
+                                            , lineHeight: 16
+                                        }]}>{
+                                            `${this.getText()}`
+                                        }</Text>
+                                </View>
+                            </View>
+                    }
+
+
+                    {
+                        SentencedToEmpty(this.props
+                            , ['calenderDataObject'
+                                , this.props.calenderSelectedDate
+                                , 'DataList'], []).length == 0
+                            ? null
+                            : <View style={[{
+                                width: SCREEN_WIDTH - 20
+                                , marginLeft: 10
+                                // , backgroundColor: '#ffffff'
+                                , borderRadius: 5, flex: 1
+                                , alignItems: 'center'
+                            }]}>
+                                <ScrollView
+                                    style={[{
+                                        width: SCREEN_WIDTH - 20, flex: 1
+                                    }]}>
+                                    {
+                                        this.getList().map((item, index) => {
+                                            return this.renderLineItem(item, index, this.getList().length);
+                                        })
+                                    }
+                                </ScrollView>
+                            </View>
+                    }
+                </Animated.View>
+                <Modal visible={this.state.modalVisible} transparent={true} onRequestClose={() => this.setState({ modalVisible: false })}>
+                    <ImageViewer
+                        saveToLocalByLongPress={false}
+                        menuContext={{ saveToLocal: '保存图片', cancel: '取消' }}
+                        onClick={() => {
+                            {
+                                this.setState({
+                                    modalVisible: false
+                                });
+                            }
+                        }}
+                        onSave={url => {
+                            // this.savePhoto(this.state.largImage[0].url);
+                        }}
+                        imageUrls={this.state.largImage}
+                        // index={0}
+                        index={this.state.index}
+                    />
+                </Modal>
+            </View >
+        </StatusPage>
         );
     }
 }

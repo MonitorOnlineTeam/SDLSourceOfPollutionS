@@ -249,7 +249,7 @@ export default class TaskHandle extends Component {
                                 }
                             } else {
                                 // 处理说明不能为空
-                                if (SentencedToEmpty(this.state, ['TaskContent'], '') == '') {
+                                if (SentencedToEmpty(this.state, ['TaskContent'], '').replace(/\s/g, "") == '') {
                                     ShowToast(`处理说明不能为空`);
                                 } else {
                                     this.props.dispatch(

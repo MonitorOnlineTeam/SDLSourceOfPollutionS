@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Image, Platform, TouchableOpacity } from 'react
 import moment from 'moment';
 import { connect } from 'react-redux';
 
-import { StatusPage, Touchable, PickerTouchable, SimplePickerRangeDay, SimplePicker, SDLText, SimpleLoadingComponent } from '../../components';
+import { StatusPage, Touchable, PickerTouchable, SimplePickerRangeDay, SimplePicker, SDLText, SimpleLoadingComponent, AlertDialog } from '../../components';
 import { createNavigationOptions, NavigationActions, createAction, SentencedToEmpty, transformColorToTransparency, ShowToast } from '../../utils';
 import { SCREEN_WIDTH } from '../../config/globalsize';
 import FlatListWithHeaderAndFooter from '../../components/FlatListWithHeaderAndFooter';
@@ -214,7 +214,97 @@ export default class AlarmRecords extends PureComponent {
         this.list.setListData(newAlarmRecordsListData);
     };
 
+    cancelButton = () => { }
+    confirm = () => {
+        let recordType = '';
+        this.setState({ commitLoading: -1 }, () => {
+            //如果是废气废水的话默认响应巡检标签，扬尘或者voc响应维修标签
+            if (SentencedToEmpty(this.props.alarmRecordsPointInfo, ['PollutantType'], null) == 2) {
+                //废气
+                // recordType = '2'; //维护/维修
+                recordType = '32'; //异常处理
+            } else if (SentencedToEmpty(this.props.alarmRecordsPointInfo, ['PollutantType'], null) == 1) {
+                //废水
+                // recordType = '8'; //维护/维修
+                recordType = '31'; //异常处理
+            } else if (SentencedToEmpty(this.props.alarmRecordsPointInfo, ['PollutantType'], null) == 12) {
+                //扬尘
+                recordType = '28'; //设备异常处理
+            } else if (SentencedToEmpty(this.props.alarmRecordsPointInfo, ['PollutantType'], null) == 5) {
+                //大气
+                recordType = '14'; //维护/维修
+            } else if (SentencedToEmpty(this.props.alarmRecordsPointInfo, ['PollutantType'], null) == 10) {
+                //voc
+                recordType = '27'; //设备异常处理
+            } else {
+                recordType = '29'; //设备异常处理
+            }
+            //this.props.alarmRecordsListData[0].OperationEntCode
+            let params = {
+                OperationFlag: 1, // 现场处理
+                // ImplementDate: this.state.selectTime,
+                taskFrom: '2',
+                // remark: this.state.remark,
+                DGIMNs: this.props.alarmRecordsListTargetDGIMN,
+                RecordType: recordType
+                // createUserId:getToken().UserId,
+                // operationsUserId:getToken().UserId
+            };
+            // 如果是缺失数据报警则增加此标示
+            if (this.state.functionType == 'WorkbenchMiss') {
+                params.missData = 1;
+            }
+            /**
+             * 接口中增加 时间记录
+             * this.props.alarmRecordsListData
+             * beginTime、endTime
+             */
+            const alarmlist = this.props.alarmRecordsListData;
+            if (alarmlist.length > 0) {
+                params.endTime = alarmlist[0].AlarmTime;
+                params.beginTime = alarmlist[alarmlist.length - 1].AlarmTime;
+            }
+            let alarmID = [];
+            alarmlist.map((item, index) => {
+                // 待定
+                alarmID.push(item.ID);
+            });
+            params.alarmID = alarmID;
+            this.props.dispatch(
+                createAction('taskModel/alarmResponse')({
+                    params
+                    , successCallback: () => {
+                        this.setState({ commitLoading: 200 });
+                        this.props.dispatch(NavigationActions.back({ routeName: 'Workbench' }));
+                    }
+                    , failureCallBack: () => {
+                        this.setState({ commitLoading: 200 });
+                    }
+                })
+            );
+        });
+    }
+
     render() {
+        let alertOptions = {
+            headTitle: '提示',
+            messText: '是否确定要现场处理该报警信息吗？',
+            headStyle: { backgroundColor: globalcolor.headerBackgroundColor, color: '#ffffff', fontSize: 18 },
+            buttons: [
+                {
+                    txt: '取消',
+                    btnStyle: { backgroundColor: 'transparent' },
+                    txtStyle: { color: globalcolor.headerBackgroundColor },
+                    onpress: this.cancelButton
+                },
+                {
+                    txt: '确定',
+                    btnStyle: { backgroundColor: globalcolor.headerBackgroundColor },
+                    txtStyle: { color: '#ffffff' },
+                    onpress: this.confirm
+                }
+            ]
+        };
         // CURRENT_PROJECT == 'POLLUTION_ORERATION_PROJECT' && this.props.alarmRecordsListData.length > 0 && (this.state.functionType == 'AlarmResponse' || this.state.functionType == 'WorkbenchMiss'
         return (
             <View style={styles.container}>
@@ -622,73 +712,8 @@ export default class AlarmRecords extends PureComponent {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => {
-                                        this.refs.respondTypeSelect.hideModal();
-                                        let recordType = '';
-                                        this.setState({ commitLoading: -1 }, () => {
-                                            //如果是废气废水的话默认响应巡检标签，扬尘或者voc响应维修标签
-                                            if (SentencedToEmpty(this.props.alarmRecordsPointInfo, ['PollutantType'], null) == 2) {
-                                                //废气
-                                                // recordType = '2'; //维护/维修
-                                                recordType = '32'; //异常处理
-                                            } else if (SentencedToEmpty(this.props.alarmRecordsPointInfo, ['PollutantType'], null) == 1) {
-                                                //废水
-                                                // recordType = '8'; //维护/维修
-                                                recordType = '31'; //异常处理
-                                            } else if (SentencedToEmpty(this.props.alarmRecordsPointInfo, ['PollutantType'], null) == 12) {
-                                                //扬尘
-                                                recordType = '28'; //设备异常处理
-                                            } else if (SentencedToEmpty(this.props.alarmRecordsPointInfo, ['PollutantType'], null) == 5) {
-                                                //大气
-                                                recordType = '14'; //维护/维修
-                                            } else if (SentencedToEmpty(this.props.alarmRecordsPointInfo, ['PollutantType'], null) == 10) {
-                                                //voc
-                                                recordType = '27'; //设备异常处理
-                                            } else {
-                                                recordType = '29'; //设备异常处理
-                                            }
-                                            //this.props.alarmRecordsListData[0].OperationEntCode
-                                            let params = {
-                                                OperationFlag: 1, // 现场处理
-                                                // ImplementDate: this.state.selectTime,
-                                                taskFrom: '2',
-                                                // remark: this.state.remark,
-                                                DGIMNs: this.props.alarmRecordsListTargetDGIMN,
-                                                RecordType: recordType
-                                                // createUserId:getToken().UserId,
-                                                // operationsUserId:getToken().UserId
-                                            };
-                                            // 如果是缺失数据报警则增加此标示
-                                            if (this.state.functionType == 'WorkbenchMiss') {
-                                                params.missData = 1;
-                                            }
-                                            /**
-                                             * 接口中增加 时间记录
-                                             * this.props.alarmRecordsListData
-                                             * beginTime、endTime
-                                             */
-                                            const alarmlist = this.props.alarmRecordsListData;
-                                            if (alarmlist.length > 0) {
-                                                params.endTime = alarmlist[0].AlarmTime;
-                                                params.beginTime = alarmlist[alarmlist.length - 1].AlarmTime;
-                                            }
-                                            let alarmID = [];
-                                            alarmlist.map((item, index) => {
-                                                // 待定
-                                                alarmID.push(item.ID);
-                                            });
-                                            params.alarmID = alarmID;
-                                            this.props.dispatch(
-                                                createAction('taskModel/alarmResponse')({
-                                                    params
-                                                    , successCallback: () => {
-                                                        this.setState({ commitLoading: 200 });
-                                                        this.props.dispatch(NavigationActions.back({ routeName: 'Workbench' }));
-                                                    }
-                                                    , failureCallBack: () => {
-                                                        this.setState({ commitLoading: 200 });
-                                                    }
-                                                })
-                                            );
+                                        this.refs.respondTypeSelect.hideModal(() => {
+                                            this.refs.doAlert.show();
                                         });
                                     }}
                                 >
@@ -703,6 +728,7 @@ export default class AlarmRecords extends PureComponent {
                             </View>
                         </View>
                     </BottomDialog>
+                    <AlertDialog options={alertOptions} ref="doAlert" />
                 </StatusPage>
             </View>
         );
