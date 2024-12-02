@@ -143,6 +143,7 @@ export default class OverAlarmVerify extends PureComponent {
         });
     }
     callback = isSuccess => {
+        CloseToast();
         this.setState({ loading: false });
         if (isSuccess == true) {
             if (this.state.selectedOverDataType.code == 2) {
@@ -371,7 +372,7 @@ export default class OverAlarmVerify extends PureComponent {
             return;
         }
         that.setState({ loading: true });
-
+        ShowLoadingToast('提交中...');
         that.props.dispatch(
             createAction('alarm/operationVerifyAdd')({
                 params: {

@@ -353,7 +353,7 @@ export default class AlarmReview extends PureComponent {
                                 <TouchableOpacity
                                     onPress={() => {
                                         if (Platform.OS == 'ios') {
-                                            SyanImagePicker.showImagePicker({ imageCount: 1 }, (err, selectedPhotos) => {
+                                            SyanImagePicker.showImagePicker({ imageCount: 15 }, (err, selectedPhotos) => {
                                                 if (err) {
                                                     // 取消选择
                                                     return;
@@ -374,7 +374,7 @@ export default class AlarmReview extends PureComponent {
                                             });
                                             return;
                                         }
-                                        SyanImagePicker.showImagePicker({ imageCount: 1 }, (err, selectedPhotos) => {
+                                        SyanImagePicker.showImagePicker({ imageCount: 15 }, (err, selectedPhotos) => {
                                             if (err) {
                                                 // 取消选择
                                                 return;

@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-08-26 10:59:39
- * @LastEditTime: 2024-11-12 16:40:50
+ * @LastEditTime: 2024-12-02 11:53:40
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/MissionVerification/RepulseMissionVerification.js
  */
 import { Image, Platform, Text, TextInput, TouchableOpacity, View, ScrollView } from 'react-native'
@@ -154,7 +154,7 @@ export default class RepulseMissionVerification extends Component {
                                 editSi = si;
                                 editSiIndex = idx;
                                 if (Platform.OS == 'ios') {
-                                    SyanImagePicker.showImagePicker({ imageCount: 6 }, (err, selectedPhotos) => {
+                                    SyanImagePicker.showImagePicker({ imageCount: 15 }, (err, selectedPhotos) => {
                                         if (err) {
                                             // 取消选择
                                             return;
@@ -177,7 +177,7 @@ export default class RepulseMissionVerification extends Component {
                                     });
                                     return;
                                 }
-                                SyanImagePicker.showImagePicker({ imageCount: 6 }, (err, selectedPhotos) => {
+                                SyanImagePicker.showImagePicker({ imageCount: 15 }, (err, selectedPhotos) => {
                                     if (err) {
                                         // 取消选择
                                         return;

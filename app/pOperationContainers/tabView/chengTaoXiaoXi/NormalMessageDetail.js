@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-09-12 11:31:23
- * @LastEditTime: 2024-11-01 16:16:57
+ * @LastEditTime: 2024-12-02 13:47:58
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/NormalMessageDetail.js
  */
 import React, { Component } from 'react'
@@ -54,7 +54,7 @@ export default class NormalMessageDetail extends Component {
                             width: SCREEN_WIDTH - 40, height: 44
                             , justifyContent: 'center'
                         }]}>
-                            <Text style={[{ color: '#333333' }]}>{`消息内容:$ 时间:${SentencedToEmpty(this.props
+                            <Text style={[{ color: '#333333' }]}>{`消息时间:${SentencedToEmpty(this.props
                                 , ['route', 'params', 'params', 'dateTime']
                                 , '----'
                             )}`}</Text>

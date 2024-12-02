@@ -238,7 +238,7 @@ export default class CheckDetails extends Component {
                                 editSi = si;
                                 editSiIndex = idx;
                                 if (Platform.OS == 'ios') {
-                                    SyanImagePicker.showImagePicker({ imageCount: 6 }, (err, selectedPhotos) => {
+                                    SyanImagePicker.showImagePicker({ imageCount: 15 }, (err, selectedPhotos) => {
                                         if (err) {
                                             // 取消选择
                                             return;
@@ -261,7 +261,7 @@ export default class CheckDetails extends Component {
                                     });
                                     return;
                                 }
-                                SyanImagePicker.showImagePicker({ imageCount: 6 }, (err, selectedPhotos) => {
+                                SyanImagePicker.showImagePicker({ imageCount: 15 }, (err, selectedPhotos) => {
                                     if (err) {
                                         // 取消选择
                                         return;

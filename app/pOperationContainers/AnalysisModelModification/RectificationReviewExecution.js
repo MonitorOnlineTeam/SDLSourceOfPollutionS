@@ -2,7 +2,7 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-11-01 16:56:11
- * @LastEditTime: 2024-11-11 17:24:30
+ * @LastEditTime: 2024-12-02 11:06:23
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/AnalysisModelModification/RectificationReviewExecution.js
  */
 import {
@@ -485,7 +485,7 @@ export default class RectificationReviewExecution extends Component {
                   onPress={() => {
                     if (Platform.OS == 'ios') {
                       SyanImagePicker.showImagePicker(
-                        { imageCount: 1 },
+                        { imageCount: 15 },
                         (err, selectedPhotos) => {
                           if (err) {
                             // 取消选择
@@ -509,7 +509,7 @@ export default class RectificationReviewExecution extends Component {
                       );
                       return;
                     }
-                    SyanImagePicker.showImagePicker({ imageCount: 1 }, (err, selectedPhotos) => {
+                    SyanImagePicker.showImagePicker({ imageCount: 15 }, (err, selectedPhotos) => {
                       if (err) {
                         // 取消选择
                         return;

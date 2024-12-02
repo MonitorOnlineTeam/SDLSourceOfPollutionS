@@ -669,7 +669,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                   onPress={() => {
                     if (Platform.OS == 'ios') {
                       SyanImagePicker.showImagePicker(
-                        { imageCount: 1 },
+                        { imageCount: 15 },
                         (err, selectedPhotos) => {
                           if (err) {
                             // 取消选择
@@ -693,7 +693,7 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
                       );
                       return;
                     }
-                    SyanImagePicker.showImagePicker({}, (err, selectedPhotos) => {
+                    SyanImagePicker.showImagePicker({ imageCount: 15 }, (err, selectedPhotos) => {
                       if (err) {
                         // 取消选择
                         return;

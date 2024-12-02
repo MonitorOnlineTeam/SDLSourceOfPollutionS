@@ -23,7 +23,7 @@ const options = {
         path: 'images'
     }
 };
-const iosOptions = { imageCount: 1 };
+const iosOptions = { imageCount: 15 };
 @connect()
 export default class ImageUploadTouchNetCore extends PureComponent {
     constructor(props) {

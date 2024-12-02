@@ -29,7 +29,7 @@ const options = {
     }
 };
 
-const iosOptions = {};
+const iosOptions = { imageCount: 15 };
 @connect()
 export default class ImageUploadTouch extends Component {
     constructor(props) {
