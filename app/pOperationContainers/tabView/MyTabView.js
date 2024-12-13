@@ -2,7 +2,7 @@
  * @Description:主页 tabview
  * @LastEditors: hxf
  * @Date: 2023-08-09 11:24:20
- * @LastEditTime: 2024-11-13 16:53:44
+ * @LastEditTime: 2024-12-13 10:08:20
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/MyTabView.js
  */
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -26,9 +26,9 @@ const Tab = createBottomTabNavigator();
 
 // 路由的地址是这个方法的名字 目前是'MyTab'
 export default function MyTab() {
-    // const { tabviews } = useSelector(state => state.router);
     const { curPage } = useSelector(state => state.map);
     const { routerConfig } = useSelector(state => state.login);
+    const { messageCount } = useSelector(state => state.notice);
     let newTabviews = [];
     const [tabviews, setTabviews] = useState([]);
     useEffect(() => {
@@ -44,18 +44,35 @@ export default function MyTab() {
                 });
             } else if (item.routeName == 'chengTaoXiaoXi') {
                 ChengTaoXiaoXi.name = 'chengTaoXiaoXi';
-                newTabviews.push({
-                    view: ChengTaoXiaoXi, options: {
-                        title: '消息',
-                        headerStyle: {
-                            backgroundColor: globalcolor.headerBackgroundColor,
-                        },
-                        headerTitleStyle: {
-                            color: 'white'
-                        },
-                        headerTitleAlign: 'center',
-                    }
-                });
+                if (messageCount > 0) {
+                    newTabviews.push({
+                        view: ChengTaoXiaoXi, options: {
+                            tabBarBadge: messageCount,
+                            title: '消息',
+                            headerStyle: {
+                                backgroundColor: globalcolor.headerBackgroundColor,
+                            },
+                            headerTitleStyle: {
+                                color: 'white'
+                            },
+                            headerTitleAlign: 'center',
+                        }
+                    });
+                } else {
+                    newTabviews.push({
+                        view: ChengTaoXiaoXi, options: {
+                            title: '消息',
+                            headerStyle: {
+                                backgroundColor: globalcolor.headerBackgroundColor,
+                            },
+                            headerTitleStyle: {
+                                color: 'white'
+                            },
+                            headerTitleAlign: 'center',
+                        }
+                    });
+                }
+
             } else if (item.routeName == 'PollutionAll') {
                 PollutionAll.name = 'PollutionAll';
                 let name = '监控';
@@ -122,122 +139,7 @@ export default function MyTab() {
             }
         })
         setTabviews(newTabviews);
-    }, [routerConfig])
-    // let navs = getRouterConfig();
-    // let navs = routerConfig;
-    // console.log('navs = ', navs);
-    // console.log('curPage = ', curPage);
-    // navs.forEach((item) => {
-    //     if (item.routeName == 'Account') {
-    //         Account.name = 'Account';
-    //         tabviews.push({
-    //             view: Account, options: {
-    //                 headerShown: false
-    //             }
-    //         });
-    //     } else if (item.routeName == 'chengTaoXiaoXi') {
-    //         ChengTaoXiaoXi.name = 'chengTaoXiaoXi';
-    //         tabviews.push({
-    //             view: ChengTaoXiaoXi, options: {
-    //                 title: '消息',
-    //                 headerStyle: {
-    //                     backgroundColor: globalcolor.headerBackgroundColor,
-    //                 },
-    //                 headerTitleStyle: {
-    //                     color: 'white'
-    //                 },
-    //                 headerTitleAlign: 'center',
-    //                 // headerLeft: (props) => {
-    //                 //     return (<Pressable >
-    //                 //         <Image source={require('@images/ic_map.png')} style={[{ width: 20, marginLeft: 16, height: 20 }]} />
-    //                 //     </Pressable>)
-    //                 // },
-    //                 // headerRight: (props) => {
-    //                 //     return (<Pressable >
-    //                 //         <Image source={require('@images/ic_search.png')} style={[{ width: 20, marginRight: 16, height: 20 }]} />
-    //                 //     </Pressable>)
-    //                 // }
-    //             }
-    //         });
-    //     } else if (item.routeName == 'PollutionAll') {
-    //         PollutionAll.name = 'PollutionAll';
-    //         let name = '监控';
-    //         let leftImg = require('../../images/ic_map.png');
-    //         if (curPage == 'map') {
-    //             name = '地图';
-    //             leftImg = require('../../images/ic_map_list.png');
-    //         } else {
-    //             name = '监控';
-    //             leftImg = require('../../images/ic_map.png');
-    //         }
-    //         tabviews.push({
-    //             view: PollutionAll, options: {
-    //                 title: name,
-    //                 headerStyle: {
-    //                     backgroundColor: globalcolor.headerBackgroundColor,
-    //                 },
-    //                 headerTitleStyle: {
-    //                     color: 'white'
-    //                 },
-    //                 headerTitleAlign: 'center',
-    //                 headerLeft: (props) => {
-    //                     return (<Touchable
-    //                         style={{ width: 44, height: 40, alignItems: 'center', justifyContent: 'center' }}
-    //                         onPress={() => {
-    //                             // navigation.state.params.navigateLeftPress();
-    //                             if (curPage == 'map') {
-    //                                 dispatch(createAction('map/updateState')({ curPage: 'list' }));
-    //                             } else {
-    //                                 // this.props.dispatch();
-    //                                 console.log('dispatch = ', dispatch);
-    //                                 dispatch(createAction('map/updateState')({ curPage: 'map' }));
-    //                             }
-    //                         }}
-    //                     >
-    //                         <Image style={{ width: 18, height: 18 }} source={leftImg} />
-    //                     </Touchable>);
-    //                     //     return (<Pressable >
-    //                     //         <Image source={require('@images/ic_map.png')} style={[{ width: 20, marginLeft: 16, height: 20 }]} />
-    //                     //     </Pressable>)
-    //                 },
-    //                 headerRight: (props) => {
-    //                     return (<Touchable
-    //                         style={{ width: 44, height: 40, alignItems: 'center', justifyContent: 'center' }}
-    //                         onPress={() => {
-    //                             dispatch(NavigationActions.navigate({ routeName: 'SearchList' }));
-    //                         }}
-    //                     >
-    //                         <Image style={{ width: 18, height: 18 }} source={require('../../images/ic_search.png')} />
-    //                     </Touchable>);
-    //                 }
-    //             }
-    //         });
-    //     } else if (item.routeName == 'Workbench') {
-    //         Workbench.name = 'Workbench';
-    //         tabviews.push({
-    //             view: Workbench, options: {
-    //                 title: '工作台',
-    //                 headerStyle: {
-    //                     backgroundColor: globalcolor.headerBackgroundColor,
-    //                 },
-    //                 headerTitleStyle: {
-    //                     color: 'white'
-    //                 },
-    //                 headerTitleAlign: 'center',
-    //                 // headerLeft: (props) => {
-    //                 //     return (<Pressable >
-    //                 //         <Image source={require('@images/ic_map.png')} style={[{ width: 20, marginLeft: 16, height: 20 }]} />
-    //                 //     </Pressable>)
-    //                 // },
-    //                 // headerRight: (props) => {
-    //                 //     return (<Pressable >
-    //                 //         <Image source={require('@images/ic_search.png')} style={[{ width: 20, marginRight: 16, height: 20 }]} />
-    //                 //     </Pressable>)
-    //                 // }
-    //             }
-    //         });
-    //     }
-    // })
+    }, [routerConfig, messageCount, curPage])
 
     let createBottomTabOption = {
         initTabName: 'Workbench'
@@ -296,7 +198,12 @@ export default function MyTab() {
     return (
         <View style={[{ width: SCREEN_WIDTH, flex: 1 }]}>
             {
-                Actions.createBottomTab(tabviews, createBottomTabOption)()
+                Actions.createBottomTab(tabviews, createBottomTabOption
+                    , (routeName) => {
+                        // console.log('routeName = ', routeName);
+                        dispatch(createAction('notice/getNewPushMessageList')({}));
+                        // dispatch(createAction('notice/updateState')({ messageCount: messageCount + 1 }));
+                    })()
             }
             {/* <Text>tebView</Text> */}
         </View>

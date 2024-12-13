@@ -1,6 +1,6 @@
 import { createNativeStackNavigator, HeaderBackButton } from '@react-navigation/native-stack';
 import React, { useLayoutEffect, useRef } from 'react'
-import { View, Text, Image, StatusBar } from 'react-native'
+import { View, Text, Image, StatusBar, TouchableOpacity } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MessageBar, MessageBarManager } from 'react-native-message-bar';
 import LoadingManager from './LoadingManager'
@@ -77,7 +77,7 @@ export class MyActions {
                 isDuplication = true;
             }
         });
-        ViewList.push({ view, options });
+        ViewList.push({ view, options: { ...getCommonHeaderStyle(), ...options } });
     }
     setOptions = (options = {}) => {
         exportNavigation.setOptions(options);
@@ -94,7 +94,7 @@ export class MyActions {
             ViewList.push({ view, options: { ...getCommonHeaderStyle(), ...options } });
         }
     }
-    createBottomTab = (views = [], option) => {
+    createBottomTab = (views = [], option, _tabPress) => {
         return function MyTab() {
             const options = { headerShown: false };
             const {
@@ -138,6 +138,16 @@ export class MyActions {
                             },
                             tabBarActiveTintColor: 'tomato',
                             tabBarInactiveTintColor: 'gray',
+                            tabBarButton: (props) => <TouchableOpacity {...props}
+                                onPress={() => {
+                                    console.log('route = ', route);
+                                    console.log('props = ', props);
+                                    const { onPress } = props;
+                                    const { name } = route;
+                                    onPress && onPress();
+                                    _tabPress(name);
+                                }}
+                            />,
                         })}
                     >
                         {
