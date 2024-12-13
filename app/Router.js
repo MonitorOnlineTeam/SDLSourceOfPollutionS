@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2024-11-08 18:02:22
+ * @LastEditTime: 2024-12-12 11:16:10
  * @FilePath: /SDLSourceOfPollutionS/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
@@ -232,6 +232,9 @@ import GeneralLocalSearchList from './components/GeneralLocalSearchList';
 import SparePartsChangeDetail from './pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeDetail';
 import SparePartsChangeUpdate from './pOperationContainers/tabView/chengTaoXiaoXi/SparePartsChange/SparePartsChangeUpdate';
 import CTSignInMap from './pOperationContainers/tabView/chengTaoXiaoXi/CTSignInMap';
+import ForgotPasswordPage1 from './components/page/forgotPassword/ForgotPasswordPage1';
+import ForgotPasswordPage2 from './components/page/forgotPassword/ForgotPasswordPage2';
+import WXBinding from './components/page/account/WXBinding';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
 function Test() {
     return (
@@ -540,7 +543,11 @@ Actions.pushViewWithName(GeneralRemoteSearchList, 'GeneralRemoteSearchList', { t
 Actions.pushViewWithName(GeneralLocalSearchList, 'GeneralLocalSearchList', { title: '本地列表' }); //本地列表
 
 
+//忘记密码
+Actions.pushView(ForgotPasswordPage1, { headerShown: false }); //修改密码1
+Actions.pushView(ForgotPasswordPage2, { headerShown: false }); //修改密码2
 
+Actions.pushView(WXBinding, { title: '微信推送绑定' }); //微信绑定 
 
 
 

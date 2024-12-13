@@ -921,5 +921,9 @@ export default api = {
         ResetUserWechatInfo: '/rest/PollutantSourceApi/UserApi/ResetUserWechatInfo', // 重制微信注册信息
         GetUserOpenID: '/rest/PollutantSourceApi/UserApi/GetUserOpenID', // 获取微信openID
         TestPushWeChatInfo: '/rest/PollutantSourceApi/UserApi/TestPushWeChatInfo', // 发送测试微信消息
-    }
+    },
+    changePwd: {
+        SendEmailCode: '/rest/PollutantSourceApi/LoginApi/SendEmailCode', // 发送邮箱验证码
+        RetrievePasswordByEmail: '/rest/PollutantSourceApi/LoginApi/RetrievePasswordByEmail', // 通过邮箱找回密码
+    },
 };

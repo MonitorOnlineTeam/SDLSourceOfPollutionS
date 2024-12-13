@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-12-29 11:36:15
- * @LastEditTime: 2024-10-08 19:19:34
- * @FilePath: /SDLMainProject/app/pOperationModels/account.js
+ * @LastEditTime: 2024-12-09 16:41:18
+ * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/account.js
  */
 import moment from 'moment';
 
@@ -18,6 +18,8 @@ export default Model.extend({
     namespace: 'account',
     state: {
         Complexity: true,
+        userAccount: '',
+        emailShow: '',
     },
     reducers: {
         updateState(state, { payload }) {
@@ -26,7 +28,29 @@ export default Model.extend({
     },
     effects: {
         *methodexample({ payload }, { call, put, take, update, select }) { },
-
+        *SendEmailCode({ payload: { callback = () => { } } }
+            , { call, put, take, update, select }) {
+            /**
+             * payload:{
+             *  userAccount:'string',
+             * }
+             */
+            const { userAccount } = yield select(state => state.account);
+            const result = yield call(axiosAuthPost, api.changePwd.SendEmailCode, { userAccount });
+            callback(result);
+        },
+        *RetrievePasswordByEmail({ payload: { params, callback = () => { } } }, { call, put, take, update, select }) {
+            /**
+             * payload:{
+                userAccount:'string',
+                code:'string',
+                password:'string',
+             }
+             */
+            console.log('RetrievePasswordByEmail payload = ', params);
+            const result = yield call(axiosAuthPost, api.changePwd.RetrievePasswordByEmail, params);
+            callback(result);
+        },
         *changePass(
             {
                 payload: { params, callback }

@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-09-03 13:50:33
- * @LastEditTime: 2024-11-11 11:34:34
+ * @LastEditTime: 2024-12-06 11:09:44
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/sdlNavigateModel.js
  */
 // sdlNavigate
@@ -43,6 +43,7 @@ export default Model.extend({
                 routeList: newList,
                 currentRoute: payload.routeName
             });
+
             // if (payload.routeName == 'GTaskOfEnterprise') {
             //     DeviceEventEmitter.emit('net401', 'true');
             // }

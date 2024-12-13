@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang=zh-CN>
+
+<head>
+    <meta charset=utf-8>
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <title>MyFirstUni</title>
+    <script>var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') || CSS.supports('top: constant(a)'))
+        document.write('<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' + (coverSupport ? ', viewport-fit=cover' : '') + '" />')</script>
+    <link rel=stylesheet href=./static/index.2da1efab.css>
+</head>
+
+<body><noscript><strong>Please enable JavaScript to continue.</strong></noscript>
+    <div id=app></div>
+    <script>
+        window.onload = function () {
+            window.document.addEventListener('message', function (RnData) {
+                var data = JSON.parse(RnData.data);
+                localStorage.setItem('proxyCode', JSON.stringify({ key: data.proxyCode }));
+                localStorage.setItem('token', JSON.stringify({ key: data.token }));
+                localStorage.setItem('userAccount', JSON.stringify({ key: data.userAccount }));
+                localStorage.setItem('userPwd', JSON.stringify({ key: data.userPwd }));
+                localStorage.setItem('department', JSON.stringify({ key: data.department }));
+                localStorage.setItem('UserId', JSON.stringify({ key: data.UserId }));
+                var script1 = document.createElement('script');
+                script1.src = './static/js/chunk-vendors.ba18ec34.js';
+                var script2 = document.createElement('script');
+                script2.src = './static/js/index.d1cb50b1.js';
+                document.head.appendChild(script1);
+                document.head.appendChild(script2);
+            });
+        }
+    </script>
+    <!-- <script src=/static/js/chunk-vendors.ba18ec34.js></script>
+    <script src=/static/js/index.d1cb50b1.js></script> -->
+</body>
+
+</html>

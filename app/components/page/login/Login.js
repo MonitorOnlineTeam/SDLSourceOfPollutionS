@@ -273,8 +273,8 @@ class Login extends Component {
                             }
                         } else {
                             if (VersionInfo.app_version_code < result.data.VersionCode) {
-                                console.log('this.refs = ', this.refs);
-                                console.log('updateAlert = ', this.refs.updateAlert);
+                                // console.log('this.refs = ', this.refs);
+                                // console.log('updateAlert = ', this.refs.updateAlert);
                                 if (this.refs && this.refs.updateAlert) this.refs.updateAlert.showModal();
                                 else console.log('报空了');
                             } else {
@@ -464,6 +464,24 @@ class Login extends Component {
                                     <Text style={{ fontSize: 14, color: '#666', marginLeft: 3 }}>重新认证</Text>
                                 </TouchableOpacity>
                             ) : null}
+                        </View>
+                        <View
+                            style={[{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                width: SCREEN_WIDTH,
+                                height: 40,
+                            }]}
+                        >
+                            <TouchableOpacity
+                                style={[styles.checkStyleDetail, { width: 100, justifyContent: 'center' }]}
+                                onPress={() => {
+                                    // 修改密码
+                                    this.props.dispatch(NavigationActions.navigate({ routeName: 'ForgotPasswordPage1' }));
+                                }}
+                            >
+                                <Text style={{ fontSize: 14, color: '#4aa0ff' }}>忘记密码</Text>
+                            </TouchableOpacity>
                         </View>
                         <View style={{ flex: 1 }} />
                         {/* {CURRENT_PROJECT == POLLUTION_ORERATION_PROJECT || CURRENT_PROJECT == POLLUTION_PROJECT ? (
