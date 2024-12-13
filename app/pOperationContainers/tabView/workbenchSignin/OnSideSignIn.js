@@ -2,7 +2,7 @@
  * @Description: 现场签到
  * @LastEditors: hxf
  * @Date: 2024-01-31 08:34:22
- * @LastEditTime: 2024-11-01 13:44:41
+ * @LastEditTime: 2024-12-09 11:36:08
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbenchSignin/OnSideSignIn.js
  */
 import {
@@ -69,6 +69,7 @@ export default class OnSideSignIn extends Component {
             largImage: [],
             modalVisible: false,
         };
+        this.lastSignInTime = new Date().getTime();
     }
 
     componentDidMount() {
@@ -438,6 +439,14 @@ export default class OnSideSignIn extends Component {
         //     ShowToast('签到照片不能为空');
         //     return;
         // }
+        let currentSignInTime = new Date().getTime();
+        let sub = currentSignInTime - this.lastSignInTime;
+        this.lastSignInTime = currentSignInTime;
+        if (sub < 2000) {
+            // 避免频繁点击
+            ShowToast('请勿频繁点击');
+            return;
+        }
         const hasSignIn = this.getSignInStatus();
         /**
          * SignIn 必传参数  longitude、latitude、SignWorkType（现场、非现场）

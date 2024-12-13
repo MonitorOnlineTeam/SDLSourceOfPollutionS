@@ -2,7 +2,7 @@
  * @Description:对成套打卡功能进行升级
  * @LastEditors: hxf
  * @Date: 2023-09-06 14:20:53
- * @LastEditTime: 2024-11-29 14:36:30
+ * @LastEditTime: 2024-12-09 11:35:41
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoSignIn2.js
  */
 import moment from 'moment';
@@ -166,6 +166,7 @@ class SignInComponent extends Component {
             modalVisible: false,
         };
         console.log('SignInComponent constructor');
+        this.lastSignInTime = new Date().getTime();
     }
 
     componentDidMount() {
@@ -221,6 +222,14 @@ class SignInComponent extends Component {
 
     // 签到
     clockIn = () => {
+        let currentSignInTime = new Date().getTime();
+        let sub = currentSignInTime - this.lastSignInTime;
+        this.lastSignInTime = currentSignInTime;
+        if (sub < 2000) {
+            // 避免频繁点击
+            ShowToast('请勿频繁点击');
+            return;
+        }
         if (this.props.orientationStatus == 'in') {
             ShowLoadingToast('签到信息上传中');
             //签到CheckType=1 签退CheckType=2
