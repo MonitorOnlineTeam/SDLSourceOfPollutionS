@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import moment from 'moment';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import {
   createNavigationOptions,
@@ -17,14 +17,14 @@ import {
   ShowToast,
   SentencedToEmpty,
 } from '../../../../utils';
-import {SCREEN_WIDTH} from '../../../../config/globalsize';
+import { SCREEN_WIDTH } from '../../../../config/globalsize';
 import {
   PickerRangeDayTouchable,
   StatusPage,
   FlatListWithHeaderAndFooter,
 } from '../../../../components';
 
-@connect(({alarmAnaly}) => ({
+@connect(({ alarmAnaly }) => ({
   fluctuationRange: alarmAnaly.fluctuationRange,
   AlarmChartPollutant: alarmAnaly.AlarmChartPollutant,
 }))
@@ -40,6 +40,12 @@ export default class FluctuationRange extends Component {
 
   componentDidMount() {
     this.getData();
+  }
+
+  componentWillUnmount() {
+    SentencedToEmpty(this.props,
+      ['route', 'params', 'params', 'backFunction']
+      , () => { })();
   }
 
   getData = () => {
@@ -85,9 +91,9 @@ export default class FluctuationRange extends Component {
         onEmptyPress={() => {
           this.getData();
         }}>
-        <ScrollView style={{flex: 1, width: SCREEN_WIDTH, padding: 13}}>
+        <ScrollView style={{ flex: 1, width: SCREEN_WIDTH, padding: 13 }}>
           {this.props.fluctuationRange.status == 200 &&
-          PollutantArr.length > 0 ? (
+            PollutantArr.length > 0 ? (
             <View
               style={{
                 flex: 1,
@@ -105,12 +111,10 @@ export default class FluctuationRange extends Component {
                   ).length != ''
                 ) {
                   return (
-                    <View style={{marginTop: 10, height: 30, marginTop: 10}}>
-                      <Text>{`${item.PollutantName}:${
-                        fluctuationRange[item.PollutantCode][0]
-                      }-${fluctuationRange[item.PollutantCode][1]}${
-                        item.Unit
-                      }`}</Text>
+                    <View style={{ marginTop: 10, height: 30, marginTop: 10 }}>
+                      <Text>{`${item.PollutantName}:${fluctuationRange[item.PollutantCode][0]
+                        }-${fluctuationRange[item.PollutantCode][1]}${item.Unit
+                        }`}</Text>
                     </View>
                   );
                 }
@@ -132,8 +136,8 @@ export default class FluctuationRange extends Component {
             ).map(item => {
               return (
                 <Image
-                  style={{width: SCREEN_WIDTH, height: 300}}
-                  source={{uri: data[item]}}></Image>
+                  style={{ width: SCREEN_WIDTH, height: 300 }}
+                  source={{ uri: data[item] }}></Image>
               );
             })}
           </View>

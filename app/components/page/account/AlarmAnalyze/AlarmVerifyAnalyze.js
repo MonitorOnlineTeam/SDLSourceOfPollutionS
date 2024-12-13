@@ -237,6 +237,7 @@ export default class AlarmVerifyAnalyze extends PureComponent {
         commitVerifyResult: { status: 200 },
       }),
     );
+    SentencedToEmpty(this, ['alarmObj', 0, 'backFunction'], () => { })();
   }
 
   componentDidMount() {

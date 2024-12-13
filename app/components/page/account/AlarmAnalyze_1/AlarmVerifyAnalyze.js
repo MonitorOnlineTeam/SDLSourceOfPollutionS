@@ -297,258 +297,259 @@ f021147d-e7c6-4c1d-9634-1d814ff9880a	多个污染物数据趋势一致 */
             ]
         };
 
-        return (
-            <StatusPage
-                status={this.props.alarmVerifyDetail.status}
-                //页面是否有回调按钮，如果不传，没有按钮，
-                emptyBtnText={'重新请求'}
-                errorBtnText={'点击重试'}
-                onEmptyPress={() => {
-                    //空页面按钮回调
-                    console.log('重新刷新');
-                    this.statusPageOnRefresh();
-                }}
-                onErrorPress={() => {
-                    //错误页面按钮回调
-                    console.log('错误操作回调');
-                    this.statusPageOnRefresh();
-                }}
-            >
-                <KeyboardAwareScrollView style={[{ flex: 1, paddingTop: 13 }]} showsVerticalScrollIndicator={false}>
-                    {this.state.hideRadio == false && (
-                        <View style={{ flexDirection: 'row', width: SCREEN_WIDTH, height: 50, alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'white', padding: 13 }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                <SDLText style={{ color: 'red' }}>*</SDLText>
-                                <SDLText style={{}}>核实结果</SDLText>
-                            </View>
-                            <SelectButton
-                                editable={this.props.editCommitEnable}
-                                style={{ flexDirection: 'row', width: 200 }} //整个组件的样式----这样可以垂直和水平
-                                conTainStyle={{ height: 44, width: 80 }} //图片和文字的容器样式
-                                imageStyle={{ width: 18, height: 18 }} //图片样式
-                                textStyle={{ color: '#666' }} //文字样式
-                                selectIndex={CheckedResult == '2' ? '0' : CheckedResult == '1' ? '1' : ''} //空字符串,表示不选中,数组索引表示默认选中
-                                data={this.state.dataArray} //数据源
-                                onPress={(index, item) => {
-                                    let newObj = SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas'], { CheckedResult: null, CheckedDes: null, FileList: [] });
-                                    newObj.CheckedResult = item.id;
-                                    //动态更新组件内state 记录输入内容
-                                    this.props.dispatch(createAction('alarmAnaly/updateState')({ alarmVerifyDetail: { ...this.props.alarmVerifyDetail, data: { Datas: newObj } } }));
-                                }}
-                            />
-                            {this.props.editCommitEnable == false ? <View style={{ position: 'absolute', width: '100%', height: '100%' }}></View> : null}
-                        </View>
-                    )}
+        // return (
+        //     <StatusPage
+        //         status={this.props.alarmVerifyDetail.status}
+        //         //页面是否有回调按钮，如果不传，没有按钮，
+        //         emptyBtnText={'重新请求'}
+        //         errorBtnText={'点击重试'}
+        //         onEmptyPress={() => {
+        //             //空页面按钮回调
+        //             console.log('重新刷新');
+        //             this.statusPageOnRefresh();
+        //         }}
+        //         onErrorPress={() => {
+        //             //错误页面按钮回调
+        //             console.log('错误操作回调');
+        //             this.statusPageOnRefresh();
+        //         }}
+        //     >
+        //         <KeyboardAwareScrollView style={[{ flex: 1, paddingTop: 13 }]} showsVerticalScrollIndicator={false}>
+        //             {this.state.hideRadio == false && (
+        //                 <View style={{ flexDirection: 'row', width: SCREEN_WIDTH, height: 50, alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'white', padding: 13 }}>
+        //                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+        //                         <SDLText style={{ color: 'red' }}>*</SDLText>
+        //                         <SDLText style={{}}>核实结果</SDLText>
+        //                     </View>
+        //                     <SelectButton
+        //                         editable={this.props.editCommitEnable}
+        //                         style={{ flexDirection: 'row', width: 200 }} //整个组件的样式----这样可以垂直和水平
+        //                         conTainStyle={{ height: 44, width: 80 }} //图片和文字的容器样式
+        //                         imageStyle={{ width: 18, height: 18 }} //图片样式
+        //                         textStyle={{ color: '#666' }} //文字样式
+        //                         selectIndex={CheckedResult == '2' ? '0' : CheckedResult == '1' ? '1' : ''} //空字符串,表示不选中,数组索引表示默认选中
+        //                         data={this.state.dataArray} //数据源
+        //                         onPress={(index, item) => {
+        //                             let newObj = SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas'], { CheckedResult: null, CheckedDes: null, FileList: [] });
+        //                             newObj.CheckedResult = item.id;
+        //                             //动态更新组件内state 记录输入内容
+        //                             this.props.dispatch(createAction('alarmAnaly/updateState')({ alarmVerifyDetail: { ...this.props.alarmVerifyDetail, data: { Datas: newObj } } }));
+        //                         }}
+        //                     />
+        //                     {this.props.editCommitEnable == false ? <View style={{ position: 'absolute', width: '100%', height: '100%' }}></View> : null}
+        //                 </View>
+        //             )}
 
-                    {CheckedResult == '2' ? (
-                        <View style={[{ flexDirection: 'row', alignItems: 'center', marginTop: 1, backgroundColor: '#ffffff', padding: 13, height: 50, justifyContent: 'space-between' }]}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                                <SDLText style={{ color: 'red' }}>*</SDLText>
-                                <SDLText style={{}}>异常原因</SDLText>
-                            </View>
-                            {this.props.editCommitEnable == true ? (
-                                <SimplePicker
-                                    ref={ref => {
-                                        this.simplePicker = ref;
-                                    }}
-                                    option={this.getTypeOption()}
-                                    style={[{ marginLeft: 40, flex: 1, justifyContent: 'flex-end' }]}
-                                    textStyle={{ textAlign: 'right', flex: 1 }}
-                                />
-                            ) : (
-                                <Text>{SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'UntruthReason'], '')}</Text>
-                            )}
-                        </View>
-                    ) : null}
-                    {CheckedResult == '2' ? <View style={{ flexDirection: 'row', width: SCREEN_WIDTH, height: 50, alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'white', padding: 13 }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <SDLText style={{ color: 'red' }}>*</SDLText>
-                            <SDLText style={{}}>是否生成整改单</SDLText>
-                        </View>
-                        <SelectButton
-                            editable={this.props.editCommitEnable}
-                            style={{ flexDirection: 'row', width: 200 }} //整个组件的样式----这样可以垂直和水平
-                            conTainStyle={{ height: 44, width: 80 }} //图片和文字的容器样式
-                            imageStyle={{ width: 18, height: 18 }} //图片样式
-                            textStyle={{ color: '#666' }} //文字样式
-                            selectIndex={IsRectificationRecord == '0' ? '0' : IsRectificationRecord == '1' ? '1' : ''} //空字符串,表示不选中,数组索引表示默认选中
-                            data={this.state.IsRectificationRecordDataArray} //数据源
-                            onPress={(index, item) => {
-                                let newObj = SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas'], { CheckedResult: null, CheckedDes: null, FileList: [] });
-                                newObj.IsRectificationRecord = item.id;
-                                //动态更新组件内state 记录输入内容
-                                this.props.dispatch(createAction('alarmAnaly/updateState')({ alarmVerifyDetail: { ...this.props.alarmVerifyDetail, data: { Datas: newObj } } }));
-                            }}
-                        />
-                    </View> : null}
-                    <View style={{ flexDirection: 'column', width: SCREEN_WIDTH, marginTop: 1, backgroundColor: '#ffffff', padding: 13 }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <SDLText style={{ color: 'red' }}>*</SDLText>
-                            <SDLText style={{}}>核实描述</SDLText>
-                        </View>
-                        <TextInput
-                            editable={this.props.editCommitEnable}
-                            autoCapitalize={'none'}
-                            autoCorrect={false}
-                            underlineColorAndroid={'transparent'}
-                            onChangeText={text => {
-                                let newObj = SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas'], { CheckedResult: null, CheckedDes: null, FileList: [] });
-                                newObj.CheckedDes = text;
-                                //动态更新组件内state 记录输入内容
-                                this.props.dispatch(createAction('alarmAnaly/updateState')({ alarmVerifyDetail: { ...this.props.alarmVerifyDetail, data: { Datas: newObj } } }));
-                                this.setState({ VerifyMessage: text });
-                            }}
-                            value={CheckedDes}
-                            multiline={true}
-                            placeholder="请输入描述信息"
-                            placeholderTextColor={'#999999'}
-                            style={{ width: SCREEN_WIDTH - 26, backgroundColor: 'white', marginTop: 10, minHeight: 100, borderWidth: 0.5, color: '#333', borderColor: '#999', padding: 13 }}
-                        />
-                    </View>
+        //             {CheckedResult == '2' ? (
+        //                 <View style={[{ flexDirection: 'row', alignItems: 'center', marginTop: 1, backgroundColor: '#ffffff', padding: 13, height: 50, justifyContent: 'space-between' }]}>
+        //                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+        //                         <SDLText style={{ color: 'red' }}>*</SDLText>
+        //                         <SDLText style={{}}>异常原因</SDLText>
+        //                     </View>
+        //                     {this.props.editCommitEnable == true ? (
+        //                         <SimplePicker
+        //                             ref={ref => {
+        //                                 this.simplePicker = ref;
+        //                             }}
+        //                             option={this.getTypeOption()}
+        //                             style={[{ marginLeft: 40, flex: 1, justifyContent: 'flex-end' }]}
+        //                             textStyle={{ textAlign: 'right', flex: 1 }}
+        //                         />
+        //                     ) : (
+        //                         <Text>{SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'UntruthReason'], '')}</Text>
+        //                     )}
+        //                 </View>
+        //             ) : null}
+        //             {CheckedResult == '2' ? <View style={{ flexDirection: 'row', width: SCREEN_WIDTH, height: 50, alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'white', padding: 13 }}>
+        //                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+        //                     <SDLText style={{ color: 'red' }}>*</SDLText>
+        //                     <SDLText style={{}}>是否生成整改单</SDLText>
+        //                 </View>
+        //                 <SelectButton
+        //                     editable={this.props.editCommitEnable}
+        //                     style={{ flexDirection: 'row', width: 200 }} //整个组件的样式----这样可以垂直和水平
+        //                     conTainStyle={{ height: 44, width: 80 }} //图片和文字的容器样式
+        //                     imageStyle={{ width: 18, height: 18 }} //图片样式
+        //                     textStyle={{ color: '#666' }} //文字样式
+        //                     selectIndex={IsRectificationRecord == '0' ? '0' : IsRectificationRecord == '1' ? '1' : ''} //空字符串,表示不选中,数组索引表示默认选中
+        //                     data={this.state.IsRectificationRecordDataArray} //数据源
+        //                     onPress={(index, item) => {
+        //                         let newObj = SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas'], { CheckedResult: null, CheckedDes: null, FileList: [] });
+        //                         newObj.IsRectificationRecord = item.id;
+        //                         //动态更新组件内state 记录输入内容
+        //                         this.props.dispatch(createAction('alarmAnaly/updateState')({ alarmVerifyDetail: { ...this.props.alarmVerifyDetail, data: { Datas: newObj } } }));
+        //                     }}
+        //                 />
+        //             </View> : null}
+        //             <View style={{ flexDirection: 'column', width: SCREEN_WIDTH, marginTop: 1, backgroundColor: '#ffffff', padding: 13 }}>
+        //                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        //                     <SDLText style={{ color: 'red' }}>*</SDLText>
+        //                     <SDLText style={{}}>核实描述</SDLText>
+        //                 </View>
+        //                 <TextInput
+        //                     editable={this.props.editCommitEnable}
+        //                     autoCapitalize={'none'}
+        //                     autoCorrect={false}
+        //                     underlineColorAndroid={'transparent'}
+        //                     onChangeText={text => {
+        //                         let newObj = SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas'], { CheckedResult: null, CheckedDes: null, FileList: [] });
+        //                         newObj.CheckedDes = text;
+        //                         //动态更新组件内state 记录输入内容
+        //                         this.props.dispatch(createAction('alarmAnaly/updateState')({ alarmVerifyDetail: { ...this.props.alarmVerifyDetail, data: { Datas: newObj } } }));
+        //                         this.setState({ VerifyMessage: text });
+        //                     }}
+        //                     value={CheckedDes}
+        //                     multiline={true}
+        //                     placeholder="请输入描述信息"
+        //                     placeholderTextColor={'#999999'}
+        //                     style={{ width: SCREEN_WIDTH - 26, backgroundColor: 'white', marginTop: 10, minHeight: 100, borderWidth: 0.5, color: '#333', borderColor: '#999', padding: 13 }}
+        //                 />
+        //             </View>
 
-                    <View style={{ flexDirection: 'column', width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 250, marginTop: 1, backgroundColor: '#ffffff', padding: 13 }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <SDLText style={{ color: 'red' }}> </SDLText>
-                            <SDLText style={{}}>核实材料</SDLText>
-                        </View>
-                        <View style={{ flexDirection: 'row', marginTop: 10, width: SCREEN_WIDTH, backgroundColor: '#ffffff', alignItems: 'center', flexWrap: 'wrap', marginBottom: 10 }}>
-                            {this.renderPickedImage()}
-                            {this.props.editCommitEnable == true ? (
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        if (Platform.OS == 'ios') {
-                                            SyanImagePicker.showImagePicker({ imageCount: 15 }, (err, selectedPhotos) => {
-                                                if (err) {
-                                                    // 取消选择
-                                                    return;
-                                                }
+        //             <View style={{ flexDirection: 'column', width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 250, marginTop: 1, backgroundColor: '#ffffff', padding: 13 }}>
+        //                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+        //                     <SDLText style={{ color: 'red' }}> </SDLText>
+        //                     <SDLText style={{}}>核实材料</SDLText>
+        //                 </View>
+        //                 <View style={{ flexDirection: 'row', marginTop: 10, width: SCREEN_WIDTH, backgroundColor: '#ffffff', alignItems: 'center', flexWrap: 'wrap', marginBottom: 10 }}>
+        //                     {this.renderPickedImage()}
+        //                     {this.props.editCommitEnable == true ? (
+        //                         <TouchableOpacity
+        //                             onPress={() => {
+        //                                 if (Platform.OS == 'ios') {
+        //                                     SyanImagePicker.showImagePicker({ imageCount: 15 }, (err, selectedPhotos) => {
+        //                                         if (err) {
+        //                                             // 取消选择
+        //                                             return;
+        //                                         }
 
-                                                if (selectedPhotos.length < 1) {
-                                                    return;
-                                                } else {
-                                                    that.props.dispatch(
-                                                        createAction('alarmAnaly/uploadimage')({
-                                                            image: selectedPhotos[0],
-                                                            images: selectedPhotos,
-                                                            uuid: this.state.TimeS,
-                                                            callback: this.uploadImageCallBack
-                                                        })
-                                                    );
-                                                }
-                                            });
-                                            return;
-                                        }
-                                        SyanImagePicker.showImagePicker({ imageCount: 15 }, (err, selectedPhotos) => {
-                                            if (err) {
-                                                // 取消选择
-                                                return;
-                                            }
+        //                                         if (selectedPhotos.length < 1) {
+        //                                             return;
+        //                                         } else {
+        //                                             that.props.dispatch(
+        //                                                 createAction('alarmAnaly/uploadimage')({
+        //                                                     image: selectedPhotos[0],
+        //                                                     images: selectedPhotos,
+        //                                                     uuid: this.state.TimeS,
+        //                                                     callback: this.uploadImageCallBack
+        //                                                 })
+        //                                             );
+        //                                         }
+        //                                     });
+        //                                     return;
+        //                                 }
+        //                                 SyanImagePicker.showImagePicker({ imageCount: 15 }, (err, selectedPhotos) => {
+        //                                     if (err) {
+        //                                         // 取消选择
+        //                                         return;
+        //                                     }
 
-                                            if (selectedPhotos.length <= 0) {
-                                                return;
-                                            } else {
-                                                ShowLoadingToast('正在上传图片');
-                                                that.props.dispatch(
-                                                    createAction('imageModel/uploadimage')({
-                                                        images: selectedPhotos,
-                                                        uuid: this.state.TimeS,
-                                                        callback: this.uploadImageCallBack
-                                                    })
-                                                );
-                                            }
-                                        });
-                                        // this.refs.doAlert.show();
-                                    }}
-                                    style={{ width: SCREEN_WIDTH / 4 - 25, height: SCREEN_WIDTH / 4 - 25 }}
-                                >
-                                    <Image source={require('../../../../images/addpic.png')} style={{ width: SCREEN_WIDTH / 4 - 25, height: SCREEN_WIDTH / 4 - 25, marginLeft: 10, marginBottom: 5 }} />
-                                </TouchableOpacity>
-                            ) : null}
-                        </View>
+        //                                     if (selectedPhotos.length <= 0) {
+        //                                         return;
+        //                                     } else {
+        //                                         ShowLoadingToast('正在上传图片');
+        //                                         that.props.dispatch(
+        //                                             createAction('imageModel/uploadimage')({
+        //                                                 images: selectedPhotos,
+        //                                                 uuid: this.state.TimeS,
+        //                                                 callback: this.uploadImageCallBack
+        //                                             })
+        //                                         );
+        //                                     }
+        //                                 });
+        //                                 // this.refs.doAlert.show();
+        //                             }}
+        //                             style={{ width: SCREEN_WIDTH / 4 - 25, height: SCREEN_WIDTH / 4 - 25 }}
+        //                         >
+        //                             <Image source={require('../../../../images/addpic.png')} style={{ width: SCREEN_WIDTH / 4 - 25, height: SCREEN_WIDTH / 4 - 25, marginLeft: 10, marginBottom: 5 }} />
+        //                         </TouchableOpacity>
+        //                     ) : null}
+        //                 </View>
 
-                        {this.props.editCommitEnable == true ? (
-                            <TouchableOpacity
-                                onPress={() => {
-                                    // IsRectificationRecord 是否生成整改单
-                                    if (CheckedResult == '' || CheckedDes == '' || CheckedResult == null || CheckedDes == null || (CheckedResult == '2' && (this.state.selectUntruthReason == '' || IsRectificationRecord == ''))) {
-                                        ShowToast('请完善相关信息');
-                                        return;
-                                    } else {
-                                        let modelWarningGuids = [];
-                                        this.alarmObj.map((item, index) => {
-                                            modelWarningGuids.push(item.ID);
-                                        });
-                                        this.props.dispatch(
-                                            createAction('alarmAnaly/commitVerify')({
-                                                params: {
-                                                    dgimn: this.alarmObj[0].DGIMN,
-                                                    warningType: this.alarmObj[0].WarningType,
-                                                    warningTime: this.alarmObj[0].WarningTime,
-                                                    modelWarningGuid: this.alarmObj[0].modelCheckedGuid && this.alarmObj[0].modelCheckedGuid.length > 0 ? [] : modelWarningGuids,
-                                                    modelCheckedGuid: this.alarmObj[0].modelCheckedGuid,
-                                                    // ApprovalRemarks: SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'CheckedDes'], ''),
-                                                    checkedResult: SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'CheckedResult'], ''),
-                                                    checkedDes: SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'CheckedDes'], ''),
-                                                    IsRectificationRecord: SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'IsRectificationRecord'], ''),
-                                                    fileUuid: this.state.TimeS,
-                                                    UntruthReason: SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'CheckedResult'], '') == '2' ? this.state.selectUntruthReason : ''
-                                                },
-                                                callback: () => {
-                                                    if (this.alarmObj.length > 1) {
-                                                        this.props.dispatch(NavigationActions.back('AlarmAnalyList'));
-                                                    } else {
-                                                        this.props.dispatch(NavigationActions.back());
-                                                        this.props.dispatch(NavigationActions.back());
-                                                    }
-                                                    if (this.alarmObj[0].onRefresh) {
-                                                        this.alarmObj[0].onRefresh();
-                                                    }
-                                                }
-                                            })
-                                        );
-                                    }
-                                }}
-                                style={{
-                                    marginVertical: 10,
-                                    borderRadius: 5,
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    width: SCREEN_WIDTH - 20,
-                                    height: 52,
-                                    backgroundColor: globalcolor.headerBackgroundColor
-                                }}
-                            >
-                                <Text style={{ color: '#ffffff', fontSize: 18 }}>{'保存'}</Text>
-                            </TouchableOpacity>
-                        ) : null}
-                        <View>
-                            <Text style={{ color: '#ee6666' }}>
-                                说明：如发现的线索属于监测正常波动，现场工况、CEMS、数采仪一切正常（不存在设备故障、停产未标记等情况）且污染物及辅助参数数据波动正常，选择系统误报并提交。
-                                如发现异常情况请选择【异常原因】，找不到相符的选项请选择“其他”并在【核实描述】中简述现场存在的异常，上传核实材料后提交核实结果。
-                            </Text>
-                        </View>
-                    </View>
+        //                 {this.props.editCommitEnable == true ? (
+        //                     <TouchableOpacity
+        //                         onPress={() => {
+        //                             // IsRectificationRecord 是否生成整改单
+        //                             if (CheckedResult == '' || CheckedDes == '' || CheckedResult == null || CheckedDes == null || (CheckedResult == '2' && (this.state.selectUntruthReason == '' || IsRectificationRecord == ''))) {
+        //                                 ShowToast('请完善相关信息');
+        //                                 return;
+        //                             } else {
+        //                                 let modelWarningGuids = [];
+        //                                 this.alarmObj.map((item, index) => {
+        //                                     modelWarningGuids.push(item.ID);
+        //                                 });
+        //                                 this.props.dispatch(
+        //                                     createAction('alarmAnaly/commitVerify')({
+        //                                         params: {
+        //                                             dgimn: this.alarmObj[0].DGIMN,
+        //                                             warningType: this.alarmObj[0].WarningType,
+        //                                             warningTime: this.alarmObj[0].WarningTime,
+        //                                             modelWarningGuid: this.alarmObj[0].modelCheckedGuid && this.alarmObj[0].modelCheckedGuid.length > 0 ? [] : modelWarningGuids,
+        //                                             modelCheckedGuid: this.alarmObj[0].modelCheckedGuid,
+        //                                             // ApprovalRemarks: SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'CheckedDes'], ''),
+        //                                             checkedResult: SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'CheckedResult'], ''),
+        //                                             checkedDes: SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'CheckedDes'], ''),
+        //                                             IsRectificationRecord: SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'IsRectificationRecord'], ''),
+        //                                             fileUuid: this.state.TimeS,
+        //                                             UntruthReason: SentencedToEmpty(this.props.alarmVerifyDetail, ['data', 'Datas', 'CheckedResult'], '') == '2' ? this.state.selectUntruthReason : ''
+        //                                         },
+        //                                         callback: () => {
+        //                                             if (this.alarmObj.length > 1) {
+        //                                                 this.props.dispatch(NavigationActions.back('AlarmAnalyList'));
+        //                                             } else {
+        //                                                 this.props.dispatch(NavigationActions.back());
+        //                                                 this.props.dispatch(NavigationActions.back());
+        //                                             }
+        //                                             if (this.alarmObj[0].onRefresh) {
+        //                                                 this.alarmObj[0].onRefresh();
+        //                                             }
+        //                                         }
+        //                                     })
+        //                                 );
+        //                             }
+        //                         }}
+        //                         style={{
+        //                             marginVertical: 10,
+        //                             borderRadius: 5,
+        //                             alignItems: 'center',
+        //                             justifyContent: 'center',
+        //                             width: SCREEN_WIDTH - 20,
+        //                             height: 52,
+        //                             backgroundColor: globalcolor.headerBackgroundColor
+        //                         }}
+        //                     >
+        //                         <Text style={{ color: '#ffffff', fontSize: 18 }}>{'保存'}</Text>
+        //                     </TouchableOpacity>
+        //                 ) : null}
+        //                 <View>
+        //                     <Text style={{ color: '#ee6666' }}>
+        //                         说明：如发现的线索属于监测正常波动，现场工况、CEMS、数采仪一切正常（不存在设备故障、停产未标记等情况）且污染物及辅助参数数据波动正常，选择系统误报并提交。
+        //                         如发现异常情况请选择【异常原因】，找不到相符的选项请选择“其他”并在【核实描述】中简述现场存在的异常，上传核实材料后提交核实结果。
+        //                     </Text>
+        //                 </View>
+        //             </View>
 
-                    <Modal visible={this.state.modalVisible} transparent={true} onRequestClose={() => this.setState({ modalVisible: false })}>
-                        <ImageViewer
-                            saveToLocalByLongPress={false}
-                            onClick={() => {
-                                {
-                                    this.setState({
-                                        modalVisible: false
-                                    });
-                                }
-                            }}
-                            imageUrls={this.state.imgUrls}
-                            index={this.state.index}
-                        />
-                    </Modal>
-                    {this.props.commitVerifyResult.status == -1 ? <SimpleLoadingComponent message={'提交中'} /> : null}
-                </KeyboardAwareScrollView>
+        //             <Modal visible={this.state.modalVisible} transparent={true} onRequestClose={() => this.setState({ modalVisible: false })}>
+        //                 <ImageViewer
+        //                     saveToLocalByLongPress={false}
+        //                     onClick={() => {
+        //                         {
+        //                             this.setState({
+        //                                 modalVisible: false
+        //                             });
+        //                         }
+        //                     }}
+        //                     imageUrls={this.state.imgUrls}
+        //                     index={this.state.index}
+        //                 />
+        //             </Modal>
+        //             {this.props.commitVerifyResult.status == -1 ? <SimpleLoadingComponent message={'提交中'} /> : null}
+        //         </KeyboardAwareScrollView>
 
-                <OperationAlertDialog options={dialogOptions} ref="doAlert" />
-            </StatusPage >
-        );
+        //         <OperationAlertDialog options={dialogOptions} ref="doAlert" />
+        //     </StatusPage >
+        // );
+        return (<View><Text>321</Text></View>);
     }
 }
 // define your styles

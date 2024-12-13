@@ -30,7 +30,7 @@ export default class StatisLinearCoefficient extends React.Component {
 
         props.navigation.setOptions({
             headerShown: false,
-          });
+        });
     }
 
     componentDidMount() {
@@ -40,6 +40,13 @@ export default class StatisLinearCoefficient extends React.Component {
         } else {
             lockToLandscapeLeft();
         }
+    }
+
+    componentWillUnmount() {
+        lockToPortrait();
+        SentencedToEmpty(this.props,
+            ['route', 'params', 'params', 'backFunction']
+            , () => { })();
     }
 
     refreshData() {
@@ -52,12 +59,12 @@ export default class StatisLinearCoefficient extends React.Component {
     getLinearCoefficientOption = () => {
         const hours = SentencedToEmpty(this.props.StatisLinearCoefficientValue, ['data', 'Datas', 'name'], []);
         // prettier-ignore
-        const days = SentencedToEmpty(this.props.StatisLinearCoefficientValue,['data','Datas','name'],[]);
+        const days = SentencedToEmpty(this.props.StatisLinearCoefficientValue, ['data', 'Datas', 'name'], []);
         // prettier-ignore
-        const data = SentencedToEmpty(this.props.StatisLinearCoefficientValue,['data','Datas','data'],[])
+        const data = SentencedToEmpty(this.props.StatisLinearCoefficientValue, ['data', 'Datas', 'data'], [])
             .map(function (item) {
-            return [item[1], item[0], item[2] || '-'];
-        });
+                return [item[1], item[0], item[2] || '-'];
+            });
         let option = {
             tooltip: {
                 position: 'top'

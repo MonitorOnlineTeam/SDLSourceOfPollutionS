@@ -7,6 +7,7 @@ import {
   Text,
   Alert,
   ScrollView,
+  Image,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -32,12 +33,39 @@ class AlarmDetails extends PureComponent {
   constructor(props) {
     super(props);
     console.log('报警信息1.0');
-    this.state = {};
+    this.state = {
+      harmonyOSHide: false,
+    };
     this.alarmObj = SentencedToEmpty(
       this.props,
       ['route', 'params', 'params'],
       {},
     );
+    this.props.navigation.setOptions({
+      headerLeft: () => {
+        return (
+          <TouchableOpacity
+            style={{ marginRight: 10 }}
+            onPress={() => {
+              this.setState({
+                harmonyOSHide: true,
+              }, () => {
+                this.props.dispatch(NavigationActions.back());
+              })
+            }}>
+            <Image
+              resizeMethod={'resize'}
+              resizeMode={'contain'}
+              style={{ tintColor: 'white', width: 24, height: 24 }}
+              source={Platform.OS == 'android'
+                // source={Platform.OS == 'ios'
+                ? require('../../../../images/back-icon-android.png')
+                : require('../../../../images/back-icon-ios.png')}
+            />
+          </TouchableOpacity>
+        );
+      }
+    })
   }
 
   componentDidMount() {
@@ -76,53 +104,107 @@ class AlarmDetails extends PureComponent {
             });
           }
           this.refs.doAlert3.hideModal();
-          console.log('this.alarmObj', this.alarmObj)
-          this.props.dispatch(
-            NavigationActions.navigate({
-              routeName: 'AlarmDataChart',
-              params: {
-                ...this.alarmObj,
-                type: 'AlarmDataChart',
-                timeRange: arr1.length > 0 ? arr1 : arr,
-              },
-            }),
-          );
+          this.setState({
+            harmonyOSHide: true,
+          }, () => {
+            this.props.dispatch(
+              NavigationActions.navigate({
+                routeName: 'AlarmDataChart',
+                params: {
+                  ...this.alarmObj,
+                  type: 'AlarmDataChart',
+                  timeRange: arr1.length > 0 ? arr1 : arr
+                  , backFunction: () => {
+                    const that = this;
+                    setTimeout(() => {
+                      that.setState({
+                        harmonyOSHide: false
+                      })
+                    }, 300)
+                  }
+                },
+              }),
+            );
+          });
         },
       },
       {
         text: '密度分布直方图',
         onPress: () => {
           this.refs.doAlert3.hideModal();
-          this.props.dispatch(
-            NavigationActions.navigate({
-              routeName: 'StatisPolValueNumsByDGIMN',
-              params: { ...this.alarmObj, type: 'StatisPolValueNumsByDGIMN' },
-            }),
-          );
+          this.setState({
+            harmonyOSHide: true,
+          }, () => {
+            this.props.dispatch(
+              NavigationActions.navigate({
+                routeName: 'StatisPolValueNumsByDGIMN',
+                params: {
+                  ...this.alarmObj, type: 'StatisPolValueNumsByDGIMN'
+                  , backFunction: () => {
+                    const that = this;
+                    setTimeout(() => {
+                      that.setState({
+                        harmonyOSHide: false
+                      })
+                    }, 300)
+                  }
+                },
+              }),
+            );
+          });
+
         },
       },
       {
         text: '波动范围',
         onPress: () => {
           this.refs.doAlert3.hideModal();
-          this.props.dispatch(
-            NavigationActions.navigate({
-              routeName: 'FluctuationRange',
-              params: this.alarmObj,
-            }),
-          );
+          this.setState({
+            harmonyOSHide: true,
+          }, () => {
+            this.props.dispatch(
+              NavigationActions.navigate({
+                routeName: 'FluctuationRange',
+                params: {
+                  ...this.alarmObj
+                  , backFunction: () => {
+                    const that = this;
+                    setTimeout(() => {
+                      that.setState({
+                        harmonyOSHide: false
+                      })
+                    }, 300)
+                  }
+                },
+              }),
+            );
+          });
         },
       },
       {
         text: '相关系数表',
         onPress: () => {
           this.refs.doAlert3.hideModal();
-          this.props.dispatch(
-            NavigationActions.navigate({
-              routeName: 'StatisLinearCoefficient',
-              params: { ...this.alarmObj, type: 'StatisLinearCoefficient' },
-            }),
-          );
+          this.setState({
+            harmonyOSHide: true,
+          }, () => {
+            this.props.dispatch(
+              NavigationActions.navigate({
+                routeName: 'StatisLinearCoefficient',
+                params: {
+                  ...this.alarmObj, type: 'StatisLinearCoefficient'
+                  , backFunction: () => {
+                    const that = this;
+                    setTimeout(() => {
+                      that.setState({
+                        harmonyOSHide: false
+                      })
+                    }, 300)
+                  }
+                },
+              }),
+            );
+          })
         },
       },
       {
@@ -133,6 +215,14 @@ class AlarmDetails extends PureComponent {
       },
     ];
   }
+
+  componentWillUnmount() {
+    console.log('AlarmDetails componentWillUnmount');
+    this.setState({
+      harmonyOSHide: true
+    });
+  }
+
   statusPageOnRefresh = () => {
     this.props.dispatch(
       createAction('alarmAnaly/getSingleWarning')({
@@ -1208,7 +1298,7 @@ class AlarmDetails extends PureComponent {
                 },
               ]}>{`${SentencedToEmpty(chartData, ['describe'], '')}`}</SDLText>
 
-            {showChart == true ? this.renderChart() : this.renderTable()}
+            {showChart == true ? (this.state.harmonyOSHide ? null : this.renderChart()) : this.renderTable()}
           </View>
           <View style={{ flex: 1, height: 100 }}></View>
         </ScrollView>
@@ -1221,14 +1311,29 @@ class AlarmDetails extends PureComponent {
           SentencedToEmpty(this.alarmObj, ['IsCheck'], 0) == 0 && (
             <TouchableOpacity
               onPress={() => {
-                this.props.dispatch(
-                  NavigationActions.navigate({
-                    routeName: 'AlarmVerifyAnalyze',
-                    params: [
-                      { ...this.alarmObj, ModelWarningGuid: this.alarmObj.ID },
-                    ],
-                  }),
-                );
+                this.setState({
+                  harmonyOSHide: true
+                }, () => {
+                  this.props.dispatch(
+                    NavigationActions.navigate({
+                      routeName: 'AlarmVerifyAnalyze',
+                      params: [
+                        {
+                          ...this.alarmObj, ModelWarningGuid: this.alarmObj.ID
+                          , backFunction: () => {
+                            const that = this;
+                            setTimeout(() => {
+                              that.setState({
+                                harmonyOSHide: false
+                              })
+                            }, 100)
+                          }
+                        },
+                      ],
+                    })
+                  );
+                });
+
               }}
               style={{
                 position: 'absolute',

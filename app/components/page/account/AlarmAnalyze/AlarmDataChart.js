@@ -64,6 +64,9 @@ export default class AlarmDataChart extends React.Component {
 
     componentWillUnmount() {
         lockToPortrait();
+        SentencedToEmpty(this.props,
+            ['route', 'params', 'params', 'backFunction']
+            , () => { })();
     }
 
     refreshData() {
@@ -568,8 +571,12 @@ export default class AlarmDataChart extends React.Component {
                 <TouchableOpacity
                     style={{ position: 'absolute', right: 0, top: 0, width: 48, height: 48, borderRadius: 2, justifyContent: 'center', alignItems: 'center', backgroundColor: globalcolor.headerBackgroundColor }}
                     onPress={() => {
-                        lockToPortrait();
-                        this.props.dispatch(NavigationActions.back());
+                        this.setState({
+                            hideEchart: true
+                        }, () => {
+                            lockToPortrait();
+                            this.props.dispatch(NavigationActions.back());
+                        });
                     }}
                 >
                     <SDLText style={{ color: '#fff' }}>返回</SDLText>

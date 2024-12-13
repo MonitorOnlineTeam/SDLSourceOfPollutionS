@@ -59,6 +59,7 @@ export default class AlarmDataChart extends React.Component {
     super(props);
     console.log('数据列表1.0');
     this.state = {
+      _harmonyOSHide: false,
       selectDGIMN: props.route.params.params.DGIMN || '',
       hideEchart: false,
       selectDateRange: '两周',
@@ -98,6 +99,13 @@ export default class AlarmDataChart extends React.Component {
     } else {
       lockToLandscapeLeft();
     }
+  }
+
+  componentWillUnmount() {
+    lockToPortrait();
+    SentencedToEmpty(this.props,
+      ['route', 'params', 'params', 'backFunction']
+      , () => { })();
   }
 
   refreshData() {
@@ -357,7 +365,7 @@ export default class AlarmDataChart extends React.Component {
             console.log('错误操作回调');
             this.refreshData();
           }}>
-          {this.props.AlarmDataChartValue.status == 200 ? (
+          {this.props.AlarmDataChartValue.status == 200 && !this.state._harmonyOSHide ? (
             <View
               style={{ flex: 1 }}
               horizontal={true}
@@ -445,9 +453,6 @@ export default class AlarmDataChart extends React.Component {
                     </TouchableOpacity>
                   );
                 })}
-                {/* <View style={[{ flex: 1, flexDirection: 'row-reverse' }]}>
-                                    <SimplePicker option={this.getDataTypeSelectOption()} style={[{ width: 150 }]} />
-                                </View> */}
               </View>
               <View
                 style={{
@@ -561,8 +566,17 @@ export default class AlarmDataChart extends React.Component {
             backgroundColor: globalcolor.headerBackgroundColor,
           }}
           onPress={() => {
-            lockToPortrait();
-            this.props.dispatch(NavigationActions.back());
+            const _this = this;
+            this.setState({
+              hideEchart: true,
+              _harmonyOSHide: true,
+            }, () => {
+              lockToPortrait();
+              _this.props.dispatch(NavigationActions.back());
+              // setTimeout(() => {
+              //   _this.props.dispatch(NavigationActions.back());
+              // }, 100);
+            });
           }}>
           <SDLText style={{ color: '#fff' }}>返回</SDLText>
         </TouchableOpacity>

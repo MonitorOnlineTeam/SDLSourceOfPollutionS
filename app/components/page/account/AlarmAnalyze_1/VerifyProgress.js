@@ -1,4 +1,4 @@
-import React, {PureComponent, Component} from 'react';
+import React, { PureComponent, Component } from 'react';
 import {
   View,
   Platform,
@@ -10,11 +10,11 @@ import {
   Modal,
   ScrollView,
 } from 'react-native';
-import {connect} from 'react-redux';
-import {Echarts, echarts} from 'react-native-secharts';
-import {SCREEN_WIDTH} from '../../../LineSelectBar';
+import { connect } from 'react-redux';
+import { Echarts, echarts } from 'react-native-secharts';
+import { SCREEN_WIDTH } from '../../../LineSelectBar';
 import globalcolor from '../../../../config/globalcolor';
-import {SDLText, StatusPage, AlertDialog} from '../../../../components';
+import { SDLText, StatusPage, AlertDialog } from '../../../../components';
 import {
   NavigationActions,
   SentencedToEmpty,
@@ -23,10 +23,10 @@ import {
 } from '../../../../utils';
 import moment from 'moment';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import {ImageUrlPrefix, UrlInfo} from '../../../../config';
-import {getEncryptData} from '../../../../dvapack/storage';
+import { ImageUrlPrefix, UrlInfo } from '../../../../config';
+import { getEncryptData } from '../../../../dvapack/storage';
 let alertContent = [];
-@connect(({alarmAnaly}) => ({
+@connect(({ alarmAnaly }) => ({
   WarningVerifyCheckInfo: alarmAnaly.WarningVerifyCheckInfo,
   alarmChartData: alarmAnaly.alarmChartData,
   showDataSort: alarmAnaly.showDataSort,
@@ -117,7 +117,7 @@ class VerifyProgress extends PureComponent {
       tempArr = item.FileName.split('/');
       fileName = tempArr[tempArr.length - 1];
       // const source = { uri: `${UrlInfo.DataAnalyze}/${item.FileName}` };
-      const source = {uri: `${ImageUrlPrefix}${ProxyCode}/${fileName}`};
+      const source = { uri: `${ImageUrlPrefix}${ProxyCode}/${fileName}` };
       rtnVal.push(
         <View
           key={item.attachID}
@@ -144,7 +144,7 @@ class VerifyProgress extends PureComponent {
                 showImage: this.state.materialImage,
               });
             }}
-            style={[{position: 'absolute', bottom: 0, left: 0}]}>
+            style={[{ position: 'absolute', bottom: 0, left: 0 }]}>
             <View
               style={[
                 {
@@ -168,11 +168,11 @@ class VerifyProgress extends PureComponent {
       tempArr = item.split('/');
       fileName = tempArr[tempArr.length - 1];
       // const source = { uri: `${UrlInfo.DataAnalyze}/${item}` };
-      const source = {uri: `${ImageUrlPrefix}${ProxyCode}/${fileName}`};
+      const source = { uri: `${ImageUrlPrefix}${ProxyCode}/${fileName}` };
       rtnVal.push(
         <View
           key={item.attachID}
-          style={{width: SCREEN_WIDTH / 4 - 5, height: SCREEN_WIDTH / 4 - 5}}>
+          style={{ width: SCREEN_WIDTH / 4 - 5, height: SCREEN_WIDTH / 4 - 5 }}>
           <Image
             resizeMethod={'resize'}
             source={source}
@@ -198,10 +198,10 @@ class VerifyProgress extends PureComponent {
                 ),
               });
             }}
-            style={[{position: 'absolute', bottom: 0, left: 0}]}>
+            style={[{ position: 'absolute', bottom: 0, left: 0 }]}>
             <View
               style={[
-                {height: SCREEN_WIDTH / 4 - 10, width: SCREEN_WIDTH / 4 - 15},
+                { height: SCREEN_WIDTH / 4 - 10, width: SCREEN_WIDTH / 4 - 15 },
               ]}
             />
           </TouchableOpacity>
@@ -246,7 +246,7 @@ class VerifyProgress extends PureComponent {
           console.log('错误操作回调');
           this.statusPageOnRefresh();
         }}>
-        <ScrollView style={{flex: 1, width: SCREEN_WIDTH, padding: 13}}>
+        <ScrollView style={{ flex: 1, width: SCREEN_WIDTH, padding: 13 }}>
           {/* <View style={[styles.card]}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: -13, justifyContent: 'space-between' }}>
                             <View style={{ flexDirection: 'row' }}>
@@ -301,7 +301,7 @@ class VerifyProgress extends PureComponent {
                             <SDLText style={[styles.content, { flex: 1 }]}>{`${SentencedToEmpty(data, ['WarningContent'], '暂未填写')}`}</SDLText>
                         </View>
                     </View> */}
-          <View style={[styles.card, {marginTop: 5}]}>
+          <View style={[styles.card, { marginTop: 5 }]}>
             <View
               style={{
                 flexDirection: 'row',
@@ -316,7 +316,7 @@ class VerifyProgress extends PureComponent {
                 }}></View>
               <SDLText
                 fontType={'large'}
-                style={{color: '#333333', marginLeft: 8}}>
+                style={{ color: '#333333', marginLeft: 8 }}>
                 线索记录
               </SDLText>
             </View>
@@ -344,7 +344,7 @@ class VerifyProgress extends PureComponent {
                           ...this.state.alarmObj,
                           ...item,
                           ID: item.ModelWarningGuid,
-                          onRefresh: () => {},
+                          onRefresh: () => { },
                           DGIMN: item.Dgimn,
                         },
                       }),
@@ -374,7 +374,7 @@ class VerifyProgress extends PureComponent {
               );
             })}
           </View>
-          <View style={[styles.card, {marginTop: 13}]}>
+          <View style={[styles.card, { marginTop: 13 }]}>
             <View
               style={{
                 flexDirection: 'row',
@@ -389,7 +389,7 @@ class VerifyProgress extends PureComponent {
                 }}></View>
               <SDLText
                 fontType={'large'}
-                style={{color: '#333333', marginLeft: 8}}>
+                style={{ color: '#333333', marginLeft: 8 }}>
                 核实结果
               </SDLText>
             </View>
@@ -400,17 +400,17 @@ class VerifyProgress extends PureComponent {
                 marginTop: 15,
                 height: 1,
               }}></View>
-            <View style={[styles.oneRow, {marginTop: 15}]}>
+            <View style={[styles.oneRow, { marginTop: 15 }]}>
               <SDLText style={[styles.label]}>核实时间：</SDLText>
               <SDLText
                 style={[
                   styles.content,
-                  {maxWidth: SCREEN_WIDTH - 140},
+                  { maxWidth: SCREEN_WIDTH - 140 },
                 ]}>{`${SentencedToEmpty(
-                data,
-                ['checkInfo', 'CheckedTime'],
-                '-',
-              )}`}</SDLText>
+                  data,
+                  ['checkInfo', 'CheckedTime'],
+                  '-',
+                )}`}</SDLText>
             </View>
             <View style={[styles.oneRow, {}]}>
               <SDLText style={[styles.label]}>核实人：</SDLText>
@@ -425,22 +425,22 @@ class VerifyProgress extends PureComponent {
               <SDLText
                 style={[
                   styles.content,
-                  {maxWidth: SCREEN_WIDTH - 140},
+                  { maxWidth: SCREEN_WIDTH - 140 },
                 ]}>{`${SentencedToEmpty(
-                data,
-                ['checkInfo', 'CheckedResultName'],
-                '-',
-              )}`}</SDLText>
+                  data,
+                  ['checkInfo', 'CheckedResultName'],
+                  '-',
+                )}`}</SDLText>
             </View>
             {SentencedToEmpty(data, ['checkInfo', 'CheckedResult'], 1) == 2 ? (
               <View style={[styles.oneRow, {}]}>
-                <SDLText style={[styles.label, {width: 120}]}>
+                <SDLText style={[styles.label, { width: 120 }]}>
                   是否生成整改单：
                 </SDLText>
                 <SDLText
                   style={[
                     styles.content,
-                    {maxWidth: SCREEN_WIDTH - 140},
+                    { maxWidth: SCREEN_WIDTH - 140 },
                   ]}>{`${this.getRectificationRecordName()}`}</SDLText>
               </View>
             ) : null}
@@ -450,12 +450,12 @@ class VerifyProgress extends PureComponent {
               <SDLText
                 style={[
                   styles.content,
-                  {maxWidth: SCREEN_WIDTH - 140},
+                  { maxWidth: SCREEN_WIDTH - 140 },
                 ]}>{`${SentencedToEmpty(
-                data,
-                ['checkInfo', 'CheckedDes'],
-                '-',
-              )}`}</SDLText>
+                  data,
+                  ['checkInfo', 'CheckedDes'],
+                  '-',
+                )}`}</SDLText>
             </View>
             <View style={[styles.oneRow, {}]}>
               <SDLText style={[styles.label]}>核实材料：</SDLText>
@@ -472,7 +472,7 @@ class VerifyProgress extends PureComponent {
               </View>
             </View>
           </View>
-          <View style={[styles.card, {marginTop: 13, marginBottom: 50}]}>
+          <View style={[styles.card, { marginTop: 13, marginBottom: 50 }]}>
             <View
               style={{
                 flexDirection: 'row',
@@ -487,7 +487,7 @@ class VerifyProgress extends PureComponent {
                 }}></View>
               <SDLText
                 fontType={'large'}
-                style={{color: '#333333', marginLeft: 8}}>
+                style={{ color: '#333333', marginLeft: 8 }}>
                 处理进度
               </SDLText>
             </View>
@@ -508,20 +508,20 @@ class VerifyProgress extends PureComponent {
                     justifyContent: 'space-between',
                     width: '100%',
                   }}>
-                  <View style={{flexDirection: 'row', maxWidth: '82%'}}>
+                  <View style={{ flexDirection: 'row', maxWidth: '82%' }}>
                     <View
-                      style={{flexDirection: 'column', alignItems: 'center'}}>
+                      style={{ flexDirection: 'column', alignItems: 'center' }}>
                       <Image
-                        style={{width: 16, height: 16, marginRight: 3}}
+                        style={{ width: 16, height: 16, marginRight: 3 }}
                         source={
                           idx ==
-                          SentencedToEmpty(data, ['appResult'], []).length - 1
+                            SentencedToEmpty(data, ['appResult'], []).length - 1
                             ? require('../../../../images/auditselect.png')
                             : require('../../../../images/alarm_unselect.png')
                         }
                       />
                       {idx ==
-                      SentencedToEmpty(data, ['appResult'], []).length -
+                        SentencedToEmpty(data, ['appResult'], []).length -
                         1 ? null : (
                         <View
                           style={{
@@ -539,7 +539,7 @@ class VerifyProgress extends PureComponent {
                       }}>
                       <SDLText
                         style={[
-                          {color: '#333333', fontSize: 15, lineHeight: 18},
+                          { color: '#333333', fontSize: 15, lineHeight: 18 },
                         ]}>
                         {item.ApproverUserName}
                       </SDLText>
@@ -565,13 +565,13 @@ class VerifyProgress extends PureComponent {
                         ]}>
                         {item.ApprovalRemarks}
                       </SDLText>
-                      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+                      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                         {this.renderTimeLinePickedImage(item.FileList, idx)}
                       </View>
                     </View>
                   </View>
                   <SDLText
-                    style={[{color: '#666666', fontSize: 15, lineHeight: 18}]}>
+                    style={[{ color: '#666666', fontSize: 15, lineHeight: 18 }]}>
                     {item.ApprovalStatusName}
                   </SDLText>
                 </View>
@@ -581,7 +581,7 @@ class VerifyProgress extends PureComponent {
           <Modal
             visible={this.state.modalVisible}
             transparent={true}
-            onRequestClose={() => this.setState({modalVisible: false})}>
+            onRequestClose={() => this.setState({ modalVisible: false })}>
             <ImageViewer
               saveToLocalByLongPress={false}
               onClick={() => {
@@ -627,7 +627,7 @@ class VerifyProgress extends PureComponent {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Text style={{color: '#fff'}}>核实</Text>
+              <Text style={{ color: '#fff' }}>核实</Text>
             </TouchableOpacity>
           )}
         {this.props.alramButtonList.findIndex(sItem => {
@@ -655,7 +655,7 @@ class VerifyProgress extends PureComponent {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Text style={{color: '#fff'}}>复核</Text>
+              <Text style={{ color: '#fff' }}>复核</Text>
             </TouchableOpacity>
           )}
       </StatusPage>

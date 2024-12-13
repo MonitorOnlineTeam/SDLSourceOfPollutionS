@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
   createNavigationOptions,
   NavigationActions,
@@ -27,21 +27,21 @@ import {
   ImageBackground,
   ScrollView,
 } from 'react-native';
-import {Echarts, echarts} from 'react-native-secharts';
+import { Echarts, echarts } from 'react-native-secharts';
 import moment from 'moment';
-import {lockToLandscapeRight, lockToPortrait} from 'react-native-orientation';
+import { lockToLandscapeRight, lockToPortrait } from 'react-native-orientation';
 import globalcolor from '../../../../config/globalcolor';
 /**
  *
  *图表数据
  */
-@connect(({alarmAnaly}) => ({
+@connect(({ alarmAnaly }) => ({
   StatisPolValue: alarmAnaly.StatisPolValue,
 }))
 export default class StatisPolValueNumsByDGIMN extends React.Component {
   static navigationOptions = createNavigationOptions({
     title: '密度分布直方图',
-    headerTitleStyle: {marginRight: Platform.OS === 'android' ? 76 : 0},
+    headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 },
   });
   static propTypes = {};
 
@@ -65,6 +65,12 @@ export default class StatisPolValueNumsByDGIMN extends React.Component {
     this.refreshData();
   }
 
+  componentWillUnmount() {
+    SentencedToEmpty(this.props,
+      ['route', 'params', 'params', 'backFunction']
+      , () => { })();
+  }
+
   refreshData() {
     this.props.dispatch(
       createAction(`alarmAnaly/${this.props.route.params.params.type}`)({
@@ -78,7 +84,7 @@ export default class StatisPolValueNumsByDGIMN extends React.Component {
       title: {
         text: item.PollutantName,
       },
-      tooltip: {formatter: '{c0}'},
+      tooltip: { formatter: '{c0}' },
       xAxis: {
         scale: true,
       },
@@ -117,7 +123,7 @@ export default class StatisPolValueNumsByDGIMN extends React.Component {
   render() {
     return (
       <StatusPage
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         status={
           SentencedToEmpty(this.props.StatisPolValue, ['data', 'Datas'], [])
             .length == 0
@@ -138,7 +144,7 @@ export default class StatisPolValueNumsByDGIMN extends React.Component {
           this.refreshData();
         }}>
         {this.props.StatisPolValue.status == 200 ? (
-          <ScrollView style={{flex: 1}}>
+          <ScrollView style={{ flex: 1 }}>
             {SentencedToEmpty(
               this.props.StatisPolValue,
               ['data', 'Datas'],
