@@ -36,6 +36,30 @@ class SingleWheel extends PureComponent {
         this._scrollView.scrollTo(positon);
     };
 
+    handleScrollEnd = (contentOffsetY) => {
+        let itemHeight = 40;
+        let index = Math.round(contentOffsetY / itemHeight);
+        
+        if (index < 0) {
+            index = 0;
+        } else if (index >= this.props.dataArray.length) {
+            index = this.props.dataArray.length - 1;
+        }
+        
+        const lastPosition = index * itemHeight;
+        console.log('lastPosition', lastPosition);
+        
+        requestAnimationFrame(() => {
+            this._scrollView.scrollTo({
+                y: lastPosition,
+                x: 0,
+                animated: true
+            });
+            this.setState({ select: index });
+            this.props.callback(this.props.dataArray[index], index);
+        });
+    };
+
     render() {
         let defaultStyle = { height: 200, minWidth: 64 };
         let scrollViewStyle = {
@@ -89,32 +113,14 @@ class SingleWheel extends PureComponent {
                     scrollEnabled={this.props.scrollEnabled}
                     style={[scrollViewStyle, { zIndex: 800 }]}
                     showsVerticalScrollIndicator={false}
-                    onScrollEndDrag={({ nativeEvent }) => { }}
+                    onScrollEndDrag={({ nativeEvent }) => {
+                        // 如果发现速度阈值 0.05 不够合适，可以根据实际体验调整。
+                        if (Math.abs(nativeEvent.velocity.y) < 0.05) {
+                            this.handleScrollEnd(nativeEvent.contentOffset.y);
+                        }
+                    }}
                     onMomentumScrollEnd={({ nativeEvent }) => {
-                        let itemHeight = 40;
-                        let index = Math.floor(nativeEvent.contentOffset.y / itemHeight);
-                        if (index < 0) {
-                            index = 0;
-                        } else if (index >= this.props.dataArray.length) {
-                            index = this.props.dataArray.length - 1;
-                        }
-                        let remainder = nativeEvent.contentOffset.y % itemHeight;
-                        let lastPosition = 0;
-                        if (remainder <= 20.0) {
-                            lastPosition = index * itemHeight;
-                        } else {
-                            if (index < this.props.dataArray.length - 1) {
-                                index += 1;
-                            }
-                            lastPosition = index * itemHeight;
-                        }
-                        this._scrollView.scrollTo({
-                            y: lastPosition,
-                            x: 0,
-                            animated: false
-                        });
-                        this.setState({ select: index });
-                        this.props.callback(this.props.dataArray[index], index);
+                        this.handleScrollEnd(nativeEvent.contentOffset.y);
                     }}
                 >
                     <View style={[{ alignItems: 'center' }]}>

@@ -71,10 +71,18 @@ export const ShowToast = msgOption => {
     // })
     // console.log('ShowToast 被调用');
     CloseToast();
-    console.log('ShowToast 被调用', msgOption);
-    // Toast.info(msg, 1);
     if (typeof msgOption == 'string') {
-        msgOption = { message: msgOption, alertType: 'info' };
+        msgOption = {
+            message: msgOption,
+            alertType: 'info',
+            viewTopOffset: Platform.OS === 'ios' ? 44 : 0,
+            viewBottomOffset: 0,
+            messageStyle: {
+                marginTop: Platform.OS === 'ios' ? 10 : 0,
+                textAlign: 'center',     // 水平居中
+                alignSelf: 'center',     // 容器水平居中
+            },
+        };
     }
     MessageBarManager.showAlert(msgOption);
 };
@@ -890,7 +898,7 @@ export const getCommonHeaderStyle = () => {
         },
         headerTitleAlign: 'center',
         headerLeft: () => {
-            return <HeaderBackButton style={{ marginLeft: -7 }} tintColor={'white'} label="Hello" onPress={() => Actions.back()} />
+            return <HeaderBackButton style={{ marginLeft: Platform.OS === 'ios' ? 0 : -7 }} tintColor={'white'} labelVisible={false} onPress={() => Actions.back()} />
         }
     };
 }

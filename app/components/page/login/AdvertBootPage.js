@@ -121,7 +121,7 @@ export default class AdvertBootPage extends Component {
                     <View style={{
                         height: 30, minWidth: 68
                         , alignItems: 'center', justifyContent: 'center'
-                        , backgroundColor: '#4B4B4B55', marginTop: 25
+                        , backgroundColor: '#4B4B4B55', marginTop: 50
                         , marginRight: 13, borderRadius: 20
                     }}>
                         <CountdownText textStyle={{ fontSize: 16, color: '#fff' }} duration={5}
