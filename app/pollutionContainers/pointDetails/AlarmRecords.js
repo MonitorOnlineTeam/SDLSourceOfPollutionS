@@ -513,8 +513,18 @@ export default class AlarmRecords extends PureComponent {
                                                     onPress={() => {
                                                         if (SentencedToEmpty(item, ['DataType'], '') == 'DayData') {
                                                             this.props.dispatch(createAction('pointDetails/updateState')({ selectTime: moment(item.AlarmTime).format('YYYY-MM-DD 00:00:00') }));
+                                                            this.props.dispatch(createAction('historyDataModel/updateState')({
+                                                                showIndex: 1, // 0 小时 1 日均 2 实时 3 分钟
+                                                            }));
                                                         } else {
-                                                            this.props.dispatch(createAction('pointDetails/updateState')({ selectTime: moment(item.AlarmTime).subtract(3, 'hours').format('YYYY-MM-DD HH:mm:ss') }));
+                                                            this.props.dispatch(createAction('pointDetails/updateState')({
+                                                                selectTime: moment(item.AlarmTime)
+                                                                    // .subtract(3, 'hours')
+                                                                    .format('YYYY-MM-DD HH:mm:ss')
+                                                            }));
+                                                            this.props.dispatch(createAction('historyDataModel/updateState')({
+                                                                showIndex: 0, // 0 小时 1 日均 2 实时 3 分钟
+                                                            }));
                                                         }
                                                         this.props.dispatch(NavigationActions.navigate({ routeName: 'HistoryData', params: { DGIMN: item.DGIMN, params: item } }));
                                                         // this.props.dispatch(NavigationActions.navigate({ routeName: 'TrendAlarmDataChart', params: item }));

@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-04-25 09:20:10
- * @LastEditTime: 2024-10-31 15:54:26
- * @FilePath: /SDLSourceOfPollutionS/app/pollutionContainers/pointDetails/HistoryData.js
+ * @LastEditTime: 2025-01-03 09:56:08
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/pollutionContainers/pointDetails/HistoryData.js
  */
 import React, { PureComponent } from 'react';
 import { Text, View, StyleSheet, Image, Platform, Dimensions, TouchableOpacity } from 'react-native';
