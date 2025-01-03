@@ -25,7 +25,6 @@
         for (let i = 0; i < paramArr.length; i++) {
             let param = paramArr[i].split('=');
             paramObj[param[0]] = decodeURIComponent(param[1]);
-            // alert(paramObj[param[0]])
         }
         localStorage.setItem('proxyCode', JSON.stringify({ key: paramObj.proxyCode }));
         localStorage.setItem('token', JSON.stringify({ key: paramObj.token }));
