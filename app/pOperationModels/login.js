@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-08-21 15:00:35
- * @LastEditTime: 2025-01-02 18:46:07
+ * @LastEditTime: 2025-01-03 11:19:22
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationModels/login.js
  */
 // import { AsyncStorage } from 'react-native';
@@ -267,7 +267,7 @@ export default Model.extend({
                 workAlarmOverButton = [],
                 workAlarmMissExceptionButton = [],
                 workAlarmExceptionButton = []
-                , signInButtonlist = []
+                , signInButtonlist = [{ label: '个人统计', value: 'personal' },]
                 , signInButton
                 , _statisticsType = 'personal';
             workerBenchMenuData.map((tabDataItem, tabIndex) => {
@@ -283,14 +283,22 @@ export default Model.extend({
                             qiandaoButton.map((qiandaoButtonItem, qiandaoButtonIndex) => {
                                 if (qiandaoButtonItem.code == 'teamButton') {
                                     _statisticsType = 'team';
+                                    if (signInButtonlist.length == 1) {
+                                        signInButtonlist.unshift({ label: '团队统计', value: 'team' });
+                                    }
                                 }
-                                signInButton = { ...qiandaoButtonItem };
-                                // { label: '团队统计', value: 'team' },
-                                signInButton.label = qiandaoButtonItem.name;
-                                signInButton.value =
-                                    qiandaoButtonItem.code == 'personButton' ? 'personal' :
-                                        qiandaoButtonItem.code == 'teamButton' ? 'team' : qiandaoButtonItem.code;
-                                signInButtonlist.push(signInButton);
+                            })
+                        }
+                        if (changyongItem.id == "8078b7f7-179d-40c6-829b-d1cd8a9277f2"
+                        ) {
+                            const qiandaoButton = SentencedToEmpty(changyongItem, ['buttonList'], []);
+                            qiandaoButton.map((qiandaoButtonItem, qiandaoButtonIndex) => {
+                                if (qiandaoButtonItem.code == 'teamButton') {
+                                    _statisticsType = 'team';
+                                    if (signInButtonlist.length == 1) {
+                                        signInButtonlist.unshift({ label: '团队统计', value: 'team' });
+                                    }
+                                }
                             })
                         }
                     })
