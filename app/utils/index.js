@@ -84,6 +84,28 @@ export const ShowToast = msgOption => {
             },
         };
     }
+    // if (typeof msgOption == 'string') {
+    //     msgOption = {
+    //         message: msgOption,
+    //         alertType: 'info',
+    //         // 添加样式配置
+    //         viewTopOffset: Platform.OS === 'ios' ? 44 : 0, // iOS 状态栏高度补偿
+    //         viewBottomOffset: 0,
+    //         messageStyle: {
+    //             marginTop: Platform.OS === 'ios' ? 10 : 0 // 额外的顶部边距
+    //         }
+    //     };
+    // } else {
+    //     // 为对象类型的 msgOption 添加样式配置
+    //     msgOption = {
+    //         ...msgOption,
+    //         viewTopOffset: Platform.OS === 'ios' ? 44 : 0,
+    //         viewBottomOffset: 0,
+    //         messageStyle: {
+    //             marginTop: Platform.OS === 'ios' ? 10 : 0
+    //         }
+    //     };
+    // }
     MessageBarManager.showAlert(msgOption);
 };
 
