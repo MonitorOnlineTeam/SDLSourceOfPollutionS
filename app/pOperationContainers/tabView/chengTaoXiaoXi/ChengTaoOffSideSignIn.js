@@ -200,6 +200,7 @@ export default class ChengTaoOffSideSignIn extends Component {
                     })
                 );
                 CloseToast();
+                ShowToast(hasSignIn ? '签退成功' : '签到成功');
             }
             , failCallBack: (result) => {
                 CloseToast();

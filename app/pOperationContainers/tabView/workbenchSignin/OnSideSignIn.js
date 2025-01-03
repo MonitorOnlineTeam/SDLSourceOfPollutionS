@@ -2,7 +2,7 @@
  * @Description: 现场签到
  * @LastEditors: hxf
  * @Date: 2024-01-31 08:34:22
- * @LastEditTime: 2024-12-09 11:36:08
+ * @LastEditTime: 2024-12-18 11:09:06
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbenchSignin/OnSideSignIn.js
  */
 import {
@@ -512,6 +512,13 @@ export default class OnSideSignIn extends Component {
                             })
                         );
                         CloseToast();
+                        if (hasSignIn) {
+                            // 签退
+                            ShowToast('签退成功');
+                        } else {
+                            // 签到
+                            ShowToast('签到成功');
+                        }
                     }
                     , failCallBack: (result) => {
                         CloseToast();
