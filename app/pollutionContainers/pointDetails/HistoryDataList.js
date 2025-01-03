@@ -46,7 +46,7 @@ export default class HistoryDataList extends React.Component {
     getTimeSelectOption = () => {
         let type = this.props.datatype;
         return {
-            formatStr: this.props.datatype == 'day' ? 'YYYY-MM-DD' : 'MM/DD HH:00',
+            formatStr: this.props.datatype == 'day' ? 'YYYY-MM-DD' : this.props.datatype == 'hour' ? 'MM/DD HH:00' : 'MM/DD HH:mm',
             type: type,
             defaultTime: this.props.selectTime,
             onSureClickListener: time => {

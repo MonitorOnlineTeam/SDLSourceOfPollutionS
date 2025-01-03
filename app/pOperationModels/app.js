@@ -17,7 +17,8 @@ export default Model.extend({
         networkTest: false,// 是否需要网络测试
         screenOrientation: 'Portrait',// 数据查询 屏幕方向 // Portrait Landscape
         // MenuID: '317a708d-f762-44a3-b27e-a96beffbec65',
-        MenuID: '367b3493-d182-4e60-aac9-910a547a9693',
+        // MenuID: '367b3493-d182-4e60-aac9-910a547a9693',
+        MenuID: '25c30d61-cfe7-4845-9d53-a8de658e73ff',
         pointDetailMenuID: '8cb21091-3290-416c-b98c-9002b725f139',
         verifyStateCod: [{ name: '全部', code: '0' }, { name: '无异常', code: '1' }, { name: '有异常', code: '2' }],
         VerifyType: [{ name: '设备故障', code: '1' }, { name: '突发性环境污染', code: '2' }, { name: '区域性污染', code: '3' }, { name: '其他原因', code: '4' }],

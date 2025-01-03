@@ -2,8 +2,8 @@
  * @Description:对成套打卡功能进行升级
  * @LastEditors: hxf
  * @Date: 2023-09-06 14:20:53
- * @LastEditTime: 2024-12-09 11:35:41
- * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoSignIn2.js
+ * @LastEditTime: 2025-01-02 18:49:34
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoSignIn2.js
  */
 import moment from 'moment';
 import React, { Component, PureComponent } from 'react';
@@ -24,6 +24,7 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import ImageDeleteTouch from '../../../components/form/images/ImageDeleteTouch';
 import AutoTimerText from '../../components/AutoTimerText';
 import { StatusPage } from '../../../components';
+import SignInStatisticsWithTeam from '../workbenchSignin/SignInStatisticsWithTeam';
 const AMapGeolocation = NativeModules.AMapGeolocation;
 // const calenderComponentHeight = 300;
 let calenderComponentHeight = 260;
@@ -32,8 +33,9 @@ const SWIPE_LEFT = 'SWIPE_LEFT';
 const SWIPE_RIGHT = 'SWIPE_RIGHT';
 const formatStr = 'YYYY-MM-DD';
 
-@connect(({ CTModel }) => ({
-    selectedProject: CTModel.selectedProject
+@connect(({ CTModel, SignInTeamStatisticsModel }) => ({
+    selectedProject: CTModel.selectedProject,
+    statisticsTypeList: SignInTeamStatisticsModel.statisticsTypeList,
 }))
 export default class ChengTaoSignIn extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -65,7 +67,8 @@ export default class ChengTaoSignIn extends Component {
                 ]}
             >
                 {this.state.showView == 'sign' ? <SignInComponent /> : null}
-                {this.state.showView == 'statistics' ? <ChengTaoSigninStatistics /> : null}
+                {/* {this.state.showView == 'statistics' ? <ChengTaoSigninStatistics /> : null} */}
+                {this.state.showView == 'statistics' ? <SignInStatisticsWithTeam /> : null}
 
                 <View style={[{ width: SCREEN_WIDTH, height: 50, backgroundColor: '#ffffff', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 22, marginTop: 10 }]}>
                     <TouchableOpacity
@@ -104,6 +107,13 @@ export default class ChengTaoSignIn extends Component {
 
                     <TouchableOpacity
                         onPress={() => {
+                            this.props.dispatch(createAction('SignInTeamStatisticsModel/updateState')({
+                                teamBeginTime: moment().format('YYYY-MM-DD 00:00:00'),
+                                teamEndTime: moment().format('YYYY-MM-DD 23:59:59'),
+                                statisticsType: this.props.statisticsTypeList.length > 1 ? 'team' : 'personal',//统计类型选中状态 team personal
+                                teamStatisticsType: 'signIn',// signIn noSignIn
+                            }));
+                            this.props.dispatch(createAction('SignInTeamStatisticsModel/getTeamOperationSignIn')({}));
                             this.setState({
                                 showView: 'statistics'
                             });

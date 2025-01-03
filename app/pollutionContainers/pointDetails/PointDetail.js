@@ -73,25 +73,30 @@ export default class PointDetail extends PureComponent {
         if (CURRENT_PROJECT == POLLUTION_ORERATION_PROJECT) {
             switch (item.id) {
                 case '6d5b5e59-8833-496c-89b6-461eacf1bfbb':
+                case "ac367771-fbda-429e-b948-665aa09f2236":
                     //异常报告
                     source = 'yichangbaogao.png';
                     break;
                 case 'f9801b6d-9b89-4465-8a63-d57ed31b46a1':
+                case "a0687e34-afaa-45d1-b39a-7283344284e8":
                     //基础设置
                     source = 'jichusheshi.png';
                     break;
 
                 case 'bc2efeff-b775-47e8-bb61-cbf8b8a31e7a':
+                case "60927266-db02-4a27-a4e8-d2c1914c6daf":
                     //停运记录
                     source = 'tingchanjilu.png';
                     break;
                 // case '7dbc22e1-1eab-41ba-af86-90ef933910e7':4b2f2a58-d18a-4fe1-97bb-03d2609d6fa4
                 case '4b2f2a58-d18a-4fe1-97bb-03d2609d6fa4':
+                case "29b89edf-1eb1-4528-a662-efbc0d712bb3":
                     //数据查询
                     source = 'shujuchaxun.png';
                     break;
                 // case 'a1bdee58-5032-4487-893c-ab37c9f079d0':f4f359b4-6c27-4757-84f4-00df140e011d
                 case 'f4f359b4-6c27-4757-84f4-00df140e011d':
+                case "708ad425-7028-4c56-8585-dcb5441c33ad":
                     // '超标数据'
                     source = 'chaobiaoshuju.png';
                     break;
@@ -101,6 +106,7 @@ export default class PointDetail extends PureComponent {
                     break;
                 case '6ccf32ce-a416-4578-b2cf-02aec0766d81':
                 case 'b3f6a1dc-23da-4150-ace1-bc83788cd7c1':
+                case "b671f8d8-1746-4018-9bdd-0f83ebdbd8c9":
                     //'报警记录'
                     source = 'baojingjilu.png';
                     break;
@@ -109,10 +115,12 @@ export default class PointDetail extends PureComponent {
                     source = 'shipinjiankong.png';
                     break;
                 case 'cb5fb48f-a7c9-466e-9306-1d5d623b4297':
+                case "85afd7db-128a-4e95-982b-024d86dcdc1a":
                     //运维日志
                     source = 'yunweirizhi.png';
                     break;
                 case '50feba5c-2af5-4872-84a3-fe3d74ff5334':
+                case "ec33f03c-7289-4323-a270-47de900cf9c4":
                     //异常数据
                     source = 'yichangshuju.png';
                     break;
@@ -121,20 +129,32 @@ export default class PointDetail extends PureComponent {
                     source = 'yunweipaidan.png';
                     break;
                 case '3377e4b8-433e-4594-b093-280a3124e892':
+                case "46087941-65cb-4ef8-8309-0b4d2dda1f78":
                     //设备资料库
                     source = 'shebeiziliao.png';
                     break;
                 case 'e59b5992-d796-42a9-94f4-1ef819de62b9':
+                case "cb565d45-ec4e-4059-b92c-d0690eb07df5":
                     // '超标限值'
                     source = 'chaobiaoxianzhi.png';
                     break;
                 case '5401aa02-6bd1-47b9-afbf-0af7cfb035f6':
+                case "e4be5b4c-67cb-44c7-8200-18b36d602f4c":
                     // '运维工单'
                     source = 'yunweigongdan.png';
                     break;
                 case '9dda0f41-2390-46d8-8d9b-2f8ad81c4521':
+                case "2a1a60c0-8b37-4ec0-85b7-535d2759a775":
                     // '缺失数据'
                     source = 'queshishuju.png';
+                    break;
+                case "50d2c460-7262-44a5-a0fa-2b2b568fe0bc":
+                    // 手动质控
+                    source = 'shoudongzhikong.png';
+                    break;
+                case '312c53c1-e9ff-4745-8c8b-eb642822b7dc':
+                    // 质控记录
+                    source = 'zhikongjilu.png';
                     break;
             }
         } else {
@@ -202,6 +222,7 @@ export default class PointDetail extends PureComponent {
     };
     render() {
         console.log('render props = ', this.props);
+        console.log('render systemMenu = ', this.props.systemMenu);
         return (
             <StatusPage
                 status={this.props.ponitInfo.status}
@@ -510,16 +531,42 @@ export default class PointDetail extends PureComponent {
         console.log('CURRENT_PROJECT boolean = ', CURRENT_PROJECT == POLLUTION_ORERATION_PROJECT);
         if (CURRENT_PROJECT == POLLUTION_ORERATION_PROJECT) {
             switch (item.id) {
+                case "312c53c1-e9ff-4745-8c8b-eb642822b7dc":
+                    this.props.dispatch(createAction('qualityControl/updateState')({ currentDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN'] }));
+                    this.props.dispatch(
+                        NavigationActions.navigate({
+                            routeName: 'QualityControlPanel',
+                            params: {
+                                DGIMN: this.props.route.params.params.DGIMN,
+                            }
+                        })
+                    );
+                    break;
+                case "50d2c460-7262-44a5-a0fa-2b2b568fe0bc":
+                    // 手动指控
+                    this.props.dispatch(createAction('qualityControl/updateState')({ currentDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN'] }));
+                    this.props.dispatch(
+                        NavigationActions.navigate({
+                            routeName: 'QualityControlRecordList',
+                            params: {
+                                DGIMN: this.props.route.params.params.DGIMN,
+                            }
+                        })
+                    );
+                    break;
                 case '6d5b5e59-8833-496c-89b6-461eacf1bfbb':
+                case "ac367771-fbda-429e-b948-665aa09f2236":
                     // 异常报告
                     this.props.dispatch(createAction('pointDetails/updateState')({ abnormalListDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN'] }));
                     this.props.dispatch(NavigationActions.navigate({ routeName: 'AbnormalityReportLst', params: { abnormalListDGIMN: this.props.route.params.params.DGIMN } }));
                     break;
                 // case 'f9801b6d-9b89-4465-8a63-d57ed31b46a1':
+                // case "a0687e34-afaa-45d1-b39a-7283344284e8":
                 //     // 基础设置
                 //     this.props.dispatch(NavigationActions.navigate({ routeName: 'BaseFacilities', params: { DGIMN: this.props.route.params.params.DGIMN } }));
                 //     break;
                 case 'b3f6a1dc-23da-4150-ace1-bc83788cd7c1':
+                case "b671f8d8-1746-4018-9bdd-0f83ebdbd8c9":
                     // 超标报警核实
                     this.props.dispatch(createAction('pointDetails/updateState')({ verifyListTargetDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN'] }));
                     this.props.dispatch(
@@ -532,6 +579,8 @@ export default class PointDetail extends PureComponent {
                     );
                     break;
                 case '4b2f2a58-d18a-4fe1-97bb-03d2609d6fa4':
+                case "29b89edf-1eb1-4528-a662-efbc0d712bb3":
+
                     console.log('CURRENT_PROJECT1 = ', CURRENT_PROJECT);
                     //数据查询
                     this.props.dispatch(createAction('historyDataModel/updateState')({
@@ -544,6 +593,7 @@ export default class PointDetail extends PureComponent {
                     // this.props.dispatch(NavigationActions.navigate({ routeName: 'TestView', params: { DGIMN: this.props.route.params.params.DGIMN } }));
                     break;
                 case 'f4f359b4-6c27-4757-84f4-00df140e011d':
+                case "708ad425-7028-4c56-8585-dcb5441c33ad":
                     // '超标数据'
                     this.props.dispatch(createAction('pointDetails/updateState')({ overDataListTargetDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN'] }));
                     this.props.dispatch(
@@ -589,6 +639,7 @@ export default class PointDetail extends PureComponent {
                     );
                     break;
                 case 'cb5fb48f-a7c9-466e-9306-1d5d623b4297':
+                case "85afd7db-128a-4e95-982b-024d86dcdc1a":
                     //运维日志
                     this.props.dispatch(createAction('pointDetails/updateState')({
                         operationLogsListTargetDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN']
@@ -602,6 +653,7 @@ export default class PointDetail extends PureComponent {
                     );
                     break;
                 case '50feba5c-2af5-4872-84a3-fe3d74ff5334':
+                case "ec33f03c-7289-4323-a270-47de900cf9c4":
                     //异常数据
                     this.props.dispatch(createAction('alarm/updateState')({ exceptionDataListTargetDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN'] }));
                     this.props.dispatch(
@@ -628,6 +680,7 @@ export default class PointDetail extends PureComponent {
                     );
                     break;
                 case '3377e4b8-433e-4594-b093-280a3124e892':
+                case "46087941-65cb-4ef8-8309-0b4d2dda1f78":
                     //设备资料库
                     this.props.dispatch(createAction('pointDetails/updateState')({ equipmentInfoDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN'] }));
                     this.props.dispatch(
@@ -638,6 +691,7 @@ export default class PointDetail extends PureComponent {
                     );
                     break;
                 case 'e59b5992-d796-42a9-94f4-1ef819de62b9':
+                case "cb565d45-ec4e-4059-b92c-d0690eb07df5":
                     //超标限值
                     this.props.dispatch(createAction('pointDetails/updateState')({ overLimitsDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN'] }));
                     this.props.dispatch(
@@ -648,6 +702,7 @@ export default class PointDetail extends PureComponent {
                     );
                     break;
                 case 'bc2efeff-b775-47e8-bb61-cbf8b8a31e7a':
+                case "60927266-db02-4a27-a4e8-d2c1914c6daf":
                     //停机记录
                     console.log('this.props = ', this.props);
                     this.props.dispatch(createAction('pointDetails/updateState')({ outputStopListDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN'] }));
@@ -659,10 +714,12 @@ export default class PointDetail extends PureComponent {
                     );
                     break;
                 case '5401aa02-6bd1-47b9-afbf-0af7cfb035f6':
+                case "e4be5b4c-67cb-44c7-8200-18b36d602f4c":
                     //运维工单
                     this.props.dispatch(NavigationActions.navigate({ routeName: 'PointTaskRecord', params: { DGIMN: this.props.route.params.params.DGIMN } }));
                     break;
                 case '9dda0f41-2390-46d8-8d9b-2f8ad81c4521':
+                case "2a1a60c0-8b37-4ec0-85b7-535d2759a775":
                     // 缺失数据
                     this.props.dispatch(
                         NavigationActions.navigate({

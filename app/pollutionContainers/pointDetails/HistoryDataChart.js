@@ -104,7 +104,7 @@ export default class HistoryDataChart extends React.Component {
         let type = this.props.datatype;
 
         return {
-            formatStr: this.props.datatype == 'day' ? 'YYYY-MM-DD' : 'MM/DD HH:00',
+            formatStr: this.props.datatype == 'day' ? 'YYYY-MM-DD' : this.props.datatype == 'hour' ? 'MM/DD HH:00' : 'MM/DD HH:mm',
             defaultTime: this.props.selectTime,
             type: type,
             onSureClickListener: time => {
@@ -214,12 +214,12 @@ export default class HistoryDataChart extends React.Component {
             beginTime =
                 moment(time)
                     .subtract(180, 'minutes')
-                    .format('YYYY-MM-DD HH:mm:ss')
-                    .substr(0, 15) + '0:00';
+                    .format('YYYY-MM-DD HH:mm:ss');
+            // .substr(0, 15) + '0:00';
             endTime =
                 moment(time)
-                    .format('YYYY-MM-DD HH:mm:ss')
-                    .substr(0, 15) + '0:00';
+                    .format('YYYY-MM-DD HH:mm:ss');
+            // .substr(0, 15) + '0:00';
         } else {
             beginTime =
                 moment(time)

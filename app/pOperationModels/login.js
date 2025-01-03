@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-08-21 15:00:35
- * @LastEditTime: 2024-11-11 11:35:47
- * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/login.js
+ * @LastEditTime: 2025-01-02 18:46:07
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationModels/login.js
  */
 // import { AsyncStorage } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -34,7 +34,7 @@ import * as authService from '../services/auth';
 import * as dataAnalyzeAuth from '../services/dataAnalyzeAuth';
 import api from '../config/globalapi';
 import { Model } from '../dvapack';
-import { RSAPubSecret, UrlInfo } from '../config/globalconst';
+import { getVersionInfo, RSAPubSecret, UrlInfo } from '../config/globalconst';
 import Actions, { NavigationActions } from '../utils/RouterUtils';
 import { addAlias, removeAlias } from 'react-native-alipush';
 // import { isSecret } from '../config/globalconfig';
@@ -93,6 +93,13 @@ export default Model.extend({
     },
     effects: {
         *loadglobalvariable({ payload }, { call, put, update, take }) {
+            // 重置企业报警tab的状态，第一次点击切换到超标报警页面
+            yield put(createAction('tabAlarmListModel/updateState')({
+                alarmTabLoadTimes: 0,
+                alarmType: 0 // 企业报警tab 默认为0
+            }));
+            // 登陆有初始化获取tab报警计数
+            yield put(createAction('tabAlarmListModel/getAlarmCountForEnt')({}));
             const { user, _dispatch } = payload;
 
             // if (user.RoleIds == '2b345cf3-1440-4898-84c8-93f9a64f8daf') {
@@ -106,22 +113,142 @@ export default Model.extend({
             let topLevelRouter = [];
             // let initialRouteName = 'Workbench';
             let initialRouteName = '';
+            let pointNemuData = [];
+            let accountOptionList = []
+                , accountHeaderId = '';
+            let tabAlarmWarningButton = [],
+                tabAlarmOverButton = [],
+                tabAlarmMissExceptionButton = [],
+                tabAlarmExceptionButton = [];
             SentencedToEmpty(user, ['MenuDatas'], []).map((item, index) => {
-                if (item.id == '317a708d-f762-44a3-b27e-a96beffbec65') {
+
+                if (item.id == '317a708d-f762-44a3-b27e-a96beffbec65'
+                    || item.id == "2252fc9d-4316-4f85-8cd2-c715668e0443"
+                ) {
                     initialRouteName = 'Workbench';
                     topLevelRouter.push({ routeName: 'Workbench' });
                     workerBenchMenuData = SentencedToEmpty(item, ['children'], []);
                 }
-                if (item.id == 'fe88216b-e18b-4280-95d3-38bf925776ef') {
+                if (item.id == 'fe88216b-e18b-4280-95d3-38bf925776ef'
+                    || item.id == "23e15626-7a94-422f-af3c-afa91c017498"
+                ) {
                     topLevelRouter.push({ routeName: 'PollutionAll' });
+                    pointNemuData = SentencedToEmpty(item, ['children'], []);
                 }
-                if (item.id == '221530a9-a6dc-46ac-9035-779e201e8cef') {
+                if (item.id == '221530a9-a6dc-46ac-9035-779e201e8cef'
+                    || item.id == "896bb82b-4935-4f2e-886c-ef0ab38e8124"
+                ) {
                     topLevelRouter.push({ routeName: 'chengTaoXiaoXi' });
                 }
-                if (item.id == '0313dd66-fe89-4845-b233-fda0a4fcf4d7') {
+                if (item.id == '0313dd66-fe89-4845-b233-fda0a4fcf4d7'
+                    || item.id == "94845b3b-f536-4402-b969-f3d455480b8b"
+                ) {
+                    // 此处添加主路由信息
                     topLevelRouter.push({ routeName: 'Account' });
+                    console.log('Account = ', item);
+                    const inComeOptions = SentencedToEmpty(item, ['children'], []);
+                    inComeOptions.map((iCOItem, iCOIndex) => {
+                        if (iCOItem.id == "929253d2-68e0-43d9-bfd5-b35baa7889b0"
+                            || iCOItem.name == "页面头部1"
+                        ) {
+                            // "页面头部1"
+                            accountHeaderId = iCOItem.id;
+                        } else if (iCOItem.id == "b1320831-30c3-4429-98ad-b3f5217c228e"
+                            || iCOItem.name == "页面头部2"
+                        ) {
+                            // "页面头部2"
+                            accountHeaderId = iCOItem.id;
+                        } else {
+                            if (iCOItem.id == "aa7b487f-2624-437e-a222-c7195e19f344"
+                            ) {
+                                // "帮助中心"
+                                iCOItem.title = iCOItem.name;
+                                iCOItem.routeName = 'HelpCenter';
+                                iCOItem.params = {};
+                            } else if (iCOItem.id == "8573b113-234e-45cb-9743-f48ce7d7d19c"
+                            ) {
+                                // "下载应用"
+                                iCOItem.title = iCOItem.name;
+                                iCOItem.routeName = 'DownLoadAPP';
+                                iCOItem.params = {};
+                            } else if (iCOItem.id == "1092cb08-cefb-4cd9-a630-d30e216f43ff"
+                            ) {
+                                // "我的证书"
+                                iCOItem.title = iCOItem.name;
+                                iCOItem.routeName = 'OperaStaffInfo';
+                                iCOItem.params = {};
+                            } else if (iCOItem.id == "50f10ab5-1c79-4b8e-8467-5ad6b4e5a276"
+                            ) {
+                                // "账户与安全"
+                                iCOItem.title = iCOItem.name;
+                                iCOItem.routeName = 'AccountSecurity';
+                                iCOItem.params = {};
+                            } else if (iCOItem.id == "77e104bf-2b4c-4bb8-b6a9-7e34d4d405b0"
+                            ) {
+                                // "推送设置"
+                                iCOItem.title = iCOItem.name;
+                                iCOItem.routeName = 'PushSetting';
+                                iCOItem.params = {};
+                            } else if (iCOItem.id == "233cb731-abce-4baa-aa9e-edad31dfa85a"
+                            ) {
+                                // "微信公众号绑定"
+                                iCOItem.title = iCOItem.name;
+                                iCOItem.routeName = 'WXBinding';
+                                iCOItem.params = {};
+                            } else if (iCOItem.id == "81b1ea71-9721-4e39-bdef-e4f1b822bf28"
+                            ) {
+                                // "版本更新"
+                                iCOItem.title = `版本更新 (v${getVersionInfo().app_version_name})`;
+                                iCOItem.routeName = 'update';
+                                iCOItem.params = {};
+                            } else if (iCOItem.id == "836fab55-bd7f-40f4-a954-fd20075eb7ba"
+                            ) {
+                                // 
+                                iCOItem.title = iCOItem.name;
+                                iCOItem.routeName = 'logout';
+                                iCOItem.params = {};
+                            }
+                            accountOptionList.push(iCOItem);
+                        }
+                    });
+                }
+                if (item.id == "0111e4bc-e277-4657-97b1-c55eb57e34c0"
+                ) {
+                    // 数据 数据一览
+                    if (initialRouteName != 'Workbench') {
+                        initialRouteName = 'DataForm'
+                    }
+                    topLevelRouter.push({ routeName: 'DataForm' });
+                }
+                if (item.id == "7004d17e-e41b-4da0-b7e3-c4555525bb8b"
+                ) {
+                    // 报警 企业用户
+                    topLevelRouter.push({ routeName: 'Alarm' });
+                    const buttonList = SentencedToEmpty(item, ['buttonList'], []);
+                    buttonList.forEach((buttonItem, buttonIndex) => {
+                        if (buttonItem.code = 'xiangying') {
+                            tabAlarmMissExceptionButton.push(buttonItem);
+                            tabAlarmExceptionButton.push(buttonItem);
+                        } else if (buttonItem.code = 'chaobiao') {
+                            tabAlarmOverButton.push(buttonItem);
+                        }
+                    })
+                }
+                if (item.id == "48303d4a-55fc-4c95-b27e-eef155c96ab7"
+                ) {
+                    // 预警 企业用户
+                    topLevelRouter.push({ routeName: 'OverWarning' });
                 }
             });
+            yield put({
+                type: 'tabAlarmListModel/updateState', payload: {
+                    tabAlarmWarningButton,
+                    tabAlarmOverButton,
+                    tabAlarmMissExceptionButton,
+                    tabAlarmExceptionButton,
+                }
+            });
+            console.log('initialRouteName = ', initialRouteName);
             // let workerBenchMenuData = SentencedToEmpty(user, ['MenuDatas'], []);
             // console.log('workerBenchMenuData = ', workerBenchMenuData);
             // let editWorkBenchData = {};
@@ -136,11 +263,72 @@ export default Model.extend({
                 menuList = [],
                 tabList = [],
                 tabItem = {};
+            let workWarningButton = [],
+                workAlarmOverButton = [],
+                workAlarmMissExceptionButton = [],
+                workAlarmExceptionButton = []
+                , signInButtonlist = []
+                , signInButton
+                , _statisticsType = 'personal';
             workerBenchMenuData.map((tabDataItem, tabIndex) => {
+                console.log('tabDataItem = ', tabDataItem);
+                if (tabDataItem.id == "3de2ed1b-c267-4167-b6bb-dbec254f6306"
+                ) {
+                    // 常用
+                    const changyong = SentencedToEmpty(tabDataItem, ['children'], []);
+                    changyong.map((changyongItem, changyongIndex) => {
+                        if (changyongItem.id == "8e16a74a-9861-481e-ada8-21d0e9d5be89"
+                        ) {
+                            const qiandaoButton = SentencedToEmpty(changyongItem, ['buttonList'], []);
+                            qiandaoButton.map((qiandaoButtonItem, qiandaoButtonIndex) => {
+                                if (qiandaoButtonItem.code == 'teamButton') {
+                                    _statisticsType = 'team';
+                                }
+                                signInButton = { ...qiandaoButtonItem };
+                                // { label: '团队统计', value: 'team' },
+                                signInButton.label = qiandaoButtonItem.name;
+                                signInButton.value =
+                                    qiandaoButtonItem.code == 'personButton' ? 'personal' :
+                                        qiandaoButtonItem.code == 'teamButton' ? 'team' : qiandaoButtonItem.code;
+                                signInButtonlist.push(signInButton);
+                            })
+                        }
+                    })
+                }
+                if (tabDataItem.id == '72eaa231-8d3a-4b88-9fd8-ba872ff915ed') {
+                    // 工作台个人
+                    const geRen = SentencedToEmpty(tabDataItem, ['children'], []);
+                    geRen.map((geRenItem, geRenIndex) => {
+                        if (geRenItem.id == 'a908b089-2cfe-4393-879a-aee09b342f69'
+                        ) {
+                            console.log('geRenItem = ', geRenItem);
+                            // 数据报警
+                            const shuJuBaoJing = SentencedToEmpty(geRenItem, ['children'], []);
+                            shuJuBaoJing.map((shuJuBaoJingItem, shuJuBaoJingIndex) => {
+                                console.log('shuJuBaoJing children = ', SentencedToEmpty(shuJuBaoJingItem, ['children'], []));
+                                if (shuJuBaoJingItem.id == '1e959259-4c86-46b6-9afa-3a9526ec7ffe') {
+                                    // "超标预警"
+                                    workWarningButton = SentencedToEmpty(shuJuBaoJingItem, ['buttonList'], []);
+                                } else if (shuJuBaoJingItem.id == "2efd3446-d7e7-4dbd-b1f7-0d09d307f788") {
+                                    // 超标报警
+                                    workAlarmOverButton = SentencedToEmpty(shuJuBaoJingItem, ['buttonList'], []);
+                                } else if (shuJuBaoJingItem.id == "12e56c69-5e5c-4494-8ee4-03623c513ff2") {
+                                    // 异常报警
+                                    workAlarmExceptionButton = SentencedToEmpty(shuJuBaoJingItem, ['buttonList'], []);
+                                } else if (shuJuBaoJingItem.id == "e347aca5-3dbb-4112-aaf1-998699834e2c") {
+                                    // 丢失报警
+                                    workAlarmMissExceptionButton = SentencedToEmpty(shuJuBaoJingItem, ['buttonList'], []);
+                                }
+                            })
+                        }
+                    })
+                }
                 tabItem = { ...tabDataItem };
                 menuList = [];
                 testItem = tabDataItem;
-                if (SentencedToEmpty(tabDataItem, ['id'], '') == 'f418da8c-fcc7-4784-8b54-1b4f182ba331') {
+                if (SentencedToEmpty(tabDataItem, ['id'], '') == 'f418da8c-fcc7-4784-8b54-1b4f182ba331'
+                    || SentencedToEmpty(tabDataItem, ['id'], '') == '3de2ed1b-c267-4167-b6bb-dbec254f6306'
+                ) {
                     // firstlevel = { ...tabDataItem };
                     // editWorkBenchData.push(firstlevel);
                     testItem = { ...tabDataItem };
@@ -152,7 +340,39 @@ export default Model.extend({
                 tabItem.menuList = menuListResult;
                 tabList.push(tabItem);
             });
-
+            yield put({
+                type: 'alarm/updateState',
+                payload: {
+                    workWarningButton,
+                    workAlarmOverButton,
+                    workAlarmExceptionButton,
+                    workAlarmMissExceptionButton
+                }
+            });
+            console.log('tabList = ', tabList);
+            console.log('statisticsType = ', _statisticsType);
+            yield put({
+                type: 'SignInTeamStatisticsModel/updateState',
+                payload: {
+                    statisticsTypeList: signInButtonlist,
+                    statisticsType: _statisticsType
+                }
+            });
+            yield put({
+                type: 'pointDetails/updateState',
+                payload: {
+                    systemMenu: pointNemuData
+                }
+            });
+            yield put({
+                type: 'account/updateState',
+                payload: {
+                    accountHeaderId,// 我的头部id
+                    accountOptionList,// 我的选项列表
+                }
+            });
+            // accountHeaderId = iCOItem.id;
+            // accountOptionList.push(iCOItem);
             yield update({
                 menuList: SentencedToEmpty(tabList, [0, 'menuList'], []),
                 workerBenchMenu: SentencedToEmpty(tabList, [0, 'editWorkBenchData'], []),
@@ -162,6 +382,8 @@ export default Model.extend({
                 routerConfig: topLevelRouter
             });
             yield put(NavigationActions.reset({ routeName: 'MyTab' }));
+            // 初始化一些数据
+
             // 获取通用配置信息
             yield put({ type: 'app/getOperationSetting', payload: {} });
             addAlias(user.UserId, (str = '') => {
@@ -244,7 +466,7 @@ export default Model.extend({
             }
         },
 
-        *getIsNeedSecrect(action, { call, put }) {
+        * getIsNeedSecrect(action, { call, put }) {
             console.log('getIsNeedSecrect 停用是否加密方法');
             // const isNeedSecret = yield call(authService.axiosGet, api.pollutionApi.Account.getIsNeedSecret, {});
             // if (isNeedSecret.status == 200 || (typeof isNeedSecret.data != 'undefined' && isNeedSecret.data && isNeedSecret.data.StatusCode == 200)) {
@@ -258,7 +480,7 @@ export default Model.extend({
          * @param {*} param0
          * @param {*} param1
          */
-        *postMessageCode({ payload }, { call, put, update, take, select }) {
+        * postMessageCode({ payload }, { call, put, update, take, select }) {
             const result = yield call(axiosAuthLogin, api.pollutionApi.Account.PostMessageCode, payload);
             if (result.status == 200 && SentencedToEmpty(result, ['data', 'IsSuccess'], false)) {
                 ShowToast('验证码已发送');
@@ -266,7 +488,7 @@ export default Model.extend({
                 ShowToast(SentencedToEmpty(result, ['data', 'Message'], '验证码发送失败'));
             }
         },
-        *login({ payload }, { call, put, update, take, select }) {
+        * login({ payload }, { call, put, update, take, select }) {
             /**
              * 公司运维没有相关逻辑，服务端不提供是否加密的配置信息
              * 同时因为此接口修改，导致错误信息401，因此去掉这部分逻辑
@@ -345,7 +567,7 @@ export default Model.extend({
             }
         },
 
-        *logout(action, { call, put }) {
+        * logout(action, { call, put }) {
             yield clearToken();
             // removeAlias();
             // Actions.reset({
@@ -362,11 +584,11 @@ export default Model.extend({
             //     })
             // );
         },
-        *processingWebSocketData({ payload: { params, callback } }, { call, put, take, update }) {
+        * processingWebSocketData({ payload: { params, callback } }, { call, put, take, update }) {
             console.log('processingWebSocketData');
         },
 
-        *getEnterpriseConfig({ payload }, { call, put, take, update }) {
+        * getEnterpriseConfig({ payload }, { call, put, take, update }) {
             yield clearToken();
 
             let encrypt = new JSEncrypt();
@@ -418,7 +640,7 @@ export default Model.extend({
                 yield put(createAction('app/updateState')({ networkTest: true }));
             }
         },
-        *reloadEnterpriseConfig({ payload }, { call, put, take, update }) {
+        * reloadEnterpriseConfig({ payload }, { call, put, take, update }) {
             yield clearToken();
 
             let encrypt = new JSEncrypt();

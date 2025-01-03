@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2023-12-29 11:36:15
- * @LastEditTime: 2024-12-09 16:41:18
- * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/account.js
+ * @LastEditTime: 2024-12-25 15:40:17
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationModels/account.js
  */
 import moment from 'moment';
 
@@ -20,6 +20,8 @@ export default Model.extend({
         Complexity: true,
         userAccount: '',
         emailShow: '',
+        accountHeaderId: '',// 我的头部id
+        accountOptionList: [],// 我的选项列表
     },
     reducers: {
         updateState(state, { payload }) {

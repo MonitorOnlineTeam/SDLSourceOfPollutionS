@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-02-01 11:02:45
- * @LastEditTime: 2024-05-17 13:36:53
- * @FilePath: /SDLMainProject37/app/pOperationContainers/tabView/workbenchSignin/SignInStatistics.js
+ * @LastEditTime: 2025-01-02 17:18:20
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/tabView/workbenchSignin/SignInStatistics.js
  */
 import {
     Animated, Image, Modal, PanResponder, Platform, ScrollView
@@ -191,9 +191,15 @@ export default class SignInStatistics extends Component {
             || tagType == 576
             || tagType == 577
             || tagType == 578
-            || tagType == 581) {
+            || tagType == 581
+            || tagType == 706
+            || tagType == 713
+        ) {
             _color = '#FFA415';
             tagTypeStr = '非现场';
+        } else if (tagType == 0) {
+            _color = '#4F6BF8';
+            tagTypeStr = '现场';
         }
         return (<View style={{ flexDirection: 'row', width: 44, height: 16 }}>
             <View
@@ -714,7 +720,7 @@ export default class SignInStatistics extends Component {
             width: SCREEN_WIDTH, flex: 1
         }]}>
             <View style={[{
-                width: SCREEN_WIDTH - 20, marginTop: 10
+                width: SCREEN_WIDTH - 20, marginTop: 0
                 , marginLeft: 10, backgroundColor: '#ffffff'
                 , borderRadius: 5
                 , alignItems: 'center'
@@ -778,7 +784,7 @@ export default class SignInStatistics extends Component {
                         />}
                     </Animated.View>
                     <View style={[{
-                        height: 16, width: SCREEN_WIDTH - 40,
+                        height: 40, width: SCREEN_WIDTH - 40,
                     }]}>
                         <TouchableOpacity
                             onPress={() => {
@@ -803,7 +809,10 @@ export default class SignInStatistics extends Component {
                                 }
                             }}
                         >
-                            <View style={[{ width: SCREEN_WIDTH - 40, flexDirection: 'row', alignItems: 'center' }]}>
+                            <View style={[{
+                                height: 40, alignItems: 'center'
+                                , width: SCREEN_WIDTH - 40, flexDirection: 'row', alignItems: 'center'
+                            }]}>
                                 <View style={[{ flex: 1, height: 1, backgroundColor: '#EAEAEA' }]}></View>
                                 <Image
                                     style={[{ width: 20, height: 8 }]}
@@ -832,11 +841,11 @@ export default class SignInStatistics extends Component {
                             , marginLeft: 10, backgroundColor: '#ffffff'
                             , borderRadius: 5
                             , alignItems: 'center'
-                            , height: 40, justifyContent: 'center'
+                            , height: 32, justifyContent: 'center'
                         }]}>
                             <View style={[{
-                                width: SCREEN_WIDTH - 40, height: 49
-                                , flexDirection: 'row'
+                                width: SCREEN_WIDTH - 40, height: 32
+                                , flexDirection: 'row', alignItems: 'center'
                             }]}>
                                 <Text
                                     numberOfLines={2}
@@ -844,7 +853,6 @@ export default class SignInStatistics extends Component {
                                         // width: SCREEN_WIDTH - 148,
                                         width: SCREEN_WIDTH - 40,
                                         fontSize: 11, color: '#666666'
-                                        , marginTop: 17, lineHeight: 16
                                     }]}>{
                                         `${this.getText()}`
                                     }</Text>

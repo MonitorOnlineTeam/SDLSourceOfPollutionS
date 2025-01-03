@@ -65,6 +65,16 @@ export default Model.extend({
 
         alarmResponseAlarmDetailResult: { status: -1 }, //报警响应报警详情
         alarmResponseAlarmDetailData: [], //报警响应报警详情 数据
+
+        workWarningButton: [],
+        workAlarmOverButton: [],
+        workAlarmMissExceptionButton: [],
+        workAlarmExceptionButton: [],
+
+        warningButton: [],
+        alarmOverButton: [],
+        alarmMissExceptionButton: [],
+        alarmExceptionButton: [],
     },
     reducers: {
         updateState(state, { payload }) {
@@ -185,6 +195,7 @@ export default Model.extend({
             },
             { call, put, take, update, select }
         ) {
+            console.log('getAlarmCount');
             let alarmType = params.alarmType;
 
             let url = api.pollutionApi.Alarm.GetMonitorAlarmDatas;
@@ -489,11 +500,42 @@ export default Model.extend({
             },
             { call, put, take, update, select }
         ) {
+            console.log('getAlarmRecords');
             let { monitorAlarmIndex, monitorAlarmData, sourceType } = yield select(state => state.alarm);
 
             let url = api.pollutionApi.Alarm.GetMonitorAlarmDatas;
 
+            console.log('sourceType = ', sourceType);
             switch (sourceType) {
+                case 'tabWorkbenchException': //运维工作台异常 异常报警
+                    params.BeginTime = moment()
+                        // .subtract(30, 'days')
+                        .subtract(1, 'days')
+                        .format('YYYY-MM-DD 00:00:00');
+                    params.EndTime = moment().format('YYYY-MM-DD HH:mm:ss');
+                    params.AlarmType = '0,1,3,4';
+                    params.AllData = '1'; //1是查看未响应的的报警信息 空为查看所有的报警信息
+                    break;
+                case 'tabWorkbenchOver': //运维工作台超标 接口需要换了
+                    url = api.pollutionApi.Alarm.GetOperationOverData;
+                    params.BeginTime = moment()
+                        // .subtract(30, 'days')
+                        .subtract(1, 'days')
+                        .format('YYYY-MM-DD 00:00:00');
+                    params.EndTime = moment().format('YYYY-MM-DD HH:mm:ss');
+                    params.AlarmType = '2';
+                    params.DataType = 'HourData,DayData';
+                    break;
+                case 'tabOverWarning': //预警 分钟报警
+                    url = api.pollutionApi.Alarm.GetOperationOverData;
+                    params.BeginTime = moment()
+                        // .subtract(7, 'days')
+                        .subtract(1, 'days')
+                        .format('YYYY-MM-DD 00:00:00');
+                    params.EndTime = moment().format('YYYY-MM-DD HH:mm:ss');
+                    params.AlarmType = '2';
+                    params.DataType = 'MinuteData';
+                    break;
                 case 'OverWarning': //预警 分钟报警
                     url = api.pollutionApi.Alarm.GetOperationOverData;
                     params.BeginTime = moment()

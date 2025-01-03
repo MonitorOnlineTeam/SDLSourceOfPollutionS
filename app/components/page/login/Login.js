@@ -221,7 +221,8 @@ class Login extends Component {
         // await loadRootUrl();
         let rootUrl = getRootUrl();
         console.log('rootUrl = ', rootUrl);
-        this.props.dispatch(createAction('login/updateState')({ ProjectName: SentencedToEmpty(rootUrl, ['SystemName'], '污染源监控平台') }));
+        // this.props.dispatch(createAction('login/updateState')({ ProjectName: SentencedToEmpty(rootUrl, ['SystemName'], '污染源监控平台') }));
+        this.props.dispatch(createAction('login/updateState')({ ProjectName: SentencedToEmpty(rootUrl, ['ProjectName'], '污染源监控平台') }));
         if (CURRENT_PROJECT == POLLUTION_ORERATION_PROJECT || CURRENT_PROJECT == POLLUTION_PROJECT) {
             if (this.props.maintain) {
             } else if (typeof rootUrl == 'undefined' || !rootUrl) {

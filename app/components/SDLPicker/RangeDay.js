@@ -13,7 +13,7 @@ import CalendarView from './component/CalendarView';
 const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 let scaleFactor = 375;
-let calendarHeight = 320 * (Math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / scaleFactor);
+let calendarHeight = 320 * (Math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / scaleFactor) + 20;
 // let calendarHeight = 370*(Math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / scaleFactor);
 
 // create a component

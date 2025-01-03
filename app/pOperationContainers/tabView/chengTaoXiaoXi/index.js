@@ -1,9 +1,9 @@
 /*
  * @Description: 成套在主tab上增加消息模块
- * @LastEditors: outman0611 jia_anbo@163.com
+ * @LastEditors: hxf
  * @Date: 2023-09-04 08:59:54
- * @LastEditTime: 2024-09-12 11:18:52
- * @FilePath: /SDLMainProject/app/pOperationContainers/tabView/chengTaoXiaoXi/index.js
+ * @LastEditTime: 2024-12-27 15:26:24
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/tabView/chengTaoXiaoXi/index.js
  */
 import Popover from 'react-native-popover';
 import React, { Component } from 'react'
@@ -365,7 +365,7 @@ class index extends Component {
                         </TouchableOpacity>
                     </View>
                 </Popover>
-                {/* <AlertDialog options={alertOptions} ref="doAlert" /> */}
+                <AlertDialog options={alertOptions} ref="doAlert" />
             </StatusPage>
         )
     }

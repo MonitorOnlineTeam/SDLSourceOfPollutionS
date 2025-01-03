@@ -144,21 +144,25 @@ export const secondlevelDataHandle = tabDataItem => {
 
             switch (innerItem.id) {
                 case '9e9bd943-1d5b-46c1-a0a9-c53bea71b552':
+                case "e2263713-6ffe-4315-82b3-22994e3ce04d":
                     // 服务提醒
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '服务提醒'), img: require('../images/renwujilu.png'), numkey: 'ServiceReminderCalendar' });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '服务提醒'), img: require('../images/renwujilu.png'), numkey: 'ServiceReminderCalendar' });
                     break;
                 case 'be671aa8-f21f-4230-87d6-6c12d2912d6c':
+                case "3a819f10-209a-4902-8b4d-5d9add1949a7":
                     // 备件更换
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '备件更换'), img: require('../images/renwujilu.png'), numkey: 'SparePartsChangeEditor' });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '备件更换'), img: require('../images/renwujilu.png'), numkey: 'SparePartsChangeEditor' });
                     break;
                 case '834900f4-4820-4143-87d2-1116377a46e3':
+                case "91e790e4-5a9e-4ac1-a742-adeda640bb74":
                     // 服务报告整改
                     secondlevel.push({ ...innerItem, dcountkey: 'serviceStatusNum', label: SentencedToEmpty(innerItem, ['name'], '服务报告整改'), img: require('../images/renwujilu.png'), numkey: 'ServiceReportRectificationList' });
                     menuList.push({ ...innerItem, dcountkey: 'serviceStatusNum', label: SentencedToEmpty(innerItem, ['name'], '服务报告整改'), img: require('../images/renwujilu.png'), numkey: 'ServiceReportRectificationList' });
                     break;
                 case '2273c00d-7594-4f85-8174-b46903a93ff7':
+                case "89afcc6f-e994-4478-92ac-31696d275975":
                     // 异常识别2.0 核查任务  "任务记录"
                     secondlevel.push({ ...innerItem, dcountkey: 'checkTaskCount', label: SentencedToEmpty(innerItem, ['name'], '任务记录'), img: require('../images/ic_ct_sign_in.png'), numkey: 'TaskToBeVerifiedList' });
                     menuList.push({ ...innerItem, dcountkey: 'checkTaskCount', label: SentencedToEmpty(innerItem, ['name'], '任务记录'), img: require('../images/ic_ct_sign_in.png'), numkey: 'TaskToBeVerifiedList' });
@@ -172,16 +176,19 @@ export const secondlevelDataHandle = tabDataItem => {
                     // menuList.push({ ...innerItem, id: 123, dcountkey: 'checkedRectificationListCount', name: '异常整改', label: '异常整改', img: require('../images/ic_ct_sign_in.png'), numkey: 'MissionVerificationRectificationList' });
                     break;
                 case '9475d452-e408-43cc-99f8-05237ddeaf38':
+                case "655315aa-b691-4d85-888e-065f25d1d2cb":
                     //  "异常识别2.0整改" 异常整改
                     secondlevel.push({ ...innerItem, id: 123, dcountkey: 'checkedRectificationListCount', label: SentencedToEmpty(innerItem, ['name'], '异常整改'), img: require('../images/ic_ct_sign_in.png'), numkey: 'MissionVerificationRectificationList' });
                     menuList.push({ ...innerItem, id: 123, dcountkey: 'checkedRectificationListCount', label: SentencedToEmpty(innerItem, ['name'], '异常整改'), img: require('../images/ic_ct_sign_in.png'), numkey: 'MissionVerificationRectificationList' });
                     break;
                 case '153aecef-0ca7-470e-8503-b6df1ef592bf':
-                    //  "数据报警/异常识别企业列表"
+                case "9a460940-dc96-4150-802b-d7492b994492":
+                    //  "数据报警/异常识别企业列表" 1.0
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '异常识别'), img: require('../images/tongzhi.png'), numkey: 'AlarmSectionList' });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '异常识别'), img: require('../images/tongzhi.png'), numkey: 'AlarmSectionList' });
                     break;
                 case '740171a4-a61d-4c14-bfa8-af32466574cc':
+                case "a4dde2e3-86ea-4339-bb29-4887064245f9":
                     //  "数据报警/异常识别企业列表"
                     // 异常识别2.0
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '异常识别'), img: require('../images/tongzhi.png'), numkey: 'AbnormalEnterpriseList' });
@@ -190,52 +197,61 @@ export const secondlevelDataHandle = tabDataItem => {
                     // menuList.push({ ...innerItem, label: '异常识别', img: require('../images/tongzhi.png'), numkey: 'AlarmSectionList' });
                     break;
                 case '96f4f52d-fc33-4293-b62f-653cc9370288':
+                case "c9845940-d99d-45a3-b0ff-2fb3f907b3e5":
                     // "安装照片整改"
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], "安装照片整改"), numkey: 'EquipmentInstallationPicAudit', countkey: 'EquipmentInstallationPicAudit', dcountkey: 'equipmentAuditRectificationNum', img: require('../images/renwujilu.png') });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], "安装照片整改"), numkey: 'EquipmentInstallationPicAudit', countkey: 'EquipmentInstallationPicAudit', dcountkey: 'equipmentAuditRectificationNum', img: require('../images/renwujilu.png') })
                     break;
                 case '27d6140f-0acb-4c54-bea1-61ef1ef36ac6':
+                case "8e16a74a-9861-481e-ada8-21d0e9d5be89":
                     // 运维签到
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '运维签到'), numkey: 'SignInEnter', countkey: 'SignInEnter', dcountkey: '', img: require('../images/ic_ct_sign_in.png') });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '运维签到'), numkey: 'SignInEnter', countkey: 'SignInEnter', dcountkey: '', img: require('../images/ic_ct_sign_in.png') })
                     break;
                 case '0fc20ea8-5091-4d03-b964-8aa3e2dda124':
+                case "fb6a59ca-7912-4f96-9626-1dad4a6ee2a4":
                     // 待办任务
                     // secondlevel.push({ label: '待办任务', numkey: 'GTaskOfEnterprise', countkey: 'TaskCount', dcountkey: '' });
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '待办任务'), numkey: 'GTaskOfEnterprise', countkey: 'TaskCount', dcountkey: '' });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '待办任务'), numkey: 'GTaskOfEnterprise', countkey: 'TaskCount', dcountkey: '' })
                     break;
                 case '2fa0ef8d-dd69-46a3-b159-5ab105912c0a':
+                case "b9bbacbc-1ff6-459e-8a10-8035a80c5f4b":
                     // 待我审批
                     // secondlevel.push({ label: '待我审批', numkey: 'PerformApproval', countkey: 'PerformApprovalCount', dcountkey: 'PerformApprovalCount', params: { pageType: 1 }  });
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '待我审批'), numkey: 'PerformApproval', countkey: 'PerformApprovalCount', dcountkey: 'PerformApprovalCount', params: { pageType: 1 } });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '待我审批'), numkey: 'PerformApproval', countkey: 'PerformApprovalCount', dcountkey: 'PerformApprovalCount', params: { pageType: 1 } });
                     break;
                 case '401cc92e-7ef3-430f-8dc1-57d64b09c352':
+                case "1e959259-4c86-46b6-9afa-3a9526ec7ffe":
                     // 超标预警
                     // secondlevel.push({ label: '超标预警', numkey: 'OverWarning', countkey: 'OverWarning', dcountkey: 'OverWarningCount' });
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '超标预警'), numkey: 'OverWarning', countkey: 'OverWarning', dcountkey: 'OverWarningCount' });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '超标预警'), numkey: 'OverWarning', countkey: 'OverWarning', dcountkey: 'OverWarningCount' });
                     break;
                 case 'e976cd64-86e9-4309-a471-41c141d9e15a':
+                case "2efd3446-d7e7-4dbd-b1f7-0d09d307f788":
                     // 超标报警
                     // secondlevel.push({ label: '超标报警', numkey: 'OverAlarm', countkey: 'OverCount', dcountkey: 'overAlarmCount' });
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '超标报警'), numkey: 'OverAlarm', countkey: 'OverCount', dcountkey: 'overAlarmCount' });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '超标报警'), numkey: 'OverAlarm', countkey: 'OverCount', dcountkey: 'overAlarmCount' });
                     break;
                 case 'bad20981-02ca-4063-bddb-69746bb14102':
+                case "12e56c69-5e5c-4494-8ee4-03623c513ff2":
                     // 异常报警
                     // secondlevel.push({ label: '异常报警', numkey: 'ExceptionAlarm', countkey: 'AlarmCount', dcountkey: 'exceptionAlarmCount' });
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '异常报警'), numkey: 'ExceptionAlarm', countkey: 'AlarmCount', dcountkey: 'exceptionAlarmCount' });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '异常报警'), numkey: 'ExceptionAlarm', countkey: 'AlarmCount', dcountkey: 'exceptionAlarmCount' });
                     break;
                 case '6d1e3a4b-397c-4c06-983e-a9c2f45176dd':
+                case "e347aca5-3dbb-4112-aaf1-998699834e2c":
                     // 缺失报警
                     // secondlevel.push({ label: '缺失报警', numkey: 'MissAlarm', countkey: 'MissAlarm', dcountkey: 'missAlarmCount' });
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '缺失报警'), numkey: 'MissAlarm', countkey: 'MissAlarm', dcountkey: 'missAlarmCount' });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '缺失报警'), numkey: 'MissAlarm', countkey: 'MissAlarm', dcountkey: 'missAlarmCount' });
                     break;
                 case '735faa4e-4e9c-45cd-8802-f9553126acba':
+                case "77b598eb-5503-4cdf-b986-8bd8f5619105":
                     // 故障反馈
                     // secondlevel.push({ label: '故障反馈', img: require('../images/renwujilu.png'), numkey: 'EquipmentFailureFeedbackList' });
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '故障反馈'), img: require('../images/renwujilu.png'), numkey: 'EquipmentFailureFeedbackList' });
@@ -251,35 +267,41 @@ export const secondlevelDataHandle = tabDataItem => {
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '宝武运维'), img: require('../images/renwujilu.png'), numkey: 'SHEnterpriseList' });
                     break;
                 case 'f8c7b7dc-6441-40bb-bc7a-9bb4da5f211f':
+                case "e8dc6e44-add7-4092-b3fb-952508811113":
                     // 关键参数核查
                     // secondlevel.push({ label: '关键参数核查', img: require('../images/renwujilu.png'), numkey: 'KeyParameterVerificationList' });
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '关键参数核查'), img: require('../images/renwujilu.png'), numkey: 'KeyParameterVerificationList' });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '关键参数核查'), img: require('../images/renwujilu.png'), numkey: 'KeyParameterVerificationList' });
                     break;
                 case '4e66e62b-66f1-41fe-a595-37312c549bdb':
+                case "29a778e3-a85c-46b6-9467-533d66718209":
                     // 设施核查整改
                     // secondlevel.push({ label: '设施核查整改', img: require('../images/renwujilu.png'), numkey: 'SuperviserRectifyList' });
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '设施核查整改'), img: require('../images/renwujilu.png'), numkey: 'SuperviserRectifyList' });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '设施核查整改'), img: require('../images/renwujilu.png'), numkey: 'SuperviserRectifyList' });
                     break;
                 case '021d1519-b23d-48fd-8130-0e0bf44bd728':
+                case "5b4be1ce-2dc2-40ab-8d28-8f354a63a563":
                     // 宝武领取工单'
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '领取工单'), img: require('../images/renwujilu.png'), numkey: 'ManualClaimTask' });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '领取工单'), img: require('../images/renwujilu.png'), numkey: 'ManualClaimTask' });
                     break;
 
                 case '185ef6e1-96b4-48bd-b36f-2949a03fd8f2':
+                case "c5544965-4d59-4b96-8224-437f2bc58153":
                     //  "成套待办"
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '成套待办'), img: require('../images/ic_ct_sign_in.png'), numkey: 'ChengTaoGTask' });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '成套待办'), img: require('../images/ic_ct_sign_in.png'), numkey: 'ChengTaoGTask' });
                     break;
                 case 'b8b30732-3dae-46c4-aeaf-2114c0516c06':
+                case "8078b7f7-179d-40c6-829b-d1cd8a9277f2":
                     //  "成套签到"
                     secondlevel.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '成套签到'), img: require('../images/ic_ct_sign_in.png'), numkey: 'ChengTaoSignIn' });
                     menuList.push({ ...innerItem, label: SentencedToEmpty(innerItem, ['name'], '成套签到'), img: require('../images/ic_ct_sign_in.png'), numkey: 'ChengTaoSignIn' });
                     break;
                 case 'efbd94a3-e794-457b-91f7-592df4b91af4':
-                    //  "模型整改"
+                case "d1f2d59a-731b-4ce6-b12d-7e3d6b8934d1":
+                    //  "模型整改" 1.0
                     secondlevel.push({ ...innerItem, label: innerItem.name, img: require('../images/ic_ct_sign_in.png'), numkey: 'AnalysisModelAbnormalRectificationList' });
                     menuList.push({ ...innerItem, label: innerItem.name, img: require('../images/ic_ct_sign_in.png'), numkey: 'AnalysisModelAbnormalRectificationList' });
                     break;
@@ -894,4 +916,19 @@ export const getCommonHeaderStyle = () => {
         }
     };
 }
+
+/**
+ * 判断是否是数字
+ * @param value
+ * @returns {Boolean}
+ */
+export const isNum = (val) => {
+    var regPos = /^\d+(\.\d+)?$/; //非负浮点数
+    var regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
+    if (regPos.test(val) || regNeg.test(val)) {
+        return true;
+    } else {
+        return false;
+    }
+};
 

@@ -348,8 +348,9 @@ export default class HistoryDataLandscapeChart extends Component {
 
     getTimeSelectOption = () => {
         let type = this.props.datatype;
+        console.log('type = ', type);
         return {
-            formatStr: this.props.datatype == 'day' ? 'YYYY-MM-DD' : 'MM/DD HH:00',
+            formatStr: this.props.datatype == 'day' ? 'YYYY-MM-DD' : this.props.datatype == 'hour' ? 'MM/DD HH:00' : 'MM/DD HH:mm',
             type: type,
             defaultTime: this.props.selectTime,
             onSureClickListener: time => {

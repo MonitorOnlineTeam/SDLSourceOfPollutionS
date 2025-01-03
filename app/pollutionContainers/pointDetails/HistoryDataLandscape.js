@@ -2,8 +2,8 @@
  * @Description: 横屏 列表和图表 入口
  * @LastEditors: hxf
  * @Date: 2024-06-26 09:07:50
- * @LastEditTime: 2024-09-27 15:16:27
- * @FilePath: /SDLMainProject/app/pollutionContainers/pointDetails/HistoryDataLandscape.js
+ * @LastEditTime: 2024-12-31 15:17:35
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/pollutionContainers/pointDetails/HistoryDataLandscape.js
  */
 import { StatusBar, Text, TouchableOpacity, View, Image, Platform } from 'react-native';
 import React, { Component } from 'react';
@@ -80,8 +80,9 @@ export default class HistoryDataLandscape extends Component {
 
     getTimeSelectOption = () => {
         let type = this.props.datatype;
+        console.log('type = ', type);
         return {
-            formatStr: this.props.datatype == 'day' ? 'YYYY-MM-DD' : 'MM/DD HH:00',
+            formatStr: this.props.datatype == 'day' ? 'YYYY-MM-DD' : this.props.datatype == 'hour' ? 'MM/DD HH:00' : 'MM/DD HH:mm',
             type: type,
             defaultTime: this.props.selectTime,
             onSureClickListener: time => {

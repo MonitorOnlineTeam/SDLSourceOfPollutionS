@@ -10,9 +10,11 @@ import {
     ProgressBarAndroid,
     Dimensions,
     Text,
-    AsyncStorage,
+    // AsyncStorage,
     Image
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import { SentencedToEmpty } from '../utils';
 
 let self;
 /**ref的引用*/
@@ -66,18 +68,23 @@ class PullToRefreshLayout extends Component {
 
     //要求成为响应者
     _handleStartShouldSetPanResponder(e: Object, gestureState: Object): boolean {
+        console.log('_handleStartShouldSetPanResponder');
         return true;
+        // return false;
     }
     _handleMoveShouldSetPanResponder(e: Object, gestureState: Object): boolean {
+        console.log('_handleMoveShouldSetPanResponder');
         return true;
+        // return false;
     }
     //touch down 开始手势操作。给用户一些视觉反馈，让他们知道发生了什么事情！
     _handlePanResponderGrant(e: Object, gestureState: Object) {
-
+        console.log('_handlePanResponderGrant');
     }
 
     //touch move 响应滑动事件
     _handlePanResponderMove(e: Object, gestureState: Object) {
+        console.log('_handlePanResponderMove');
         if (self.state.currentDistance > REFRESH_PULL_LENGTH) {
             if (self.state.showPullStatus === ShowLoadingStatus.SHOW_DOWN) {
                 self.setState({
@@ -206,6 +213,7 @@ class PullToRefreshLayout extends Component {
     }
 
     _handlePanResponderEnd(e: Object, gestureState: Object) {
+        console.log('_handlePanResponderEnd');
         if (self.state.currentDistance >= REFRESH_PULL_LENGTH) {
             self.refreshStateHeader();
         }
@@ -227,13 +235,61 @@ class PullToRefreshLayout extends Component {
     componentWillMount() {
         self = this;
         this._panResponder = PanResponder.create({
+            onStartShouldSetResponderCapture: () => {
+                console.log("onStartShouldSetResponderCapture");
+                return false;
+            },
+            onMoveShouldSetPanResponderCapture: this.onMoveShouldSetPanResponderCapture,
             onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder,
-            onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
+            // 不设置这个参数，是否捕获事件交给onMoveShouldSetPanResponderCapture
+            // onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
             onPanResponderGrant: this._handlePanResponderGrant,
             onPanResponderMove: this._handlePanResponderMove,
             onPanResponderRelease: this._handlePanResponderEnd,
             onPanResponderTerminate: this._handlePanResponderEnd,
+            onPanResponderTerminationRequest: this.onPanResponderTerminationRequest,
+            onShouldBlockNativeResponder: () => {
+                // 返回一个布尔值，决定当前组件是否应该阻止原生组件成为JS响应者
+                // 默认返回true。目前暂时只支持android。
+                return true;
+            }
         });
+    }
+
+    onPanResponderTerminationRequest(event) {
+        return false;
+    }
+
+    onMoveShouldSetPanResponderCapture(event, gestureState) {
+        console.log("onMoveShouldSetPanResponderCapture");
+        // return false;
+        // if (this.props.refreshing) {
+        //     // 正在刷新中，不接受再次下拉
+        //     return false;
+        // }
+        // if (this.state.scrollEnabled) {
+        //     return false;
+        // }
+        /**
+         * 判断是否捕获事件
+         * 两次坐标相差大于2认为可以拦截事件
+         * 大于20可能是分两次点击距离过远需要重置lastPositionY的位置
+         */
+        let lastPositionY = SentencedToEmpty(this, ['lastPositionY'], 0);
+        let moveY = SentencedToEmpty(gestureState, ['moveY'], 0);
+        if (lastPositionY == 0) {
+            this.lastPositionY = gestureState.moveY;
+            return false;
+        } else if (Math.abs(moveY - lastPositionY) > 2
+            && Math.abs(moveY - lastPositionY) < 20) {
+            // this.lastPositionY = gestureState.moveY;
+            this.lastPositionY = 0;
+            // return !this.state.scrollEnabled;
+            return true;
+        } else {
+            this.lastPositionY = gestureState.moveY;
+            return false;
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {

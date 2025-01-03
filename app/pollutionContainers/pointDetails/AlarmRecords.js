@@ -18,7 +18,7 @@ import { alarmResponseing } from '../../pOperationModels/taskModel';
 /**
  * 报警记录/报警详情
  */
-@connect(({ pointDetails, taskModel, app }) => ({
+@connect(({ pointDetails, taskModel, app, alarm }) => ({
     isVerifyOrHandle: app.isVerifyOrHandle,
     alarmRecordsListData: pointDetails.alarmRecordsListData,
     alarmRecordsListDataSelected: pointDetails.alarmRecordsListDataSelected,
@@ -28,7 +28,11 @@ import { alarmResponseing } from '../../pOperationModels/taskModel';
     alarmRecordsPointInfo: pointDetails.alarmRecordsPointInfo,
     alarmRecordsListTargetDGIMN: pointDetails.alarmRecordsListTargetDGIMN,
     isAlarmRes: taskModel.isAlarmRes,
-    relatedToAlarmsTaskId: taskModel.relatedToAlarmsTaskId
+    relatedToAlarmsTaskId: taskModel.relatedToAlarmsTaskId,
+
+    alarmOverButton: alarm.alarmOverButton,
+    alarmMissExceptionButton: alarm.alarmMissExceptionButton,
+    alarmExceptionButton: alarm.alarmExceptionButton,
 }))
 export default class AlarmRecords extends PureComponent {
     // static navigationOptions = ({ navigation }) => {
@@ -285,6 +289,49 @@ export default class AlarmRecords extends PureComponent {
         });
     }
 
+    getPageStatus = () => {
+        if ((this.state.functionType == 'OverVerify' || this.state.functionType == 'AlarmVerify')) {
+            // 超标
+            if (this.props.alarmRecordsListData.length > 0
+                && SentencedToEmpty(this.props, ['alarmOverButton'], []).length > 0
+            ) {
+                return {
+                    edit: true, buttons: SentencedToEmpty(this.props, ['alarmOverButton'], [])
+                    , OverAlarmEdit: true, exceptionEdit: false
+                    , missEdit: false
+                };
+            } else {
+                return {
+                    edit: false, buttons: []
+                    , OverAlarmEdit: false, exceptionEdit: false
+                    , missEdit: false
+                };
+            }
+
+        } else if (this.state.functionType == 'AlarmResponse' || this.state.functionType == 'WorkbenchMiss') {
+            // 异常 和 缺失
+            if (this.props.alarmRecordsListData.length > 0
+                && (SentencedToEmpty(this.props, ['alarmExceptionButton'], []).length > 0
+                    || SentencedToEmpty(this.props, ['alarmMissExceptionButton'], []).length > 0
+                )
+            ) {
+                return {
+                    edit: true, buttons: SentencedToEmpty(this.props, ['alarmExceptionButton'], [])
+                    , OverAlarmEdit: false, exceptionEdit: true
+                    , missEdit: true
+                };
+            } else {
+                return {
+                    edit: false, buttons: []
+                    , OverAlarmEdit: false, exceptionEdit: false
+                    , missEdit: false
+                };
+            }
+
+        }
+        // CURRENT_PROJECT == 'POLLUTION_ORERATION_PROJECT' && this.props.alarmRecordsListData.length > 0 && (this.state.functionType == 'AlarmResponse' || this.state.functionType == 'WorkbenchMiss')
+    }
+
     render() {
         let alertOptions = {
             headTitle: '提示',
@@ -403,12 +450,15 @@ export default class AlarmRecords extends PureComponent {
                                         <Touchable onPress={() => this.selectItem(item, index)} style={[{ minHeight: 92, width: SCREEN_WIDTH, backgroundColor: '#fff', paddingLeft: 20, justifyContent: 'center' }]}>
                                             <View style={[{ flexDirection: 'row', alignItems: 'center', height: 42, width: SCREEN_WIDTH - 20 }]}>
                                                 {/* 报警响应则创建任务不多选，核实 处置 超标核实进行多选操作 */}
-                                                {this.state.functionType == 'OverVerify' || this.state.functionType == 'AlarmVerify' ? (
-                                                    <Image
-                                                        style={{ marginRight: 5, height: 21, width: 21 }}
-                                                        source={SentencedToEmpty(item, ['selected'], false) ? require('../../images/ic_reported_check.png') : require('../../images/ic_reported_uncheck.png')}
-                                                    />
-                                                ) : null}
+                                                {
+                                                    // this.state.functionType == 'OverVerify' || this.state.functionType == 'AlarmVerify' 
+                                                    this.getPageStatus().edit
+                                                        ? (
+                                                            <Image
+                                                                style={{ marginRight: 5, height: 21, width: 21 }}
+                                                                source={SentencedToEmpty(item, ['selected'], false) ? require('../../images/ic_reported_check.png') : require('../../images/ic_reported_uncheck.png')}
+                                                            />
+                                                        ) : null}
                                                 <SDLText fontType={'normal'} style={[{ color: '#666' }]}>
                                                     {SentencedToEmpty(item, ['FirstTime'], '')}
                                                 </SDLText>
@@ -522,46 +572,107 @@ export default class AlarmRecords extends PureComponent {
                             <Text style={{ color: '#ffffff', fontSize: 18 }}>{this.props.isVerifyOrHandle == 'handle' ? '处置' : '核实'}</Text>
                         </Touchable>
                     ) : null}
-                    {(this.state.functionType == 'OverVerify' || this.state.functionType == 'AlarmVerify') && this.props.alarmRecordsListData.length > 0 ? (
-                        <Touchable
-                            onPress={() => {
-                                //多选点击右上角进行核实
-                                let newArray = [];
-                                let that = this;
-                                Object.keys(this.props.alarmRecordsListDataSelected).forEach(function (key) {
-                                    newArray.push(that.props.alarmRecordsListDataSelected[key]);
-                                });
-                                if (newArray.length > 0) {
-                                    if (this.state.functionType == 'AlarmVerify') {
-                                        //监控 进行核实或者处置
-                                        if (this.props.isVerifyOrHandle == 'handle') {
-                                            this.props.dispatch(NavigationActions.navigate({ routeName: 'Disposal', params: { alramData: newArray, onRefresh: this.statusPageOnRefresh } }));
+                    {
+                        this.getPageStatus().OverAlarmEdit ? (
+                            <Touchable
+                                onPress={() => {
+                                    //多选点击右上角进行核实
+                                    let newArray = [];
+                                    let that = this;
+                                    Object.keys(this.props.alarmRecordsListDataSelected).forEach(function (key) {
+                                        newArray.push(that.props.alarmRecordsListDataSelected[key]);
+                                    });
+                                    if (newArray.length > 0) {
+                                        if (this.state.functionType == 'AlarmVerify') {
+                                            //监控 进行核实或者处置
+                                            if (this.props.isVerifyOrHandle == 'handle') {
+                                                this.props.dispatch(NavigationActions.navigate({ routeName: 'Disposal', params: { alramData: newArray, onRefresh: this.statusPageOnRefresh } }));
+                                            } else {
+                                                this.props.dispatch(NavigationActions.navigate({ routeName: 'AlarmVerify', params: { alramData: newArray, onRefresh: this.statusPageOnRefresh } }));
+                                            }
                                         } else {
-                                            this.props.dispatch(NavigationActions.navigate({ routeName: 'AlarmVerify', params: { alramData: newArray, onRefresh: this.statusPageOnRefresh } }));
+                                            //运维进行超标核实
+                                            this.props.dispatch(NavigationActions.navigate({ routeName: 'OverAlarmVerify', params: { alramData: newArray, onRefresh: this.statusPageOnRefresh } }));
                                         }
                                     } else {
-                                        //运维进行超标核实
-                                        this.props.dispatch(NavigationActions.navigate({ routeName: 'OverAlarmVerify', params: { alramData: newArray, onRefresh: this.statusPageOnRefresh } }));
+                                        ShowToast('未选中任何报警记录');
                                     }
-                                } else {
-                                    ShowToast('未选中任何报警记录');
-                                }
-                            }}
-                            style={{
-                                marginBottom: 10,
-                                borderRadius: 5,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                width: SCREEN_WIDTH - 20,
-                                marginLeft: 10,
-                                height: 52,
-                                backgroundColor: globalcolor.headerBackgroundColor
-                            }}
-                        >
-                            <Text style={{ color: '#ffffff', fontSize: 18 }}>{this.props.isVerifyOrHandle == 'handle' ? '处置' : '核实'}</Text>
-                        </Touchable>
-                    ) : null}
-                    {CURRENT_PROJECT == 'POLLUTION_ORERATION_PROJECT' && this.props.alarmRecordsListData.length > 0 && (this.state.functionType == 'AlarmResponse' || this.state.functionType == 'WorkbenchMiss') ? (
+                                }}
+                                style={{
+                                    marginBottom: 10,
+                                    borderRadius: 5,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    width: SCREEN_WIDTH - 20,
+                                    marginLeft: 10,
+                                    height: 52,
+                                    backgroundColor: globalcolor.headerBackgroundColor
+                                }}
+                            >
+                                <Text style={{ color: '#ffffff', fontSize: 18 }}>{this.props.isVerifyOrHandle == 'handle' ? '处置' : '核实'}</Text>
+                            </Touchable>
+                        ) : null
+                    }
+                    {/* {(this.state.functionType == 'OverVerify' || this.state.functionType == 'AlarmVerify') && this.props.alarmRecordsListData.length > 0
+                        && SentencedToEmpty(this.props, ['alarmOverButton'], []).length > 0
+                        ? (
+                            <Touchable
+                                onPress={() => {
+                                    //多选点击右上角进行核实
+                                    let newArray = [];
+                                    let that = this;
+                                    Object.keys(this.props.alarmRecordsListDataSelected).forEach(function (key) {
+                                        newArray.push(that.props.alarmRecordsListDataSelected[key]);
+                                    });
+                                    if (newArray.length > 0) {
+                                        if (this.state.functionType == 'AlarmVerify') {
+                                            //监控 进行核实或者处置
+                                            if (this.props.isVerifyOrHandle == 'handle') {
+                                                this.props.dispatch(NavigationActions.navigate({ routeName: 'Disposal', params: { alramData: newArray, onRefresh: this.statusPageOnRefresh } }));
+                                            } else {
+                                                this.props.dispatch(NavigationActions.navigate({ routeName: 'AlarmVerify', params: { alramData: newArray, onRefresh: this.statusPageOnRefresh } }));
+                                            }
+                                        } else {
+                                            //运维进行超标核实
+                                            this.props.dispatch(NavigationActions.navigate({ routeName: 'OverAlarmVerify', params: { alramData: newArray, onRefresh: this.statusPageOnRefresh } }));
+                                        }
+                                    } else {
+                                        ShowToast('未选中任何报警记录');
+                                    }
+                                }}
+                                style={{
+                                    marginBottom: 10,
+                                    borderRadius: 5,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    width: SCREEN_WIDTH - 20,
+                                    marginLeft: 10,
+                                    height: 52,
+                                    backgroundColor: globalcolor.headerBackgroundColor
+                                }}
+                            >
+                                <Text style={{ color: '#ffffff', fontSize: 18 }}>{this.props.isVerifyOrHandle == 'handle' ? '处置' : '核实'}</Text>
+                            </Touchable>
+                        ) : null} */}
+                    {
+                        this.getPageStatus().exceptionEdit || this.getPageStatus().missEdit
+                            ? (
+                                <Touchable
+                                    onPress={() => {
+                                        if (this.props.isAlarmRes == false) {
+                                            ShowToast('报警已经生成任务，请到待办中查看');
+                                            return;
+                                        } else {
+                                            this.refs.respondTypeSelect.showModal();
+                                        }
+                                    }}
+                                    style={{ marginBottom: 10, borderRadius: 5, alignItems: 'center', justifyContent: 'center', width: SCREEN_WIDTH - 20, marginLeft: 10, height: 52, backgroundColor: globalcolor.headerBackgroundColor }}
+                                >
+                                    <Text style={{ color: '#ffffff', fontSize: 18 }}>{this.props.isAlarmRes == false ? '已响应' : '响应'}</Text>
+                                </Touchable>
+                            ) : null
+                    }
+                    {/* CURRENT_PROJECT == 'POLLUTION_ORERATION_PROJECT' && this.props.alarmRecordsListData.length > 0 && (this.state.functionType == 'AlarmResponse' || this.state.functionType == 'WorkbenchMiss') ? (
                         <Touchable
                             onPress={() => {
                                 if (this.props.isAlarmRes == false) {
@@ -575,9 +686,9 @@ export default class AlarmRecords extends PureComponent {
                         >
                             <Text style={{ color: '#ffffff', fontSize: 18 }}>{this.props.isAlarmRes == false ? '已响应' : '响应'}</Text>
                         </Touchable>
-                    ) : null}
+                    ) : null */}
                     {this.state.commitLoading == -1 ? <SimpleLoadingComponent message={'提交中'} /> : null}
-                    <BottomDialog ref="respondTypeSelect">
+                    <BottomDialog BottomDialog ref="respondTypeSelect">
                         <View style={{
                             width: SCREEN_WIDTH - 30, height: 186, borderRadius: 12
                             , alignItems: 'center', justifyContent: 'space-around', backgroundColor: globalcolor.lightGreyBackground
@@ -730,7 +841,7 @@ export default class AlarmRecords extends PureComponent {
                     </BottomDialog>
                     <AlertDialog options={alertOptions} ref="doAlert" />
                 </StatusPage>
-            </View>
+            </View >
         );
     }
 }

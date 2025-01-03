@@ -17,7 +17,8 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 /**
  *个人中心
  */
-@connect(({ app }) => ({
+@connect(({ app, account }) => ({
+    accountOptionList: account.accountOptionList,
     appIndexInfoConfig: app.appIndexInfoConfig
 }))
 class Account extends PureComponent {
@@ -52,6 +53,7 @@ class Account extends PureComponent {
         });
     }
     render() {
+        console.log('accountOptionList = ', this.props.accountOptionList);
         // console.log('ReactNativeUniappModule = ', ReactNativeUniappModule);
         const {
             RNRequestMonitor = {
@@ -88,25 +90,27 @@ class Account extends PureComponent {
                     <Text style={{ color: '#ffffff', fontSize: 16, fontWeight: 'bold', marginTop: 6, alignSelf: 'center' }}>{getToken().UserName}</Text>
                 </View>
 
-                {AccountConfig.map((item, index) => {
-                    let views = [];
-                    views.push(
-                        <Touchable
-                            key={index.toString()}
-                            style={{ backgroundColor: '#fff' }}
-                            onPress={() => {
-                                this.clickItem(item);
-                            }}
-                        >
-                            <View style={styles.usertype}>
-                                <Text style={{ fontSize: 14, color: '#333333', marginLeft: 20, flex: 1 }}>{item.title}</Text>
-                                <Image source={require('../../../images/right.png')} style={{ width: 16, height: 16, marginRight: 20 }} />
-                            </View>
-                        </Touchable>
-                    );
-                    views.push(<Text key={`_${index}`} style={{ backgroundColor: '#f2f2f2', height: 1, marginLeft: 5, marginRight: 5 }} />);
-                    return views;
-                })}
+                {/* {AccountConfig.map((item, index) => { */}
+                {
+                    this.props.accountOptionList.map((item, index) => {
+                        let views = [];
+                        views.push(
+                            <Touchable
+                                key={index.toString()}
+                                style={{ backgroundColor: '#fff' }}
+                                onPress={() => {
+                                    this.clickItem(item);
+                                }}
+                            >
+                                <View style={styles.usertype}>
+                                    <Text style={{ fontSize: 14, color: '#333333', marginLeft: 20, flex: 1 }}>{item.title}</Text>
+                                    <Image source={require('../../../images/right.png')} style={{ width: 16, height: 16, marginRight: 20 }} />
+                                </View>
+                            </Touchable>
+                        );
+                        views.push(<Text key={`_${index}`} style={{ backgroundColor: '#f2f2f2', height: 1, marginLeft: 5, marginRight: 5 }} />);
+                        return views;
+                    })}
                 {this.props.appIndexInfoConfig != null ? (
                     <View>
                         <Image source={{ uri: UrlInfo.BaseUrl + this.props.appIndexInfoConfig.LogoURL }} style={{ marginTop: 52, alignSelf: 'center', width: this.state.imageWidth, height: this.state.imageHeight }} />
@@ -182,7 +186,7 @@ class Account extends PureComponent {
                                 //                        this.setState({ syncMessage: '已经是最新版本' });
                             }
                         } else {
-                            if (71 < result.data.VersionCode) {
+                            if (VersionInfo.app_version_code < result.data.VersionCode) {
                                 this.refs.updateAlert.showModal();
                             } else {
                                 ShowToast('已经是最新版本');

@@ -87,6 +87,7 @@ export default class PullToRefresh extends React.Component {
         this.state.containerTop.addListener(this._containerTopChange);
 
         this._panResponder = PanResponder.create({
+            onStartShouldSetPanResponder: (evt, gestureState) => false,
             onMoveShouldSetPanResponderCapture: this.onMoveShouldSetPanResponderCapture,
             onPanResponderGrant: this.onPanResponderGrant,
             onPanResponderReject: this.onPanResponderReject,

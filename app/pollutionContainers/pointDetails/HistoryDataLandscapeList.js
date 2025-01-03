@@ -2,8 +2,8 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2024-06-14 14:02:27
- * @LastEditTime: 2024-09-27 15:15:02
- * @FilePath: /SDLMainProject/app/pollutionContainers/pointDetails/HistoryDataLandscapeList.js
+ * @LastEditTime: 2024-12-31 15:11:59
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/pollutionContainers/pointDetails/HistoryDataLandscapeList.js
  */
 /*
  * @Description: 横评 数据查询列表
@@ -157,7 +157,7 @@ export default class HistoryDataLandscapeList extends Component {
     getTimeSelectOption = () => {
         let type = this.props.datatype;
         return {
-            formatStr: this.props.datatype == 'day' ? 'YYYY-MM-DD' : 'MM/DD HH:00',
+            formatStr: this.props.datatype == 'day' ? 'YYYY-MM-DD' : this.props.datatype == 'hour' ? 'MM/DD HH:00' : 'MM/DD HH:mm',
             type: type,
             defaultTime: this.props.selectTime,
             onSureClickListener: time => {

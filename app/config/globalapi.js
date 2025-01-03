@@ -241,7 +241,8 @@ export default api = {
             //netcore ✅ CreatTaskTarget: 'rest/PollutantSourceApi/MonitorTargetApi/GetOperationTargetList', //创建任务获取监控标
             CreatTaskTarget: 'rest/PollutantSourceApi/MonitorTargetApi/GetMonitorTargetList', //创建任务获取监控标
             GetMonitorTargetList: 'rest/PollutantSourceApi/MonitorTargetApi/GetMonitorTargetList', //获取监控标
-            AddOrDelStickyEnt: 'rest/PollutantSourceApi/MonitorTargetApi/AddOrDelStickyEnt', //置顶监控标
+            // AddOrDelStickyEnt: 'rest/PollutantSourceApi/MonitorTargetApi/AddOrDelStickyEnt', //置顶监控标
+            AddOrDelStickyEnt: 'rest/PollutantSourceApi/MonitorTargetApi/EntStickyOperate',//置顶监控标
             GetPoints: 'rest/PollutantSourceApi/MonitorPointApi/GetPoints', //获取监测点
             //netcore ✅ GetPhoneMapLegend: 'rest/PollutantSourceApi/MonitorTargetApi/GetPhoneMapLegend', //获取图例
             GetPhoneMapLegend: 'rest/PollutantSourceApi/MonitorPollutantApi/GetPollutantTypeTargetList', //获取图例
@@ -291,8 +292,10 @@ export default api = {
         },
         Data: {
             GetListPager: 'rest/PollutantSourceApi/AutoFormDataApi/GetListPager', // netcore autoform
-            GetPollutantTypeList: 'rest/PollutantSourceApi/BaseDataApi/GetPollutantTypeList', //污染物类型
-            GetPollutantTypeCode: '/rest/PollutantSourceApi/BaseDataApi/GetPollutantTypeCode', //污染物编码
+            // GetPollutantTypeList: 'rest/PollutantSourceApi/BaseDataApi/GetPollutantTypeList', //污染物类型
+            GetPollutantTypeList: '/rest/PollutantSourceApi/MonitorPollutantApi/GetPollutantTypeList', //污染物类型
+            // GetPollutantTypeCode: '/rest/PollutantSourceApi/BaseDataApi/GetPollutantTypeCode', //污染物编码
+            GetPollutantTypeCode: '/rest/PollutantSourceApi/MonitorPollutantApi/GetPollutantTypeCode', //污染物编码
             //数据相关信息
             //netcore ✅ AllTypeSummaryList: 'rest/PollutantSourceApi/BaseDataApi/AllTypeSummaryList', //获取最新监控数据
             AllTypeSummaryList: 'rest/PollutantSourceApi/MonBasicDataApi/AllTypeSummaryList', //获取最新监控数据
@@ -421,6 +424,7 @@ export default api = {
             RetransmissionKeyParameter: 'rest/PollutantSourceApi/KeyParameter/RetransmissionKeyParameter' // 关键参数核查任务转发
         },
         WorkBench: {
+            GetAlarmCountForEnt: '/rest/PollutantSourceApi/OperationWorkbenchApi/GetAlarmCountForEnt', // 获取企业报警数量
             GetNoticeMessageInfoList: 'rest/PollutantSourceApi/OperationBasicApi/GetNoticeMessageInfoList', //获取APP通知列表
             GetOperationDocuments: 'rest/PollutantSourceApi/OperationBasicApi/GetOperationDocuments', //获取运维资料库
             GetOperationStatistics: 'rest/PollutantSourceApi/OperationBasicApi/GetOperationStatistics', //获取运维统计
@@ -879,6 +883,9 @@ export default api = {
             GetUpdAndRevokeStatus: '/rest/PollutantSourceApi/OperationSignInApi/GetUpdAndRevokeStatus',// 获取撤销修改状态
             RevokeApproved: '/rest/PollutantSourceApi/OperationSignInApi/RevokeApproved',// 撤销已申请的补卡
             UpdateApproved: '/rest/PollutantSourceApi/OperationSignInApi/UpdateApproved',// 获取需要修改的补签记录的信息
+
+            GetTeamOperationSignIn: '/rest/PollutantSourceApi/OperationSignInApi/GetTeamOperationSignIn',// 团队统计1
+            GetPersonSignList: '/rest/PollutantSourceApi/OperationSignInApi/GetPersonSignList',// 团队统计2
         },
         /**
          * 2024.04.26
@@ -912,6 +919,16 @@ export default api = {
             AddSpareReplacementRecord: '/rest/PollutantSourceApi/CTBaseDataApi/AddSpareReplacementRecord', // 添加备件更换
             GetCisPartsList: '/rest/PollutantSourceApi/CTBaseDataApi/GetCisPartsList', // 获取CIs申请单列表
             DeleteSpareReplacementRecord: '/rest/PollutantSourceApi/CTBaseDataApi/DeleteSpareReplacementRecord', // 删除备件更换
+        },
+        // 指控
+        qualityControl: {
+            GetQCAStatus: '/rest/PollutantSourceApi/QCStatus/GetQCAStatus', // 获取状态 （质控仪状态和cems状态）
+            GetQCAInfo: '/rest/PollutantSourceApi/QCAnalyzerManagement/GetQCAInfo', // 获取质控仪信息
+            GetNewQCARecord: 'rest/PollutantSourceApi/QualityControlApi/GetNewQCARecord', // 获取质控日志
+            // GetQCAResultRecord: 'rest/PollutantSourceApi/QualityControlApi/GetQCAResultRecord', // 获取质控结果记录
+            GetQCAResultRecord: '/rest/PollutantSourceApi/QCRecord/GetQCRecord', // 获取质控结果记录
+            SendQCACheckCMD: 'rest/PollutantSourceApi/QualityControlApi/SendQCACheckCMD', // 执行质控
+            GetQCAResultInfo: 'rest/PollutantSourceApi/QualityControlApi/GetQCAResultInfo' // 获取质控详情
         }
     },
     gridOperation: {
@@ -926,4 +943,10 @@ export default api = {
         SendEmailCode: '/rest/PollutantSourceApi/LoginApi/SendEmailCode', // 发送邮箱验证码
         RetrievePasswordByEmail: '/rest/PollutantSourceApi/LoginApi/RetrievePasswordByEmail', // 通过邮箱找回密码
     },
+    provisioning: {
+        //netcore ✅ GetPersonalCenterOrder: 'rest/PollutantSourceApi/TaskFormApi/GetPersonalCenterOrder', // 一级 开通记录
+        GetPersonalCenterOrder: 'rest/PollutantSourceApi/CustomerRenew/GetAppCustomerRenewList', // 一级 开通记录
+        //netcore ✅ GetGetPersonalCenterOrderInfo: 'rest/PollutantSourceApi/TaskFormApi/GetGetPersonalCenterOrderInfo', // 二级 开通记录
+        GetGetPersonalCenterOrderInfo: 'rest/PollutantSourceApi/CustomerRenew/GetAppCustomerRenewInfo', // 二级 开通记录
+    }
 };

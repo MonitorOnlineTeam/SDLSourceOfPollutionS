@@ -2,8 +2,8 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2023-06-16 17:09:37
- * @LastEditTime: 2024-10-31 11:51:24
- * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/index.js
+ * @LastEditTime: 2025-01-01 13:18:16
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationModels/index.js
  */
 /**
  * 已迁移 未完成
@@ -76,6 +76,11 @@ import historyDataModel from './historyDataModel';
 import baseModel from './model';
 import helpCenter from './helpCenter';
 import approvalModel from './approvalModel';
+import qualityControl from './qualityControl';
+import dataForm from './dataForm';
+import provisioning from './provisioning';//开通记录
+import tabAlarmListModel from './tabAlarmListModel';
+import SignInTeamStatisticsModel from './SignInTeamStatisticsModel';
 
 export function registerModels(app) {
     app.model(appModel);
@@ -141,5 +146,9 @@ export function registerModels(app) {
     app.model(GeneralSearchModel); // 通用搜索model
     app.model(historyDataModel); // 历史数据model
     // app.model(requestTestModel); // 网络请求本地测试
-
+    app.model(qualityControl); // 质量控制
+    app.model(dataForm); // 数据一览
+    app.model(provisioning); //开通记录
+    app.model(tabAlarmListModel); // tab报警列表 
+    app.model(SignInTeamStatisticsModel); // 签到团队统计 
 }

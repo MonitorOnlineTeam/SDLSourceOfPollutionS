@@ -2,8 +2,8 @@
  * @Description: 统一签到入口
  * @LastEditors: hxf
  * @Date: 2024-01-29 11:07:20
- * @LastEditTime: 2024-04-24 14:31:44
- * @FilePath: /SDLMainProject37_backup/app/pOperationContainers/tabView/workbenchSignin/SignInEnter.js
+ * @LastEditTime: 2025-01-02 18:48:43
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/tabView/workbenchSignin/SignInEnter.js
  */
 import { Platform, Text, TouchableOpacity, View, Image } from 'react-native'
 import React, { Component } from 'react'
@@ -13,11 +13,13 @@ import OnSideSignIn from './OnSideSignIn';
 import OffSideSignIn from './OffSideSignIn';
 import { connect } from 'react-redux';
 import { StatusPage } from '../../../components';
+import moment from 'moment';
 
-@connect(({ signInModel }) => ({
+@connect(({ signInModel, SignInTeamStatisticsModel }) => ({
     topLevelTypeList: signInModel.topLevelTypeList // 第一大类数据
     , workTypeList: signInModel.workTypeList, // 工作类型数据
     signInType: signInModel.signInType, // 签到类型
+    statisticsTypeList: SignInTeamStatisticsModel.statisticsTypeList,
 }))
 export default class SignInEnter extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -273,7 +275,19 @@ export default class SignInEnter extends Component {
 
                     <TouchableOpacity
                         onPress={() => {
-                            this.props.dispatch(NavigationActions.navigate({ routeName: 'SignInStatistics' }))
+                            // 测试
+
+                            this.props.dispatch(createAction('SignInTeamStatisticsModel/updateState')({
+                                teamBeginTime: moment().format('YYYY-MM-DD 00:00:00'),
+                                teamEndTime: moment().format('YYYY-MM-DD 23:59:59'),
+                                statisticsType: this.props.statisticsTypeList.length > 1 ? 'team' : 'personal',//统计类型选中状态 team personal
+                                teamStatisticsType: 'signIn',// signIn noSignIn
+                            }));
+                            this.props.dispatch(createAction('SignInTeamStatisticsModel/getTeamOperationSignIn')({}));
+                            // this.props.dispatch(createAction('SignInTeamStatisticsModel/getPersonSignList')({}));
+
+                            // this.props.dispatch(NavigationActions.navigate({ routeName: 'SignInStatistics' }))
+                            this.props.dispatch(NavigationActions.navigate({ routeName: 'SignInStatisticsWithTeam' }))
                         }}
                     >
                         <View

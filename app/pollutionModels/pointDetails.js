@@ -374,6 +374,49 @@ export default Model.extend({
             const params = { noCancelFlag: true };
             let url = api.pollutionApi.Alarm.GetMonitorAlarmDatas;
             switch (sourceType) {
+                case 'tabWorkbenchException': //运维工作台异常 异常报警
+                    params.IsPaging = false;
+                    params.DGIMN = alarmRecordsListTargetDGIMN;
+                    params.BeginTime = moment()
+                        // .subtract(30, 'days')
+                        .subtract(1, 'days')
+                        .format('YYYY-MM-DD 00:00:00');
+                    params.EndTime = moment().format('YYYY-MM-DD HH:mm:ss');
+                    params.AlarmType = '0,1,3,4';
+                    params.pageIndex = alarmRecordsIndex;
+                    params.pageSize = 10000;
+                    params.AllData = '1'; //1是查看未响应的的报警信息 空为查看所有的报警信息
+                    break;
+                case 'tabWorkbenchOver': //运维工作台超标 接口需要换了
+                    url = api.pollutionApi.Alarm.GetOperationOverData;
+                    params.IsPaging = false;
+                    params.DGIMN = alarmRecordsListTargetDGIMN;
+                    params.BeginTime = moment()
+                        // .subtract(30, 'days')
+                        .subtract(1, 'days')
+                        .format('YYYY-MM-DD 00:00:00');
+                    params.EndTime = moment().format('YYYY-MM-DD HH:mm:ss');
+                    params.AlarmType = '2';
+                    params.pageIndex = alarmRecordsIndex;
+                    params.pageSize = 10000;
+                    params.AllData = '1';
+                    params.DataType = 'HourData,DayData';
+                    break;
+                case 'tabOverWarning': //预警 分钟报警
+                    url = api.pollutionApi.Alarm.GetOperationOverData;
+                    params.IsPaging = false;
+                    params.DGIMN = alarmRecordsListTargetDGIMN;
+                    params.BeginTime = moment()
+                        // .subtract(7, 'days')
+                        .subtract(1, 'days')
+                        .format('YYYY-MM-DD 00:00:00');
+                    params.EndTime = moment().format('YYYY-MM-DD HH:mm:ss');
+                    params.AlarmType = '2';
+                    params.pageIndex = alarmRecordsIndex;
+                    params.pageSize = 10000;
+                    params.AllData = '1';
+                    params.DataType = 'MinuteData';
+                    break;
                 case 'OverWarning':
                     url = api.pollutionApi.Alarm.GetOperationOverData;
                     params.IsPaging = false;
@@ -661,11 +704,14 @@ export default Model.extend({
             const result = yield call(authService.axiosAuthPost, api.pollutionApi.PointDetails.PointInfo, params);
             if (result && result.status == 200) {
                 if (SentencedToEmpty(result, ['data', 'Datas'], []).length > 0) {
+                    // 从登陆中获取配置，不再单独获取站点详情菜单
+                    // PollutantTypeCode 5 :废水 12:废气 特殊处理
                     yield put('getMenu', {
                         params: {
                             info: result
                         }
                     });
+                    yield update({ ponitInfo: result });
                 } else {
                     yield update({ ponitInfo: { status: 0 } });
                 }
@@ -680,20 +726,37 @@ export default Model.extend({
             { call, put, take, update, select }
         ) {
             //排口下菜单
-            yield update({ ponitInfo: { status: -1 } });
+            // yield update({ ponitInfo: { status: -1 } });
             const { pointDetailMenuID } = yield select(state => state.app);
             const result = yield call(authService.axiosAuthPost, api.pollutionApi.PointDetails.SystemMenu, {
                 menu_id: pointDetailMenuID
             });
             if (result && result.status == 200 && (params.info.data.Datas[0]['PollutantTypeCode'] == '5' || params.info.data.Datas[0]['PollutantTypeCode'] == '12')) {
+                console.log("getMenu 1");
+                let menuDate = result.data.Datas;
+                menuDate.push({
+                    id: '50d2c460-7262-44a5-a0fa-2b2b568fe0bc',
+                    name: '手动指控'
+                });
+                console.log('getMenu menuDate = ', menuDate);
                 yield put('getHourData', {
                     params: {
                         info: params.info,
-                        menu: result.data.Datas
+                        menu: menuDate
                     }
                 });
             } else {
-                yield update({ ponitInfo: params.info, systemMenu: SentencedToEmpty(result, ['data', 'Datas'], []) });
+                console.log("getMenu 2");
+                let menuDate = SentencedToEmpty(result, ['data', 'Datas'], []);
+                menuDate.push({
+                    id: '50d2c460-7262-44a5-a0fa-2b2b568fe0bc',
+                    name: '质控记录'
+                });
+                menuDate.push({
+                    id: '312c53c1-e9ff-4745-8c8b-eb642822b7dc',
+                    name: '手动指控'
+                });
+                // yield update({ ponitInfo: params.info, systemMenu: menuDate });
             }
         },
         *getHourData(

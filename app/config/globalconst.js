@@ -29,7 +29,7 @@ export const lineColorsAll = ['#fe2b00', '#fee101', '#24eeec', '#95d502', '#0084
 /**
  * 获取版本更新配置
  */
-const getVersionInfo = () => {
+export const getVersionInfo = () => {
     if (CURRENT_PROJECT == AIR_PROJECT) {
         if (Platform.OS == 'android') return { app_version_code: 10, app_version_name: '1.1.0' };
         else if (Platform.OS == 'ios') return { app_version_code: 10, app_version_name: '1.1.0' };

@@ -2,8 +2,8 @@
  * @Description: 宝武相关事件
  * @LastEditors: hxf
  * @Date: 2023-05-06 08:44:32
- * @LastEditTime: 2024-11-11 11:34:22
- * @FilePath: /SDLSourceOfPollutionS/app/pOperationModels/signInModel.js
+ * @LastEditTime: 2025-01-02 09:22:35
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationModels/signInModel.js
  */
 import { SentencedToEmpty, ShowToast, NavigationActions, bwFormatArray, CloseToast, createAction } from '../utils';
 import * as authService from '../services/auth';

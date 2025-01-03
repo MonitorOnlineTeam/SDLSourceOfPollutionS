@@ -2,8 +2,8 @@
  * @Description: 超标预警
  * @LastEditors: hxf
  * @Date: 2022-08-22 11:58:18
- * @LastEditTime: 2024-11-25 09:50:38
- * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbench/OverWarning.js
+ * @LastEditTime: 2024-12-27 11:46:08
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/tabView/workbench/OverWarning.js
  */
 import moment from 'moment';
 import React, { Component } from 'react'
@@ -51,7 +51,9 @@ export default class OverWarning extends Component {
     //     });
 
     componentDidMount() {
-        this.props.navigation.setOptions({
+        SentencedToEmpty(this.props, ['navigation', 'setOptions']
+            , () => { }
+        )({
             headerRight: () => <DeclareModule
                 contentRender={() => {
                     return <Text style={[{ fontSize: 13, color: 'white', marginHorizontal: 16 }]}>{'说明'}</Text>;

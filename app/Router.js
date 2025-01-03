@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2024-12-12 11:16:10
- * @FilePath: /SDLSourceOfPollutionS/app/Router.js
+ * @LastEditTime: 2025-01-01 22:43:17
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
 import React, { useEffect } from 'react'
@@ -65,6 +65,7 @@ import VerifyRecords from './pollutionContainers/pointDetails/VerifyRecords';
 import SignInEnter from './pOperationContainers/tabView/workbenchSignin/SignInEnter';
 import SupplementarySignIn from './pOperationContainers/tabView/workbenchSignin/SupplementarySignIn';
 import SignInStatistics from './pOperationContainers/tabView/workbenchSignin/SignInStatistics';
+import SignInStatisticsWithTeam from './pOperationContainers/tabView/workbenchSignin/SignInStatisticsWithTeam';
 import SupplementarySignInRecord from './pOperationContainers/tabView/workbenchSignin/SupplementarySignInRecord';
 import SupplementarySignInApprove from './pOperationContainers/tabView/workbenchSignin/SupplementarySignInApprove';
 import ChengTaoSignIn from './pOperationContainers/tabView/chengTaoXiaoXi/ChengTaoSignIn2';
@@ -235,6 +236,12 @@ import CTSignInMap from './pOperationContainers/tabView/chengTaoXiaoXi/CTSignInM
 import ForgotPasswordPage1 from './components/page/forgotPassword/ForgotPasswordPage1';
 import ForgotPasswordPage2 from './components/page/forgotPassword/ForgotPasswordPage2';
 import WXBinding from './components/page/account/WXBinding';
+import QualityControlRecordList from './pOperationContainers/qualityControl/QualityControlRecordList';
+import QualityControlPanel from './pOperationContainers/qualityControl/QualityControlPanel';
+import DoQualityControl from './pOperationContainers/qualityControl/DoQualityControl';
+import ProvisioningOfAllPoints from './components/page/account/ProvisioningOfAllPoints';
+import ProvisioningRecords from './components/page/account/ProvisioningRecords';
+import SignInstatisticsWithPersonal from './pOperationContainers/tabView/workbenchSignin/SignInstatisticsWithPersonal';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
 function Test() {
     return (
@@ -381,6 +388,9 @@ Actions.pushViewWithName(SignInAddressSearchListView, 'SignInAddressSearchListVi
 Actions.pushViewWithName(ScopeMap, 'ScopeMap', { title: '查看打卡范围' });
 
 Actions.pushViewWithName(SignInStatistics, 'SignInStatistics', { title: '统计' });
+Actions.pushView(SignInStatisticsWithTeam, { title: '统计' });
+Actions.pushView(SignInstatisticsWithPersonal, { title: '个人统计' });
+
 Actions.pushViewWithName(SupplementarySignInRecord, 'SupplementarySignInRecord', { title: '补签记录' });
 Actions.pushViewWithName(SupplementarySignInApprove, 'SupplementarySignInApprove', { title: '补签记录' });
 
@@ -541,6 +551,11 @@ Actions.pushViewWithName(EquipmentFailureFeedbackDetail, 'EquipmentFailureFeedba
 
 Actions.pushViewWithName(GeneralRemoteSearchList, 'GeneralRemoteSearchList', { title: '本地列表' }); //本地列表
 Actions.pushViewWithName(GeneralLocalSearchList, 'GeneralLocalSearchList', { title: '本地列表' }); //本地列表
+// 质控
+Actions.pushViewWithName(QualityControlRecordList, 'QualityControlRecordList', { title: '核查记录' }); //核查记录
+Actions.pushViewWithName(QualityControlPanel, 'QualityControlPanel', { title: '核查记录' }); //核查记录
+Actions.pushViewWithName(DoQualityControl, 'DoQualityControl', { title: '手动核查' }); //手动核查
+
 
 
 //忘记密码
@@ -548,6 +563,8 @@ Actions.pushView(ForgotPasswordPage1, { headerShown: false }); //修改密码1
 Actions.pushView(ForgotPasswordPage2, { headerShown: false }); //修改密码2
 
 Actions.pushView(WXBinding, { title: '微信推送绑定' }); //微信绑定 
+Actions.pushViewWithName(ProvisioningOfAllPoints, 'ProvisioningOfAllPoints', { title: '全部点位' }); //全部点位 开通记录
+Actions.pushViewWithName(ProvisioningRecords, 'ProvisioningRecords', { title: '开通记录' }); //开通记录 
 
 
 

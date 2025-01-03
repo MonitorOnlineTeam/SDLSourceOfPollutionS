@@ -132,6 +132,11 @@ const list = [
     , CTEquipmentPicAuditModel, CTServiceReportRectificationModel
     , abnormalTask }) => ({
 
+        workWarningButton: alarm.workWarningButton,
+        workAlarmOverButton: alarm.workAlarmOverButton,
+        workAlarmMissExceptionButton: alarm.workAlarmMissExceptionButton,
+        workAlarmExceptionButton: alarm.workAlarmExceptionButton,
+
         equipmentAuditRectificationNum: CTEquipmentPicAuditModel.equipmentAuditRectificationNum,
         noticeContentResult: helpCenter.noticeContentResult,
         homeData: app.homeData,
@@ -650,9 +655,14 @@ class Workbench extends Component {
                 })
             );
         } else if (item.numkey == 'OverWarning') {
+            // 预警
             this.props.dispatch(
                 createAction('alarm/updateState')({
-                    sourceType: 'OverWarning'
+                    sourceType: 'OverWarning',
+                    warningButton: this.props.workWarningButton,
+                    alarmOverButton: this.props.workAlarmOverButton,
+                    alarmMissExceptionButton: this.props.workAlarmMissExceptionButton,
+                    alarmExceptionButton: this.props.workAlarmExceptionButton,
                 })
             );
             this.props.dispatch(
@@ -661,9 +671,14 @@ class Workbench extends Component {
                 })
             );
         } else if (item.numkey == 'ExceptionAlarm') {
+            // 异常
             this.props.dispatch(
                 createAction('alarm/updateState')({
-                    sourceType: 'WorkbenchException'
+                    sourceType: 'WorkbenchException',
+                    warningButton: this.props.workWarningButton,
+                    alarmOverButton: this.props.workAlarmOverButton,
+                    alarmMissExceptionButton: this.props.workAlarmMissExceptionButton,
+                    alarmExceptionButton: this.props.workAlarmExceptionButton,
                 })
             );
             this.props.dispatch(
@@ -672,9 +687,14 @@ class Workbench extends Component {
                 })
             );
         } else if (item.numkey == 'OverAlarm') {
+            // 超标
             this.props.dispatch(
                 createAction('alarm/updateState')({
-                    sourceType: 'WorkbenchOver'
+                    sourceType: 'WorkbenchOver',
+                    warningButton: this.props.workWarningButton,
+                    alarmOverButton: this.props.workAlarmOverButton,
+                    alarmMissExceptionButton: this.props.workAlarmMissExceptionButton,
+                    alarmExceptionButton: this.props.workAlarmExceptionButton,
                 })
             );
             this.props.dispatch(
@@ -683,9 +703,14 @@ class Workbench extends Component {
                 })
             );
         } else if (item.numkey == 'MissAlarm') {
+            // 缺失
             this.props.dispatch(
                 createAction('alarm/updateState')({
-                    sourceType: 'WorkbenchMiss'
+                    sourceType: 'WorkbenchMiss',
+                    warningButton: this.props.workWarningButton,
+                    alarmOverButton: this.props.workAlarmOverButton,
+                    alarmMissExceptionButton: this.props.workAlarmMissExceptionButton,
+                    alarmExceptionButton: this.props.workAlarmExceptionButton,
                 })
             );
             this.props.dispatch(
@@ -803,7 +828,9 @@ class Workbench extends Component {
          * 宝武运维     ae4426a8-cdd3-4d5d-b2da-2b5f349373a2
          */
         let showCount = '-';
-        if (item.id == '9e9bd943-1d5b-46c1-a0a9-c53bea71b552') {
+        if (item.id == '9e9bd943-1d5b-46c1-a0a9-c53bea71b552'
+            || item.id == "e2263713-6ffe-4315-82b3-22994e3ce04d"
+        ) {
             // 服务提醒
             return (
                 <TouchableOpacity
@@ -818,7 +845,9 @@ class Workbench extends Component {
                     </View>
                 </TouchableOpacity>
             );
-        } else if (item.id == 'be671aa8-f21f-4230-87d6-6c12d2912d6c') {
+        } else if (item.id == 'be671aa8-f21f-4230-87d6-6c12d2912d6c'
+            || item.id == "3a819f10-209a-4902-8b4d-5d9add1949a7"
+        ) {
             // 备件更换
             return (
                 <TouchableOpacity
@@ -850,8 +879,10 @@ class Workbench extends Component {
         //         </TouchableOpacity>
         //     );
         // } 
-        else if (item.id == 'efbd94a3-e794-457b-91f7-592df4b91af4') {
-            // 异常整改 模型整改
+        else if (item.id == 'efbd94a3-e794-457b-91f7-592df4b91af4'
+            || item.id == "d1f2d59a-731b-4ce6-b12d-7e3d6b8934d1"
+        ) {
+            // 异常整改 模型整改 1.0
             showCount = SentencedToEmpty(this.props, ['checkedRectificationListGResult', 'data', 'Total'], '-');
             return (
                 <TouchableOpacity
@@ -868,7 +899,9 @@ class Workbench extends Component {
                     </View>
                 </TouchableOpacity>
             );
-        } else if (item.id == '185ef6e1-96b4-48bd-b36f-2949a03fd8f2') {
+        } else if (item.id == '185ef6e1-96b4-48bd-b36f-2949a03fd8f2'
+            || item.id == "c5544965-4d59-4b96-8224-437f2bc58153"
+        ) {
             // 成套待办
             showCount = SentencedToEmpty(this.props, ['serviceDispatchResult', 'data', 'Total'], '-');
             return (
@@ -888,6 +921,7 @@ class Workbench extends Component {
             );
         } else if (item.id == 'b8b30732-3dae-46c4-aeaf-2114c0516c06'
             // || item.id == '96f4f52d-fc33-4293-b62f-653cc9370288'
+            || item.id == "8078b7f7-179d-40c6-829b-d1cd8a9277f2"
         ) {
             // 成套签到
             return (
@@ -903,7 +937,9 @@ class Workbench extends Component {
                     </View>
                 </TouchableOpacity>
             );
-        } else if (item.id == '27d6140f-0acb-4c54-bea1-61ef1ef36ac6') {
+        } else if (item.id == '27d6140f-0acb-4c54-bea1-61ef1ef36ac6'
+            || item.id == "8e16a74a-9861-481e-ada8-21d0e9d5be89"
+        ) {
             // 运维签到
             return (
                 <TouchableOpacity
@@ -918,7 +954,9 @@ class Workbench extends Component {
                     </View>
                 </TouchableOpacity>
             );
-        } else if (item.id == '740171a4-a61d-4c14-bfa8-af32466574cc') {
+        } else if (item.id == '740171a4-a61d-4c14-bfa8-af32466574cc'
+            || item.id == "a4dde2e3-86ea-4339-bb29-4887064245f9"
+        ) {
             // 异常识别创建任务
             return (
                 <TouchableOpacity
@@ -933,7 +971,9 @@ class Workbench extends Component {
                     </View>
                 </TouchableOpacity>
             );
-        } else if (item.id == '2273c00d-7594-4f85-8174-b46903a93ff7') {
+        } else if (item.id == '2273c00d-7594-4f85-8174-b46903a93ff7'
+            || item.id == "89afcc6f-e994-4478-92ac-31696d275975"
+        ) {
             // 待核查任务
             // return (
             //     <TouchableOpacity
@@ -963,7 +1003,10 @@ class Workbench extends Component {
                     </View>
                 </TouchableOpacity>
             );
-        } else if (item.id == '735faa4e-4e9c-45cd-8802-f9553126acba' || item.id == '021d1519-b23d-48fd-8130-0e0bf44bd728' || item.id == 'ae4426a8-cdd3-4d5d-b2da-2b5f349373a2') {
+        } else if (item.id == '735faa4e-4e9c-45cd-8802-f9553126acba' || item.id == '021d1519-b23d-48fd-8130-0e0bf44bd728' || item.id == 'ae4426a8-cdd3-4d5d-b2da-2b5f349373a2'
+            || item.id == "77b598eb-5503-4cdf-b986-8bd8f5619105" // 故障反馈
+            || item.id == "5b4be1ce-2dc2-40ab-8d28-8f354a63a563" // 宝武领取工单
+        ) {
             return (
                 <TouchableOpacity
                     key={`a${key}`}
@@ -977,7 +1020,9 @@ class Workbench extends Component {
                     </View>
                 </TouchableOpacity>
             );
-        } else if (item.id == '153aecef-0ca7-470e-8503-b6df1ef592bf') {
+        } else if (item.id == '153aecef-0ca7-470e-8503-b6df1ef592bf'
+            || item.id == "9a460940-dc96-4150-802b-d7492b994492"
+        ) {
             // 异常识别	153aecef-0ca7-470e-8503-b6df1ef592bf
 
             return (
@@ -998,7 +1043,9 @@ class Workbench extends Component {
                     </View>
                 </TouchableOpacity>
             );
-        } else if (item.id == '4e66e62b-66f1-41fe-a595-37312c549bdb') {
+        } else if (item.id == '4e66e62b-66f1-41fe-a595-37312c549bdb'
+            || item.id == "29a778e3-a85c-46b6-9467-533d66718209"
+        ) {
             // 设施核查整改		4e66e62b-66f1-41fe-a595-37312c549bdb
             count = SentencedToEmpty(this.props.rectificationNumResult, ['data', 'Datas'], {});
             showCount = SentencedToEmpty(count, ['DaiZG'], 0) + SentencedToEmpty(count, ['ShenSZ'], 0) + SentencedToEmpty(count, ['YiZG'], 0);
@@ -1017,7 +1064,9 @@ class Workbench extends Component {
                     </View>
                 </TouchableOpacity>
             );
-        } else if (item.id == 'f8c7b7dc-6441-40bb-bc7a-9bb4da5f211f') {
+        } else if (item.id == 'f8c7b7dc-6441-40bb-bc7a-9bb4da5f211f'
+            || item.id == "e8dc6e44-add7-4092-b3fb-952508811113"
+        ) {
             // 关键参数核查		f8c7b7dc-6441-40bb-bc7a-9bb4da5f211f
             count = SentencedToEmpty(this.props.OperationKeyParameterCountResult, ['data', 'Datas'], {});
             showCount = SentencedToEmpty(count, ['noSubmit'], 0) + SentencedToEmpty(count, ['submit'], 0) + SentencedToEmpty(count, ['norectified'], 0) + SentencedToEmpty(count, ['rectified'], 0) + SentencedToEmpty(count, ['appeal'], 0);
@@ -1047,7 +1096,8 @@ class Workbench extends Component {
                 >
                     <View style={[{ width: SCREEN_WIDTH / 4, height: 72, marginTop: 10, marginBottom: 10, justifyContent: 'center', alignItems: 'center' }]}>
                         <View style={[{ height: 48, width: 48, backgroundColor: '#f0f0f0', borderRadius: 24, alignItems: 'center', justifyContent: 'center' }]}>
-                            {item.id == '0fc20ea8-5091-4d03-b964-8aa3e2dda124' ? (
+                            {item.id == '0fc20ea8-5091-4d03-b964-8aa3e2dda124'
+                                || item.id == "fb6a59ca-7912-4f96-9626-1dad4a6ee2a4" ? (
                                 <Text style={[{ color: '#666666' }]}>{this.props.homeData.status == 200 ? SentencedToEmpty(this.props, ['homeData', 'data', 'Datas', item.countkey], 0) : '-'}</Text>
                             ) : (
                                 <Text style={[{ color: '#666666' }]}>{SentencedToEmpty(this.props, [item.dcountkey], '-')}</Text>
@@ -1088,6 +1138,7 @@ class Workbench extends Component {
     }
 
     render() {
+        console.log('tabList = ', this.props.tabList);
         // return (<View><Text>workbench</Text></View>);
         // console.log('workerBenchMenu = ', SentencedToEmpty(this.props, ['workerBenchMenu'], []));
         const workerBenchMenu = SentencedToEmpty(this.props, ['workerBenchMenu'], {});
@@ -1232,6 +1283,7 @@ class Workbench extends Component {
                                 this.getTaskExecutiveStatisticsView()
                             }
                             {SentencedToEmpty(this.props, ['workerBenchMenu'], []).map((item, index) => {
+                                console.log('workerBenchMenu item = ', item);
                                 /**
                                  * "工单执行统计"
                                  * "322ac13e-fadf-43ed-a7a6-b2ccde37f390"
@@ -1239,10 +1291,14 @@ class Workbench extends Component {
                                  * "0c8da383-b312-431b-8ff5-f24f75c7f933"
                                  */
                                 // console.log('item.id = ', item.id);
-                                if (item.id == "322ac13e-fadf-43ed-a7a6-b2ccde37f390") {
+                                if (item.id == "322ac13e-fadf-43ed-a7a6-b2ccde37f390"
+                                    || item.id == "30699f7b-b0c8-4ade-ac3b-225ea1807762"
+                                ) {
                                     // 工单执行统计
                                     return (<ExecutiveStatistics />);
-                                } else if (item.id == "0c8da383-b312-431b-8ff5-f24f75c7f933") {
+                                } else if (item.id == "0c8da383-b312-431b-8ff5-f24f75c7f933"
+                                    || item.id == "9ff9a2fc-3f0b-4d6d-bf20-24e6a296a5d0"
+                                ) {
                                     // 完成工单统计
                                     return (<CompleteTaskStatistics />);
                                 } else {

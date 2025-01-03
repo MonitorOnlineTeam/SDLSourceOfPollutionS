@@ -77,7 +77,7 @@ export default Model.extend({
       // console.log('formdata = ', formdata);
       // Alert.alert('上传中', JSON.stringify(formdata));
 
-      // // 使用axios发送请求
+      // 使用axios发送请求
       // axios.post(UrlInfo.BaseUrl + api.pollutionApi.Alarm.uploadimage
       //   , formdata
       //   , {
@@ -89,17 +89,28 @@ export default Model.extend({
       //       'Content-Type': 'multipart/form-data',
       //     }
       //   })
-      //   .then(response => {
-      //     console.log(response);
-      //     callback('', true);
-      //     Alert.alert('上传成功', JSON.stringify(response));
+      //   .then(res => {
+      //     if (res.status == 200
+      //       && SentencedToEmpty(res, ['data', 'IsSuccess'], false)
+      //     ) {
+      //       let images = SentencedToEmpty(res, ['data', 'Datas'], []);
+      //       callback(images, true);
+      //     } else {
+      //       // console.log('not 200 res = ', res);
+      //       callback(res, false);
+      //     }
+      //     console.log('上传成功: ', res);
+      //     // callback('', true);
+      //     Alert.alert('上传成功', JSON.stringify(res));
       //   })
       //   .catch(error => {
-      //     console.error(error);
+      //     console.log('error = ', SentencedToEmpty(error, ['stack'], 'stack'));
+      //     console.log(error);
       //     callback('', false);
       //     Alert.alert('失败', '123');
       //   });
       // Alert.alert('结束', '123');
+
       fetch(UrlInfo.BaseUrl + api.pollutionApi.Alarm.uploadimage, {
         method: 'POST',
         bodyType: 'file', //后端接收的类型
@@ -114,31 +125,11 @@ export default Model.extend({
         },
       })
         .then(response => {
-          // console.log('response = ', response);
+          console.log('response = ', response);
           return response.json()
         })
         .then(res => {
           if (res.StatusCode == 200) {
-            //     console.log('typeof = ', typeof res);
-            //     const response = res.json();
-            // console.log('res = ', res);
-            //     debugger;
-            //     // let urls = JSON.parse(res._bodyInit).Datas;
-            // let urls = SentencedToEmpty(response, ['_j', 'Datas'], []);
-            //     let url = '';
-            //     for (let index = 0; index < urls.length; index++) {
-            //       url = SentencedToEmpty(urls, [index], '');
-            //       if (url != '') {
-            //         let attachIDArr = urls[index].split('/');
-            //         images[index].attachID = attachIDArr[attachIDArr.length - 1];
-            //         images[index].url = url;
-            //       }
-            //     }
-            //     console.log('images = ', images);
-            //     callback(images, true);
-            //   } else {
-            //     callback(res._bodyInit, false);
-
             let images = res.Datas.map(item => {
               return { attachID: item.split('/').pop(), url: item };
             });
@@ -149,7 +140,8 @@ export default Model.extend({
           }
         })
         .catch(error => {
-          // console.log('error = ', error);
+          console.log('error = ', error);
+          console.log('error = ', SentencedToEmpty(error, ['stack'], 'stack'));
           const msg = JSON.stringify(error)
           callback(msg, false);
           // Alert.alert("title", msg);
