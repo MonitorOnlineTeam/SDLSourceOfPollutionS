@@ -7,7 +7,7 @@
  */
 import {
     Animated, Image, Modal, PanResponder, Platform, ScrollView
-    , Text, TouchableOpacity, View
+    , Text, TouchableOpacity, View, Easing
 } from 'react-native'
 import React, { Component } from 'react'
 import moment from 'moment';
@@ -45,7 +45,8 @@ export default class SignInStatistics extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            calendarHeight: new Animated.Value(calenderComponentHeight), // 0-300 calenderComponentHeight
+            isExpanded: true,  // 使用布尔值来控制展开状态
+            calendarHeight: new Animated.Value(calenderComponentHeight),
             panResponder: {},
             hideCalendar: false,
             calenderOpacity: 1,
@@ -54,7 +55,8 @@ export default class SignInStatistics extends Component {
             listType: 0,
             largImage: [],
             index: 0,
-            modalVisible: false
+            modalVisible: false,
+            isAnimating: false  // 添加动画状态标记
         };
     }
 
@@ -709,7 +711,62 @@ export default class SignInStatistics extends Component {
         }
     }
 
+    handleCalendarToggle = () => {
+        if (this.state.isAnimating) return;  // 如果正在动画中，直接返回
+
+        this.setState({ isAnimating: true });  // 设置动画状态
+
+        const isExpanded = this.state.calendarHeight._value === calenderComponentHeight;
+        const toValue = isExpanded ? 0 : calenderComponentHeight;
+
+        // 先更新 hideCalendar 状态
+        this.showCalenderFun(() => {
+            Animated.spring(
+                this.state.calendarHeight,
+                {
+                    toValue,
+                    useNativeDriver: false,  // Animated.Value 不支持原生驱动
+                    friction: 8,  // 添加摩擦力，使动画更流畅
+                    tension: 40  // 降低张力，使动画更平滑
+                }
+            ).start(({ finished }) => {
+                // 动画完成后的回调
+                if (finished) {
+                    this.setState({ 
+                        calenderOpacity: isExpanded ? 0 : 1,
+                        isAnimating: false  // 重置动画状态
+                    });
+                }
+            });
+        });
+    };
+
+    // 简化展开/收起的处理方法
+    toggleCalendar = () => {
+        const toValue = this.state.isExpanded ? 0 : calenderComponentHeight;
+        
+        // 立即更新状态
+        this.setState(prevState => ({
+            isExpanded: !prevState.isExpanded,
+            hideCalendar: prevState.isExpanded
+        }));
+
+        // 执行动画
+        Animated.timing(this.state.calendarHeight, {
+            toValue,
+            duration: 300,
+            useNativeDriver: false,
+            easing: Easing.ease
+        }).start(() => {
+            this.setState({
+                calenderOpacity: this.state.isExpanded ? 1 : 0
+            });
+        });
+    };
+
     render() {
+        const { isExpanded } = this.state;
+        
         return (<View style={[{
             width: SCREEN_WIDTH, flex: 1
         }]}>
@@ -778,38 +835,20 @@ export default class SignInStatistics extends Component {
                         />}
                     </Animated.View>
                     <View style={[{
-                        height: 16, width: SCREEN_WIDTH - 40,
+                        height: 40, width: SCREEN_WIDTH - 40,
                     }]}>
                         <TouchableOpacity
-                            onPress={() => {
-                                if (this.state.calendarHeight._value == 0) {
-                                    this.showCalenderFun(() => {
-                                        Animated.spring(
-                                            this.state.calendarHeight, // Auto-multiplexed
-                                            { toValue: calenderComponentHeight } // Back to zero
-                                        ).start(() => {
-                                            this.setState({ calenderOpacity: 1 });
-                                        });
-                                    });
-                                } else if (this.state.calendarHeight._value == calenderComponentHeight) {
-                                    this.showCalenderFun(() => {
-                                        Animated.spring(
-                                            this.state.calendarHeight, // Auto-multiplexed
-                                            { toValue: 0 } // Back to zero
-                                        ).start(() => {
-                                            // this.setState({hideCalendar:true});
-                                        });
-                                    });
-                                }
-                            }}
+                            onPress={this.toggleCalendar}
+                            activeOpacity={0.7}  // 添加触摸反馈
+                            disabled={this.state.isAnimating}  // 动画过程中禁用点击
                         >
-                            <View style={[{ width: SCREEN_WIDTH - 40, flexDirection: 'row', alignItems: 'center' }]}>
+                            <View style={[{ width: SCREEN_WIDTH - 40, height: 40,flexDirection: 'row', alignItems: 'center' }]}>
                                 <View style={[{ flex: 1, height: 1, backgroundColor: '#EAEAEA' }]}></View>
                                 <Image
                                     style={[{ width: 20, height: 8 }]}
-                                    source={this.state.hideCalendar
-                                        ? require('../../../images/ic_ct_calendar_down.png')
-                                        : require('../../../images/ic_ct_calendar_up.png')
+                                    source={isExpanded 
+                                        ? require('../../../images/ic_ct_calendar_up.png')
+                                        : require('../../../images/ic_ct_calendar_down.png')
                                     }
                                 />
                                 <View style={[{ flex: 1, height: 1, backgroundColor: '#EAEAEA' }]}></View>
@@ -949,3 +988,34 @@ export default class SignInStatistics extends Component {
         );
     }
 }
+
+// 将样式抽离出来，使代码更清晰
+const styles = {
+    calendarContainer: {
+        width: SCREEN_WIDTH - 40,
+    },
+    calendarWrapper: {
+        width: SCREEN_WIDTH - 40,
+        overflow: 'hidden'
+    },
+    toggleButton: {
+        height: 44,  // 增加按钮高度，使其更容易点击
+        justifyContent: 'center',
+        paddingVertical: 10
+    },
+    toggleButtonContent: {
+        width: SCREEN_WIDTH - 40,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    line: {
+        flex: 1,
+        height: 1,
+        backgroundColor: '#EAEAEA'
+    },
+    toggleIcon: {
+        width: 20,
+        height: 8,
+        marginHorizontal: 10
+    }
+};
