@@ -13,26 +13,48 @@
 <body><noscript><strong>Please enable JavaScript to continue.</strong></noscript>
     <div id=app></div>
     <script>
-        window.onload = function () {
-            window.document.addEventListener('message', function (RnData) {
-                var data = JSON.parse(RnData.data);
-                localStorage.setItem('proxyCode', JSON.stringify({ key: data.proxyCode }));
-                localStorage.setItem('token', JSON.stringify({ key: data.token }));
-                localStorage.setItem('userAccount', JSON.stringify({ key: data.userAccount }));
-                localStorage.setItem('userPwd', JSON.stringify({ key: data.userPwd }));
-                localStorage.setItem('department', JSON.stringify({ key: data.department }));
-                localStorage.setItem('UserId', JSON.stringify({ key: data.UserId }));
-                var script1 = document.createElement('script');
-                script1.src = './static/js/chunk-vendors.ba18ec34.js';
-                var script2 = document.createElement('script');
-                script2.src = './static/js/index.d1cb50b1.js';
-                document.head.appendChild(script1);
-                document.head.appendChild(script2);
-            });
+        // 获取url参数
+        let url = window.location.href;
+        // 获取参数部分
+        let params = url.split('?')[1];
+        // 将参数部分分割成数组
+        let paramArr = params.split('&');
+        // 创建一个空对象
+        let paramObj = {};
+        // 遍历数组，将参数名和值存入对象
+        for (let i = 0; i < paramArr.length; i++) {
+            let param = paramArr[i].split('=');
+            paramObj[param[0]] = decodeURIComponent(param[1]);
+            // alert(paramObj[param[0]])
         }
+        localStorage.setItem('proxyCode', JSON.stringify({ key: paramObj.proxyCode }));
+        localStorage.setItem('token', JSON.stringify({ key: paramObj.token }));
+        localStorage.setItem('userAccount', JSON.stringify({ key: paramObj.userAccount }));
+        localStorage.setItem('userPwd', JSON.stringify({ key: paramObj.userPwd }));
+        localStorage.setItem('department', JSON.stringify({ key: paramObj.department }));
+        localStorage.setItem('UserId', JSON.stringify({ key: paramObj.UserId }));
+        // // 将对象转换为JSON字符串并存储到localStorage中
+        // localStorage.setItem('params', JSON.stringify(paramObj));
+        // window.onload = function () {
+        //     window.document.addEventListener('message', function (RnData) {
+        //         var data = JSON.parse(RnData.data);
+        //         localStorage.setItem('proxyCode', JSON.stringify({ key: data.proxyCode }));
+        //         localStorage.setItem('token', JSON.stringify({ key: data.token }));
+        //         localStorage.setItem('userAccount', JSON.stringify({ key: data.userAccount }));
+        //         localStorage.setItem('userPwd', JSON.stringify({ key: data.userPwd }));
+        //         localStorage.setItem('department', JSON.stringify({ key: data.department }));
+        //         localStorage.setItem('UserId', JSON.stringify({ key: data.UserId }));
+        //         var script1 = document.createElement('script');
+        //         script1.src = './static/js/chunk-vendors.ba18ec34.js';
+        //         var script2 = document.createElement('script');
+        //         script2.src = './static/js/index.d1cb50b1.js';
+        //         document.head.appendChild(script1);
+        //         document.head.appendChild(script2);
+        //     });
+        // }
     </script>
-    <!-- <script src=/static/js/chunk-vendors.ba18ec34.js></script>
-    <script src=/static/js/index.d1cb50b1.js></script> -->
+    <script src=./static/js/chunk-vendors.dfd370a7.js></script>
+    <script src=./static/js/index.9ad35a1d.js></script>
 </body>
 
 </html>

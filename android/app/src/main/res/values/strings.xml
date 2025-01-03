@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">智慧运维</string>
+    <!-- <string name="app_name">智慧运维</string> -->
+    <string name="app_name">智慧监测</string>
 </resources>

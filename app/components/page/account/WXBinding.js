@@ -8,7 +8,8 @@ export default function WXBinding() {
 
     const wxBinding = useRef(null);
     const [loadOnce, setLoadOnce] = useState(true);
-
+    let encryData = getEncryptData();
+    const user = getToken();
     return (
         <View
             style={[{
@@ -24,7 +25,8 @@ export default function WXBinding() {
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={Platform.OS !== 'ios'}
                 originWhitelist={['*']}
-                source={Platform.OS === 'ios' ? {} : { uri: 'file:///android_asset/wxBinding/index.html' }}
+                // source={Platform.OS === 'ios' ? {} : { uri: 'file:///android_asset/wxBinding/index.html' }}
+                source={Platform.OS === 'ios' ? {} : { uri: `file:///android_asset/wxBinding/index.html?proxyCode=${encryData}&token=${'Bearer ' + user.dataAnalyzeTicket}&userAccount=${user.UserAccount}&userPwd=${user.LocalPwd}&department=${'污染源技术服务部'}&UserId=${user.UserId}` }}
                 onLoad={() => {
                     if (loadOnce) {
                         setLoadOnce(false);
