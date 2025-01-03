@@ -24,31 +24,31 @@ import globalcolor from '../../../config/globalcolor';
     TaskRecordendTime: taskModel.TaskRecordendTime
 }))
 export default class TaskRecord extends Component {
-    static navigationOptions = createNavigationOptions({
-        title: '任务记录',
-        // headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 },
-        headerRight: (
-            <DeclareModule
-                contentRender={() => {
-                    return <Text style={[{ fontSize: 13, color: 'white', marginHorizontal: 16 }]}>{'说明'}</Text>;
-                }}
-                options={{
-                    headTitle: '说明',
-                    innersHeight: 140,
-                    messText: `任务工单在结束后720分钟内允许修改。`,
-                    headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
-                    buttons: [
-                        {
-                            txt: '知道了',
-                            btnStyle: { backgroundColor: '#fff' },
-                            txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
-                            onpress: () => { }
-                        }
-                    ]
-                }}
-            />
-        )
-    });
+    // static navigationOptions = createNavigationOptions({
+    //     title: '任务记录',
+    //     // headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 },
+    //     headerRight: (
+    //         <DeclareModule
+    //             contentRender={() => {
+    //                 return <Text style={[{ fontSize: 13, color: 'white', marginHorizontal: 16 }]}>{'说明'}</Text>;
+    //             }}
+    //             options={{
+    //                 headTitle: '说明',
+    //                 innersHeight: 140,
+    //                 messText: `任务工单在结束后720分钟内允许修改。`,
+    //                 headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
+    //                 buttons: [
+    //                     {
+    //                         txt: '知道了',
+    //                         btnStyle: { backgroundColor: '#fff' },
+    //                         txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
+    //                         onpress: () => { }
+    //                     }
+    //                 ]
+    //             }}
+    //         />
+    //     )
+    // });
 
     constructor(props) {
         super(props);

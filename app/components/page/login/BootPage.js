@@ -81,7 +81,7 @@ export default class BootPage extends Component {
      */
     initLocation = () => {
         init({
-            ios: '9df5f713ad0f0b8d2550436f5793e371',
+            ios: '6fc6242b16e792000fa5968848f191c3',
             android:
                 CURRENT_PROJECT == 'POLLUTION_ORERATION_PROJECT' || CURRENT_PROJECT == 'POLLUTION_PROJECT'
                     ? // ? '4502a480cb8cefdeb655628a5c89c36d'

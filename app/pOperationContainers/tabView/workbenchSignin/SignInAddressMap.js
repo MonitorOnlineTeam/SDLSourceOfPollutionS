@@ -29,22 +29,22 @@ const AMapGeolocation = NativeModules.AMapGeolocation;
 }))
 export default class SignInAddressMap extends Component {
 
-    static navigationOptions = ({ navigation }) => {
-        return createNavigationOptions({
-            title: '地点微调',
-            // headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 },
-            headerRight: (
-                <TouchableOpacity
-                    style={{ width: 44, height: 40, justifyContent: 'center' }}
-                    onPress={() => {
-                        navigation.state.params.navigatePress();
-                    }}
-                >
-                    <Text style={[{ fontSize: 12, color: globalcolor.whiteFont }]}>{'确定'}</Text>
-                </TouchableOpacity>
-            )
-        });
-    };
+    // static navigationOptions = ({ navigation }) => {
+    //     return createNavigationOptions({
+    //         title: '地点微调',
+    //         // headerTitleStyle: { marginRight: Platform.OS === 'android' ? 76 : 0 },
+    //         headerRight: (
+    //             <TouchableOpacity
+    //                 style={{ width: 44, height: 40, justifyContent: 'center' }}
+    //                 onPress={() => {
+    //                     navigation.state.params.navigatePress();
+    //                 }}
+    //             >
+    //                 <Text style={[{ fontSize: 12, color: globalcolor.whiteFont }]}>{'确定'}</Text>
+    //             </TouchableOpacity>
+    //         )
+    //     });
+    // };
 
     constructor(props) {
         super(props);

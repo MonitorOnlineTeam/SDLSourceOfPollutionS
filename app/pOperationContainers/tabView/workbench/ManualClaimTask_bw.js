@@ -31,27 +31,27 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
     unclaimedGasTaskCountResult: claimTaskModels.unclaimedGasTaskCountResult
 }))
 export default class ManualClaimTask extends Component {
-    static navigationOptions = ({ navigation }) => {
-        return createNavigationOptions({
-            title: '领取工单',
-            headerTitleStyle: { marginRight: 0 },
-            headerRight: (
-                <View>
-                    <TouchableOpacity
-                        style={{ width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}
-                        onPress={(e) => {
-                            const {
-                                nativeEvent: { pageX, pageY }
-                            } = e;
-                            navigation.state.params.navigateRightPress(pageX, pageY);
-                        }}
-                    >
-                        <Image source={require('../../../images/ic_more_option.png')} style={{ width: 18, height: 18, marginRight: 16, tintColor: '#fff' }} />
-                    </TouchableOpacity>
-                </View>
-            )
-        });
-    };
+    // static navigationOptions = ({ navigation }) => {
+    //     return createNavigationOptions({
+    //         title: '领取工单',
+    //         headerTitleStyle: { marginRight: 0 },
+    //         headerRight: (
+    //             <View>
+    //                 <TouchableOpacity
+    //                     style={{ width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}
+    //                     onPress={(e) => {
+    //                         const {
+    //                             nativeEvent: { pageX, pageY }
+    //                         } = e;
+    //                         navigation.state.params.navigateRightPress(pageX, pageY);
+    //                     }}
+    //                 >
+    //                     <Image source={require('../../../images/ic_more_option.png')} style={{ width: 18, height: 18, marginRight: 16, tintColor: '#fff' }} />
+    //                 </TouchableOpacity>
+    //             </View>
+    //         )
+    //     });
+    // };
 
     constructor(props) {
         super(props);

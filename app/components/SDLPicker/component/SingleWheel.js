@@ -114,6 +114,7 @@ class SingleWheel extends PureComponent {
                     style={[scrollViewStyle, { zIndex: 800 }]}
                     showsVerticalScrollIndicator={false}
                     onScrollEndDrag={({ nativeEvent }) => {
+                        // 如果发现速度阈值 0.05 不够合适，可以根据实际体验调整。
                         if (Math.abs(nativeEvent.velocity.y) < 0.05) {
                             this.handleScrollEnd(nativeEvent.contentOffset.y);
                         }

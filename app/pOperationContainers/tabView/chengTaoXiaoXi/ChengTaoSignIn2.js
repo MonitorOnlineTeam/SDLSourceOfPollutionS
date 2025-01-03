@@ -70,7 +70,9 @@ export default class ChengTaoSignIn extends Component {
                 {/* {this.state.showView == 'statistics' ? <ChengTaoSigninStatistics /> : null} */}
                 {this.state.showView == 'statistics' ? <SignInStatisticsWithTeam /> : null}
 
-                <View style={[{ width: SCREEN_WIDTH, height: 50, backgroundColor: '#ffffff', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 22, marginTop: 10 }]}>
+                <View style={[{ width: SCREEN_WIDTH, height: Platform.OS === 'ios' ? 84 : 50, backgroundColor: '#ffffff', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 22, marginTop: 10,
+                    paddingBottom: Platform.OS === 'ios' ? 34 : 0 // Add bottom margin for iOS safe area
+                 }]}>
                     <TouchableOpacity
                         onPress={() => {
                             this.setState({
