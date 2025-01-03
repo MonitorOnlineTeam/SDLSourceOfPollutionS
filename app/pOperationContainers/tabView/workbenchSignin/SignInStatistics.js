@@ -25,6 +25,7 @@ const calenderComponentHeight = 280;
 const SWIPE_LEFT = 'SWIPE_LEFT';
 const SWIPE_RIGHT = 'SWIPE_RIGHT';
 const formatStr = 'YYYY-MM-DD';
+const IS_ANDROID = Platform.OS === 'android';
 
 @connect(({ signInModel }) => ({
     calenderData: signInModel.calenderData,
@@ -750,25 +751,54 @@ export default class SignInStatistics extends Component {
     // 简化展开/收起的处理方法
     toggleCalendar = () => {
         const toValue = this.state.isExpanded ? 0 : calenderComponentHeight;
-
+        
         // 立即更新状态
         this.setState(prevState => ({
             isExpanded: !prevState.isExpanded,
             hideCalendar: prevState.isExpanded
         }));
 
-        // 执行动画
-        Animated.timing(this.state.calendarHeight, {
-            toValue,
-            duration: 300,
-            useNativeDriver: false,
-            easing: Easing.ease
-        }).start(() => {
-            this.setState({
-                calenderOpacity: this.state.isExpanded ? 1 : 0
+        // 针对 Android 优化的动画配置
+        if (IS_ANDROID) {
+            Animated.spring(this.state.calendarHeight, {
+                toValue,
+                useNativeDriver: false,
+                // 只使用 tension/friction 组合
+                tension: 50,        // 降低张力使动画更平滑
+                friction: 10,       // 适中的摩擦力
+                restDisplacementThreshold: 0.01,
+                restSpeedThreshold: 0.01
+            }).start(() => {
+                this.setState({
+                    calenderOpacity: this.state.isExpanded ? 1 : 0
+                });
             });
-        });
+        } else {
+            // iOS 保持原有的 timing 动画
+            Animated.timing(this.state.calendarHeight, {
+                toValue,
+                duration: 300,
+                useNativeDriver: false,
+                easing: Easing.ease
+            }).start(() => {
+                this.setState({
+                    calenderOpacity: this.state.isExpanded ? 1 : 0
+                });
+            });
+        }
     };
+
+    // 优化渲染性能
+    shouldComponentUpdate(nextProps, nextState) {
+        // 只在必要时更新组件
+        return (
+            this.state.isExpanded !== nextState.isExpanded ||
+            this.state.hideCalendar !== nextState.hideCalendar ||
+            this.state.calenderOpacity !== nextState.calenderOpacity ||
+            this.props.calenderSelectedDate !== nextProps.calenderSelectedDate ||
+            this.props.calenderCurrentMonth !== nextProps.calenderCurrentMonth
+        );
+    }
 
     render() {
         const { isExpanded } = this.state;
@@ -816,7 +846,21 @@ export default class SignInStatistics extends Component {
                         width: SCREEN_WIDTH - 40,
                     }]}
                 >
-                    <Animated.View style={[{ height: this.state.calendarHeight, width: SCREEN_WIDTH - 40, }]}>
+                    <Animated.View 
+                        style={[{ 
+                            height: this.state.calendarHeight, 
+                            width: SCREEN_WIDTH - 40,
+                        }, IS_ANDROID && {
+                            // Android 特定的优化
+                            transform: [{
+                                translateY: this.state.calendarHeight.interpolate({
+                                    inputRange: [0, calenderComponentHeight],
+                                    outputRange: [0, 0]
+                                })
+                            }],
+                            backfaceVisibility: 'hidden'  // 防止闪烁
+                        }]}
+                    >
                         {this.state.hideCalendar ? null : <CalendarPicker
                             ref={ref => (this.CalendarPicker = ref)}
                             showHeader={false}
@@ -841,23 +885,49 @@ export default class SignInStatistics extends Component {
                         />}
                     </Animated.View>
                     <View style={[{
-                        height: 40, width: SCREEN_WIDTH - 40,
+                        height: 40, 
+                        width: SCREEN_WIDTH - 40,
+                        justifyContent: 'center'  // 确保内容垂直居中
                     }]}>
                         <TouchableOpacity
                             onPress={this.toggleCalendar}
-                            activeOpacity={0.7}  // 添加触摸反馈
-                            disabled={this.state.isAnimating}  // 动画过程中禁用点击
+                            activeOpacity={0.7}
+                            disabled={this.state.isAnimating}
+                            hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}  // 扩大点击区域
+                            style={[{  // 添加样式以确保整个区域可点击
+                                width: SCREEN_WIDTH - 40,
+                                minHeight: 40,
+                                justifyContent: 'center'
+                            }]}
                         >
-                            <View style={[{ width: SCREEN_WIDTH - 40, height: 40, flexDirection: 'row', alignItems: 'center' }]}>
-                                <View style={[{ flex: 1, height: 1, backgroundColor: '#EAEAEA' }]}></View>
+                            <View style={[{ 
+                                width: SCREEN_WIDTH - 40, 
+                                height: 40, 
+                                flexDirection: 'row', 
+                                alignItems: 'center',
+                                paddingVertical: 10  // 增加内边距
+                            }]}>
+                                <View style={[{ 
+                                    flex: 1, 
+                                    height: 1, 
+                                    backgroundColor: '#EAEAEA' 
+                                }]} />
                                 <Image
-                                    style={[{ width: 20, height: 8 }]}
+                                    style={[{ 
+                                        width: 20, 
+                                        height: 8,
+                                        marginHorizontal: 15  // 增加图标的水平间距
+                                    }]}
                                     source={isExpanded
                                         ? require('../../../images/ic_ct_calendar_up.png')
                                         : require('../../../images/ic_ct_calendar_down.png')
                                     }
                                 />
-                                <View style={[{ flex: 1, height: 1, backgroundColor: '#EAEAEA' }]}></View>
+                                <View style={[{ 
+                                    flex: 1, 
+                                    height: 1, 
+                                    backgroundColor: '#EAEAEA' 
+                                }]} />
                             </View>
                         </TouchableOpacity>
                     </View>
