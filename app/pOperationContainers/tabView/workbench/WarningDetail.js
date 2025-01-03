@@ -2,7 +2,7 @@
  * @Description: 预警详情，分钟数据报警
  * @LastEditors: hxf
  * @Date: 2022-08-22 16:15:44
- * @LastEditTime: 2024-12-31 09:53:08
+ * @LastEditTime: 2025-01-03 10:27:10
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/tabView/workbench/WarningDetail.js
  */
 import moment from 'moment';
@@ -180,7 +180,14 @@ export default class WarningDetail extends Component {
                                                 //     this.props.dispatch(createAction('pointDetails/updateState')({ selectTime: moment(item.AlarmTime).subtract(3, 'hours').format('YYYY-MM-DD HH:mm:ss') }));
                                                 // }
                                                 // this.props.dispatch(NavigationActions.navigate({ routeName: 'HistoryData', params: { DGIMN: item.DGIMN, params: item } }));
-                                                this.props.dispatch(createAction('pointDetails/updateState')({ selectTime: moment(item.AlarmTime).subtract(3, 'hours').format('YYYY-MM-DD HH:mm:ss') }));
+                                                this.props.dispatch(createAction('pointDetails/updateState')({
+                                                    selectTime: moment(item.AlarmTime)
+                                                        // .subtract(3, 'hours')
+                                                        .format('YYYY-MM-DD HH:mm:ss')
+                                                }));
+                                                this.props.dispatch(createAction('historyDataModel/updateState')({
+                                                    showIndex: 3, // 0 小时 1 日均 2 实时 3 分钟
+                                                }));
                                                 this.props.dispatch(NavigationActions.navigate({ routeName: 'HistoryData', params: { DGIMN: item.DGIMN, params: { sourceType: 'OverWarning', ...item } } }));
                                             }}
                                             style={{ width: SCREEN_WIDTH / 2, height: 22 }}>
