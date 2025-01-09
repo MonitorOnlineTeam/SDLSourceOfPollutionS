@@ -2,7 +2,7 @@
  * @Description: 宝武相关事件
  * @LastEditors: hxf
  * @Date: 2023-05-06 08:44:32
- * @LastEditTime: 2025-01-02 09:22:35
+ * @LastEditTime: 2025-01-09 10:14:48
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationModels/signInModel.js
  */
 import { SentencedToEmpty, ShowToast, NavigationActions, bwFormatArray, CloseToast, createAction } from '../utils';
@@ -436,6 +436,12 @@ export default Model.extend({
                 });
             }
             yield update({ calenderData, ctSignInHistoryListResult: result, calenderDataObject: dataObject });
+            // yield put(createAction('signInModel/updateState')({
+            //     calenderData
+            //     , ctSignInHistoryListResult: result
+            //     , calenderDataObject: dataObject
+            // }));
+            callback();
         },
         /**
          * GetUpdAndRevokeStatus

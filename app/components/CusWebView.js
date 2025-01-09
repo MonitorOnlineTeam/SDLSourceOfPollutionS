@@ -2,8 +2,8 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2020-08-26 09:28:38
- * @LastEditTime: 2024-10-31 16:00:05
- * @FilePath: /SDLSourceOfPollutionS/app/components/CusWebView.js
+ * @LastEditTime: 2025-01-09 10:04:18
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/components/CusWebView.js
  */
 //import liraries
 import React, { PureComponent } from 'react';

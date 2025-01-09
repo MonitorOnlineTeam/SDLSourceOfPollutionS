@@ -60,11 +60,17 @@ export default Model.extend({
         *getOperationKeyParameterCount({ payload }, { call, put, take, update, select }) {
             const { workerBenchMenu } = yield select(state => state.login);
             let alramBtnArr = [];
+            console.log('getOperationKeyParameterCount workerBenchMenu = ', workerBenchMenu);
             workerBenchMenu.map(item => {
-                if (item.id === '90eea7ec-90b1-4b7b-82c0-ef961ae90329') {
+                // if (item.id === '90eea7ec-90b1-4b7b-82c0-ef961ae90329') {
+                if (item.id === 'a908b089-2cfe-4393-879a-aee09b342f69') {
+                    // 数据报警
                     // if (item.id === 'd92e9aab-486f-4cb5-abd6-344674d4b0d5') {
                     item.children.map(sItem => {
-                        if (sItem.id === '153aecef-0ca7-470e-8503-b6df1ef592bf') {
+                        //"9a460940-dc96-4150-802b-d7492b994492"
+                        // if (sItem.id === '153aecef-0ca7-470e-8503-b6df1ef592bf') {
+                        if (sItem.id === '9a460940-dc96-4150-802b-d7492b994492') {
+                            // 异常识别1.0
                             // if (sItem.id === '740171a4-a61d-4c14-bfa8-af32466574cc') {
                             alramBtnArr = sItem.buttonList;
                         }

@@ -78,7 +78,6 @@ export default class MapList extends Component {
      */
     renderHeader = () => {
         const { selectEnt } = this.props;
-        console.log('selectEnt = ', selectEnt);
         return (
             <View style={{ width: '100%', paddingRight: 13, height: lineHeight, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#fff' }}>
                 <Touchable

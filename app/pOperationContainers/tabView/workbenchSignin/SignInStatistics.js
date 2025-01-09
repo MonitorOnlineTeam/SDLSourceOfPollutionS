@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-02-01 11:02:45
- * @LastEditTime: 2025-01-03 09:20:02
+ * @LastEditTime: 2025-01-07 16:13:54
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/tabView/workbenchSignin/SignInStatistics.js
  */
 import {
@@ -74,7 +74,9 @@ export default class SignInStatistics extends Component {
                     // SignWorkType: this.state.listType == 0 ? 60 : 61,
                     RecordDate: moment().format('YYYY-MM-DD')
                 },
-                callback: result => { }
+                callback: result => {
+                    this.forceUpdate();
+                }
             })
         );
 
@@ -284,7 +286,9 @@ export default class SignInStatistics extends Component {
             || workType == 576
             || workType == 577
             || workType == 578
-            || workType == 581) {
+            || workType == 581
+            || workType == 706
+            || workType == 713) {
             return (<View
                 style={[{
                     width: SCREEN_WIDTH - 20, height: 142
@@ -414,6 +418,8 @@ export default class SignInStatistics extends Component {
                                 this.setState({
                                     modalVisible: true,
                                     index: 0
+                                }, () => {
+                                    this.forceUpdate();
                                 });
                             });
                         }
@@ -427,6 +433,7 @@ export default class SignInStatistics extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
+                        console.log('file = ', SentencedToEmpty(item, ['file'], []));
                         let ImgNameList = SentencedToEmpty(item, ['file'], []);
                         if (ImgNameList.length == 0) {
                             ShowToast('未上传图片');
@@ -440,12 +447,15 @@ export default class SignInStatistics extends Component {
                                     AttachID: item.FileName
                                 });
                             });
+                            console.log('largImage = ', largImage);
                             this.setState({
                                 largImage
                             }, () => {
                                 this.setState({
                                     modalVisible: true,
                                     index: 0
+                                }, () => {
+                                    this.forceUpdate();
                                 });
                             });
                         }
@@ -457,7 +467,10 @@ export default class SignInStatistics extends Component {
                         }]}
                     >{`${SentencedToEmpty(item, ['file'], []).length}张`}</Text>
                 </TouchableOpacity>
-                <Modal visible={this.state.modalVisible} transparent={true} onRequestClose={() => this.setState({ modalVisible: false })}>
+                <Modal visible={this.state.modalVisible} transparent={true} onRequestClose={() =>
+                    this.setState({ modalVisible: false }, () => {
+                        this.forceUpdate();
+                    })}>
                     <ImageViewer
                         saveToLocalByLongPress={false}
                         menuContext={{ saveToLocal: '保存图片', cancel: '取消' }}
@@ -465,6 +478,8 @@ export default class SignInStatistics extends Component {
                             {
                                 this.setState({
                                     modalVisible: false
+                                }, () => {
+                                    this.forceUpdate();
                                 });
                             }
                         }}
@@ -751,7 +766,7 @@ export default class SignInStatistics extends Component {
     // 简化展开/收起的处理方法
     toggleCalendar = () => {
         const toValue = this.state.isExpanded ? 0 : calenderComponentHeight;
-        
+
         // 立即更新状态
         this.setState(prevState => ({
             isExpanded: !prevState.isExpanded,
@@ -802,7 +817,8 @@ export default class SignInStatistics extends Component {
 
     render() {
         const { isExpanded } = this.state;
-
+        console.log('render calenderData = ', this.props.calenderData);
+        console.log('render modalVisible = ', this.state.modalVisible);
         return (<View style={[{
             width: SCREEN_WIDTH, flex: 1
         }]}>
@@ -846,9 +862,9 @@ export default class SignInStatistics extends Component {
                         width: SCREEN_WIDTH - 40,
                     }]}
                 >
-                    <Animated.View 
-                        style={[{ 
-                            height: this.state.calendarHeight, 
+                    <Animated.View
+                        style={[{
+                            height: this.state.calendarHeight,
                             width: SCREEN_WIDTH - 40,
                         }, IS_ANDROID && {
                             // Android 特定的优化
@@ -885,7 +901,7 @@ export default class SignInStatistics extends Component {
                         />}
                     </Animated.View>
                     <View style={[{
-                        height: 40, 
+                        height: 40,
                         width: SCREEN_WIDTH - 40,
                         justifyContent: 'center'  // 确保内容垂直居中
                     }]}>
@@ -900,21 +916,21 @@ export default class SignInStatistics extends Component {
                                 justifyContent: 'center'
                             }]}
                         >
-                            <View style={[{ 
-                                width: SCREEN_WIDTH - 40, 
-                                height: 40, 
-                                flexDirection: 'row', 
+                            <View style={[{
+                                width: SCREEN_WIDTH - 40,
+                                height: 40,
+                                flexDirection: 'row',
                                 alignItems: 'center',
                                 paddingVertical: 10  // 增加内边距
                             }]}>
-                                <View style={[{ 
-                                    flex: 1, 
-                                    height: 1, 
-                                    backgroundColor: '#EAEAEA' 
+                                <View style={[{
+                                    flex: 1,
+                                    height: 1,
+                                    backgroundColor: '#EAEAEA'
                                 }]} />
                                 <Image
-                                    style={[{ 
-                                        width: 20, 
+                                    style={[{
+                                        width: 20,
                                         height: 8,
                                         marginHorizontal: 15  // 增加图标的水平间距
                                     }]}
@@ -923,10 +939,10 @@ export default class SignInStatistics extends Component {
                                         : require('../../../images/ic_ct_calendar_down.png')
                                     }
                                 />
-                                <View style={[{ 
-                                    flex: 1, 
-                                    height: 1, 
-                                    backgroundColor: '#EAEAEA' 
+                                <View style={[{
+                                    flex: 1,
+                                    height: 1,
+                                    backgroundColor: '#EAEAEA'
                                 }]} />
                             </View>
                         </TouchableOpacity>

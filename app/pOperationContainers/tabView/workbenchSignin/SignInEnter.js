@@ -2,7 +2,7 @@
  * @Description: 统一签到入口
  * @LastEditors: hxf
  * @Date: 2024-01-29 11:07:20
- * @LastEditTime: 2025-01-02 18:48:43
+ * @LastEditTime: 2025-01-07 11:43:25
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/tabView/workbenchSignin/SignInEnter.js
  */
 import { Platform, Text, TouchableOpacity, View, Image } from 'react-native'
@@ -187,7 +187,8 @@ export default class SignInEnter extends Component {
                         }
                     })()
                 }
-                <View style={[{ width: SCREEN_WIDTH, height: Platform.OS === 'ios' ? 84 : 50, backgroundColor: '#ffffff', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 22, marginTop: 10,
+                <View style={[{
+                    width: SCREEN_WIDTH, height: Platform.OS === 'ios' ? 84 : 50, backgroundColor: '#ffffff', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 22, marginTop: 10,
                     paddingBottom: Platform.OS === 'ios' ? 34 : 0 // Add bottom margin for iOS safe area
                 }]}>
                     <View>

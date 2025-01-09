@@ -99,8 +99,8 @@ android {
 
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 75
-        versionName "1.7.5"
+        versionCode 79
+        versionName "1.7.9"
     }
     signingConfigs {
         release {

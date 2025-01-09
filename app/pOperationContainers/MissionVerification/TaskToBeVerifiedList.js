@@ -35,9 +35,11 @@ class TaskToBeVerifiedList extends Component {
         let buttons = [];
         console.log('this.props.workerBenchMenu = ', this.props.workerBenchMenu);
         this.props.workerBenchMenu.map(item => {
-            if (item.id === 'd92e9aab-486f-4cb5-abd6-344674d4b0d5') {
+            // if (item.id === 'd92e9aab-486f-4cb5-abd6-344674d4b0d5') {
+            if (item.id === "a7ab5b6c-b14a-4ee4-8eee-9151be0ea88a") {
                 item.children.map(sItem => {
-                    if (sItem.id === '2273c00d-7594-4f85-8174-b46903a93ff7') {
+                    // if (sItem.id === '2273c00d-7594-4f85-8174-b46903a93ff7') {
+                    if (sItem.id === "89afcc6f-e994-4478-92ac-31696d275975") {
                         sItem.buttonList.map(btn => {
                             buttons.push({ ModelGuid: btn.code.replace(/[^0-9]/g, ''), ModelName: btn.name });
                         });
@@ -62,7 +64,7 @@ class TaskToBeVerifiedList extends Component {
 
         props.navigation.setOptions({
             title: '核查任务',
-          });
+        });
     }
 
     componentDidMount() {

@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2025-01-01 12:55:57
- * @LastEditTime: 2025-01-02 18:42:54
+ * @LastEditTime: 2025-01-07 10:03:32
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/tabView/workbenchSignin/SignInStatisticsWithTeam.js
  */
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native'
@@ -75,7 +75,7 @@ export default function SignInStatisticsWithTeam() {
 
             {
                 statisticsType == 'team' ? <TeamStatistics />
-                    : statisticsType == 'personal' ? <SignInStatistics /> : null
+                    : statisticsType == 'personal' ? <SignInStatistics key={`page${moment().format('YYYYMMDDHHmmss')}}`} /> : null
             }
         </View>
     )
