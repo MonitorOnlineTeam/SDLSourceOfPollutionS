@@ -756,7 +756,7 @@ export default Model.extend({
                     id: '312c53c1-e9ff-4745-8c8b-eb642822b7dc',
                     name: '手动指控'
                 });
-                // yield update({ ponitInfo: params.info, systemMenu: menuDate });
+                yield update({ ponitInfo: params.info, systemMenu: menuDate });
             }
         },
         *getHourData(

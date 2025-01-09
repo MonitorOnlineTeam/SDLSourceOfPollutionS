@@ -113,21 +113,24 @@ class Account extends PureComponent {
                                     </View>
                                 </Touchable>
                             );
-                        })}
-                </View>
-                {this.props.appIndexInfoConfig != null ? (
-                    <View>
-                        <Image source={{ uri: UrlInfo.BaseUrl + this.props.appIndexInfoConfig.LogoURL }} style={{ marginTop: 52, alignSelf: 'center', width: this.state.imageWidth, height: this.state.imageHeight }} />
-                        <Text style={{ fontSize: 12, marginTop: 32, alignSelf: 'center', textAlign: 'center', color: '#666' }}> {this.props.appIndexInfoConfig.AppName}</Text>
-                        <Text style={{ fontSize: 11, marginTop: 15, alignSelf: 'center', textAlign: 'center', color: '#666' }}>{'Version ' + VersionInfo.app_version_name}</Text>
-                        <Text style={{ fontSize: 15, marginTop: 15, alignSelf: 'center', textAlign: 'center', color: '#666' }}>{this.props.appIndexInfoConfig.CompanyName}</Text>
-                    </View>
-                ) : null}
+                        })
+                    }
+                </View >
+                {
+                    this.props.appIndexInfoConfig != null ? (
+                        <View>
+                            <Image source={{ uri: UrlInfo.BaseUrl + this.props.appIndexInfoConfig.LogoURL }} style={{ marginTop: 52, alignSelf: 'center', width: this.state.imageWidth, height: this.state.imageHeight }} />
+                            <Text style={{ fontSize: 12, marginTop: 32, alignSelf: 'center', textAlign: 'center', color: '#666' }}> {this.props.appIndexInfoConfig.AppName}</Text>
+                            <Text style={{ fontSize: 11, marginTop: 15, alignSelf: 'center', textAlign: 'center', color: '#666' }}>{'Version ' + VersionInfo.app_version_name}</Text>
+                            <Text style={{ fontSize: 15, marginTop: 15, alignSelf: 'center', textAlign: 'center', color: '#666' }}>{this.props.appIndexInfoConfig.CompanyName}</Text>
+                        </View>
+                    ) : null
+                }
 
                 {/* <ModalParent ref="updateAlert" DownLoadPath={Platform.OS == 'ios' ? this.state.IOSDownLoadPath : this.state.DownLoadPath} UpdateContent={this.state.UpdateContent} /> */}
                 {/*<UpdateModal />*/}
                 <ModalParent ref="updateAlert" DownLoadPath={Platform.OS == 'ios' ? this.state.IOSDownLoadPath : this.state.DownLoadPath} UpdateContent={this.state.UpdateContent} />
-            </ScrollView>
+            </ScrollView >
         );
     }
 
