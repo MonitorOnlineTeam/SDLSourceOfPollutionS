@@ -438,6 +438,15 @@ export default class TaskHandle extends Component {
 
                 } else if (item.Type == '1') {
                     switch (item.ID) {
+                        case 1001:
+                            console.log('示值误差和响应时间');
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'IndicationErrorAndResponseTimeList',
+                                    params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
+                                })
+                            );
+                            break;
                         case 59: // 异常小时数记录 废气
                         case 58: // 异常小时数记录 废水
                             this.props.dispatch(

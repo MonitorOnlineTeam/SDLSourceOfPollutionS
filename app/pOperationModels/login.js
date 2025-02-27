@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-08-21 15:00:35
- * @LastEditTime: 2025-01-07 10:23:42
+ * @LastEditTime: 2025-02-13 15:42:25
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationModels/login.js
  */
 // import { AsyncStorage } from 'react-native';
@@ -365,6 +365,15 @@ export default Model.extend({
                     statisticsTypeList: signInButtonlist,
                     statisticsType: _statisticsType
                 }
+            });
+            // 指控测试 质控
+            pointNemuData.push({
+                id: '312c53c1-e9ff-4745-8c8b-eb642822b7dc',
+                name: '质控记录'
+            });
+            pointNemuData.push({
+                id: '50d2c460-7262-44a5-a0fa-2b2b568fe0bc',
+                name: '手动指控'
             });
             yield put({
                 type: 'pointDetails/updateState',

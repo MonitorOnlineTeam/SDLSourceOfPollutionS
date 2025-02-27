@@ -2,7 +2,7 @@
  * @Description: 质控日志
  * @LastEditors: hxf
  * @Date: 2020-12-09 09:46:18
- * @LastEditTime: 2024-11-15 14:27:13
+ * @LastEditTime: 2025-02-13 14:19:33
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/qualityControl/QualityControlDailyRecord.js
  */
 import React, { Component } from 'react';
@@ -26,7 +26,10 @@ const checkTypeList = [
 let a = ['3101', '3101_py', '3102', '3102_py', '3105'];
 //
 @connect(({ qualityControl }) => ({
-    NewQCARecordResult: qualityControl.NewQCARecordResult
+    NewQCARecordResult: qualityControl.NewQCARecordResult,
+    stepList: qualityControl.stepList,
+    currentPointName: qualityControl.currentPointName,
+    currentEntName: qualityControl.currentEntName,
 }))
 export default class QualityControlDailyRecord extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -78,6 +81,18 @@ export default class QualityControlDailyRecord extends Component {
 
     componentWillUnmount() {
         this.mInterval && clearInterval(this.mInterval);
+    }
+
+    getPollutantName = (PollutantCode) => {
+        if (PollutantCode == '02') {
+            return 'SO2'
+        } else if (PollutantCode == '03') {
+            return 'NOx'
+        } else if (PollutantCode == 's01') {
+            return 'O2'
+        } else {
+            return '--'
+        }
     }
 
     getButtonStatusText = () => {
@@ -161,6 +176,7 @@ export default class QualityControlDailyRecord extends Component {
 
     render() {
         console.log('NewQCARecordResult = ', this.props.NewQCARecordResult);
+        console.log('stepList = ', this.props.stepList);
         return (
             <StatusPage
                 status={this.props.NewQCARecordResult.status}
@@ -211,7 +227,7 @@ export default class QualityControlDailyRecord extends Component {
                         }
                         showsVerticalScrollIndicator={false}
                     >
-                        {SentencedToEmpty(this.props.NewQCARecordResult, ['data', 'Datas'], []).map((item, key) => {
+                        {SentencedToEmpty(this.props, ['stepList'], []).map((item, key) => {
                             {
                                 /* if (key == this.props.NewQCARecordResult.data.Datas.length - 1) { */
                             }
@@ -226,7 +242,7 @@ export default class QualityControlDailyRecord extends Component {
                                         </View>
                                         <View style={[{ flex: 1 }]}>
                                             <View style={[{ justifyContent: 'center' }]}>
-                                                <SDLText style={[{ fontSize: 14, color: '#333333' }]}>{`${item.User}【${item.PointName}】,发送${item.PollutantName}${item.Str}`}</SDLText>
+                                                <SDLText style={[{ fontSize: 14, color: '#333333' }]}>{`${item.User}【${SentencedToEmpty(this.props, ['currentEntName'], 'xxx')}-${SentencedToEmpty(this.props, ['currentPointName'], 'xxx')}】,发送${this.getPollutantName(item.PollutantCode)}${item.Str}`}</SDLText>
                                             </View>
                                             <SDLText style={[{ fontSize: 13, color: '#999999' }]}>{`${SentencedToEmpty(item, ['Time'], '')}`}</SDLText>
                                         </View>
@@ -248,7 +264,7 @@ export default class QualityControlDailyRecord extends Component {
                                                 </View>
                                             ) : item.Result ? (
                                                 <View style={[{ justifyContent: 'center' }]}>
-                                                    <SDLText style={[{ fontSize: 14, color: '#333333' }]}>{`收到${item.PollutantName}${item.Str}`}</SDLText>
+                                                    <SDLText style={[{ fontSize: 14, color: '#333333' }]}>{`【${SentencedToEmpty(this.props, ['currentEntName'], 'xxx')}-${SentencedToEmpty(this.props, ['currentPointName'], 'xxx')}】收到${this.getPollutantName(item.PollutantCode)}${item.Comment},${item.Str}`}</SDLText>
                                                     <View style={[{ height: 20, borderWidth: 1, backgroundColor: '#87d068', borderColor: '#87d068', width: 64, alignItems: 'center', justifyContent: 'center', borderRadius: 2 }]}>
                                                         <Text style={[{ fontSize: 12, color: '#ffffff', marginHorizontal: 4 }]}>{'应答成功'}</Text>
                                                     </View>
@@ -277,7 +293,7 @@ export default class QualityControlDailyRecord extends Component {
                                         </View>
                                         <View style={[{ flex: 1 }]}>
                                             <View style={[{ justifyContent: 'center' }]}>
-                                                <SDLText style={[{ fontSize: 14, color: '#333333' }]}>{`【${item.PointName}】${item.Str}`}</SDLText>
+                                                <SDLText style={[{ fontSize: 14, color: '#333333' }]}>{`【${SentencedToEmpty(this.props, ['currentEntName'], 'xxx')}-${SentencedToEmpty(this.props, ['currentPointName'], 'xxx')}】${item.Str}`}</SDLText>
                                                 {item.ResultStr == '合格' ? (
                                                     <View style={[{ height: 20, borderWidth: 1, borderColor: '#87d068', backgroundColor: '#87d068', width: 40, borderRadius: 2, alignItems: 'center', justifyContent: 'center' }]}>
                                                         <Text style={[{ fontSize: 12, color: '#ffffff', marginHorizontal: 4 }]}>{item.ResultStr}</Text>

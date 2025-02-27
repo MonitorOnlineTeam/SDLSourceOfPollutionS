@@ -2,7 +2,7 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2025-01-09 10:39:46
+ * @LastEditTime: 2025-02-26 17:21:51
  * @FilePath: /SDLSourceOfPollutionS_dev/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
@@ -242,6 +242,10 @@ import DoQualityControl from './pOperationContainers/qualityControl/DoQualityCon
 import ProvisioningOfAllPoints from './components/page/account/ProvisioningOfAllPoints';
 import ProvisioningRecords from './components/page/account/ProvisioningRecords';
 import SignInstatisticsWithPersonal from './pOperationContainers/tabView/workbenchSignin/SignInstatisticsWithPersonal';
+import QualityControlDailyRecord from './pOperationContainers/qualityControl/QualityControlDailyRecord';
+import QualityControlRecordDetail from './pOperationContainers/qualityControl/QualityControlRecordDetail';
+import IndicationErrorAndResponseTimeList from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeList';
+import IndicationErrorAndResponseTimeEditor from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeEditor';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
 function Test() {
     return (
@@ -555,6 +559,8 @@ Actions.pushViewWithName(GeneralLocalSearchList, 'GeneralLocalSearchList', { tit
 Actions.pushViewWithName(QualityControlRecordList, 'QualityControlRecordList', { title: '核查记录' }); //核查记录
 Actions.pushViewWithName(QualityControlPanel, 'QualityControlPanel', { title: '核查记录' }); //核查记录
 Actions.pushViewWithName(DoQualityControl, 'DoQualityControl', { title: '手动核查' }); //手动核查
+Actions.pushViewWithName(QualityControlDailyRecord, 'QualityControlDailyRecord', { title: '质控记录' }); //手动核查
+Actions.pushViewWithName(QualityControlRecordDetail, 'QualityControlRecordDetail', { title: '质控记录详情' }); //手动核查
 
 
 
@@ -566,7 +572,9 @@ Actions.pushView(WXBinding, { title: '微信推送绑定' }); //微信绑定
 Actions.pushViewWithName(ProvisioningOfAllPoints, 'ProvisioningOfAllPoints', { title: '全部点位' }); //全部点位 开通记录
 Actions.pushViewWithName(ProvisioningRecords, 'ProvisioningRecords', { title: '开通记录' }); //开通记录 
 
-
+// 任务表单 示值误差和响应时间 入口
+Actions.pushView(IndicationErrorAndResponseTimeList, { title: '示值误差和响应时间' }); //示值误差和响应时间 入口
+Actions.pushView(IndicationErrorAndResponseTimeEditor, { title: '示值误差和响应时间' }); //示值误差和响应时间 入口
 
 Actions.pushView(Test, { headerShown: false });
 

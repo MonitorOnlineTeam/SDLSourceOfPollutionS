@@ -28,9 +28,9 @@ export default class SelectButton extends Component {
     render() {
         let newArray = this.state.data;
         return (
-            <View style={[this.props.style]}>
+            <View style={[this.props.style, { flexWrap: 'wrap' }]}>
                 {this.props.selectStyle == 'More' ? (
-                    <TouchableHighlight style={[this.props.style]} onPress={() => this.onClick()} underlayColor="transparent">
+                    <TouchableHighlight style={[this.props.itemStyle]} onPress={() => this.onClick()} underlayColor="transparent">
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', height: 40 }}>
                             {this._renderLeft()}
                             {this._renderImage()}
@@ -38,7 +38,7 @@ export default class SelectButton extends Component {
                         </View>
                     </TouchableHighlight>
                 ) : (
-                    <View style={[this.props.style, { alignItems: 'center', justifyContent: 'space-between' }]}>{newArray.map((item, index) => this.renderRadioButton(newArray, item, this.onPress, index, this.state.selectIndex))}</View>
+                    <View style={[this.props.style, { alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' }]}>{newArray.map((item, index) => this.renderRadioButton(newArray, item, this.onPress, index, this.state.selectIndex))}</View>
                 )}
             </View>
         );
@@ -146,7 +146,7 @@ export default class SelectButton extends Component {
             }
         }
         this.setState({ selectIndex: index });
-        this.props.onPress ? this.props.onPress(index, item) : () => {};
+        this.props.onPress ? this.props.onPress(index, item) : () => { };
     };
 
     renderRadioButton(array, item, onPress, index, sexIndex) {

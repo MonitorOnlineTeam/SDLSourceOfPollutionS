@@ -706,11 +706,12 @@ export default Model.extend({
                 if (SentencedToEmpty(result, ['data', 'Datas'], []).length > 0) {
                     // 从登陆中获取配置，不再单独获取站点详情菜单
                     // PollutantTypeCode 5 :废水 12:废气 特殊处理
-                    yield put('getMenu', {
-                        params: {
-                            info: result
-                        }
-                    });
+                    // 试用登陆的配置信息，不再使用此接口
+                    // yield put('getMenu', {
+                    //     params: {
+                    //         info: result
+                    //     }
+                    // });
                     yield update({ ponitInfo: result });
                 } else {
                     yield update({ ponitInfo: { status: 0 } });

@@ -924,11 +924,14 @@ export default api = {
         qualityControl: {
             GetQCAStatus: '/rest/PollutantSourceApi/QCStatus/GetQCAStatus', // 获取状态 （质控仪状态和cems状态）
             GetQCAInfo: '/rest/PollutantSourceApi/QCAnalyzerManagement/GetQCAInfo', // 获取质控仪信息
-            GetNewQCARecord: 'rest/PollutantSourceApi/QualityControlApi/GetNewQCARecord', // 获取质控日志
+            // GetNewQCARecord: 'rest/PollutantSourceApi/QualityControlApi/GetNewQCARecord', // 获取质控日志
+            GetNewQCARecord: 'rest/PollutantSourceApi/QCRecord/GetQCDetailRecord', // 获取质控日志
             // GetQCAResultRecord: 'rest/PollutantSourceApi/QualityControlApi/GetQCAResultRecord', // 获取质控结果记录
-            GetQCAResultRecord: '/rest/PollutantSourceApi/QCRecord/GetQCRecord', // 获取质控结果记录
-            SendQCACheckCMD: 'rest/PollutantSourceApi/QualityControlApi/SendQCACheckCMD', // 执行质控
-            GetQCAResultInfo: 'rest/PollutantSourceApi/QualityControlApi/GetQCAResultInfo' // 获取质控详情
+            GetQCAResultRecord: '/rest/PollutantSourceApi/QCProcess/GetQCARecordList', // 获取质控结果记录
+            // SendQCACheckCMD: 'rest/PollutantSourceApi/QualityControlApi/SendQCACheckCMD', // 执行质控
+            SendQCACheckCMD: 'rest/PollutantSourceApi/QCRemote/SendQCACheckCMD', // 执行质控
+            // GetQCAResultInfo: 'rest/PollutantSourceApi/QualityControlApi/GetQCAResultInfo' // 获取质控详情
+            GetQCAResultInfo: 'rest/PollutantSourceApi/QCProcess/GetQCProcessData' // 获取质控详情
         }
     },
     gridOperation: {

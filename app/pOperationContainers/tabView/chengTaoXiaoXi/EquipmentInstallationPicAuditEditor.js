@@ -62,6 +62,7 @@ export default class EquipmentInstallationPicAuditEditor extends Component {
                 , ['params', 'params', 'data', 'PointName'],
                 '安装照片不合格'),
         });
+        this.lastSignInTime = new Date().getTime();
     }
 
     isEdit = () => {
@@ -543,6 +544,12 @@ export default class EquipmentInstallationPicAuditEditor extends Component {
                         >
                             <TouchableOpacity
                                 onPress={() => {
+                                    let currentSignInTime = new Date().getTime();
+                                    let sub = currentSignInTime - this.lastSignInTime;
+                                    this.lastSignInTime = currentSignInTime;
+                                    if (sub < 2000) {
+                                        return;
+                                    }
                                     ShowLoadingToast('正在提交');
                                     const data = this.state.data;
                                     console.log('data = ', data);

@@ -351,6 +351,7 @@ export default class PointDetail extends PureComponent {
                             </View>
                             <View style={{ marginLeft: 13, width: SCREEN_WIDTH - 26, flex: 1, flexDirection: 'row', marginTop: 0, flexWrap: 'wrap' }}>
                                 {this.props.systemMenu.map((item, key) => {
+                                    console.log('item = ', item);
                                     if (SentencedToEmpty(this.props.ponitInfo.data.Datas[0], ['PollutantTypeCode'], '') == '5' || SentencedToEmpty(this.props.ponitInfo.data.Datas[0], ['PollutantTypeCode'], '') == '12') {
                                         switch (item.id) {
                                             case 'f4f359b4-6c27-4757-84f4-00df140e011d': //超标数据 运维
@@ -370,6 +371,17 @@ export default class PointDetail extends PureComponent {
                                             case 'fccbe5e5-4b8d-41fa-a8be-f4fd53d8d19d': //超标核实 监控
                                                 return null;
                                         }
+                                    }
+                                    // QCAFlag =true代表支持  false代表不支持质控
+                                    if (!SentencedToEmpty(this.props, ['ponitInfo', 'data', 'Datas', 0, 'QCAFlag'], false)
+                                        && (item.id == '312c53c1-e9ff-4745-8c8b-eb642822b7dc'
+                                            || item.id == '50d2c460-7262-44a5-a0fa-2b2b568fe0bc')
+                                    ) {
+                                        /**
+                                         * 312c53c1-e9ff-4745-8c8b-eb642822b7dc 质控记录
+                                         * 50d2c460-7262-44a5-a0fa-2b2b568fe0bc 手动指控
+                                         */
+                                        return null;
                                     }
                                     return (
                                         <TouchableOpacity
@@ -531,8 +543,13 @@ export default class PointDetail extends PureComponent {
         console.log('CURRENT_PROJECT boolean = ', CURRENT_PROJECT == POLLUTION_ORERATION_PROJECT);
         if (CURRENT_PROJECT == POLLUTION_ORERATION_PROJECT) {
             switch (item.id) {
-                case "312c53c1-e9ff-4745-8c8b-eb642822b7dc":
-                    this.props.dispatch(createAction('qualityControl/updateState')({ currentDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN'] }));
+                case "50d2c460-7262-44a5-a0fa-2b2b568fe0bc":
+                    // 质控记录
+                    this.props.dispatch(createAction('qualityControl/updateState')({
+                        currentDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN']
+                        , currentEntName: this.props.route.params.params.TargetName,//当前企业名称
+                        currentPointName: SentencedToEmpty(this.props.ponitInfo.data.Datas[0], ['PointName'], '--'),// 当前监测点名称
+                    }));
                     this.props.dispatch(
                         NavigationActions.navigate({
                             routeName: 'QualityControlPanel',
@@ -542,9 +559,13 @@ export default class PointDetail extends PureComponent {
                         })
                     );
                     break;
-                case "50d2c460-7262-44a5-a0fa-2b2b568fe0bc":
+                case "312c53c1-e9ff-4745-8c8b-eb642822b7dc":
                     // 手动指控
-                    this.props.dispatch(createAction('qualityControl/updateState')({ currentDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN'] }));
+                    this.props.dispatch(createAction('qualityControl/updateState')({
+                        currentDGIMN: this.props.ponitInfo.data.Datas[0]['DGIMN']
+                        , currentEntName: this.props.route.params.params.TargetName,//当前企业名称
+                        currentPointName: SentencedToEmpty(this.props.ponitInfo.data.Datas[0], ['PointName'], '--'),// 当前监测点名称
+                    }));
                     this.props.dispatch(
                         NavigationActions.navigate({
                             routeName: 'QualityControlRecordList',

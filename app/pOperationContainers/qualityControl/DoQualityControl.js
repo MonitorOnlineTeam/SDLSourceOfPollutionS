@@ -2,7 +2,7 @@
  * @Description: 手动核查
  * @LastEditors: hxf
  * @Date: 2020-12-11 11:22:19
- * @LastEditTime: 2024-11-25 17:21:48
+ * @LastEditTime: 2025-02-12 10:02:38
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/qualityControl/DoQualityControl.js
  */
 import React, { Component } from 'react'
@@ -69,7 +69,8 @@ export default class DoQualityControl extends Component {
             console.log('pollutants = ', pollutants);
             // AlarmState 1 报警  0正常
             return <SelectButton
-                style={{ flexDirection: 'row' }} //整个组件的样式----这样可以垂直和水平
+                style={{ flexDirection: 'row', flexWrap: 'wrap', width: SCREEN_WIDTH - 140, }} //整个组件的样式----这样可以垂直和水平
+                itemStyle={{}}
                 conTainStyle={{ height: 44, width: 65 }} //图片和文字的容器样式
                 imageStyle={{ width: 18, height: 18 }} //图片样式
                 textStyle={{ color: '#666' }} //文字样式
@@ -207,7 +208,7 @@ export default class DoQualityControl extends Component {
                         <SDLText style={[{ fontSize: 15, color: '#333333' }]}>{this.getTitle()}</SDLText>
                     </View>
                     <View style={[{ width: SCREEN_WIDTH, flex: 1, paddingTop: 15, paddingHorizontal: 20 }]}>
-                        <View style={[{ flexDirection: 'row', width: SCREEN_WIDTH - 40, height: 36, alignItems: 'center', }]}>
+                        <View style={[{ flexDirection: 'row', width: SCREEN_WIDTH - 40, minHeight: 36, alignItems: 'center', }]}>
                             <SDLText style={[{ width: 110, fontSize: 14, color: '#999999' }]}>
                                 {'污染物'}
                             </SDLText>

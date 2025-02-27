@@ -7,7 +7,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import globalcolor from '../../../../config/globalcolor';
 import { SCREEN_WIDTH } from '../../../../config/globalsize';
 import MyTextInput from '../../../../components/base/TextInput';
-import { ModalParent, SimpleLoadingComponent } from '../../../../components';
+import { ModalParent, OperationAlertDialog, SimpleLoadingComponent } from '../../../../components';
 import Mask from '../../../../components/Mask';
 import ConfirmDialog from '../components/ConfirmDialog';
 import { ShowToast, createAction, NavigationActions, SentencedToEmpty } from '../../../../utils';
@@ -62,6 +62,8 @@ class CalibrationRecordEdit extends Component {
                 LdCalibrationIsOk: '', //是否正常
                 LdCalibrationSufValue: '', //校准后
                 BqNdz: '', //标气浓度值
+                IsChange: false, //是否更换标气
+                LcNewCalibrationPreValue: '', // 更换后的标气浓度值
                 LcLastCalibrationValue: props.route.params.params.item.LcLastCalibrationValue, //量程 上一次校准值
                 LcCalibrationPreValue: '', //校准前
                 LcPy: '', //量程漂移%F.S.
@@ -86,6 +88,13 @@ class CalibrationRecordEdit extends Component {
                 LdCalibrationIsOk: props.route.params.params.item.LdCalibrationIsOk, //是否正常
                 LdCalibrationSufValue: props.route.params.params.item.LdCalibrationSufValue, //校准后
                 BqNdz: props.route.params.params.item.BqNdz, //标气浓度值
+                IsChange: SentencedToEmpty(props
+                    , ['route', 'params', 'params', 'item', 'IsChange'], false
+                ), //是否更换标气
+                LcNewCalibrationPreValue: SentencedToEmpty(props,
+                    ['route', 'params', 'params', 'item', 'LcNewCalibrationPreValue']
+                    , ''
+                ), // 更换后的标气浓度值
                 LcLastCalibrationValue: props.route.params.params.item.LcLastCalibrationValue, //量程 上一次校准值
                 LcCalibrationPreValue: props.route.params.params.item.LcCalibrationPreValue, //校准前
                 LcPy: props.route.params.params.item.LcPy, //量程漂移%F.S.
@@ -398,10 +407,14 @@ class CalibrationRecordEdit extends Component {
     };
 
     render() {
+        let Item = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
+        console.log('render Item = ', Item);
         let ItemID = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ItemId'], '');
         /**
          * ItemID == 543
          * 流速不需要填写量程校准
+         * 
+         * '160': '颗粒物',
          * 
          * IsPiaoYi
          * IsLiangCheng
@@ -635,7 +648,7 @@ class CalibrationRecordEdit extends Component {
                         </View>
                         {
                             // ItemID: "流速"   ItemId: "543"
-                            ItemID != 543 ? <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 28 }]}>
+                            ItemID != 543 ? <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 24 }]}>
                                 <Text
                                     style={[
                                         {
@@ -661,22 +674,99 @@ class CalibrationRecordEdit extends Component {
                                     }
                                 ]}
                             >
-                                <View style={[styles.layoutWithBottomBorder]}>
-                                    <Text style={[styles.labelStyle]}>标气浓度值：</Text>
-                                    <MyTextInput
-                                        keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                                        value={this.state.BqNdz}
-                                        ref={ref => (this._inputMachineHaltReason = ref)}
-                                        style={[styles.textStyle, { flex: 1 }]}
-                                        placeholder={'请填写标气浓度值'}
-                                        onChangeText={text => {
-                                            // 动态更新组件内State记录
-                                            this.setState({
-                                                BqNdz: text
-                                            });
-                                        }}
-                                    />
-                                </View>
+                                {
+                                    ItemID != 543 && ItemID != 160
+                                        ? <View
+                                            style={[{
+                                                flexDirection: 'row', alignItems: 'center'
+                                                , height: 40, width: SCREEN_WIDTH - 24
+                                                , paddingHorizontal: 24, marginTop: 8
+                                            }]}
+                                        >
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    this.setState({
+                                                        IsChange: !this.state.IsChange
+                                                    })
+                                                }}
+                                            >
+                                                <View
+                                                    style={[{
+                                                        width: 21, height: 40
+                                                        , justifyContent: 'center'
+                                                    }]}
+                                                >
+                                                    <Image
+                                                        style={{ marginRight: 5, height: 16, width: 16 }}
+                                                        source={this.state.IsChange ? require('../../../../images/ic_reported_check.png') : require('../../../../images/ic_reported_uncheck.png')}
+                                                    />
+                                                </View>
+                                            </TouchableOpacity>
+                                            <Text style={[styles.labelStyle, { width: SCREEN_WIDTH - 93, lineHeight: 18 }]}>如果本次校准更换了标气且标气浓度发生了改变，请打勾<TouchableOpacity
+                                                onPress={() => {
+                                                    this.refs.doAlert.show();
+                                                }}
+                                                style={[{
+                                                    height: 18, paddingTop: 4
+                                                }]}>
+                                                <Text style={[styles.labelStyle, { lineHeight: 18, height: 18, color: globalcolor.antBlue }]}>{'   操作说明'}</Text></TouchableOpacity></Text>
+                                        </View> : null
+                                }
+                                {
+                                    this.state.IsChange ? <View style={[styles.layoutWithBottomBorder, { marginTop: 0 }]}>
+                                        <Text style={[styles.labelStyle]}>原标气浓度值：</Text>
+                                        <MyTextInput
+                                            keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
+                                            value={this.state.BqNdz}
+                                            ref={ref => (this._inputMachineHaltReason = ref)}
+                                            style={[styles.textStyle, { flex: 1 }]}
+                                            placeholder={'请填写标气浓度值'}
+                                            onChangeText={text => {
+                                                // 动态更新组件内State记录
+                                                this.setState({
+                                                    BqNdz: text
+                                                });
+                                            }}
+                                        />
+                                    </View> : null
+                                }
+                                {
+                                    this.state.IsChange ? <View style={[styles.layoutWithBottomBorder]}>
+                                        <Text style={[styles.labelStyle]}>新标气浓度值：</Text>
+                                        <MyTextInput
+                                            keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
+                                            value={this.state.LcNewCalibrationPreValue}
+                                            ref={ref => (this._inputNewMachineHaltReason = ref)}
+                                            style={[styles.textStyle, { flex: 1 }]}
+                                            placeholder={'请填写标气浓度值'}
+                                            onChangeText={text => {
+                                                // 动态更新组件内State记录
+                                                this.setState({
+                                                    LcNewCalibrationPreValue: text
+                                                });
+                                            }}
+                                        />
+                                    </View> : null
+                                }
+                                {
+                                    !this.state.IsChange ? <View style={[styles.layoutWithBottomBorder
+                                        , ItemID != 543 && ItemID != 160 ? { marginTop: 0 } : null]}>
+                                        <Text style={[styles.labelStyle]}>标气浓度值：</Text>
+                                        <MyTextInput
+                                            keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
+                                            value={this.state.BqNdz}
+                                            ref={ref => (this._inputMachineHaltReason = ref)}
+                                            style={[styles.textStyle, { flex: 1 }]}
+                                            placeholder={'请填写标气浓度值'}
+                                            onChangeText={text => {
+                                                // 动态更新组件内State记录
+                                                this.setState({
+                                                    BqNdz: text
+                                                });
+                                            }}
+                                        />
+                                    </View> : null
+                                }
                                 <View style={[styles.layoutWithBottomBorder]}>
                                     <Text style={[styles.labelStyle]}>上次校准后测试值：</Text>
                                     <MyTextInput
@@ -780,26 +870,28 @@ class CalibrationRecordEdit extends Component {
                                 </View>
                             </View> : null
                         }
-                    </View>
-                </ScrollView>
+                    </View >
+                </ScrollView >
                 {/* </KeyboardAwareScrollView> */}
-                {this.props.route.params.params.index != -1 &&
-                    this.props.route.params.params.item.FormMainID &&
-                    ((this.props.route.params.params.item.LdCalibrationIsOk && this.props.route.params.params.item.LdCalibrationIsOk != '') ||
-                        (this.props.route.params.params.item.LcCalibrationIsOk && this.props.route.params.params.item.LcCalibrationIsOk != '')) ? (
-                    <TouchableOpacity
-                        style={[styles.button, { backgroundColor: globalcolor.orange }, { marginVertical: 10 }]}
-                        onPress={() => {
-                            this.setState({ dialogType: deleteItem });
-                            this._modalParent.showModal();
-                        }}
-                    >
-                        <View style={styles.button}>
-                            <Image style={{ tintColor: globalcolor.white, height: 16, width: 18 }} resizeMode={'contain'} source={require('../../../../images/icon_submit.png')} />
-                            <Text style={[{ color: globalcolor.whiteFont, fontSize: 20, marginLeft: 8 }]}>删除记录</Text>
-                        </View>
-                    </TouchableOpacity>
-                ) : null}
+                {
+                    this.props.route.params.params.index != -1 &&
+                        this.props.route.params.params.item.FormMainID &&
+                        ((this.props.route.params.params.item.LdCalibrationIsOk && this.props.route.params.params.item.LdCalibrationIsOk != '') ||
+                            (this.props.route.params.params.item.LcCalibrationIsOk && this.props.route.params.params.item.LcCalibrationIsOk != '')) ? (
+                        <TouchableOpacity
+                            style={[styles.button, { backgroundColor: globalcolor.orange }, { marginVertical: 10 }]}
+                            onPress={() => {
+                                this.setState({ dialogType: deleteItem });
+                                this._modalParent.showModal();
+                            }}
+                        >
+                            <View style={styles.button}>
+                                <Image style={{ tintColor: globalcolor.white, height: 16, width: 18 }} resizeMode={'contain'} source={require('../../../../images/icon_submit.png')} />
+                                <Text style={[{ color: globalcolor.whiteFont, fontSize: 20, marginLeft: 8 }]}>删除记录</Text>
+                            </View>
+                        </TouchableOpacity>
+                    ) : null
+                }
                 <TouchableOpacity
                     style={[styles.button, { backgroundColor: globalcolor.blue }, { marginVertical: 20 }]}
                     onPress={() => {
@@ -823,7 +915,7 @@ class CalibrationRecordEdit extends Component {
                                         "FxyYl":"52",           //分析仪原理
                                         "FxyLc":"45",          //分析仪量程
                                         "JlUnit":"26"//计量单位
-
+                
                                         upperLimitValue={this.getUpperLimitValue(SentencedToEmpty(this.state, ['FxyLc'], ''))}
                                         lowerLimitValue={this.getLowerLimitValue(SentencedToEmpty(this.state, ['FxyLc'], ''))}
                                     }
@@ -911,6 +1003,28 @@ class CalibrationRecordEdit extends Component {
                 {this._renderModal()}
                 {this.props.editstatus.status == -2 ? <SimpleLoadingComponent message={'提交中'} /> : null}
                 {this.props.editstatus.status == -1 ? <SimpleLoadingComponent message={'删除中'} /> : null}
+                <OperationAlertDialog options={{
+                    headTitle: '说明',
+                    innersHeight: 450,
+                    messText: `如果本次校准更换了标气且标气浓度发生改变，请按照下面方法填写校准电子台账：
+1、用更换前标气浓度进行校前测试，用更换后标气浓度进行校准后测试。
+2、核准电子台账填写规则如下：
+旧标气浓度值：填写更换前标气浓度值；
+新标气浓度值：填写更换后标气浓度值；
+校前测试值：用更换前标气浓度进行校前测试值；
+量程漂移：（校前测试值-上次校准后测试值）/量程*100%；
+校准后测试值：用更换后标气浓度进行校准后测试值；`,
+                    headStyle: { color: '#333', fontSize: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5, fontWeight: 'bold' },
+                    buttons: [
+                        {
+                            txt: '知道了',
+                            btnStyle: { backgroundColor: '#fff' },
+                            txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
+                            onpress: () => { }
+                        }
+                    ]
+                }} ref="doAlert" />
+
             </View >
         );
     }

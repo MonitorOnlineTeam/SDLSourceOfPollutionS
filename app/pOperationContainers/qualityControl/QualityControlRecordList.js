@@ -2,7 +2,7 @@
  * @Description: 质控记录列表
  * @LastEditors: hxf
  * @Date: 2020-12-03 10:03:16
- * @LastEditTime: 2024-11-15 09:43:36
+ * @LastEditTime: 2025-02-13 14:02:38
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/qualityControl/QualityControlRecordList.js
  */
 import React, { Component } from 'react'
@@ -18,9 +18,9 @@ import AnyValueWheelPicker from '../../components/SDLPicker/component/AnyValueWh
 const barHeight = 44;
 
 const pollutantList = [
-    { PollutantName: "SO2", PollutantCode: "a21026" },
-    { PollutantName: "NOx", PollutantCode: "a21002" },
-    { PollutantName: "O2", PollutantCode: "a19001" },
+    { PollutantName: "SO2", PollutantCode: "02" },
+    { PollutantName: "NOx", PollutantCode: "03" },
+    { PollutantName: "O2", PollutantCode: "s01" },
 ];
 
 const checkTypeList = [
@@ -101,6 +101,8 @@ export default class QualityControlRecordList extends Component {
     };
 
     _onItemClick = (item) => {
+        this.props.dispatch(createAction('qualityControl/updateState')({ currentResult: item.Result }));
+
         this.props.dispatch(NavigationActions.navigate({
             routeName: 'QualityControlRecordDetail',
             params: {
@@ -392,14 +394,17 @@ export default class QualityControlRecordList extends Component {
                                         break;
                                     case 0:
                                     case '0':
+                                    case '合格':
                                         statusStr = '合格';
                                         statusColor = '#55c995'
                                         break;
                                     case 1:
+                                    case '不合格':
                                         statusStr = '不合格';
                                         statusColor = '#ff5a5a'
                                         break;
                                     case 2:
+                                    case '无效':
                                         statusStr = '无效';
                                         statusColor = '#696969'
                                         break;
@@ -419,20 +424,36 @@ export default class QualityControlRecordList extends Component {
                                         break;
                                 }
 
+                                /**
+                                 *  case "3104":qcaName = "线性核查";
+                                    case "3102":qcaName = "量程核查";
+                                    case "3103":qcaName = "响应时间核查";
+                                    case "3105":qcaName = "盲样核查";
+                                    case "3101":qcaName = "零点核查";
+                                    case "3106":qcaName = "示值误差核查";
+                                 */
                                 const checkTypeList = [
+                                    // { label: '全部核查', value: 'all' },
+                                    // { label: '零点核查', value: '3101' },
+                                    // { label: '零点漂移', value: '3101_py' },
+                                    // { label: '量程核查', value: '3102' },
+                                    // { label: '量程漂移', value: '3102_py' },
+                                    // { label: '盲样核查', value: '3105' },
+                                    // { label: '响应时间', value: '3103' },
+                                    // { label: '线性核查', value: '3104' },
                                     { label: '全部核查', value: 'all' },
                                     { label: '零点核查', value: '3101' },
-                                    { label: '零点漂移', value: '3101_py' },
                                     { label: '量程核查', value: '3102' },
-                                    { label: '量程漂移', value: '3102_py' },
                                     { label: '盲样核查', value: '3105' },
                                     { label: '响应时间', value: '3103' },
                                     { label: '线性核查', value: '3104' },
                                 ];
                                 let labelStr = '----';
                                 let imageId = require('../../images/ic_default_circle.png');
-                                switch (item.CN) {
+                                // switch (item.CN) {
+                                switch (item.QCAType) {
                                     case '3101':
+                                    case 3101:
                                         labelStr = '零点核查';
                                         imageId = require('../../images/ic_lingdian_hecha.png');
                                         break;
@@ -441,6 +462,7 @@ export default class QualityControlRecordList extends Component {
                                         imageId = require('../../images/ic_lingdianpiaoyi_hecha.png');
                                         break;
                                     case '3102':
+                                    case 3102:
                                         labelStr = '量程核查';
                                         imageId = require('../../images/ic_liangcheng_hecha.png');
                                         break;
@@ -449,14 +471,17 @@ export default class QualityControlRecordList extends Component {
                                         imageId = require('../../images/ic_liangchengpiaoyi_hecha.png');
                                         break;
                                     case '3105':
+                                    case 3105:
                                         labelStr = '盲样核查';
                                         imageId = require('../../images/ic_mangyang_hecha.png');
                                         break;
                                     case '3103':
+                                    case 3103:
                                         labelStr = '响应时间';
                                         imageId = require('../../images/ic_xiangyingshijian_hecha.png');
                                         break;
                                     case '3104':
+                                    case 3104:
                                         labelStr = '线性核查';
                                         imageId = require('../../images/ic_xianxing_hecha.png');
                                         break;
@@ -464,6 +489,7 @@ export default class QualityControlRecordList extends Component {
                                         imageId = require('../../images/ic_del_helper.png');
                                         break;
                                 }
+                                labelStr = item.QCATypeName;
                                 if (index == 0 || (index > 0 && moment(item.Time).month() != moment(this.props.QCAResultRecordData[index - 1].Time).month())) {
                                     return (
                                         <Touchable

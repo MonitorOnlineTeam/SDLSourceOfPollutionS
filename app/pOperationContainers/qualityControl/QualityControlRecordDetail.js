@@ -2,7 +2,7 @@
  * @Description: 质控记录详情
  * @LastEditors: hxf
  * @Date: 2020-12-09 09:46:18
- * @LastEditTime: 2024-11-15 14:35:57
+ * @LastEditTime: 2025-02-13 14:06:27
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/qualityControl/QualityControlRecordDetail.js
  */
 import React, { Component } from 'react'
@@ -26,9 +26,16 @@ const checkTypeList = [
 ];
 let a = ['3101', '3101_py', '3102', '3102_py', '3105']
 // 
-
+const pollutantList = [
+    { PollutantName: "SO2", PollutantCode: "02" },
+    { PollutantName: "NOx", PollutantCode: "03" },
+    { PollutantName: "O2", PollutantCode: "s01" },
+];
 @connect(({ qualityControl }) => ({
     QCAResultInfoResult: qualityControl.QCAResultInfoResult,
+    currentEntName: qualityControl.currentEntName,
+    currentPointName: qualityControl.currentPointName,
+    currentResult: qualityControl.currentResult,
 }))
 export default class QualityControlRecordDetail extends Component {
 
@@ -166,25 +173,34 @@ export default class QualityControlRecordDetail extends Component {
         let statusStr = '---';
         let statusColor = '#696969'
         const item = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
-        switch (item.Result) {
+        // switch (item.Result) {
+        switch (this.props.currentResult) {
             case -1:
                 statusStr = '---';
                 statusColor = '#696969'
                 break;
             case 0:
             case '0':
+            case '合格':
                 statusStr = '合格';
                 statusColor = '#55c995'
                 break;
             case 1:
+            case '不合格':
                 statusStr = '不合格';
                 statusColor = '#ff5a5a'
                 break;
             case 2:
+            case '无效':
                 statusStr = '无效';
                 statusColor = '#696969'
                 break;
+            default:
+                statusStr = '---';
+                statusColor = '#696969'
+                break;
         }
+        statusStr = this.props.currentResult
         return <View style={[{ height: 22, minWidth: 48, borderRadius: 11, backgroundColor: statusColor, justifyContent: 'center', alignItems: 'center' }]}>
             <SDLText style={[{ color: 'white', fontSize: 13 }]}>{statusStr}</SDLText>
         </View>
@@ -245,12 +261,14 @@ export default class QualityControlRecordDetail extends Component {
                         <View style={[{ height: 36, width: SCREEN_WIDTH - 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}>
                             <SDLText style={[{ fontSize: 14, color: '#999999', minWidth: 70, marginRight: 16 }]}>{'企业'}</SDLText>
                             {/* param EntName */}
-                            <SDLText style={[{ fontSize: 14, color: '#333333' }]}>{`${SentencedToEmpty(info, ['EntName'], '未知企业')}`}</SDLText>
+                            {/* <SDLText style={[{ fontSize: 14, color: '#333333' }]}>{`${SentencedToEmpty(info, ['EntName'], '未知企业')}`}</SDLText>*/}
+                            <SDLText style={[{ fontSize: 14, color: '#333333' }]}>{`${SentencedToEmpty(this.props, ['currentEntName'], '未知企业')}`}</SDLText>
                         </View>
                         <View style={[{ height: 36, width: SCREEN_WIDTH - 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}>
                             <SDLText style={[{ fontSize: 14, color: '#999999', minWidth: 70, marginRight: 16 }]}>{'排口'}</SDLText>
                             {/* param title */}
-                            <SDLText style={[{ fontSize: 14, color: '#333333' }]}>{`${SentencedToEmpty(info, ['PointName'], '未知排口')}`}</SDLText>
+                            {/* <SDLText style={[{ fontSize: 14, color: '#333333' }]}>{`${SentencedToEmpty(info, ['PointName'], '未知排口')}`}</SDLText> */}
+                            <SDLText style={[{ fontSize: 14, color: '#333333' }]}>{`${SentencedToEmpty(this.props, ['currentPointName'], '未知排口')}`}</SDLText>
                         </View>
                         <View style={[{ height: 36, width: SCREEN_WIDTH - 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}>
                             <SDLText style={[{ fontSize: 14, color: '#999999', minWidth: 70, marginRight: 16 }]}>{'执行时间'}</SDLText>

@@ -71,6 +71,24 @@ export default Model.extend({
                     let rootUrl = getRootUrl();
                     console.log('rootUrl = ', rootUrl);
                     console.log('taskDetail.TaskFormList ', taskDetail.TaskFormList);
+                    // 测试数据
+                    taskDetail.TaskFormList.push({
+                        Abbreviation: "CEMS校准",
+                        CnName: "示值误差和响应时间",
+                        // FormMainID: "8f4c763c-104e-4255-8a5a-9b9cb41af8ee",
+                        FormMainID: "",
+                        ID: 1001,
+                        IsRequired: 0,
+                        IsSign: false,
+                        RecordType: "1",
+                        Status: 1,
+                        TaskID: "37e7a6d7-b9c9-4764-a5b9-11d81dd76be9",
+                        TaskStatus: 2,
+                        Type: "1",
+                        TypeID: 8,
+                        TypeName: "shiZhiWuCha",
+                        formUrl: "http://61.50.135.114:61002/appoperation/appjzrecord/37e7a6d7-b9c9-4764-a5b9-11d81dd76be9/8"
+                    })
                     if (rootUrl.ReactUrl) {
                         createFormUrl(taskDetail.TaskFormList, rootUrl.ReactUrl, taskDetail.TaskID, taskDetail.TaskStatus);
                     }

@@ -2,8 +2,8 @@
  * @Description: 质控功能的model
  * @LastEditors: hxf
  * @Date: 2020-12-03 10:18:05
- * @LastEditTime: 2024-07-08 10:07:16
- * @FilePath: /SDLMainProject/app/pollutionModels/qualityControl.js
+ * @LastEditTime: 2025-02-13 12:08:03
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationModels/qualityControl.js
  */
 import moment from 'moment';
 import { AsyncStorage } from 'react-native';
@@ -18,6 +18,10 @@ import { UrlInfo, CURRENT_PROJECT, VersionInfo, POLLUTION_ORERATION_PROJECT } fr
 export default Model.extend({
     namespace: 'qualityControl',
     state: {
+        currentEntName: '',//当前企业名称
+        currentPointName: '',// 当前监测点名称
+        currentResult: '',// 当前质控结果
+        stepList: [], // 当前质控步骤
         currentDGIMN: '',// 当前监测点id 质控记录列表
         currentQCAType: null,// 当前质控类型
         QCAResultRecordIndex: 1,// 质控记录页码
@@ -90,7 +94,8 @@ export default Model.extend({
                 EndTime: SentencedToEmpty(params, ['EndTime'], ''),
                 PollutantCode: SentencedToEmpty(params, ['PollutantCode'], ''),
                 DGIMN: currentDGIMN,
-                QCAType: SentencedToEmpty(params, ['CN'], '')
+                // QCAType: SentencedToEmpty(params, ['CN'], '')QCAType
+                QCAType: SentencedToEmpty(params, ['QCAType'], '')
             };
             const QCAResultInfoResult = yield call(authService.axiosAuthPost, api.pOperationApi.qualityControl.GetQCAResultInfo, requireParams);
             if (QCAResultInfoResult.status == 200) {
@@ -260,7 +265,7 @@ export default Model.extend({
             }
         },
         /**
-         * 单点最新韵味日志
+         * 单点最新运维日志
          * @param {*} param0 
          * @param {*} param1 
          */
@@ -292,8 +297,11 @@ export default Model.extend({
             }
 
             const NewQCARecordResult = yield call(authService.axiosAuthPost, api.pOperationApi.qualityControl.GetNewQCARecord, aParams);
+            let stepList = [].concat(SentencedToEmpty(NewQCARecordResult, ['data', 'Datas'], []));
+            stepList.splice(0, 1);
+            console.log('stepList = ', stepList);
             if (NewQCARecordResult.status == 200) {
-                yield update({ NewQCARecordResult });
+                yield update({ NewQCARecordResult, stepList });
             } else {
                 ShowToast('日志获取失败！');
                 yield update({ NewQCARecordResult });
