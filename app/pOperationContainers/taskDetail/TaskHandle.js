@@ -438,8 +438,7 @@ export default class TaskHandle extends Component {
 
                 } else if (item.Type == '1') {
                     switch (item.ID) {
-                        case 1001:
-                            console.log('示值误差和响应时间');
+                        case 74: // 示值误差和响应时间
                             this.props.dispatch(
                                 NavigationActions.navigate({
                                     routeName: 'IndicationErrorAndResponseTimeList',

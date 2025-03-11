@@ -47,6 +47,7 @@ import standardSolutionCheckModel from './formModels/standardSolutionCheckModel'
 // import waterParametersChangeModel from './formModels/waterParametersChangeModel'; // 设备参数变动记录表 废水 参数核对记录
 // import gasParametersChangeModel from './formModels/gasParametersChangeModel'; // 设备参数变动记录表 烟气 设备参数变动记录表
 import waterSampleComparisonTestModel from './formModels/waterSampleComparisonTestModel'; // 实际水样比对试验结果记录表
+import indicationErrorAndResponseTimeModel from './formModels/indicationErrorAndResponseTimeModel'; // 示值误差和响应时间
 import equipmentFailureFeedbackModel from './equipmentFailureFeedbackModel';
 // import inspectionRecordsModel from './inspectionRecordsModel';
 // import helpCenter from '../models/helpCenter';
@@ -124,6 +125,7 @@ export function registerModels(app) {
     // app.model(waterParametersChangeModel); // 设备参数变动记录表 废水 参数核对记录
     // app.model(gasParametersChangeModel); // 设备参数变动记录表 烟气 设备参数变动记录表
     app.model(waterSampleComparisonTestModel); // 实际水样比对试验结果记录表
+    app.model(indicationErrorAndResponseTimeModel); // 示值误差和响应时间
     app.model(equipmentFailureFeedbackModel); // 设备故障反馈
     // app.model(inspectionRecordsModel); // 督查记录
     app.model(supervision); // 督查整改

@@ -1,5 +1,5 @@
 /*
- * @Description: 
+ * @Description:
  * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
  * @LastEditTime: 2025-02-26 17:21:51
@@ -369,7 +369,7 @@ Actions.pushViewWithName(OverData, 'OverData', { title: '超标数据' });
 Actions.pushViewWithName(ExceptionData, 'ExceptionData', { title: '异常数据' });
 Actions.pushViewWithName(MissDataList, 'MissDataList', { title: '缺失数据' });
 // Actions.pushViewWithName(OverAlarmVerify, 'OverAlarmVerify', { title: '超标核实记录' });
-Actions.pushViewWithName(VerifyRecords, 'VerifyRecords', { title: '超标核实记录' });
+Actions.    pushViewWithName(VerifyRecords, 'VerifyRecords', { title: '超标核实记录' });
 Actions.pushViewWithName(AlarmVerifyDetail, 'AlarmVerifyDetail', { title: '核实信息' });
 
 Actions.pushViewWithName(SignInEnter, 'SignInEnter', { title: '签到' });
@@ -568,13 +568,14 @@ Actions.pushViewWithName(QualityControlRecordDetail, 'QualityControlRecordDetail
 Actions.pushView(ForgotPasswordPage1, { headerShown: false }); //修改密码1
 Actions.pushView(ForgotPasswordPage2, { headerShown: false }); //修改密码2
 
-Actions.pushView(WXBinding, { title: '微信推送绑定' }); //微信绑定 
+Actions.pushView(WXBinding, { title: '微信推送绑定' }); //微信绑定
 Actions.pushViewWithName(ProvisioningOfAllPoints, 'ProvisioningOfAllPoints', { title: '全部点位' }); //全部点位 开通记录
-Actions.pushViewWithName(ProvisioningRecords, 'ProvisioningRecords', { title: '开通记录' }); //开通记录 
+Actions.pushViewWithName(ProvisioningRecords, 'ProvisioningRecords', { title: '开通记录' }); //开通记录
 
 // 任务表单 示值误差和响应时间 入口
-Actions.pushView(IndicationErrorAndResponseTimeList, { title: '示值误差和响应时间' }); //示值误差和响应时间 入口
-Actions.pushView(IndicationErrorAndResponseTimeEditor, { title: '示值误差和响应时间' }); //示值误差和响应时间 入口
+Actions.pushViewWithName(IndicationErrorAndResponseTimeList, 'IndicationErrorAndResponseTimeList', { title: '示值误差和响应时间' });
+Actions.pushViewWithName(IndicationErrorAndResponseTimeEditor, 'IndicationErrorAndResponseTimeEditor', { title: '示值误差和响应时间' });
+
 
 Actions.pushView(Test, { headerShown: false });
 

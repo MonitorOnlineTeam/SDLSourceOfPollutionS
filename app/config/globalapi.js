@@ -755,7 +755,18 @@ export default api = {
              * 督查记录
              */
             //netcore ✅ GetRemoteInspectorList: 'rest/PollutantSourceApi/TaskProcessingApi/GetRemoteInspectorList' // 督查记录 列表
-            GetRemoteInspectorList: 'rest/PollutantSourceApi/KeyParameterApi/GetKeyParameterCheckList' // 督查记录 列表
+            GetRemoteInspectorList: 'rest/PollutantSourceApi/KeyParameterApi/GetKeyParameterCheckList', // 督查记录 列表
+
+            // 示值误差和响应时间
+            GetIndicationErrorSystemResponseRecordListForApp: 'rest/PollutantSourceApi/GasOperationFormApi/GetIndicationErrorSystemResponseRecordListForApp', // 获取示值误差及响应时间列表
+            // 计算示值误差
+            GetIndicationError: 'rest/PollutantSourceApi/GasOperationFormApi/GetIndicationError', // 获取示值误差
+            // 添加或修改示值误差及响应时间
+            AddOrUpdateIndicationErrorSystemResponseRecord: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateIndicationErrorSystemResponseRecord', // 添加或修改示值误差及响应时间
+            // 删除示值误差及响应时间量程
+            DeleteErrorSystemResponseRecordInfo: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecordInfo', // 删除示值误差及响应时间
+            // 删除示值误差及响应时间整个表单
+            DeleteErrorSystemResponseRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecord', // 删除示值误差及响应时间
         },
         /**
          * 2022.11.30

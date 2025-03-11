@@ -62,7 +62,7 @@ class CalibrationRecordEdit extends Component {
                 LdCalibrationIsOk: '', //是否正常
                 LdCalibrationSufValue: '', //校准后
                 BqNdz: '', //标气浓度值
-                IsChange: false, //是否更换标气
+                IsChange: 0, //是否更换标气
                 LcNewCalibrationPreValue: '', // 更换后的标气浓度值
                 LcLastCalibrationValue: props.route.params.params.item.LcLastCalibrationValue, //量程 上一次校准值
                 LcCalibrationPreValue: '', //校准前
@@ -89,7 +89,7 @@ class CalibrationRecordEdit extends Component {
                 LdCalibrationSufValue: props.route.params.params.item.LdCalibrationSufValue, //校准后
                 BqNdz: props.route.params.params.item.BqNdz, //标气浓度值
                 IsChange: SentencedToEmpty(props
-                    , ['route', 'params', 'params', 'item', 'IsChange'], false
+                    , ['route', 'params', 'params', 'item', 'IsChange'], 0
                 ), //是否更换标气
                 LcNewCalibrationPreValue: SentencedToEmpty(props,
                     ['route', 'params', 'params', 'item', 'LcNewCalibrationPreValue']
@@ -686,7 +686,7 @@ class CalibrationRecordEdit extends Component {
                                             <TouchableOpacity
                                                 onPress={() => {
                                                     this.setState({
-                                                        IsChange: !this.state.IsChange
+                                                        IsChange: this.state.IsChange ? 0 : 1
                                                     })
                                                 }}
                                             >
@@ -698,7 +698,7 @@ class CalibrationRecordEdit extends Component {
                                                 >
                                                     <Image
                                                         style={{ marginRight: 5, height: 16, width: 16 }}
-                                                        source={this.state.IsChange ? require('../../../../images/ic_reported_check.png') : require('../../../../images/ic_reported_uncheck.png')}
+                                                        source={this.state.IsChange === 1 ? require('../../../../images/ic_reported_check.png') : require('../../../../images/ic_reported_uncheck.png')}
                                                     />
                                                 </View>
                                             </TouchableOpacity>
@@ -713,7 +713,7 @@ class CalibrationRecordEdit extends Component {
                                         </View> : null
                                 }
                                 {
-                                    this.state.IsChange ? <View style={[styles.layoutWithBottomBorder, { marginTop: 0 }]}>
+                                    this.state.IsChange === 1 ? <View style={[styles.layoutWithBottomBorder, { marginTop: 0 }]}>
                                         <Text style={[styles.labelStyle]}>原标气浓度值：</Text>
                                         <MyTextInput
                                             keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
@@ -731,7 +731,7 @@ class CalibrationRecordEdit extends Component {
                                     </View> : null
                                 }
                                 {
-                                    this.state.IsChange ? <View style={[styles.layoutWithBottomBorder]}>
+                                    this.state.IsChange === 1 ? <View style={[styles.layoutWithBottomBorder]}>
                                         <Text style={[styles.labelStyle]}>新标气浓度值：</Text>
                                         <MyTextInput
                                             keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
@@ -749,7 +749,7 @@ class CalibrationRecordEdit extends Component {
                                     </View> : null
                                 }
                                 {
-                                    !this.state.IsChange ? <View style={[styles.layoutWithBottomBorder
+                                    this.state.IsChange === 0 ? <View style={[styles.layoutWithBottomBorder
                                         , ItemID != 543 && ItemID != 160 ? { marginTop: 0 } : null]}>
                                         <Text style={[styles.labelStyle]}>标气浓度值：</Text>
                                         <MyTextInput
@@ -979,6 +979,7 @@ class CalibrationRecordEdit extends Component {
                                 return;
                             }
                         }
+                        console.log('this.state', this.state)
                         this.props.dispatch(
                             createAction('calibrationRecord/saveItem')({
                                 index: this.props.route.params.params.index,
