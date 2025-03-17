@@ -261,13 +261,12 @@ class CalibrationRecordList extends Component {
                   {item.ItemID + '分析仪校准'}
                 </Text>
               </View>
-              {item.ChildList
-                ? item.ChildList.map((child, index) => {
+              {(item.ChildList && item.ChildList.length > 0 ? item.ChildList : [{}])
+                .map((child, index) => {
                     return (
                       <TouchableOpacity
                         onPress={() => {
                           let currentPollutant = this.props.JzConfigItemSelectedList.find(_item => _item.ItemId == item.ItemId)
-                          console.log('currentPollutant', currentPollutant)
                           this.props.dispatch(
                             NavigationActions.navigate({
                               routeName: 'CalibrationRecordEdit',
@@ -278,8 +277,7 @@ class CalibrationRecordList extends Component {
                         {this._renderLDContent(child, true, index)}
                       </TouchableOpacity>
                     );
-                  })
-                : ''}
+                  })}
             </View>
           </View>
         );
@@ -379,7 +377,8 @@ class CalibrationRecordList extends Component {
                     <Text
                       style={[
                         {fontSize: 14, color: globalcolor.taskImfoLabel},
-                      ]}>{`(${item.FxyLc ? item.FxyLc : ' '})`}</Text>
+                      // ]}>{`(${item.FxyLc ? item.FxyLc : ' '})`}</Text>
+                      ]}>{item.FxyLc ? `(${item.FxyLc})`: ' '}</Text>
                   </View>
                   <View
                     style={[
@@ -501,8 +500,6 @@ class CalibrationRecordList extends Component {
   };
 
   getPageStatus = () => {
-    console.log('JzConfigItemResult = ', this.props.JzConfigItemResult);
-    console.log('liststatus = ', this.props.liststatus);
     let configItemsStatus = SentencedToEmpty(
       this.props,
       ['JzConfigItemResult', 'status'],
@@ -572,7 +569,17 @@ class CalibrationRecordList extends Component {
         selectData,
       }) => {
         selectData.map((item, index) => {
+          // 基础数据初始化
           item.ItemID = item.ItemName;
+          item.ID = '';  // 确保有ID字段
+          
+          // 如果是流速，确保有初始的完整数据结构
+          if (item.ItemId == 543 && (!item.ChildList || item.ChildList.length === 0)) {
+            item.ChildList = [{
+              ItemID: item.ItemName,
+              ...item
+            }];
+          } 
         });
         let findIndex = -1;
         let selectedIndexList = [];
@@ -597,10 +604,44 @@ class CalibrationRecordList extends Component {
           }
         });
         selectedIndexList.map(selectedDateItem => {
-          selectData[selectedDateItem.findIndex] = {
-            ...selectData[selectedDateItem.findIndex],
-            ...this.props.calibrationRecordList[selectedDateItem.dataIndex],
-          };
+
+
+          // selectData[selectedDateItem.findIndex] = {
+          //   ...selectData[selectedDateItem.findIndex],
+          //   ...this.props.calibrationRecordList[selectedDateItem.dataIndex],
+          // };
+          // 如果是流速，保持 ChildList 并确保数据完整性
+          if (selectData[selectedDateItem.findIndex].ItemId == 543) {
+            const existingChildList = this.props.calibrationRecordList[selectedDateItem.dataIndex].ChildList || [{
+              ID: '',
+              ItemID: '流速',
+              ItemId: '543',
+              ItemName: '流速',
+              // 数值类型字段使用 undefined
+              LdCalibrationPreValue: undefined,
+              LdCalibrationSufValue: undefined,
+              LdLastCalibrationValue: undefined,
+              LdPy: undefined,
+              LqNdz: undefined,
+              // 非数值类型的字段使用空字符串
+              LdCalibrationIsOk: ''
+            }];
+            
+            selectData[selectedDateItem.findIndex] = {
+              ...selectData[selectedDateItem.findIndex],
+              ...this.props.calibrationRecordList[selectedDateItem.dataIndex],
+              ID: '',  // 确保父级也有ID
+              ItemID: '流速',
+              ItemId: '543',
+              ItemName: '流速',
+              ChildList: existingChildList
+            };
+          } else {
+            selectData[selectedDateItem.findIndex] = {
+              ...selectData[selectedDateItem.findIndex],
+              ...this.props.calibrationRecordList[selectedDateItem.dataIndex],
+            };
+          }
         });
         if (deleteIndexList.length > 0) {
           this.setState({

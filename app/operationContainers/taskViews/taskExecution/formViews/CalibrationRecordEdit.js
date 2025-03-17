@@ -216,15 +216,26 @@ class CalibrationRecordEdit extends Component {
      * 判断数字是否存在异常
     */
     testNumberException = (param) => {
+        // 处理 undefined 和 null
+        if (param === undefined || param === null) {
+            return true;
+        }
+        // 处理空字符串
+        if (param === '') {
+            return true;
+        }
+        // 转换为数字
         let sample = Number(param);
+        // 检查是否为 NaN
         if (isNaN(sample)) {
             return true;
-        } else if (!(/^-?[0-9]+$/.test(sample) || /^-?[0-9]+\.?[0-9]+?$/.test(sample))) {
-            return true;
-        } else {
-            return false;
         }
-    }
+        // 检查是否为有效的数字格式（整数或小数）
+        if (!(/^-?[0-9]+$/.test(param) || /^-?[0-9]+\.?[0-9]+?$/.test(param))) {
+            return true;
+        }
+        return false;
+    };
 
     //零点测试
     _zeroTest = (moduleIndex) => {
@@ -266,6 +277,7 @@ class CalibrationRecordEdit extends Component {
         }
         let range = Number(max) - Number(min);
         // 校验零气浓度是否合理
+        
         if (this.testNumberException(this.state.modules[moduleIndex].LqNdz)) {
             ShowToast('零点校准 零气浓度值非法');
             this.updateModuleData(moduleIndex, {
@@ -276,7 +288,7 @@ class CalibrationRecordEdit extends Component {
         }
         let LqNdz = Number(this.state.modules[moduleIndex].LqNdz);
 
-        let LdLastCalibrationValue = Number(this.state.modules[moduleIndex].LdLastCalibrationValue);
+        let LdLastCalibrationValue = this.state.modules[moduleIndex].LdLastCalibrationValue;
         if (this.testNumberException(LdLastCalibrationValue)) {
             ShowToast('零点校准 上次校准测试值非法');
             this.updateModuleData(moduleIndex, {
@@ -286,7 +298,7 @@ class CalibrationRecordEdit extends Component {
             return;
         } 
 
-        let LdCalibrationPreValue = Number(this.state.modules[moduleIndex].LdCalibrationPreValue);
+        let LdCalibrationPreValue = this.state.modules[moduleIndex].LdCalibrationPreValue;
         if (this.testNumberException(LdCalibrationPreValue)) {
             ShowToast('零点校准 校准前测试值非法');
             this.updateModuleData(moduleIndex, {
@@ -340,7 +352,6 @@ class CalibrationRecordEdit extends Component {
     };
 
     renderZeroCalibrationModule = (module, index) => {
-        console.log('this.state', this.state)
         return (
             <View key={index} style={{ marginTop: index > 0 ? 20 : 0 }}>
                 <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 28 }]}>
@@ -583,7 +594,6 @@ class CalibrationRecordEdit extends Component {
 
     render() {
         let Item = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
-        console.log('render Item = ', Item);
         let ItemId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ItemId'], '');
         /**
          * ItemID == 543
@@ -963,7 +973,6 @@ class CalibrationRecordEdit extends Component {
                         const IsLiangCheng = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'IsLiangCheng'], -1);
                         let up = this.getUpperLimitValue(SentencedToEmpty(this.state, ['FxyLc'], ''));
                         let lower = this.getLowerLimitValue(SentencedToEmpty(this.state, ['FxyLc'], ''));
-                   console.log('route.params.params.item', this.props.route.params.params.item);
                         if (SentencedToEmpty(this.state, ['FxyYl'], '') == '') {
                             ShowToast('分析仪原理不能为空');
                             return;
@@ -977,23 +986,25 @@ class CalibrationRecordEdit extends Component {
                         if (IsPiaoYi == 1) { // 零点校准必填
                             for (let i = 0; i < this.state.modules.length; i++) {
                                 const module = this.state.modules[i];
-                                const moduleIndex = this.props.route.params.params.index + i + 1;
+                                const moduleIndex = i + 1;
+                                const isFlowRate = ItemId === '543';
+                                const modulePrefix = isFlowRate ? `差压表 ${this.props.route.params.params.index + moduleIndex} 中` : '';
                                 
                                 if (SentencedToEmpty(module, ['LqNdz'], '') == '') {
-                                    ShowToast(`差压表 ${moduleIndex} 中零气浓度不能为空`);
+                                    ShowToast(`${modulePrefix}零气浓度不能为空`);
                                     return;
                                 } else if (SentencedToEmpty(module, ['LdLastCalibrationValue'], '') == '') {
-                                    ShowToast(`差压表 ${moduleIndex} 中零点上次校准后测试值不能为空`);
+                                    ShowToast(`${modulePrefix}零点上次校准后测试值不能为空`);
                                     return;
                                 } else if (SentencedToEmpty(module, ['LdCalibrationPreValue'], '') == '') {
-                                    ShowToast(`差压表 ${moduleIndex} 中零点校准前测试值不能为空`);
+                                    ShowToast(`${modulePrefix}零点校准前测试值不能为空`);
                                     return;
                                 } else if (SentencedToEmpty(module, ['LdPy'], '') == ''
                                     || SentencedToEmpty(module, ['LdCalibrationIsOk'], '') == '') {
-                                    ShowToast(`差压表 ${moduleIndex} 中零点漂移未进行计算，无法提交`);
+                                    ShowToast(`${modulePrefix}零点漂移未进行计算，无法提交`);
                                     return;
                                 } else if (SentencedToEmpty(module, ['LdCalibrationSufValue'], '') == '') {
-                                    ShowToast(`差压表 ${moduleIndex} 中零点校准后测试值不能为空`);
+                                    ShowToast(`${modulePrefix}零点校准后测试值不能为空`);
                                     return;
                                 }
                             }
