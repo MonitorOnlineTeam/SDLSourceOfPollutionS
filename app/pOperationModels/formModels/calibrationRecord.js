@@ -451,7 +451,8 @@ export default Model.extend({
             // yield update({ RecordList });
             let submitList = [];
             if (record) {
-                submitList.push(record);
+                // submitList.push(record);
+                submitList = record;
             } else {
                 submitList = null;
             }

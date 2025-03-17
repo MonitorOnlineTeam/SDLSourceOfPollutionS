@@ -493,7 +493,10 @@ class IndicationErrorAndResponseTimeList extends Component {
             {rangeData.Col1 && (
               <View style={styles.evaluationRow}>
                 <Text style={styles.evaluationLabel}>评价依据:</Text>
-                <Text style={styles.evaluationValue}>{rangeData.Col1}</Text>
+                <Text style={styles.evaluationValue}>
+                  {rangeData?.Col1?.replace(/\\n/g, '\n')?.replace(/\\/g, '') ||
+                    ''}
+                </Text>
               </View>
             )}
           </View>

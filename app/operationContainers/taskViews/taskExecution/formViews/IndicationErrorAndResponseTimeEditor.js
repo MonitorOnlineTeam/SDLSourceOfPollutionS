@@ -625,7 +625,6 @@ export default function IndicationErrorAndResponseTimeEditor({route}) {
       },
       recordList: records,
     };
-    console.log('submitData', submitData);
     dispatch(
       createAction(
         'indicationErrorAndResponseTimeModel/AddOrUpdateIndicationErrorSystemResponseRecord',
@@ -704,7 +703,7 @@ export default function IndicationErrorAndResponseTimeEditor({route}) {
         <FormInput
           {...commonFormInputProps}
           label="标准气体浓度"
-          placeholder="支持填写数字，包括小数点"
+          placeholder="请输入"
           keyboardType="numeric"
           value={activeTab.data.nominalValue}
           onChangeText={text => updateErrorData('nominalValue', text)}
@@ -713,7 +712,7 @@ export default function IndicationErrorAndResponseTimeEditor({route}) {
         <FormInput
           {...commonFormInputProps}
           label="CEMS显示值1"
-          placeholder="支持填写数字，包括小数点"
+          placeholder="请输入"
           keyboardType="numeric"
           value={activeTab.data.labelGas1}
           onChangeText={text => updateErrorData('labelGas1', text)}
@@ -722,7 +721,7 @@ export default function IndicationErrorAndResponseTimeEditor({route}) {
         <FormInput
           {...commonFormInputProps}
           label="CEMS显示值2"
-          placeholder="支持填写数字，包括小数点"
+          placeholder="请输入"
           keyboardType="numeric"
           value={activeTab.data.labelGas2}
           onChangeText={text => updateErrorData('labelGas2', text)}
@@ -731,7 +730,7 @@ export default function IndicationErrorAndResponseTimeEditor({route}) {
         <FormInput
           {...commonFormInputProps}
           label="CEMS显示值3"
-          placeholder="支持填写数字，包括小数点"
+          placeholder="请输入"
           keyboardType="numeric"
           value={activeTab.data.labelGas3}
           onChangeText={text => updateErrorData('labelGas3', text)}
@@ -773,7 +772,6 @@ export default function IndicationErrorAndResponseTimeEditor({route}) {
       </View>
     );
   };
-  console.log('responseTimeData', responseTimeData);
   // 渲染响应时间内容
   const renderResponseTimeContent = () => {
     return (
@@ -782,13 +780,13 @@ export default function IndicationErrorAndResponseTimeEditor({route}) {
         <View style={styles.responseTimeRow}>
           <View style={styles.responseLabelContainer}>
             <Text style={styles.requiredStar}>*</Text>
-            <Text style={styles.responseTimeLabel}>T1:</Text>
+            <Text style={styles.responseTimeLabel}>1:</Text>
           </View>
           <TextInput
             style={styles.responseTimeInput}
             value={responseTimeData.t1_1}
             onChangeText={text => updateResponseTimeData('t1_1', text)}
-            placeholder="请输入"
+            placeholder="T1"
             placeholderTextColor="#999999"
             keyboardType="numeric"
           />
@@ -797,7 +795,7 @@ export default function IndicationErrorAndResponseTimeEditor({route}) {
             style={styles.responseTimeInput}
             value={responseTimeData.t1_2}
             onChangeText={text => updateResponseTimeData('t1_2', text)}
-            placeholder="请输入"
+            placeholder="T2"
             placeholderTextColor="#999999"
             keyboardType="numeric"
           />
@@ -811,13 +809,13 @@ export default function IndicationErrorAndResponseTimeEditor({route}) {
         <View style={styles.responseTimeRow}>
           <View style={styles.responseLabelContainer}>
             <Text style={styles.requiredStar}>*</Text>
-            <Text style={styles.responseTimeLabel}>T2:</Text>
+            <Text style={styles.responseTimeLabel}>2:</Text>
           </View>
           <TextInput
             style={styles.responseTimeInput}
             value={responseTimeData.t2_1}
             onChangeText={text => updateResponseTimeData('t2_1', text)}
-            placeholder="请输入"
+            placeholder="T1"
             placeholderTextColor="#999999"
             keyboardType="numeric"
           />
@@ -826,7 +824,7 @@ export default function IndicationErrorAndResponseTimeEditor({route}) {
             style={styles.responseTimeInput}
             value={responseTimeData.t2_2}
             onChangeText={text => updateResponseTimeData('t2_2', text)}
-            placeholder="请输入"
+            placeholder="T2"
             placeholderTextColor="#999999"
             keyboardType="numeric"
           />
@@ -840,13 +838,13 @@ export default function IndicationErrorAndResponseTimeEditor({route}) {
         <View style={styles.responseTimeRow}>
           <View style={styles.responseLabelContainer}>
             <Text style={styles.requiredStar}>*</Text>
-            <Text style={styles.responseTimeLabel}>T3:</Text>
+            <Text style={styles.responseTimeLabel}>3:</Text>
           </View>
           <TextInput
             style={styles.responseTimeInput}
             value={responseTimeData.t3_1}
             onChangeText={text => updateResponseTimeData('t3_1', text)}
-            placeholder="请输入"
+            placeholder="T1"
             placeholderTextColor="#999999"
             keyboardType="numeric"
           />
@@ -855,7 +853,7 @@ export default function IndicationErrorAndResponseTimeEditor({route}) {
             style={styles.responseTimeInput}
             value={responseTimeData.t3_2}
             onChangeText={text => updateResponseTimeData('t3_2', text)}
-            placeholder="请输入"
+            placeholder="T2"
             placeholderTextColor="#999999"
             keyboardType="numeric"
           />
@@ -914,8 +912,8 @@ export default function IndicationErrorAndResponseTimeEditor({route}) {
               //     marginRight: 0,
               //   }}
               label="测试日期"
-              timeString={formData.testDate}
               getPickerOption={getTestDateOption}
+              timeString={moment(formData.testDate).format('YYYY-MM-DD')}
             />
 
             <FormInput
@@ -1130,7 +1128,7 @@ const styles = StyleSheet.create({
     width: 40,
   },
   responseTimeInput: {
-    width: 80,
+    width: 60,
     height: 36,
     borderWidth: 1,
     borderColor: '#EAEAEA',
