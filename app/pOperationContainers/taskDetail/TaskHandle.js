@@ -555,6 +555,25 @@ export default class TaskHandle extends Component {
                         case 19: // 实际水样比对试验结果记录表 水污染源校验记录
                             this.props.dispatch(NavigationActions.navigate({ routeName: 'WaterSampleComparisonTestForm', params: { item } }));
                             break;
+                        /**淄博项目 */
+                        case 82: //零点量程漂移校准 淄博
+                            this.props.dispatch(
+                                createAction('calibrationRecordZb/updateState')({
+                                    liststatus: { status: -1 },
+                                    JzConfigItemResult: { status: -1 },
+                                    JzConfigItemSelectedList: [],
+                                    TypeID: item.TypeID,
+                                    TaskID: item.TaskID
+                                })
+                            );
+                            this.props.dispatch(createAction('calibrationRecordZb/getJzItem')({ ...item, createForm: true }));
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'CalibrationRecordListZb',
+                                    params: { ...item, createForm: true }
+                                })
+                            );
+                            break;
                     }
                 }
             }

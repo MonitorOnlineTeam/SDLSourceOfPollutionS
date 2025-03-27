@@ -1,8 +1,8 @@
 /*
  * @Description:
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2025-02-26 17:21:51
+ * @LastEditTime: 2025-03-27 14:33:41
  * @FilePath: /SDLSourceOfPollutionS_dev/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
@@ -247,6 +247,11 @@ import QualityControlRecordDetail from './pOperationContainers/qualityControl/Qu
 import IndicationErrorAndResponseTimeList from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeList';
 import IndicationErrorAndResponseTimeEditor from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeEditor';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
+
+import CalibrationRecordListZb from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordListZb';
+import CalibrationRecordTimeZb from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordTimeZb';
+import CalibrationRecordEditZb from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordEditZb';
+
 function Test() {
     return (
         <View>
@@ -575,6 +580,11 @@ Actions.pushViewWithName(ProvisioningRecords, 'ProvisioningRecords', { title: '�
 // 任务表单 示值误差和响应时间 入口
 Actions.pushViewWithName(IndicationErrorAndResponseTimeList, 'IndicationErrorAndResponseTimeList', { title: '示值误差和响应时间' });
 Actions.pushViewWithName(IndicationErrorAndResponseTimeEditor, 'IndicationErrorAndResponseTimeEditor', { title: '示值误差和响应时间' });
+
+//淄博项目
+Actions.pushViewWithName(CalibrationRecordListZb, 'CalibrationRecordListZb', { title: '零点量程漂移校准' });
+Actions.pushViewWithName(CalibrationRecordTimeZb, 'CalibrationRecordTimeZb', { title: '校准执行时间' });
+Actions.pushViewWithName(CalibrationRecordEditZb, 'CalibrationRecordEditZb', { title: '校准记录表' });
 
 
 Actions.pushView(Test, { headerShown: false });

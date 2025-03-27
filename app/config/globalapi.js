@@ -767,6 +767,14 @@ export default api = {
             DeleteErrorSystemResponseRecordInfo: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecordInfo', // 删除示值误差及响应时间
             // 删除示值误差及响应时间整个表单
             DeleteErrorSystemResponseRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecord', // 删除示值误差及响应时间
+        
+             /**
+             * 淄博项目
+             */
+            GetJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/GetCemsCalibrationRecordZB', // 获取单个任务的校准记录
+            AddOrUpdateJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateCemsCalibrationRecordListZB', // 新增或更新校准记录  
+            GetJzItemZBCEMS: 'rest/PollutantSourceApi/GasOperationFormApi/GetJzItemZBCEMS', // 废气校准
+            DeleteJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/GetJzItemZBCEMS', //删除指定任务的校准表单数据
         },
         /**
          * 2022.11.30
