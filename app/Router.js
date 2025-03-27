@@ -246,6 +246,8 @@ import QualityControlDailyRecord from './pOperationContainers/qualityControl/Qua
 import QualityControlRecordDetail from './pOperationContainers/qualityControl/QualityControlRecordDetail';
 import IndicationErrorAndResponseTimeList from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeList';
 import IndicationErrorAndResponseTimeEditor from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeEditor';
+import Patrol_CEM from './operationContainers/taskViews/taskExecution/formViews/Patrol_CEM';
+import SignaturePage from './operationContainers/taskViews/taskExecution/formViews/components/SignaturePage';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
 function Test() {
     return (
@@ -576,6 +578,9 @@ Actions.pushViewWithName(ProvisioningRecords, 'ProvisioningRecords', { title: '�
 Actions.pushViewWithName(IndicationErrorAndResponseTimeList, 'IndicationErrorAndResponseTimeList', { title: '示值误差和响应时间' });
 Actions.pushViewWithName(IndicationErrorAndResponseTimeEditor, 'IndicationErrorAndResponseTimeEditor', { title: '示值误差和响应时间' });
 
+// 巡检完全抽取法
+Actions.pushViewWithName(Patrol_CEM, 'Patrol_CEM', { title: '完全抽取法CEMS日常巡检记录表' });
+Actions.pushViewWithName(SignaturePage, 'SignaturePage', { title: '签名'});
 
 Actions.pushView(Test, { headerShown: false });
 
