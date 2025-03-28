@@ -51,7 +51,9 @@ class Patrol_CEM extends Component {
       case 76:
       case 77:
       case 78:
-        // 完全抽取法,稀释采样法,直接测量法
+      case 79:
+      case 80:
+        // 完全抽取法,稀释采样法,直接测量法,VOCs,废水
         pic1Name = 'WHGGDYGZGCZP';
         pic2Name = 'ZFQJZP';
         break;
@@ -93,19 +95,19 @@ class Patrol_CEM extends Component {
 
     let actionType = '';
     switch (TypeID) {
-      case 76:
+      case 76: // 完全抽取法
         actionType = 'GetAllExInspectionRecord';
         break;
-      case 77:
+      case 77: // 稀释采样法
         actionType = 'GetXSExInspectionRecord';
         break;
-      case 78:
+      case 78: // 直接测量法
         actionType = 'GetZJExInspectionRecord';
         break;
-      case 79:
+      case 79: // VOCs
         actionType = 'GetVOCsExInspectionRecord';
         break;
-      case 80:
+      case 80: // 废水
         actionType = 'GetFSExInspectionRecord';
         break;
     }
@@ -168,19 +170,19 @@ class Patrol_CEM extends Component {
 
     let actionType = '';
     switch (TypeID) {
-      case 76:
+      case 76: // 完全抽取法
         actionType = 'AddOrUpdateAllExInspectionRecord';
         break;
-      case 77:
+      case 77: // 稀释采样法
         actionType = 'AddOrUpdateXSExInspectionRecord';
         break;
-      case 78:
+      case 78: // 直接测量法
         actionType = 'AddOrUpdateZJExInspectionRecord';
         break;
-      case 79:
+      case 79: // VOCs
         actionType = 'AddOrUpdateVOCsExInspectionRecord';
         break;
-      case 80:
+      case 80: // 废水
         actionType = 'AddOrUpdateFSExInspectionRecord';
         break;
     }
@@ -213,19 +215,19 @@ class Patrol_CEM extends Component {
     const {TypeID} = this.props.route.params.params;
     let actionType = '';
     switch (TypeID) {
-      case 76:
+      case 76: // 完全抽取法
         actionType = 'DeleteAllExInspectionRecord';
         break;
-      case 77:
+      case 77: // 稀释采样法
         actionType = 'DeleteXSExInspectionRecord';
         break;
-      case 78:
+      case 78: // 直接测量法
         actionType = 'DeleteZJExInspectionRecord';
         break;
-      case 79:
+      case 79: // VOCs
         actionType = 'DeleteVOCsExInspectionRecord';
         break;
-      case 80:
+      case 80: // 废水
         actionType = 'DeleteFSExInspectionRecord';
         break;
     }

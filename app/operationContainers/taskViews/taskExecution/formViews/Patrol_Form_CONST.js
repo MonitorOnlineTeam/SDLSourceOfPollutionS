@@ -657,6 +657,346 @@ const FORM_CONST = {
       items: [{id: 'XJRYQZ', title: '签名', type: 'signature'}],
     },
   ],
+  79: [
+    {
+      id: 1,
+      title: '维护预备',
+      items: [
+        {id: 'IsSelectLog', title: '查询日志 7d'},
+        {id: 'IsCheckHC', title: '检查耗材 7d'},
+        {id: 'WHB_Remark', title: '说明', type: 'textarea'},
+      ],
+    },
+    {
+      id: 2,
+      title: '辅助设备检查',
+      items: [
+        {id: 'ZFWS', title: '站房卫生 7d'},
+        {id: 'ZFMCMFX', title: '站房门窗的密封性检查 7d'},
+        {id: 'GDXT', title: '供电系统（稳压、UPS 等） 7d'},
+        {id: 'SNWSD', title: '室内温湿度 7d'},
+        {id: 'KT', title: '空调 7d'},
+        {id: 'KQYSJYL', title: '空气压缩机压力 7d'},
+        {id: 'YSJPS', title: '压缩机排水 7d'},
+        {id: 'QQFSQCSZZ', title: '氢气发生器除湿装置 7d'},
+        {id: 'CJKQCSZZ', title: '除烃空气除湿装置 7d'},
+        {id: 'CJZZWD', title: '除烃装置温度在350 ℃以上 7d'},
+        {id: 'FZSB_Remark', title: '说明', type: 'textarea'},
+      ],
+    },
+    {
+      id: 3,
+      title: '非甲烷总氢监测设备检查',
+      items: [
+        {id: 'CYGLQMXJC', title: '采样管路气密性检查 30d'},
+        {id: 'TTGLJRWDJC', title: '探头、管路加热温度检查 7d'},
+        {id: 'CYXTLL', title: '采样系统流量 7d'},
+        {id: 'FCGLZZFMJC', title: '反吹过滤装置、阀门检查 7d'},
+        {id: 'SDFCJC', title: '手动反吹检查 7d'},
+        {id: 'CYBLL', title: '采样泵流量 7d'},
+        {id: 'YPYCLSBWD', title: '样品预处理设备温度 7d'},
+        {id: 'PSXTGLLNSJC', title: '排水系统、管路冷凝水检查 7d'},
+        {id: 'KQGLQ', title: '空气过滤器 7d'},
+        {id: 'BQYXQGPYL', title: '标气的有效期、钢瓶压力检查 7d'},
+        {id: 'FJWZJFXYZTJC', title: '非甲烷总烃分析仪状态检查 7d'},
+        {id: 'QXTJZ', title: '全系统校准 90d'},
+        {id: 'ZQDHC', title: '正确度核查 90d'},
+        {id: 'FIDJCQ', title: 'FID 检测器点火 7d'},
+        {
+          id: 'CFSJ',
+          title: '出峰时间与标准谱图一致性情况是否符合仪器使用手册要求 7d',
+        },
+        {id: 'WDZX', title: '温度-柱箱 7d'},
+        {id: 'WDJCQ', title: '温度-检测器 7d'},
+        {id: 'QTLLRSQ', title: '气体流量/压力-燃烧气 7d'},
+        {id: 'QTLLZQ', title: '气体流量/压力-载气 7d'},
+        {
+          id: 'QXCYTTGLZZCYB',
+          title: '清洗采样探头、过滤装置、采样泵 30d',
+          type: 'input',
+        },
+        {
+          id: 'FJWZJ_Remark',
+          title: '说明',
+          type: 'textarea',
+        },
+      ],
+    },
+    {
+      id: 4,
+      title: '流速监测系统检查',
+      items: [
+        {id: 'LSLLYDYL', title: '流速、流量、烟道压力测量数据 7d'},
+        {id: 'CLCGQ', title: '测量传感器 30d', type: 'input'},
+        {id: 'TTJC', title: '探头检查 90d', type: 'input'},
+        {id: 'FCZZ', title: '反吹装置 30d', type: 'input'},
+        {id: 'LSXT_Remark', title: '说明', type: 'textarea'},
+      ],
+    },
+    {
+      id: 5,
+      title: '其他废气监测参数',
+      items: [
+        {id: 'YHLCLSJ', title: '氧含量测量数据 7d'},
+        {id: 'WDCLSJ', title: '温度测量数据 7d'},
+        {id: 'SDCLSJ', title: '湿度测量数据 7d'},
+        {id: 'Other_Remark', title: '说明', type: 'textarea'},
+      ],
+    },
+    {
+      id: 6,
+      title: '数据传输装置',
+      items: [
+        {id: 'TXXDLJ', title: '通信线的连接 7d'},
+        {id: 'CSSBDY', title: '传输设备电源 7d'},
+        {id: 'SJCJCSZZ_Remark', title: '说明', type: 'textarea'},
+      ],
+    },
+    {
+      id: 7,
+      title: '站房全景照片（室内与室外）',
+      items: [
+        {id: 'ZFQJZP', title: '站房全景照片（室内与室外）', type: 'upload'},
+      ],
+    },
+    {
+      id: 8,
+      title: '维护各个单元工作过程照片',
+      items: [
+        {id: 'WHGGDYGZGCZP', title: '维护各个单元工作过程照片', type: 'upload'},
+      ],
+    },
+    {
+      id: 9,
+      title: '异常情况处理记录',
+      items: [
+        {id: 'ExceptionRecord', title: '异常情况处理记录', type: 'textarea'},
+      ],
+    },
+    {
+      id: 10,
+      title: '巡检人员签字',
+      items: [{id: 'XJRYQZ', title: '签名', type: 'signature'}],
+    },
+  ],
+  80: [
+    {
+      id: 1,
+      title: '维护预备',
+      items: [
+        {id: 'IsSelectLog', title: '查询日志 7d'},
+        {id: 'IsCheckHC', title: '检查耗材 7d'},
+        {id: 'WHSB_Remark', title: '情况说明', type: 'textarea'},
+      ],
+    },
+    {
+      id: 2,
+      title: '辅助设备检查',
+      items: [
+        {id: 'ZFWS', title: '站房卫生 7d'},
+        {id: 'ZFMCMFX', title: '站房门窗的密封性检查 7d'},
+        {id: 'GDXT', title: '供电系统（稳压、UPS 等） 7d'},
+        {id: 'SNWSD', title: '室内温湿度 7d'},
+        {id: 'KT', title: '空调 7d'},
+        {id: 'ZLSGYQK', title: '自来水供应情况 7d'},
+        {id: 'FZSB_Remark', title: '情况说明', type: 'textarea'},
+      ],
+    },
+    {
+      id: 3,
+      title: '采样泵采水情况',
+      items: [
+        {id: 'CYBCSQK', title: '采样泵采水情况 1d'},
+        {id: 'CYGLTC', title: '采样管路通畅 7d'},
+        {id: 'ZDQXZZYXQK', title: '自动清洗装置运行情况 7d'},
+        {id: 'PSGLTC', title: '排水管路通畅 1d'},
+        {id: 'CYTT', title: '采样探头 7d'},
+        {id: 'CYGLJBRXT', title: '采样管路及伴热系统 7d'},
+        {id: 'ZDCYQYZ', title: '自动采样器运转 7d'},
+        {id: 'GLHYTLYTGLW', title: '管路、混匀桶、留样桶、过滤网 7d'},
+        {id: 'QXCYBGLZZ', title: '清洗采样泵 、过滤装置 7d', type: 'input'},
+        {id: 'QXCYGLPSGL', title: '清洗采样管路 、排水管路 7d', type: 'input'},
+        {
+          id: 'FCQXZDCYQGL',
+          title: '反吹 、清洗自动采样器管路 7d',
+          type: 'input',
+        },
+        {
+          id: 'SDCSSYCJ',
+          title:
+            '手动测试水样采集单元电机、电磁阀、感应器、采样泵、超标留样等功能 30d',
+          type: 'input',
+        },
+        {id: 'CYXT_Remark', title: '情况说明', type: 'textarea'},
+      ],
+    },
+    {
+      id: 4,
+      title: '水污染在线监测仪器',
+      items: [
+        {id: 'TTGLJRWDJC', title: '仪器报警状态 1d'},
+        {id: 'YQZTCSJC', title: '仪器状态参数检查 1d'},
+        {id: 'YQWGJC', title: '仪器外观检查 1d'},
+        {id: 'YQNBGLTC', title: '仪器内部管路通畅 7d'},
+        {
+          id: 'YQJYPYGLQJJC',
+          title: '仪器进样、排液管路清洁检查 7d',
+        },
+        {id: 'DJBZYNCY', title: '检查电极标准液、内充液 7d'},
+        {id: 'BZRYSJ', title: '标准溶液、试剂是否在保质期 7d'},
+        {
+          id: 'GHBZRYQXYSJ',
+          title: '更换标准溶液、清洗液、试剂 7d',
+        },
+        {id: 'BGJRL', title: '检查泵、管、加热炉等 30d'},
+        {id: 'DJSFDH', title: '检查电极是否钝化，必要时进行更换 30d'},
+        {id: 'CSBLLJGD', title: '检查超声波流量计高度是否发生变化 30d'},
+        {id: 'YQGLBYQJ', title: '仪器管路进行保养、清洁 30d'},
+        {
+          id: 'JCCYBFGZQK',
+          title:
+            '检查采样部分、计量单元、反应单元、加热单元、检测单元的工作情况 30d',
+        },
+        {
+          id: 'GJSWRYZXJCYQ',
+          title:
+            '根据水污染源在线监测仪器操作维护说明，检查及更换易损耗件，检查关键零部件可靠性，如计量单元准确性、反应室密封性等，必要时进行更换 30d',
+        },
+        {id: 'JY', title: '校验 90d'},
+      ],
+    },
+    {
+      id: 5,
+      title: '数据采集传输装置',
+      items: [
+        {id: 'SJCJXTBJXX', title: '数据采集系统报警信息 1d'},
+        {id: 'SJSCQK', title: '数据上传情况 1d'},
+        {id: 'SJCJQK', title: '数据采集情况 1d'},
+        {id: 'JCSCY', title: '检查数采仪和仪器的连接 7d'},
+        {id: 'JCSCSJ', title: '检查上传数据和现场数据的一致性 7d'},
+        {id: 'SJCJCSSBDY', title: '数据采集、传输设备电源 7d'},
+        {id: 'SJCS_Remark', title: '情况说明', type: 'textarea'},
+      ],
+    },
+    {
+      id: 6,
+      title: '流量计',
+      items: [
+        {id: 'LSYC', title: '量水堰槽 7d'},
+        {id: 'CSBTT', title: '超声波探头 7d'},
+        {id: 'LLJCS', title: '流量计参数 7d'},
+        {id: 'LJXHCS', title: '流量信号传输 7d'},
+        {id: 'LLJ_Remark', title: '情况描述', type: 'textarea'},
+      ],
+    },
+    {
+      id: 7,
+      title: '加药计量单元',
+      items: [
+        {id: 'JYJLDYBT', title: '加药计量单元泵体 、 电磁阀 7d'},
+        {id: 'GFTLL', title: '各阀体流路 7d'},
+        {id: 'SJSYTQ', title: '试剂 、水样提取 7d'},
+        {id: 'JYJLZQX', title: '加药计量准确性 90d'},
+        {id: 'SJGHRDBG', title: '视情更换蠕动泵管 30d', type: 'input'},
+        {id: 'JYJL_Remark', title: '情况说明', type: 'textarea'},
+      ],
+    },
+    {
+      id: 8,
+      title: '预处理单元',
+      items: [
+        {id: 'JRSJXJSJ', title: '加热时间 、消解时间 7d'},
+        {id: 'JRZZ', title: '加热装置 7d'},
+        {id: 'XJB', title: '消解杯 7d'},
+        {id: 'LQZZ', title: '冷却装置 7d'},
+        {id: 'YCL_Remark', title: '情况说明', type: 'textarea'},
+      ],
+    },
+    {
+      id: 9,
+      title: '测量单元',
+      items: [
+        {id: 'FGGDSBBSC', title: '分光光度设备比色池 7d'},
+        {id: 'BSGYQD', title: '比色光源强度 30d'},
+        {id: 'DJFADDNXH', title: '电极法氨氮电能信号 30d'},
+        {id: 'SQGHDJ', title: '视情更换电极 30d', type: 'input'},
+        {id: 'QXDJT', title: '清洗电极头 7d', type: 'input'},
+        {id: 'CLDY_Remark', title: '测量单元-情况说明', type: 'textarea'},
+      ],
+    },
+    {
+      id: 10,
+      title: '试剂单元',
+      items: [
+        {id: 'SJBYSYL', title: '试剂标样剩余量 7d'},
+        {id: 'BZRYSJYXQ', title: '标准溶液 、试剂有效期 30d'},
+        {id: 'SJBYBQ', title: '试剂标样标签 7d'},
+        {id: 'SJDY_Remark', title: '试剂单元-情况说明', type: 'textarea'},
+      ],
+    },
+    {
+      id: 11,
+      title: '设备显示按键单元',
+      items: [
+        {id: 'SBPMXS', title: '设备屏幕显示 7d'},
+        {id: 'AJCZ', title: '按键操作 7d'},
+        {id: 'SBXS_Remark', title: '设备显示按键单元-情况说明', type: 'textarea'},
+      ],
+    },
+    {
+      id: 12,
+      title: '校准对比试验',
+      items: [
+        {id: 'ZDBYHC', title: '自动标样核查 7d', type: 'input'},
+        {id: 'JZ', title: '校准 7d', type: 'input'},
+        {id: 'SJSYBDSY', title: '实际水样比对试验 30d', type: 'input'},
+      ],
+    },
+    {
+      id: 13,
+      title: '废液处置',
+      items: [
+        {id: 'FYHSQK', title: '废液回收情况 7d', type: 'textarea'},
+      ],
+    },
+    {
+      id: 14,
+      title: '数据运行参数',
+      items: [
+        {id: 'SCSJHXCZQX', title: '上传数据和现场正确性 7d'},
+        {id: 'LSSJWZX', title: '历史数据完整性 7d'},
+        {id: 'CLCS', title: '测量参数 7d'},
+        {id: 'YXZT', title: '运行状态 7d'},
+        {id: 'SJYX_Remark', title: '数据运行参数-情况说明', type: 'textarea'},
+      ],
+    },
+    {
+      id: 15,
+      title: '站房全景照片（室内与室外）',
+      items: [
+        {id: 'ZFQJZP', title: '站房全景照片（室内与室外）', type: 'upload'},
+      ],
+    },
+    {
+      id: 16,
+      title: '维护各个单元工作过程照片',
+      items: [
+        {id: 'WHGGDYGZGCZP', title: '维护各个单元工作过程照片', type: 'upload'},
+      ],
+    },
+    {
+      id: 17,
+      title: '异常情况处理记录',
+      items: [
+        {id: 'ExceptionRecord', title: '异常情况处理记录', type: 'textarea'},
+      ],
+    },
+    {
+      id: 18,
+      title: '巡检人员签字',
+      items: [{id: 'XJRYQZ', title: '签名', type: 'signature'}],
+    },
+  ],
 };
 
 export default FORM_CONST;

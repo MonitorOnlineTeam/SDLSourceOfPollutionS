@@ -804,7 +804,12 @@ export default api = {
             AddOrUpdateVOCsExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateVOCsExInspectionRecord',
             // 删除 VOCs 监测日常巡检
             DeleteVOCsExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteVOCsExInspectionRecord',
-            
+            // 添加修改废水监测日常巡检
+            AddOrUpdateFSExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateFSExInspectionRecord',
+            // 获取废水监测日常巡检
+            GetFSExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/GetFSExInspectionRecord',
+            // 删除废水监测日常巡检
+            DeleteFSExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteFSExInspectionRecord',
             
         },
         /**
