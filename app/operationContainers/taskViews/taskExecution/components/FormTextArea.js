@@ -25,6 +25,7 @@ export default class FormTextArea extends Component {
             areaHeight = 100,
             editable = true,
             numberOfLines = 4,
+            labelStyle = {},
         } = this.props;
         return (
             <View
@@ -40,7 +41,7 @@ export default class FormTextArea extends Component {
             >
                 <View style={[{ flexDirection: 'row', alignItems: 'center' }]}>
                     {required ? <Text style={[styles.labelStyle, { color: 'red' }]}>*</Text> : null}
-                    <Text style={[{ marginVertical: 10, fontSize: 15, color: globalcolor.taskImfoLabel }]}>{label}</Text>
+                    <Text style={[{ marginVertical: 10, fontSize: 15, color: globalcolor.taskImfoLabel }, labelStyle]}>{label}</Text>
                 </View>
                 <TextInput
                     editable={editable}

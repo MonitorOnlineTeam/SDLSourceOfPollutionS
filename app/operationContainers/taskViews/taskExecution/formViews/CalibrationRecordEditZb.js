@@ -15,6 +15,7 @@ import FormRangInput from '../components/FormRangInput';
 import FormInput from '../components/FormInput';
 import FormPicker from '../components/FormPicker';
 import { accAdd, accSub, accMul, accDiv } from '../../../../utils/numutil'
+import ImageGrid from '../../../../components/form/images/ImageGrid';
 
 const saveItem = 0;
 const deleteItem = 1;
@@ -51,7 +52,7 @@ class CalibrationRecordEditZb extends Component {
     constructor(props) {
         super(props);
         const item = props.route.params.params.item;
-        
+
         // 初始化第一个模块数据，直接从 item 获取数据
         const initialModuleData = {
             ID: item.ID || '',
@@ -84,14 +85,16 @@ class CalibrationRecordEditZb extends Component {
             FxyLc: item.FxyLc || '',
             JlUnit: item.JlUnit || '',
             dialogType: saveItem,
-            TRQT:item.TRQT || '',
-            Remark:item.Remark || '',
+            TRQT: item.TRQT || '',
+            Remark: item.Remark || '',
+            // [pic1Name + '_PIC']: [],
+            // [pic2Name + '_PIC']: [],
         };
-        
+
         this.props.navigation.setOptions({
             title: item.ItemID + '校准记录表',
         });
-    
+
     }
 
     addNewModule = () => {
@@ -280,7 +283,7 @@ class CalibrationRecordEditZb extends Component {
         }
         let range = Number(max) - Number(min);
         // 校验零气浓度是否合理
-        
+
         if (this.testNumberException(this.state.modules[moduleIndex].LqNdz)) {
             ShowToast('零点校准 零气浓度值非法');
             this.updateModuleData(moduleIndex, {
@@ -299,7 +302,7 @@ class CalibrationRecordEditZb extends Component {
                 LdCalibrationIsOk: ''
             });
             return;
-        } 
+        }
 
         let LdCalibrationPreValue = this.state.modules[moduleIndex].LdCalibrationPreValue;
         if (this.testNumberException(LdCalibrationPreValue)) {
@@ -314,7 +317,7 @@ class CalibrationRecordEditZb extends Component {
         // 计算公式：(校前测试值-上次校准后测试值)/量程
         let result = accDiv(accSub(LdCalibrationPreValue, LdLastCalibrationValue), range);
         console.log('零点漂移计算结果:', result, '校前测试值:', LdCalibrationPreValue, '上次校准后测试值:', LdLastCalibrationValue, '量程:', range);
-        
+
         let signBit = '';
         if (result < 0) {
             signBit = '-';
@@ -345,9 +348,9 @@ class CalibrationRecordEditZb extends Component {
         } else {
             isOk = Math.abs(zhenshiLDPY) <= 0.025 ? '是' : '否';
         }
-        
+
         console.log('设置仪器校准是否正常:', isOk);
-        
+
         this.updateModuleData(moduleIndex, {
             LdPy: formattedResult,
             LdCalibrationIsOk: isOk
@@ -366,18 +369,18 @@ class CalibrationRecordEditZb extends Component {
                             {index === 0 && (
                                 <TouchableOpacity
                                     onPress={this.addNewModule}
-                                    style={{ 
-                                        marginLeft: 10, 
-                                        height: 24, 
-                                        width: 24, 
-                                        justifyContent: 'center', 
+                                    style={{
+                                        marginLeft: 10,
+                                        height: 24,
+                                        width: 24,
+                                        justifyContent: 'center',
                                         alignItems: 'center',
                                         backgroundColor: globalcolor.blue,
                                         borderRadius: 4
                                     }}
                                 >
-                                    <Text style={{ 
-                                        color: '#fff', 
+                                    <Text style={{
+                                        color: '#fff',
                                         fontSize: 20,
                                         fontWeight: '300',
                                         marginTop: -2,
@@ -388,18 +391,18 @@ class CalibrationRecordEditZb extends Component {
                             {index > 0 && (
                                 <TouchableOpacity
                                     onPress={() => this.removeModule(index)}
-                                    style={{ 
-                                        marginLeft: 10, 
-                                        height: 24, 
-                                        width: 24, 
-                                        justifyContent: 'center', 
+                                    style={{
+                                        marginLeft: 10,
+                                        height: 24,
+                                        width: 24,
+                                        justifyContent: 'center',
                                         alignItems: 'center',
                                         backgroundColor: globalcolor.orange,
                                         borderRadius: 4
                                     }}
                                 >
-                                    <Text style={{ 
-                                        color: '#fff', 
+                                    <Text style={{
+                                        color: '#fff',
                                         fontSize: 20,
                                         fontWeight: '300',
                                         marginTop: -2,
@@ -594,7 +597,41 @@ class CalibrationRecordEditZb extends Component {
             return '';
         }
     };
+    upLoadImg = (label,item) => {
+        return <>
+        <View style={[styles.labelStyle]}><Text style={[styles.labelStyle, propsLabelStyle, { color: 'red' }]}>*</Text> {label}：</View>
 
+        <View key={index} style={styles.imageUploadContainer}>
+            <ImageGrid
+                componentType={'taskhandle'}
+                style={{
+                    backgroundColor: '#fff',
+                }}
+                Imgs={this.state[item.id + '_PIC']}
+                isUpload={true}
+                isDel={true}
+                UUID={formData[item.id]}
+                uploadCallback={items => {
+                    console.log('items', items);
+                    // let newFormData = {...this.state.formData};
+                    // let newImgList = [].concat(
+                    //   this.state.formData[item.id] || [],
+                    // );
+                    let newImgList = [...this.state[item.id + '_PIC']];
+                    items.map(imageItem => {
+                        newImgList.push(imageItem);
+                    });
+                    this.setState({ [item.id + '_PIC']: newImgList });
+                }}
+                delCallback={index => {
+                    let newImgList = [...this.state[item.id + '_PIC']];
+                    newImgList.splice(index, 1);
+                    this.setState({ [item.id + '_PIC']: newImgList });
+                }}
+            />
+        </View>
+        </>
+    }
     render() {
         let Item = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
         let ItemId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ItemId'], '');
@@ -612,7 +649,7 @@ class CalibrationRecordEditZb extends Component {
          */
         const isSd = ItemId === '782'
 
-        const isBasicGas = ItemId==='770' || ItemId==='771' || ItemId==='772' || ItemId==='774' // SO2/NO/O2/NO2
+        const isBasicGas = ItemId === '770' || ItemId === '771' || ItemId === '772' || ItemId === '774' // SO2/NO/O2/NO2
         return (
             <View style={styles.container}>
                 {/* <KeyboardAwareScrollView> */}
@@ -670,7 +707,7 @@ class CalibrationRecordEditZb extends Component {
                                 />
                             </View>
                             <View
-                               style={[{ flexDirection: 'column', justifyContent: 'center' }]}
+                                style={[{ flexDirection: 'column', justifyContent: 'center' }]}
                             >
                                 <FormPicker
                                     last={false}
@@ -692,46 +729,46 @@ class CalibrationRecordEditZb extends Component {
                                 />
                             </View>
                             {isSd && <>
-                            <View
-                                style={[{ flexDirection: 'column', justifyContent: 'center' }]}
-                            >
-                                <FormPicker
-                                    last={false}
-                                    label="通入气体"
-                                    defaultCode={this.state.TRQT}
-                                    option={{
-                                        codeKey: 'Name',
-                                        nameKey: 'Name',
-                                        defaultCode: this.state.TRQT,
-                                        dataArr: [{Name:'空气'},{Name:'氮气'}],
-                                        onSelectListener: item => {
-                                            this.setState({
-                                                TRQT: item.Name
-                                            });
-                                        }
-                                    }}
-                                    showText={this.state.TRQT}
-                                    placeHolder="请选择"
-                                />
-                            </View>
-                            <View style={[styles.lastItem]}>
-                                        <Text style={[styles.labelStyle]}>通入气体测量值：</Text>
-                                        <MyTextInput
-                                            keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                                            value={this.state.TRKQDQCLZ}
-                                            ref={ref => (this._inputNewMachineHaltReason = ref)}
-                                            style={[styles.textStyle, { flex: 1 }]}
-                                            placeholder={'请输入'}
-                                            onChangeText={text => {
+                                <View
+                                    style={[{ flexDirection: 'column', justifyContent: 'center' }]}
+                                >
+                                    <FormPicker
+                                        last={false}
+                                        label="通入气体"
+                                        defaultCode={this.state.TRQT}
+                                        option={{
+                                            codeKey: 'Name',
+                                            nameKey: 'Name',
+                                            defaultCode: this.state.TRQT,
+                                            dataArr: [{ Name: '空气' }, { Name: '氮气' }],
+                                            onSelectListener: item => {
                                                 this.setState({
-                                                    TRKQDQCLZ: text
+                                                    TRQT: item.Name
                                                 });
-                                            }}
-                                        />
-                                    </View>
-                                    </>}
+                                            }
+                                        }}
+                                        showText={this.state.TRQT}
+                                        placeHolder="请选择"
+                                    />
+                                </View>
+                                <View style={[styles.lastItem]}>
+                                    <Text style={[styles.labelStyle]}>通入气体测量值：</Text>
+                                    <MyTextInput
+                                        keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
+                                        value={this.state.TRKQDQCLZ}
+                                        ref={ref => (this._inputNewMachineHaltReason = ref)}
+                                        style={[styles.textStyle, { flex: 1 }]}
+                                        placeholder={'请输入'}
+                                        onChangeText={text => {
+                                            this.setState({
+                                                TRKQDQCLZ: text
+                                            });
+                                        }}
+                                    />
+                                </View>
+                            </>}
                         </View>
-                     
+
                         {/* 使用 renderZeroCalibrationModule 渲染零点漂移校准模块 */}
                         {this.state.modules.map((module, index) => this.renderZeroCalibrationModule(module, index))}
                         {
@@ -959,33 +996,47 @@ class CalibrationRecordEditZb extends Component {
                             </View> : null
                         }
                         <View style={[
-                                    {
-                                        width: SCREEN_WIDTH - 24,
-                                        paddingHorizontal: 24,
-                                        borderRadius: 2,
-                                        backgroundColor: globalcolor.white,
-                                        marginTop: 10
-                                    }
-                                ]}>
-                                     <View style={[styles.lastItem]}>
-                                    <Text style={[styles.labelStyle]}>情况说明：</Text>
-                                    <MyTextInput
-                                        keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                                        value={this.state.Remark}
-                                        ref={ref => (this._inputMachineHaltReason = ref)}
-                                        style={[styles.textStyle, { flex: 1 }]}
-                                        placeholder={'请填写情况说明'}
-                                        multiline={true}
-                                        numberOfLines={2}
-                                        onChangeText={text => {
-                                            // 动态更新组件内State记录
-                                            this.setState({
-                                                Remark: text
-                                            });
-                                        }}
-                                    />
-                                    </View>
-                                </View>
+                            {
+                                width: SCREEN_WIDTH - 24,
+                                paddingHorizontal: 24,
+                                borderRadius: 2,
+                                backgroundColor: globalcolor.white,
+                                marginTop: 10
+                            }
+                        ]}>
+                            <View style={[styles.lastItem]}>
+                                <Text style={[styles.labelStyle]}>情况说明：</Text>
+                                <MyTextInput
+                                    keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
+                                    value={this.state.Remark}
+                                    ref={ref => (this._inputMachineHaltReason = ref)}
+                                    style={[styles.textStyle, { flex: 1 }]}
+                                    placeholder={'请填写情况说明'}
+                                    multiline={true}
+                                    numberOfLines={2}
+                                    onChangeText={text => {
+                                        // 动态更新组件内State记录
+                                        this.setState({
+                                            Remark: text
+                                        });
+                                    }}
+                                />
+                            </View>
+                        </View>
+                    </View >
+                    <View style={[
+                        {
+                            width: SCREEN_WIDTH - 24,
+                            paddingHorizontal: 24,
+                            borderRadius: 2,
+                            backgroundColor: globalcolor.white,
+                            marginTop: 10
+                        }
+                    ]}>
+
+                        <View style={[styles.labelStyle]}><Text style={[styles.labelStyle, propsLabelStyle, { color: 'red' }]}>*</Text>  校准前数值：</View>
+                        {/* {this.upLoadImg()} */}
+
                     </View >
                 </ScrollView >
                 {/* </KeyboardAwareScrollView> */}
@@ -994,19 +1045,19 @@ class CalibrationRecordEditZb extends Component {
                         this.props.route.params.params.item.FormMainID &&
                         ((this.props.route.params.params.item.LdCalibrationIsOk && this.props.route.params.params.item.LdCalibrationIsOk != '') ||
                             (this.props.route.params.params.item.LcCalibrationIsOk && this.props.route.params.params.item.LcCalibrationIsOk != '')) ? (
-                        <TouchableOpacity
-                            style={[styles.button, { backgroundColor: globalcolor.orange }, { marginVertical: 10 }]}
-                            onPress={() => {
-                                this.setState({ dialogType: deleteItem });
-                                this._modalParent.showModal();
-                            }}
-                        >
-                            <View style={styles.button}>
-                                <Image style={{ tintColor: globalcolor.white, height: 16, width: 18 }} resizeMode={'contain'} source={require('../../../../images/icon_submit.png')} />
-                                <Text style={[{ color: globalcolor.whiteFont, fontSize: 20, marginLeft: 8 }]}>删除记录</Text>
-                            </View>
-                        </TouchableOpacity>
-                    ) : null
+                            <TouchableOpacity
+                                style={[styles.button, { backgroundColor: globalcolor.orange }, { marginVertical: 10 }]}
+                                onPress={() => {
+                                    this.setState({ dialogType: deleteItem });
+                                    this._modalParent.showModal();
+                                }}
+                            >
+                                <View style={styles.button}>
+                                    <Image style={{ tintColor: globalcolor.white, height: 16, width: 18 }} resizeMode={'contain'} source={require('../../../../images/icon_submit.png')} />
+                                    <Text style={[{ color: globalcolor.whiteFont, fontSize: 20, marginLeft: 8 }]}>删除记录</Text>
+                                </View>
+                            </TouchableOpacity>
+                        ) : null
                 }
                 <TouchableOpacity
                     style={[styles.button, { backgroundColor: globalcolor.blue }, { marginVertical: 20 }]}
@@ -1061,7 +1112,7 @@ class CalibrationRecordEditZb extends Component {
                                 const moduleIndex = i + 1;
                                 const isFlowRate = ItemId === '780';
                                 const modulePrefix = isFlowRate ? `差压表 ${this.props.route.params.params.index + moduleIndex} 中` : '';
-                                
+
                                 if (SentencedToEmpty(module, ['LqNdz'], '') == '') {
                                     ShowToast(`${modulePrefix}零气浓度不能为空`);
                                     return;
@@ -1127,7 +1178,7 @@ class CalibrationRecordEditZb extends Component {
                             FxyLc: this.state.FxyLc,
                             JlUnit: this.state.JlUnit,
                             ModuleIndex: index,
-                            TRQT:this.state.TRQT,
+                            TRQT: this.state.TRQT,
                         }));
                         console.log('submitData', submitData);
                         // return;

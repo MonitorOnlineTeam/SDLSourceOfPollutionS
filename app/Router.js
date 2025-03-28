@@ -2,7 +2,7 @@
  * @Description:
  * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2025-03-27 14:33:41
+ * @LastEditTime: 2025-03-28 08:54:28
  * @FilePath: /SDLSourceOfPollutionS_dev/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
@@ -246,6 +246,8 @@ import QualityControlDailyRecord from './pOperationContainers/qualityControl/Qua
 import QualityControlRecordDetail from './pOperationContainers/qualityControl/QualityControlRecordDetail';
 import IndicationErrorAndResponseTimeList from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeList';
 import IndicationErrorAndResponseTimeEditor from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeEditor';
+import Patrol_CEM from './operationContainers/taskViews/taskExecution/formViews/Patrol_CEM';
+import SignaturePage from './operationContainers/taskViews/taskExecution/formViews/components/SignaturePage';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
 
 import CalibrationRecordListZb from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordListZb';
@@ -586,6 +588,9 @@ Actions.pushViewWithName(CalibrationRecordListZb, 'CalibrationRecordListZb', { t
 Actions.pushViewWithName(CalibrationRecordTimeZb, 'CalibrationRecordTimeZb', { title: '校准执行时间' });
 Actions.pushViewWithName(CalibrationRecordEditZb, 'CalibrationRecordEditZb', { title: '校准记录表' });
 
+// 巡检完全抽取法
+Actions.pushViewWithName(Patrol_CEM, 'Patrol_CEM', { title: '完全抽取法CEMS日常巡检记录表' });
+Actions.pushViewWithName(SignaturePage, 'SignaturePage', { title: '签名'});
 
 Actions.pushView(Test, { headerShown: false });
 

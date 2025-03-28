@@ -30,6 +30,7 @@ import notice from './notice';
 import bdRecordModel from './formModels/bdRecordModel';
 // import patrolRecordModel from './formModels/patrolRecordModel';
 import calibrationRecord from './formModels/calibrationRecord';
+import patrolModel from './formModels/patrolModel';
 // import equipmentAbnormal from './formModels/equipmentAbnormal';
 // import machineryMaintenanceModel from './formModels/machineryMaintenanceModel';
 import imageFormModel from './formModels/imageFormModel';
@@ -108,6 +109,7 @@ export function registerModels(app) {
     app.model(bdRecordModel); //比对校验
     // app.model(patrolRecordModel); //巡检
     app.model(calibrationRecord); //零点量程漂移与校准
+    app.model(patrolModel); //巡检
     // app.model(equipmentAbnormal); //异常数据
     // app.model(machineryMaintenanceModel); //设备保养
     // app.model(repairRecordModel); //维修记录表

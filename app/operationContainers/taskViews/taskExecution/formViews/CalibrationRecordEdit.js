@@ -83,8 +83,8 @@ class CalibrationRecordEdit extends Component {
             FxyYl: item.FxyYl || '',
             FxyLc: item.FxyLc || '',
             JlUnit: item.JlUnit || '',
-            dialogType: saveItem
-        };
+                dialogType: saveItem
+            };
 
         this.props.navigation.setOptions({
             title: item.ItemID + '校准记录表',
@@ -296,7 +296,7 @@ class CalibrationRecordEdit extends Component {
                 LdCalibrationIsOk: ''
             });
             return;
-        } 
+        }
 
         let LdCalibrationPreValue = this.state.modules[moduleIndex].LdCalibrationPreValue;
         if (this.testNumberException(LdCalibrationPreValue)) {
@@ -339,7 +339,7 @@ class CalibrationRecordEdit extends Component {
         } else if (this.state.ItemId == '543') {
             // ItemID: "流速"   ItemId: "543"
             isOk = Math.abs(zhenshiLDPY) <= 0.03 ? '是' : '否';
-        } else {
+            } else {
             isOk = Math.abs(zhenshiLDPY) <= 0.025 ? '是' : '否';
         }
         
@@ -992,20 +992,20 @@ class CalibrationRecordEdit extends Component {
                                 
                                 if (SentencedToEmpty(module, ['LqNdz'], '') == '') {
                                     ShowToast(`${modulePrefix}零气浓度不能为空`);
-                                    return;
+                                return;
                                 } else if (SentencedToEmpty(module, ['LdLastCalibrationValue'], '') == '') {
                                     ShowToast(`${modulePrefix}零点上次校准后测试值不能为空`);
-                                    return;
+                                return;
                                 } else if (SentencedToEmpty(module, ['LdCalibrationPreValue'], '') == '') {
                                     ShowToast(`${modulePrefix}零点校准前测试值不能为空`);
-                                    return;
+                                return;
                                 } else if (SentencedToEmpty(module, ['LdPy'], '') == ''
                                     || SentencedToEmpty(module, ['LdCalibrationIsOk'], '') == '') {
                                     ShowToast(`${modulePrefix}零点漂移未进行计算，无法提交`);
-                                    return;
+                                return;
                                 } else if (SentencedToEmpty(module, ['LdCalibrationSufValue'], '') == '') {
                                     ShowToast(`${modulePrefix}零点校准后测试值不能为空`);
-                                    return;
+                                return;
                                 }
                             }
                         }
