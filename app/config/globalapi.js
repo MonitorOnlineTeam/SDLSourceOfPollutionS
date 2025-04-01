@@ -767,6 +767,50 @@ export default api = {
             DeleteErrorSystemResponseRecordInfo: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecordInfo', // 删除示值误差及响应时间
             // 删除示值误差及响应时间整个表单
             DeleteErrorSystemResponseRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecord', // 删除示值误差及响应时间
+        
+             /**
+             * 淄博项目 校准
+             */
+            GetJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/GetCemsCalibrationRecordZB', // 获取单个任务的校准记录
+            AddOrUpdateJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateCemsCalibrationRecordListZB', // 新增或更新校准记录  
+            GetJzItemZBCEMS: 'rest/PollutantSourceApi/GasOperationFormApi/GetJzItemZBCEMS', // 废气校准
+            DeleteJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/GetJzItemZBCEMS', //删除指定任务的校准表单数据
+
+            /**
+             * 2025.3.26
+             * 淄博巡检
+             */
+            // 添加修改完全抽取法 CEMS 日常巡检
+            AddOrUpdateAllExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateAllExInspectionRecord', // 淄博巡检
+            // 获取完全抽取法 CEMS 日常巡检
+            GetAllExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/GetAllExInspectionRecord',
+            // 删除完全抽取法 CEMS 日常巡检
+            DeleteAllExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteAllExInspectionRecord',
+            // 添加修改稀释采样法 CEMS 日常巡检
+            AddOrUpdateXSExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateXSExInspectionRecord',
+            // 获取稀释采样法 CEMS 日常巡检
+            GetXSExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/GetXSExInspectionRecord',
+            // 删除稀释采样法 CEMS 日常巡检
+            DeleteXSExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteXSExInspectionRecord',
+            // 添加修改直接测量法 CEMS 日常巡检
+            AddOrUpdateZJExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateZJExInspectionRecord',
+            // 获取直接测量法 CEMS 日常巡检
+            GetZJExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/GetZJExInspectionRecord',
+            // 删除直接测量法 CEMS 日常巡检
+            DeleteZJExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteZJExInspectionRecord',
+            // 获取 VOCs 监测日常巡检
+            GetVOCsExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/GetVOCsExInspectionRecord',
+            // 添加修改 VOCs 监测日常巡检
+            AddOrUpdateVOCsExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateVOCsExInspectionRecord',
+            // 删除 VOCs 监测日常巡检
+            DeleteVOCsExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteVOCsExInspectionRecord',
+            // 添加修改废水监测日常巡检
+            AddOrUpdateFSExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateFSExInspectionRecord',
+            // 获取废水监测日常巡检
+            GetFSExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/GetFSExInspectionRecord',
+            // 删除废水监测日常巡检
+            DeleteFSExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteFSExInspectionRecord',
+            
         },
         /**
          * 2022.11.30

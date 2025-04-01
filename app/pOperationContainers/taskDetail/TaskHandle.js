@@ -446,6 +446,18 @@ export default class TaskHandle extends Component {
                                 })
                             );
                             break;
+                        case 76: // 巡检完全抽取法
+                        case 77: // 巡检稀释采样法
+                        case 78: // 巡检直接测量法
+                        case 79: // 巡检 VOCs 监测
+                        case 80: // 巡检废水
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'Patrol_CEM',
+                                    params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
+                                })
+                            );
+                            break;
                         case 59: // 异常小时数记录 废气
                         case 58: // 异常小时数记录 废水
                             this.props.dispatch(
@@ -554,6 +566,25 @@ export default class TaskHandle extends Component {
                             break;
                         case 19: // 实际水样比对试验结果记录表 水污染源校验记录
                             this.props.dispatch(NavigationActions.navigate({ routeName: 'WaterSampleComparisonTestForm', params: { item } }));
+                            break;
+                        /**淄博项目 */
+                        case 82: //零点量程漂移校准 淄博
+                            this.props.dispatch(
+                                createAction('calibrationRecordZb/updateState')({
+                                    liststatus: { status: -1 },
+                                    JzConfigItemResult: { status: -1 },
+                                    JzConfigItemSelectedList: [],
+                                    TypeID: item.TypeID,
+                                    TaskID: item.TaskID
+                                })
+                            );
+                            this.props.dispatch(createAction('calibrationRecordZb/getJzItem')({ ...item, createForm: true }));
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'CalibrationRecordListZb',
+                                    params: { ...item, createForm: true }
+                                })
+                            );
                             break;
                     }
                 }
@@ -681,7 +712,7 @@ export default class TaskHandle extends Component {
                             isDel={this.isEdit()}
                             UUID={SentencedToEmpty(taskDetail, ['AttachmentsId'], taskID)}
                             uploadCallback={items => {
-                                console.log('uploadCallback');
+                                console.log('uploadCallback', items);
                                 let newTaskDetail = { ...taskDetail };
                                 // let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], [])); 
                                 let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []));
@@ -694,7 +725,7 @@ export default class TaskHandle extends Component {
                                 this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
                             }}
                             delCallback={index => {
-                                console.log('delCallback');
+                                console.log('delCallback=', index);
                                 let newTaskDetail = { ...taskDetail };
                                 // let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], []));
                                 let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []));

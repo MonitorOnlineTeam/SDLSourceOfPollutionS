@@ -15,23 +15,24 @@ import FormRangInput from '../components/FormRangInput';
 import FormInput from '../components/FormInput';
 import FormPicker from '../components/FormPicker';
 import { accAdd, accSub, accMul, accDiv } from '../../../../utils/numutil'
+import ImageGrid from '../../../../components/form/images/ImageGrid';
 
 const saveItem = 0;
 const deleteItem = 1;
 const rangSeparator = '-';
 /**
- * 校准记录表
+ * 校准记录表 淄博
  */
 
 // create a component
-@connect(({ calibrationRecord }) => ({
-    RecordList: calibrationRecord.RecordList,
-    unitsList: calibrationRecord.unitsList,
-    editstatus: calibrationRecord.editstatus,
-    JzConfigItemSelectedList: calibrationRecord.JzConfigItemSelectedList
+@connect(({ calibrationRecordZb }) => ({
+    RecordList: calibrationRecordZb.RecordList,
+    unitsList: calibrationRecordZb.unitsList,
+    editstatus: calibrationRecordZb.editstatus,
+    JzConfigItemSelectedList: calibrationRecordZb.JzConfigItemSelectedList
 }))
 // @connect() 
-class CalibrationRecordEdit extends Component {
+class CalibrationRecordEditZb extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerMode: 'float',
@@ -51,7 +52,7 @@ class CalibrationRecordEdit extends Component {
     constructor(props) {
         super(props);
         const item = props.route.params.params.item;
-        
+
         // 初始化第一个模块数据，直接从 item 获取数据
         const initialModuleData = {
             ID: item.ID || '',
@@ -83,12 +84,17 @@ class CalibrationRecordEdit extends Component {
             FxyYl: item.FxyYl || '',
             FxyLc: item.FxyLc || '',
             JlUnit: item.JlUnit || '',
-                dialogType: saveItem
-            };
+            dialogType: saveItem,
+            TRQT: item.TRQT || '',
+            Remark: item.Remark || '',
+            // [pic1Name + '_PIC']: [],
+            // [pic2Name + '_PIC']: [],
+        };
 
         this.props.navigation.setOptions({
             title: item.ItemID + '校准记录表',
         });
+
     }
 
     addNewModule = () => {
@@ -142,10 +148,10 @@ class CalibrationRecordEdit extends Component {
                             //dialog确定
                             if (this.state.dialogType == deleteItem) {
                                 //删除记录
-                                this.props.dispatch(createAction('calibrationRecord/updateState')({
+                                this.props.dispatch(createAction('calibrationRecordZb/updateState')({
                                     jzDeleteResult: { status: -1 }
                                 }));
-                                this.props.dispatch(createAction('calibrationRecord/deleteJzItem')({
+                                this.props.dispatch(createAction('calibrationRecordZb/deleteJzItem')({
                                     params: { ID: SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ID'], 'empty') },
                                     callback: () => {
                                         let index = this.props.JzConfigItemSelectedList.findIndex((seletedItem, selectedIndex) => {
@@ -158,21 +164,21 @@ class CalibrationRecordEdit extends Component {
                                         if (index != -1) {
                                             let newData = this.props.JzConfigItemSelectedList.concat([]);
                                             newData.splice(index, 1);
-                                            this.props.dispatch(createAction('calibrationRecord/updateState')({
+                                            this.props.dispatch(createAction('calibrationRecordZb/updateState')({
                                                 JzConfigItemSelectedList: newData, liststatus: { status: -1 }, JzConfigItemResult: { status: -1 },
                                             }));
                                         }
                                         this.props.dispatch(NavigationActions.back());
-                                        this.props.dispatch(createAction('calibrationRecord/getJzItem')({}));
+                                        this.props.dispatch(createAction('calibrationRecordZb/getJzItem')({}));
                                     }
                                 }));
                             } else {
                                 this.props.dispatch(
-                                    createAction('calibrationRecord/saveItem')({
+                                    createAction('calibrationRecordZb/saveItem')({
                                         index: this.props.route.params.params.index,
                                         record: this.state,
                                         callback: () => {
-                                            this.props.dispatch(createAction('calibrationRecord/getInfo')({ createForm: false }));
+                                            this.props.dispatch(createAction('calibrationRecordZb/getInfo')({ createForm: false }));
                                             this._modalParent.hideModal();
                                             this.props.dispatch(NavigationActions.back());
                                         }
@@ -277,7 +283,7 @@ class CalibrationRecordEdit extends Component {
         }
         let range = Number(max) - Number(min);
         // 校验零气浓度是否合理
-        
+
         if (this.testNumberException(this.state.modules[moduleIndex].LqNdz)) {
             ShowToast('零点校准 零气浓度值非法');
             this.updateModuleData(moduleIndex, {
@@ -311,7 +317,7 @@ class CalibrationRecordEdit extends Component {
         // 计算公式：(校前测试值-上次校准后测试值)/量程
         let result = accDiv(accSub(LdCalibrationPreValue, LdLastCalibrationValue), range);
         console.log('零点漂移计算结果:', result, '校前测试值:', LdCalibrationPreValue, '上次校准后测试值:', LdLastCalibrationValue, '量程:', range);
-        
+
         let signBit = '';
         if (result < 0) {
             signBit = '-';
@@ -333,18 +339,18 @@ class CalibrationRecordEdit extends Component {
         console.log('格式化后的零点漂移结果:', formattedResult);
 
         let isOk = '';
-        if (this.state.ItemId == '160') {
-            //ItemID: "颗粒物"  ItemId: "160"
+        if (this.state.ItemId == '773') {
+            //ItemID: "颗粒物"  ItemId: "773"
             isOk = Math.abs(zhenshiLDPY) <= 0.02 ? '是' : '否';
-        } else if (this.state.ItemId == '543') {
-            // ItemID: "流速"   ItemId: "543"
+        } else if (this.state.ItemId == '780') {
+            // ItemID: "流速"   ItemId: "780"
             isOk = Math.abs(zhenshiLDPY) <= 0.03 ? '是' : '否';
-            } else {
+        } else {
             isOk = Math.abs(zhenshiLDPY) <= 0.025 ? '是' : '否';
         }
-        
+
         console.log('设置仪器校准是否正常:', isOk);
-        
+
         this.updateModuleData(moduleIndex, {
             LdPy: formattedResult,
             LdCalibrationIsOk: isOk
@@ -356,25 +362,25 @@ class CalibrationRecordEdit extends Component {
             <View key={index} style={{ marginTop: index > 0 ? 20 : 0 }}>
                 <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 28 }]}>
                     <Text style={[{ color: '#333333', flex: 1, marginVertical: 12 }]}>
-                        {this.state.ItemId === '543' ? `零点漂移校准（差压表 ${this.props.route.params.params.index + index + 1})` : '零点漂移校准'}
+                        {this.state.ItemId === '780' ? `零点漂移校准（差压表 ${this.props.route.params.params.index + index + 1})` : '零点漂移校准'}
                     </Text>
-                    {this.state.ItemId === '543' && (
+                    {this.state.ItemId === '780' && (
                         <View style={{ flexDirection: 'row' }}>
                             {index === 0 && (
                                 <TouchableOpacity
                                     onPress={this.addNewModule}
-                                    style={{ 
-                                        marginLeft: 10, 
-                                        height: 24, 
-                                        width: 24, 
-                                        justifyContent: 'center', 
+                                    style={{
+                                        marginLeft: 10,
+                                        height: 24,
+                                        width: 24,
+                                        justifyContent: 'center',
                                         alignItems: 'center',
                                         backgroundColor: globalcolor.blue,
                                         borderRadius: 4
                                     }}
                                 >
-                                    <Text style={{ 
-                                        color: '#fff', 
+                                    <Text style={{
+                                        color: '#fff',
                                         fontSize: 20,
                                         fontWeight: '300',
                                         marginTop: -2,
@@ -385,18 +391,18 @@ class CalibrationRecordEdit extends Component {
                             {index > 0 && (
                                 <TouchableOpacity
                                     onPress={() => this.removeModule(index)}
-                                    style={{ 
-                                        marginLeft: 10, 
-                                        height: 24, 
-                                        width: 24, 
-                                        justifyContent: 'center', 
+                                    style={{
+                                        marginLeft: 10,
+                                        height: 24,
+                                        width: 24,
+                                        justifyContent: 'center',
                                         alignItems: 'center',
                                         backgroundColor: globalcolor.orange,
                                         borderRadius: 4
                                     }}
                                 >
-                                    <Text style={{ 
-                                        color: '#fff', 
+                                    <Text style={{
+                                        color: '#fff',
                                         fontSize: 20,
                                         fontWeight: '300',
                                         marginTop: -2,
@@ -553,15 +559,15 @@ class CalibrationRecordEdit extends Component {
         // let zhenshiLCPY = result / 10000;
         let zhenshiLCPY = result;
         let ItemId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ItemId'], '');
-        if (ItemId == '160') {
-            //ItemID: "颗粒物"  ItemId: "160"
+        if (ItemId == '773') {
+            //ItemID: "颗粒物"  ItemId: "773"
             if (Math.abs(zhenshiLCPY) <= 0.02) {
                 this.setState({ LcCalibrationIsOk: '是', LcPy: signBit + (prefix == '' ? 0 : prefix) + '.' + (suffixLength == 2 ? suffix : suffixLength == 1 ? '0' + suffix : '00') + '%' });
             } else {
                 this.setState({ LcCalibrationIsOk: '否', LcPy: signBit + (prefix == '' ? 0 : prefix) + '.' + (suffixLength == 2 ? suffix : suffixLength == 1 ? '0' + suffix : '00') + '%' });
             }
-        } else if (ItemId == '543') {
-            // ItemID: "流速"   ItemId: "543"
+        } else if (ItemId == '780') {
+            // ItemID: "流速"   ItemId: "780"
             if (Math.abs(zhenshiLCPY) <= 0.03) {
                 this.setState({ LcCalibrationIsOk: '是', LcPy: signBit + (prefix == '' ? 0 : prefix) + '.' + (suffixLength == 2 ? suffix : suffixLength == 1 ? '0' + suffix : '00') + '%' });
             } else {
@@ -591,20 +597,59 @@ class CalibrationRecordEdit extends Component {
             return '';
         }
     };
+    upLoadImg = (label,item) => {
+        return <>
+        <View style={[styles.labelStyle]}><Text style={[styles.labelStyle, propsLabelStyle, { color: 'red' }]}>*</Text> {label}：</View>
 
+        <View key={index} style={styles.imageUploadContainer}>
+            <ImageGrid
+                componentType={'taskhandle'}
+                style={{
+                    backgroundColor: '#fff',
+                }}
+                Imgs={this.state[item.id + '_PIC']}
+                isUpload={true}
+                isDel={true}
+                UUID={formData[item.id]}
+                uploadCallback={items => {
+                    console.log('items', items);
+                    // let newFormData = {...this.state.formData};
+                    // let newImgList = [].concat(
+                    //   this.state.formData[item.id] || [],
+                    // );
+                    let newImgList = [...this.state[item.id + '_PIC']];
+                    items.map(imageItem => {
+                        newImgList.push(imageItem);
+                    });
+                    this.setState({ [item.id + '_PIC']: newImgList });
+                }}
+                delCallback={index => {
+                    let newImgList = [...this.state[item.id + '_PIC']];
+                    newImgList.splice(index, 1);
+                    this.setState({ [item.id + '_PIC']: newImgList });
+                }}
+            />
+        </View>
+        </>
+    }
     render() {
         let Item = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
         let ItemId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ItemId'], '');
         /**
-         * ItemID == 543
+         * ItemID == 780
          * 流速不需要填写量程校准
          * 
-         * '160': '颗粒物',
+         * '773': '颗粒物',
+         * 
+         * '782': '湿度',
          * 
          * IsPiaoYi
          * IsLiangCheng
          * 1表示必填
          */
+        const isSd = ItemId === '782'
+
+        const isBasicGas = ItemId === '770' || ItemId === '771' || ItemId === '772' || ItemId === '774' // SO2/NO/O2/NO2
         return (
             <View style={styles.container}>
                 {/* <KeyboardAwareScrollView> */}
@@ -662,14 +707,10 @@ class CalibrationRecordEdit extends Component {
                                 />
                             </View>
                             <View
-                                style={[
-                                    {
-                                        width: SCREEN_WIDTH - 72
-                                    }
-                                ]}
+                                style={[{ flexDirection: 'column', justifyContent: 'center' }]}
                             >
                                 <FormPicker
-                                    last={true}
+                                    last={false}
                                     label="计量单位"
                                     defaultCode={this.state.JlUnit}
                                     option={{
@@ -687,12 +728,52 @@ class CalibrationRecordEdit extends Component {
                                     placeHolder="请选择"
                                 />
                             </View>
+                            {isSd && <>
+                                <View
+                                    style={[{ flexDirection: 'column', justifyContent: 'center' }]}
+                                >
+                                    <FormPicker
+                                        last={false}
+                                        label="通入气体"
+                                        defaultCode={this.state.TRQT}
+                                        option={{
+                                            codeKey: 'Name',
+                                            nameKey: 'Name',
+                                            defaultCode: this.state.TRQT,
+                                            dataArr: [{ Name: '空气' }, { Name: '氮气' }],
+                                            onSelectListener: item => {
+                                                this.setState({
+                                                    TRQT: item.Name
+                                                });
+                                            }
+                                        }}
+                                        showText={this.state.TRQT}
+                                        placeHolder="请选择"
+                                    />
+                                </View>
+                                <View style={[styles.lastItem]}>
+                                    <Text style={[styles.labelStyle]}>通入气体测量值：</Text>
+                                    <MyTextInput
+                                        keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
+                                        value={this.state.TRKQDQCLZ}
+                                        ref={ref => (this._inputNewMachineHaltReason = ref)}
+                                        style={[styles.textStyle, { flex: 1 }]}
+                                        placeholder={'请输入'}
+                                        onChangeText={text => {
+                                            this.setState({
+                                                TRKQDQCLZ: text
+                                            });
+                                        }}
+                                    />
+                                </View>
+                            </>}
                         </View>
+
                         {/* 使用 renderZeroCalibrationModule 渲染零点漂移校准模块 */}
                         {this.state.modules.map((module, index) => this.renderZeroCalibrationModule(module, index))}
                         {
-                            // ItemID: "流速"   ItemId: "543"
-                            ItemId != '543' ? <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 24 }]}>
+                            // ItemID: "流速"   ItemId: "780"
+                            ItemId != '780' ? <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 24 }]}>
                                 <Text
                                     style={[
                                         {
@@ -706,8 +787,8 @@ class CalibrationRecordEdit extends Component {
                                 </Text>
                             </View> : null
                         }
-                        {   // ItemID: "流速"   ItemId: "543"
-                            ItemId != '543' ? <View
+                        {   // ItemID: "流速"   ItemId: "780"
+                            ItemId != '780' ? <View
                                 style={[
                                     {
                                         width: SCREEN_WIDTH - 24,
@@ -719,7 +800,7 @@ class CalibrationRecordEdit extends Component {
                                 ]}
                             >
                                 {
-                                    ItemId != '543' && ItemId != '160'
+                                    ItemId != '780' && ItemId != '773'
                                         ? <View
                                             style={[{
                                                 flexDirection: 'row', alignItems: 'center'
@@ -794,7 +875,7 @@ class CalibrationRecordEdit extends Component {
                                 }
                                 {
                                     this.state.IsChange === 0 ? <View style={[styles.layoutWithBottomBorder
-                                        , ItemId != '543' && ItemId != '160' ? { marginTop: 0 } : null]}>
+                                        , ItemId != '780' && ItemId != '773' ? { marginTop: 0 } : null]}>
                                         <Text style={[styles.labelStyle]}>标气浓度值：</Text>
                                         <MyTextInput
                                             keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
@@ -872,8 +953,8 @@ class CalibrationRecordEdit extends Component {
                             </View> : null
                         }
                         {
-                            // ItemID: "流速"   ItemId: "543"
-                            ItemId != '543' ? <View
+                            // ItemID: "流速"   ItemId: "780"
+                            ItemId != '780' ? <View
                                 style={[
                                     {
                                         width: SCREEN_WIDTH - 24,
@@ -914,6 +995,48 @@ class CalibrationRecordEdit extends Component {
                                 </View>
                             </View> : null
                         }
+                        <View style={[
+                            {
+                                width: SCREEN_WIDTH - 24,
+                                paddingHorizontal: 24,
+                                borderRadius: 2,
+                                backgroundColor: globalcolor.white,
+                                marginTop: 10
+                            }
+                        ]}>
+                            <View style={[styles.lastItem]}>
+                                <Text style={[styles.labelStyle]}>情况说明：</Text>
+                                <MyTextInput
+                                    keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
+                                    value={this.state.Remark}
+                                    ref={ref => (this._inputMachineHaltReason = ref)}
+                                    style={[styles.textStyle, { flex: 1 }]}
+                                    placeholder={'请填写情况说明'}
+                                    multiline={true}
+                                    numberOfLines={2}
+                                    onChangeText={text => {
+                                        // 动态更新组件内State记录
+                                        this.setState({
+                                            Remark: text
+                                        });
+                                    }}
+                                />
+                            </View>
+                        </View>
+                    </View >
+                    <View style={[
+                        {
+                            width: SCREEN_WIDTH - 24,
+                            paddingHorizontal: 24,
+                            borderRadius: 2,
+                            backgroundColor: globalcolor.white,
+                            marginTop: 10
+                        }
+                    ]}>
+
+                        <View style={[styles.labelStyle]}><Text style={[styles.labelStyle, propsLabelStyle, { color: 'red' }]}>*</Text>  校准前数值：</View>
+                        {/* {this.upLoadImg()} */}
+
                     </View >
                 </ScrollView >
                 {/* </KeyboardAwareScrollView> */}
@@ -922,19 +1045,19 @@ class CalibrationRecordEdit extends Component {
                         this.props.route.params.params.item.FormMainID &&
                         ((this.props.route.params.params.item.LdCalibrationIsOk && this.props.route.params.params.item.LdCalibrationIsOk != '') ||
                             (this.props.route.params.params.item.LcCalibrationIsOk && this.props.route.params.params.item.LcCalibrationIsOk != '')) ? (
-                        <TouchableOpacity
-                            style={[styles.button, { backgroundColor: globalcolor.orange }, { marginVertical: 10 }]}
-                            onPress={() => {
-                                this.setState({ dialogType: deleteItem });
-                                this._modalParent.showModal();
-                            }}
-                        >
-                            <View style={styles.button}>
-                                <Image style={{ tintColor: globalcolor.white, height: 16, width: 18 }} resizeMode={'contain'} source={require('../../../../images/icon_submit.png')} />
-                                <Text style={[{ color: globalcolor.whiteFont, fontSize: 20, marginLeft: 8 }]}>删除记录</Text>
-                            </View>
-                        </TouchableOpacity>
-                    ) : null
+                            <TouchableOpacity
+                                style={[styles.button, { backgroundColor: globalcolor.orange }, { marginVertical: 10 }]}
+                                onPress={() => {
+                                    this.setState({ dialogType: deleteItem });
+                                    this._modalParent.showModal();
+                                }}
+                            >
+                                <View style={styles.button}>
+                                    <Image style={{ tintColor: globalcolor.white, height: 16, width: 18 }} resizeMode={'contain'} source={require('../../../../images/icon_submit.png')} />
+                                    <Text style={[{ color: globalcolor.whiteFont, fontSize: 20, marginLeft: 8 }]}>删除记录</Text>
+                                </View>
+                            </TouchableOpacity>
+                        ) : null
                 }
                 <TouchableOpacity
                     style={[styles.button, { backgroundColor: globalcolor.blue }, { marginVertical: 20 }]}
@@ -987,30 +1110,30 @@ class CalibrationRecordEdit extends Component {
                             for (let i = 0; i < this.state.modules.length; i++) {
                                 const module = this.state.modules[i];
                                 const moduleIndex = i + 1;
-                                const isFlowRate = ItemId === '543';
+                                const isFlowRate = ItemId === '780';
                                 const modulePrefix = isFlowRate ? `差压表 ${this.props.route.params.params.index + moduleIndex} 中` : '';
-                                
+
                                 if (SentencedToEmpty(module, ['LqNdz'], '') == '') {
                                     ShowToast(`${modulePrefix}零气浓度不能为空`);
-                                return;
+                                    return;
                                 } else if (SentencedToEmpty(module, ['LdLastCalibrationValue'], '') == '') {
                                     ShowToast(`${modulePrefix}零点上次校准后测试值不能为空`);
-                                return;
+                                    return;
                                 } else if (SentencedToEmpty(module, ['LdCalibrationPreValue'], '') == '') {
                                     ShowToast(`${modulePrefix}零点校准前测试值不能为空`);
-                                return;
+                                    return;
                                 } else if (SentencedToEmpty(module, ['LdPy'], '') == ''
                                     || SentencedToEmpty(module, ['LdCalibrationIsOk'], '') == '') {
                                     ShowToast(`${modulePrefix}零点漂移未进行计算，无法提交`);
-                                return;
+                                    return;
                                 } else if (SentencedToEmpty(module, ['LdCalibrationSufValue'], '') == '') {
                                     ShowToast(`${modulePrefix}零点校准后测试值不能为空`);
-                                return;
+                                    return;
                                 }
                             }
                         }
                         let ItemId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ItemId'], '');
-                        if (IsLiangCheng == 1 && ItemId != '543') {
+                        if (IsLiangCheng == 1 && ItemId != '780') {
                             if (SentencedToEmpty(this.state, ['BqNdz'], '') == '') {
                                 ShowToast('标气浓度不能为空');
                                 return;
@@ -1054,20 +1177,21 @@ class CalibrationRecordEdit extends Component {
                             FxyYl: this.state.FxyYl,
                             FxyLc: this.state.FxyLc,
                             JlUnit: this.state.JlUnit,
-                            ModuleIndex: index
+                            ModuleIndex: index,
+                            TRQT: this.state.TRQT,
                         }));
                         console.log('submitData', submitData);
                         // return;
 
                         this.props.dispatch(
-                            createAction('calibrationRecord/saveItem')({
+                            createAction('calibrationRecordZb/saveItem')({
                                 index: this.props.route.params.params.index,
                                 record: submitData,
                                 callback: () => {
-                                    this.props.dispatch(createAction('calibrationRecord/updateState')({
+                                    this.props.dispatch(createAction('calibrationRecordZb/updateState')({
                                         liststatus: { status: -1 }
                                     }));
-                                    this.props.dispatch(createAction('calibrationRecord/getJzItem')({}));
+                                    this.props.dispatch(createAction('calibrationRecordZb/getJzItem')({}));
                                     this.props.dispatch(NavigationActions.back());
                                 }
                             })
@@ -1166,4 +1290,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default CalibrationRecordEdit;
+export default CalibrationRecordEditZb;
