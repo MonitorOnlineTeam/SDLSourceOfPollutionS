@@ -42,8 +42,31 @@ class Patrol_CEM extends Component {
   constructor(props) {
     super(props);
     this.state = this.initState();
+
+    let title = '';
+    switch (props.route.params.params.TypeID) {
+      case 76:
+        title = '完全抽取法 CEMS 日常巡检';
+        break;
+      case 77:
+        title = '稀释采样法 CEMS 日常巡检';
+        break;
+      case 78:
+        title = '直接测量法 CEMS 日常巡检';
+        break;
+      case 79:
+        title = 'VOCs 日常巡检';
+        break;
+      case 80:
+        title = '废水巡检维护';
+        break;
+    }
+    props.navigation.setOptions({
+      title: title,
+    });
   }
 
+  // 初始化状态
   initState = () => {
     const {ID, FormMainID} = this.props.route.params.params;
     let pic1Name, pic2Name;
@@ -71,23 +94,15 @@ class Patrol_CEM extends Component {
       [pic2Name + '_PIC']: [],
       signContent: '', // 签名内容
       sections: FORM_CONST[ID],
+      Content: {},
     };
   };
 
   componentDidMount() {
     this.GetAllRecord();
-    // 初始化 Redux state
-    this.props.dispatch(
-      createAction('patrolModel/updateState')({
-        workTimeStart: '2021-11-12 15:00:00',
-        workTimeEnd: '2021-11-12 15:00:00',
-        maintenanceStartTime: moment().format('YYYY-MM-DD HH:00:00'),
-        maintenanceEndTime: moment().format('YYYY-MM-DD HH:00:00'),
-      }),
-    );
   }
 
-  // 获取 CEMS 日常巡检
+  // 获取 CEMS 日常巡检  
   GetAllRecord = () => {
     this.setState({loading: true});
     const {TaskID, TypeID} = this.props.route.params.params;
@@ -145,6 +160,7 @@ class Patrol_CEM extends Component {
               FormMainID: RecordList?.Data?.FormMainID || prevState.FormMainID, // 防止添加后，再次进入FormMainID是假的情况
               signContent: Main?.SignContent || '',
               signTime: Main?.SignTime || '',
+              Content: Main?.Content || {},
             }));
           }
           this.setState({loading: false});
@@ -155,19 +171,36 @@ class Patrol_CEM extends Component {
 
   // 添加修改完全抽取法 CEMS 日常巡检
   onSubmit = () => {
-    this.setState({loading: true});
     const {TaskID, ID, TypeID} = this.props.route.params.params;
-    const {signContent} = this.state;
+    const {signContent, Content, formData, pic1Name, pic2Name} = this.state;
+
+    if (!Content.MaintenanceBeginTime || !Content.MaintenanceEndTime) {
+      ShowToast('请选择运行维护开始时间和结束时间');
+      return;
+    }
+    if (!signContent) {
+      ShowToast('请签名');
+      return;
+    }
+    if (!formData[pic1Name].length || !formData[pic2Name].length) {
+      ShowToast('请上传照片');
+      return;
+    }
+    if (!formData.ExceptionRecord) {
+      ShowToast('请填写异常情况处理记录');
+      return;
+    }
+
+    this.setState({loading: true});
     let body = {
       id: ID,
       taskID: TaskID,
       typeID: TypeID,
-      // content: {},
+      content: Content,
       recordList: [{...this.state.formData}],
       signContent: signContent,
     };
     console.log('body', body);
-
     let actionType = '';
     switch (TypeID) {
       case 76: // 完全抽取法
@@ -274,33 +307,38 @@ class Patrol_CEM extends Component {
   };
 
   getMaintenanceStartTimeOption = () => {
+    const {Content} = this.state;
+    console.log('Content', Content);
     return {
-      defaultTime: moment(this.props.maintenanceStartTime).format(
-        'YYYY-MM-DD HH:mm:ss',
-      ),
+      defaultTime: Content.MaintenanceBeginTime
+        ? moment(Content.MaintenanceBeginTime).format('YYYY-MM-DD HH:mm:ss')
+        : undefined,
       type: 'hour',
       onSureClickListener: time => {
-        this.props.dispatch(
-          createAction('patrolModel/updateState')({
-            maintenanceStartTime: time,
-          }),
-        );
+        this.setState(prevState => ({
+          Content: {
+            ...prevState.Content,
+            MaintenanceBeginTime: time,
+          },
+        }));
       },
     };
   };
 
   getMaintenanceEndTimeOption = () => {
+    const {Content} = this.state;
     return {
-      defaultTime: moment(this.props.maintenanceEndTime).format(
-        'YYYY-MM-DD HH:mm:ss',
-      ),
+      defaultTime: Content.MaintenanceEndTime
+        ? moment(Content.MaintenanceEndTime).format('YYYY-MM-DD HH:mm:ss')
+        : undefined,
       type: 'hour',
       onSureClickListener: time => {
-        this.props.dispatch(
-          createAction('patrolModel/updateState')({
-            maintenanceEndTime: time,
-          }),
-        );
+        this.setState(prevState => ({
+          Content: {
+            ...prevState.Content,
+            MaintenanceEndTime: time,
+          },
+        }));
       },
     };
   };
@@ -319,6 +357,7 @@ class Patrol_CEM extends Component {
   };
 
   renderTimeSection = () => {
+    const {Content} = this.state;
     return (
       <View
         style={[
@@ -336,18 +375,19 @@ class Patrol_CEM extends Component {
           <Text style={styles.labelStyle}>工作时间：</Text>
           <View style={styles.timeRangeContainer}>
             <Text style={[styles.timeValue, {flex: 1}]}>
-              {this.props.workTimeStart}
+              {Content.WorkingDateBegin}
             </Text>
             <Text
               style={{
                 fontSize: 14,
                 color: globalcolor.taskFormLabel,
-                paddingHorizontal: 5,
+                paddingHorizontal: 2,
+                textAlign: 'center',
               }}>
               ~
             </Text>
             <Text style={[styles.timeValue, {flex: 1}]}>
-              {this.props.workTimeEnd}
+              {Content.WorkingDateEnd}
             </Text>
           </View>
         </View>
@@ -355,17 +395,23 @@ class Patrol_CEM extends Component {
           required={true}
           getPickerOption={this.getMaintenanceStartTimeOption}
           label={'运行维护开始时间'}
-          timeString={moment(this.props.maintenanceStartTime).format(
-            'YYYY-MM-DD HH:00',
-          )}
+          timeString={
+            Content.MaintenanceBeginTime
+              ? moment(Content.MaintenanceBeginTime).format(
+                  'YYYY-MM-DD HH:mm:ss',
+                )
+              : '请选择开始时间'
+          }
         />
         <FormDatePicker
           required={true}
           getPickerOption={this.getMaintenanceEndTimeOption}
           label={'运行维护结束时间'}
-          timeString={moment(this.props.maintenanceEndTime).format(
-            'YYYY-MM-DD HH:00',
-          )}
+          timeString={
+            Content.MaintenanceEndTime
+              ? moment(Content.MaintenanceEndTime).format('YYYY-MM-DD HH:mm:ss')
+              : '请选择结束时间'
+          }
           last={true}
         />
       </View>
@@ -671,7 +717,7 @@ class Patrol_CEM extends Component {
                 txt: '确定',
                 btnStyle: {backgroundColor: globalcolor.headerBackgroundColor},
                 txtStyle: {color: '#ffffff'},
-                onpress: this.deleteAllExInspectionRecord,
+                onpress: this.onDeleteRecord,
               },
             ],
           }}
@@ -697,7 +743,7 @@ const styles = StyleSheet.create({
   labelStyle: {
     fontSize: 14,
     color: globalcolor.taskFormLabel,
-    width: 80,
+    width: 70,
   },
   timeRangeContainer: {
     flex: 1,
@@ -707,6 +753,7 @@ const styles = StyleSheet.create({
   timeValue: {
     fontSize: 14,
     color: globalcolor.taskFormValue,
+    textAlign: 'center',
   },
   sectionHeader: {
     flexDirection: 'row',
