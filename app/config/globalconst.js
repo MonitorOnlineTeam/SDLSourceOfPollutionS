@@ -47,7 +47,7 @@ export const getVersionInfo = () => {
         else if (Platform.OS == 'ios') return { app_version_code: 48, app_version_name: '1.4.8', version_type: '' };
     } else if (CURRENT_PROJECT == POLLUTION_ORERATION_PROJECT) {
         // 公司运维  智慧运维
-        if (Platform.OS == 'android') return { app_version_code: 79, app_version_name: '1.7.9', version_type: 'xinjiangbingtuan' };
+        if (Platform.OS == 'android') return { app_version_code: 80, app_version_name: '1.8.0', version_type: 'xinjiangbingtuan' };
         else if (Platform.OS == 'ios') return { app_version_code: 33, app_version_name: '1.3.3', version_type: 'xinjiangbingtuan' };
         // 新疆
         // if (Platform.OS == 'android') return { app_version_code: 36, app_version_name: '1.3.6', version_type: 'xinjiangbingtuan' };
