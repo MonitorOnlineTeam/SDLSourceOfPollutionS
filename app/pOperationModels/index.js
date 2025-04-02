@@ -2,7 +2,7 @@
  * @Description:
  * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2023-06-16 17:09:37
- * @LastEditTime: 2025-03-26 15:36:06
+ * @LastEditTime: 2025-03-31 19:50:12
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationModels/index.js
  */
 /**
@@ -85,6 +85,7 @@ import provisioning from './provisioning';
 import SignInTeamStatisticsModel from './SignInTeamStatisticsModel';
 /**淄博项目 */
 import calibrationRecordZb from './formModels/calibrationRecordZb';
+import calibrationRecordZbFs from './formModels/calibrationRecordZbFs';
 
 
 export function registerModels(app) {
@@ -160,5 +161,6 @@ export function registerModels(app) {
     app.model(SignInTeamStatisticsModel); // 签到团队统计 
     
     /**淄博项目 */
-    app.model(calibrationRecordZb); //零点量程漂移与校准 淄博
+    app.model(calibrationRecordZb); //零点量程漂移与校准 淄博 废气
+    app.model(calibrationRecordZbFs); //零点量程漂移与校准 淄博 废水
 }

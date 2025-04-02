@@ -7,7 +7,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import globalcolor from '../../../../config/globalcolor';
 import { SCREEN_WIDTH } from '../../../../config/globalsize';
 import MyTextInput from '../../../../components/base/TextInput';
-import { ModalParent, OperationAlertDialog, SimpleLoadingComponent } from '../../../../components';
+import { ModalParent, OperationAlertDialog, SimpleLoadingComponent, SDLText } from '../../../../components';
 import Mask from '../../../../components/Mask';
 import ConfirmDialog from '../components/ConfirmDialog';
 import { ShowToast, createAction, NavigationActions, SentencedToEmpty } from '../../../../utils';
@@ -29,7 +29,7 @@ const rangSeparator = '-';
     RecordList: calibrationRecordZb.RecordList,
     unitsList: calibrationRecordZb.unitsList,
     editstatus: calibrationRecordZb.editstatus,
-    JzConfigItemSelectedList: calibrationRecordZb.JzConfigItemSelectedList
+    JzConfigItemSelectedList: calibrationRecordZb.JzConfigItemSelectedList,
 }))
 // @connect() 
 class CalibrationRecordEditZb extends Component {
@@ -52,6 +52,41 @@ class CalibrationRecordEditZb extends Component {
     constructor(props) {
         super(props);
         const item = props.route.params.params.item;
+        // const { ItemId } = item;
+        // let pic1Name, pic2Name, pic3Name, pic4Name, noSelectedFlag;
+        // switch (ItemId) {
+        //     case '770':
+        //     case '771':
+        //     case '772':
+        //     case '774':
+        //         //  SO2/NO/O2/NO2
+        //         pic1Name = 'JZQSZ';
+        //         pic2Name = 'JZHLDSZ';
+        //         pic3Name = 'JZHLCSZ';
+        //         pic4Name = 'SYBQNDJBQ';
+        //         noSelectedFlag = this.props.RecordList.some(seletedItem =>
+        //             ['770', '771', '772', '774'].includes(seletedItem.ItemId) &&
+        //             (seletedItem?.[pic1Name + '_PIC']?.ImgNameList?.length ||
+        //                 seletedItem?.[pic2Name + '_PIC']?.ImgNameList?.length) &&
+        //             (!item?.[pic1Name + '_PIC']?.ImgNameList?.length)
+        //         )
+
+        //         break;
+        //     case '780': //流速
+        //         pic1Name = 'JZUSZJGZZ';
+        //         pic2Name = 'JZDSZJGZZ';
+        //         break;
+        //     case '782': //湿度
+        //         pic1Name = 'TRKQDQCLZ';
+        //         pic2Name = 'SDYQWHGZ';
+        //         break;
+        //     default:
+        //         pic1Name = 'LDSZU';
+        //         pic2Name = 'LDSZD';
+        //         pic3Name = 'LCSJU';
+        //         pic4Name = 'LCSJD';
+        //         break;
+        // }
 
         // 初始化第一个模块数据，直接从 item 获取数据
         const initialModuleData = {
@@ -64,7 +99,6 @@ class CalibrationRecordEditZb extends Component {
             LdPy: item.LdPy || '',
             LdCalibrationIsOk: item.LdCalibrationIsOk || ''
         };
-
         this.state = {
             ID: item.ID || '',
             ItemId: item.ItemId || '',  // 保持在 state 中
@@ -87,14 +121,83 @@ class CalibrationRecordEditZb extends Component {
             dialogType: saveItem,
             TRQT: item.TRQT || '',
             Remark: item.Remark || '',
-            // [pic1Name + '_PIC']: [],
-            // [pic2Name + '_PIC']: [],
+            // noSelectedFlag, //SO2/NO/O2/NO2 之前有选中过校准前数值和校准后零点数值照片 后面选的这两个不是必选
+            // pic1Name, pic2Name, pic3Name, pic4Name,
+            // [pic1Name]: item?.[pic1Name + '_PIC']?.AttachID || new Date().getTime() + pic1Name?.toLowerCase(),
+            // [pic2Name]: item?.[pic2Name + '_PIC']?.AttachID || new Date().getTime() + pic2Name?.toLowerCase(),
+            // [pic3Name]: item?.[pic3Name + '_PIC']?.AttachID || new Date().getTime() + pic3Name?.toLowerCase(),
+            // [pic4Name]: item?.[pic4Name + '_PIC']?.AttachID || new Date().getTime() + pic4Name?.toLowerCase(),
+            // [pic1Name + '_PIC']: item?.[pic1Name + '_PIC']?.ImgNameList?.map(item => ({ AttachID: item, })) || [],
+            // [pic2Name + '_PIC']: item?.[pic2Name + '_PIC']?.ImgNameList?.map(item => ({ AttachID: item, })) || [],
+            // [pic3Name + '_PIC']: item?.[pic3Name + '_PIC']?.ImgNameList?.map(item => ({ AttachID: item, })) || [],
+            // [pic4Name + '_PIC']: item?.[pic4Name + '_PIC']?.ImgNameList?.map(item => ({ AttachID: item, })) || [],
         };
 
         this.props.navigation.setOptions({
             title: item.ItemID + '校准记录表',
         });
 
+    }
+    componentWillMount() {
+        const item = this.props.route.params.params.item;
+        const { ItemId } = item;
+        let pic1Name, pic2Name, pic3Name, pic4Name, noSelectedFlag=false;
+        switch (ItemId) {
+            case '770':
+            case '771':
+            case '772':
+            case '774':
+                //  SO2/NO/O2/NO2
+                pic1Name = 'JZQSZ';
+                pic2Name = 'JZHLDSZ';
+                pic3Name = 'JZHLCSZ';
+                pic4Name = 'SYBQNDJBQ';
+                noSelectedFlag = this.props.RecordList.some(seletedItem =>
+                    ['770', '771', '772', '774'].includes(seletedItem.ItemId) &&
+                    (seletedItem?.[pic1Name + '_PIC']?.ImgNameList?.length ||
+                        seletedItem?.[pic2Name + '_PIC']?.ImgNameList?.length) &&
+                    (!item?.[pic1Name + '_PIC']?.ImgNameList?.length)
+                )
+
+                break;
+            case '780': //流速
+                pic1Name = 'JZUSZJGZZ';
+                pic2Name = 'JZDSZJGZZ';
+                break;
+            case '782': //湿度
+                pic1Name = 'TRKQDQCLZ';
+                pic2Name = 'SDYQWHGZ';
+                break;
+            default:
+                pic1Name = 'LDSZU';
+                pic2Name = 'LDSZD';
+                pic3Name = 'LCSJU';
+                pic4Name = 'LCSJD';
+                break;
+        }
+        if(ItemId==780 || ItemId==782){
+            this.setState({
+                pic1Name, pic2Name,
+                [pic1Name]: item?.[pic1Name + '_PIC']?.AttachID || new Date().getTime() + pic1Name?.toLowerCase(),
+                [pic2Name]: item?.[pic2Name + '_PIC']?.AttachID || new Date().getTime() + pic2Name?.toLowerCase(),
+                [pic1Name + '_PIC']: item?.[pic1Name + '_PIC']?.ImgNameList?.map(item => ({ AttachID: item, })) || [],
+                [pic2Name + '_PIC']: item?.[pic2Name + '_PIC']?.ImgNameList?.map(item => ({ AttachID: item, })) || [],
+            })
+        }else{
+            this.setState({
+                noSelectedFlag,
+                pic1Name, pic2Name, pic3Name, pic4Name,
+                [pic1Name]: item?.[pic1Name + '_PIC']?.AttachID || new Date().getTime() + pic1Name?.toLowerCase(),
+                [pic2Name]: item?.[pic2Name + '_PIC']?.AttachID || new Date().getTime() + pic2Name?.toLowerCase(),
+                [pic3Name]: item?.[pic3Name + '_PIC']?.AttachID || new Date().getTime() + pic3Name?.toLowerCase(),
+                [pic4Name]: item?.[pic4Name + '_PIC']?.AttachID || new Date().getTime() + pic4Name?.toLowerCase(),
+                [pic1Name + '_PIC']: item?.[pic1Name + '_PIC']?.ImgNameList?.map(item => ({ AttachID: item, })) || [],
+                [pic2Name + '_PIC']: item?.[pic2Name + '_PIC']?.ImgNameList?.map(item => ({ AttachID: item, })) || [],
+                [pic3Name + '_PIC']: item?.[pic3Name + '_PIC']?.ImgNameList?.map(item => ({ AttachID: item, })) || [],
+                [pic4Name + '_PIC']: item?.[pic4Name + '_PIC']?.ImgNameList?.map(item => ({ AttachID: item, })) || [],
+            })
+        }
+  
     }
 
     addNewModule = () => {
@@ -342,7 +445,7 @@ class CalibrationRecordEditZb extends Component {
         if (this.state.ItemId == '773') {
             //ItemID: "颗粒物"  ItemId: "773"
             isOk = Math.abs(zhenshiLDPY) <= 0.02 ? '是' : '否';
-        } else if (this.state.ItemId == '780') {
+        } else if (this.state.ItemId == '780' || this.state.ItemId == '782') {
             // ItemID: "流速"   ItemId: "780"
             isOk = Math.abs(zhenshiLDPY) <= 0.03 ? '是' : '否';
         } else {
@@ -362,9 +465,9 @@ class CalibrationRecordEditZb extends Component {
             <View key={index} style={{ marginTop: index > 0 ? 20 : 0 }}>
                 <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 28 }]}>
                     <Text style={[{ color: '#333333', flex: 1, marginVertical: 12 }]}>
-                        {this.state.ItemId === '780' ? `零点漂移校准（差压表 ${this.props.route.params.params.index + index + 1})` : '零点漂移校准'}
+                        {this.state.ItemId === '780' || this.state.ItemId === '782' ? `零点漂移校准（差压表 ${this.props.route.params.params.index + index + 1})` : '零点漂移校准'}
                     </Text>
-                    {this.state.ItemId === '780' && (
+                    {(this.state.ItemId === '780' || this.state.ItemId === '782') && (
                         <View style={{ flexDirection: 'row' }}>
                             {index === 0 && (
                                 <TouchableOpacity
@@ -566,8 +669,8 @@ class CalibrationRecordEditZb extends Component {
             } else {
                 this.setState({ LcCalibrationIsOk: '否', LcPy: signBit + (prefix == '' ? 0 : prefix) + '.' + (suffixLength == 2 ? suffix : suffixLength == 1 ? '0' + suffix : '00') + '%' });
             }
-        } else if (ItemId == '780') {
-            // ItemID: "流速"   ItemId: "780"
+        } else if (ItemId == '780' || ItemId == '782') {
+            // ItemID: "流速"   ItemId: "780"  ItemID: "湿度"   ItemId: "782"
             if (Math.abs(zhenshiLCPY) <= 0.03) {
                 this.setState({ LcCalibrationIsOk: '是', LcPy: signBit + (prefix == '' ? 0 : prefix) + '.' + (suffixLength == 2 ? suffix : suffixLength == 1 ? '0' + suffix : '00') + '%' });
             } else {
@@ -597,47 +700,47 @@ class CalibrationRecordEditZb extends Component {
             return '';
         }
     };
-    upLoadImg = (label,item) => {
-        return <>
-        <View style={[styles.labelStyle]}><Text style={[styles.labelStyle, propsLabelStyle, { color: 'red' }]}>*</Text> {label}：</View>
+    upLoadImg = (label, id) => {
+        const noRequire = ['校准前数值', '校准后零点数值'].includes(label) && this.state.noSelectedFlag
+        return <View>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+                {!noRequire && <Text style={[styles.labelStyle, { color: 'red' }]}>* </Text>}
+                <Text style={[styles.labelStyle]}>{label}：</Text>
+            </View>
 
-        <View key={index} style={styles.imageUploadContainer}>
-            <ImageGrid
-                componentType={'taskhandle'}
-                style={{
-                    backgroundColor: '#fff',
-                }}
-                Imgs={this.state[item.id + '_PIC']}
-                isUpload={true}
-                isDel={true}
-                UUID={formData[item.id]}
-                uploadCallback={items => {
-                    console.log('items', items);
-                    // let newFormData = {...this.state.formData};
-                    // let newImgList = [].concat(
-                    //   this.state.formData[item.id] || [],
-                    // );
-                    let newImgList = [...this.state[item.id + '_PIC']];
-                    items.map(imageItem => {
-                        newImgList.push(imageItem);
-                    });
-                    this.setState({ [item.id + '_PIC']: newImgList });
-                }}
-                delCallback={index => {
-                    let newImgList = [...this.state[item.id + '_PIC']];
-                    newImgList.splice(index, 1);
-                    this.setState({ [item.id + '_PIC']: newImgList });
-                }}
-            />
+            <View key={id} style={styles.imageUploadContainer}>
+                <ImageGrid
+                    componentType={'taskhandle'}
+                    style={{
+                        backgroundColor: '#fff',
+                    }}
+                    Imgs={this.state[id + '_PIC']}
+                    isUpload={true}
+                    isDel={true}
+                    UUID={this.state[id]}
+                    uploadCallback={items => {
+                        console.log('items', items);
+                        let newImgList = [...this.state[id + '_PIC']];
+                        items.map(imageItem => {
+                            newImgList.push(imageItem);
+                        });
+                        this.setState({ [id + '_PIC']: newImgList });
+                    }}
+                    delCallback={index => {
+                        let newImgList = [...this.state[id + '_PIC']];
+                        newImgList.splice(index, 1);
+                        this.setState({ [id + '_PIC']: newImgList });
+                    }}
+                />
+            </View>
         </View>
-        </>
     }
     render() {
         let Item = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
         let ItemId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ItemId'], '');
         /**
-         * ItemID == 780
-         * 流速不需要填写量程校准
+         * ItemID == 780 ItemID == 782
+         * 流速 湿度 不需要填写量程校准
          * 
          * '773': '颗粒物',
          * 
@@ -647,9 +750,14 @@ class CalibrationRecordEditZb extends Component {
          * IsLiangCheng
          * 1表示必填
          */
+        const isLs = ItemId === '780'
+
+
         const isSd = ItemId === '782'
 
         const isBasicGas = ItemId === '770' || ItemId === '771' || ItemId === '772' || ItemId === '774' // SO2/NO/O2/NO2
+
+        const { pic1Name, pic2Name, pic3Name, pic4Name, noSelectedFlag } = this.state
         return (
             <View style={styles.container}>
                 {/* <KeyboardAwareScrollView> */}
@@ -751,21 +859,6 @@ class CalibrationRecordEditZb extends Component {
                                         placeHolder="请选择"
                                     />
                                 </View>
-                                <View style={[styles.lastItem]}>
-                                    <Text style={[styles.labelStyle]}>通入气体测量值：</Text>
-                                    <MyTextInput
-                                        keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                                        value={this.state.TRKQDQCLZ}
-                                        ref={ref => (this._inputNewMachineHaltReason = ref)}
-                                        style={[styles.textStyle, { flex: 1 }]}
-                                        placeholder={'请输入'}
-                                        onChangeText={text => {
-                                            this.setState({
-                                                TRKQDQCLZ: text
-                                            });
-                                        }}
-                                    />
-                                </View>
                             </>}
                         </View>
 
@@ -773,7 +866,7 @@ class CalibrationRecordEditZb extends Component {
                         {this.state.modules.map((module, index) => this.renderZeroCalibrationModule(module, index))}
                         {
                             // ItemID: "流速"   ItemId: "780"
-                            ItemId != '780' ? <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 24 }]}>
+                            ItemId != '780' || ItemId != '782' ? <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 24 }]}>
                                 <Text
                                     style={[
                                         {
@@ -788,7 +881,7 @@ class CalibrationRecordEditZb extends Component {
                             </View> : null
                         }
                         {   // ItemID: "流速"   ItemId: "780"
-                            ItemId != '780' ? <View
+                            ItemId != '780' || ItemId != '782' ? <View
                                 style={[
                                     {
                                         width: SCREEN_WIDTH - 24,
@@ -800,7 +893,7 @@ class CalibrationRecordEditZb extends Component {
                                 ]}
                             >
                                 {
-                                    ItemId != '780' && ItemId != '773'
+                                    (ItemId != '780' || ItemId != '782') && ItemId != '773'
                                         ? <View
                                             style={[{
                                                 flexDirection: 'row', alignItems: 'center'
@@ -875,7 +968,7 @@ class CalibrationRecordEditZb extends Component {
                                 }
                                 {
                                     this.state.IsChange === 0 ? <View style={[styles.layoutWithBottomBorder
-                                        , ItemId != '780' && ItemId != '773' ? { marginTop: 0 } : null]}>
+                                        , (ItemId != '780' || ItemId != '782') && ItemId != '773' ? { marginTop: 0 } : null]}>
                                         <Text style={[styles.labelStyle]}>标气浓度值：</Text>
                                         <MyTextInput
                                             keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
@@ -954,7 +1047,7 @@ class CalibrationRecordEditZb extends Component {
                         }
                         {
                             // ItemID: "流速"   ItemId: "780"
-                            ItemId != '780' ? <View
+                            ItemId != '780' || ItemId != '782' ? <View
                                 style={[
                                     {
                                         width: SCREEN_WIDTH - 24,
@@ -1007,7 +1100,6 @@ class CalibrationRecordEditZb extends Component {
                             <View style={[styles.lastItem]}>
                                 <Text style={[styles.labelStyle]}>情况说明：</Text>
                                 <MyTextInput
-                                    keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
                                     value={this.state.Remark}
                                     ref={ref => (this._inputMachineHaltReason = ref)}
                                     style={[styles.textStyle, { flex: 1 }]}
@@ -1023,21 +1115,34 @@ class CalibrationRecordEditZb extends Component {
                                 />
                             </View>
                         </View>
-                    </View >
-                    <View style={[
+                        <View style={[
                         {
                             width: SCREEN_WIDTH - 24,
                             paddingHorizontal: 24,
                             borderRadius: 2,
                             backgroundColor: globalcolor.white,
-                            marginTop: 10
+                            marginTop: 10,
+                            paddingTop:16,
+                            paddingBottom:8,
                         }
                     ]}>
-
-                        <View style={[styles.labelStyle]}><Text style={[styles.labelStyle, propsLabelStyle, { color: 'red' }]}>*</Text>  校准前数值：</View>
-                        {/* {this.upLoadImg()} */}
+                        {isBasicGas ? [{ label: '校准前数值', picName: pic1Name }, { label: '校准后零点数值', picName: pic2Name }, { label: '校准后量程数值', picName: pic3Name }, { label: '使用标气浓度及标签', picName: pic4Name }].map(item => {
+                            return this.upLoadImg(item.label, item.picName)
+                        }) : isLs ?
+                                [{ label: '校准前数值及工作照', picName: pic1Name }, { label: '校准后数值及工作照', picName: pic2Name }].map(item => {
+                                    return this.upLoadImg(item.label, item.picName)
+                                }) : isSd ?
+                                    [{ label: '通入空气/氮气测量值', picName: pic1Name }, { label: '湿度仪器维护工作', picName: pic2Name }].map(item => {
+                                        return this.upLoadImg(item.label, item.picName)
+                                    })
+                                    :
+                                    [{ label: '零点数值（校准前）', picName: pic1Name }, { label: '零点数值（校准后）', picName: pic2Name }, { label: '量程数值（校准前）', picName: pic3Name }, { label: '量程数值（校准后）', picName: pic4Name }].map(item => {
+                                        return this.upLoadImg(item.label, item.picName)
+                                    })}
 
                     </View >
+                    </View >
+                
                 </ScrollView >
                 {/* </KeyboardAwareScrollView> */}
                 {
@@ -1110,7 +1215,7 @@ class CalibrationRecordEditZb extends Component {
                             for (let i = 0; i < this.state.modules.length; i++) {
                                 const module = this.state.modules[i];
                                 const moduleIndex = i + 1;
-                                const isFlowRate = ItemId === '780';
+                                const isFlowRate = ItemId === '780' || ItemId === '782';
                                 const modulePrefix = isFlowRate ? `差压表 ${this.props.route.params.params.index + moduleIndex} 中` : '';
 
                                 if (SentencedToEmpty(module, ['LqNdz'], '') == '') {
@@ -1133,7 +1238,7 @@ class CalibrationRecordEditZb extends Component {
                             }
                         }
                         let ItemId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ItemId'], '');
-                        if (IsLiangCheng == 1 && ItemId != '780') {
+                        if (IsLiangCheng == 1 && (ItemId != '780' || ItemId != '782')) {
                             if (SentencedToEmpty(this.state, ['BqNdz'], '') == '') {
                                 ShowToast('标气浓度不能为空');
                                 return;
@@ -1152,6 +1257,47 @@ class CalibrationRecordEditZb extends Component {
                                 return;
                             }
                         }
+
+                        let imgFiles = {}
+                        if (isBasicGas) {
+                            imgFiles = {
+                                JZQSZ: this.state[pic1Name],
+                                JZHLDSZ: this.state[pic2Name],
+                                JZHLCSZ: this.state[pic3Name],
+                                SYBQNDJBQ: this.state[pic4Name],
+                            }
+                            if ((!this.state[pic1Name + '_PIC']?.length) && !noSelectedFlag) { ShowToast('校准前数值不能为空'); return }
+                            if ((!this.state[pic2Name + '_PIC']?.length) && !noSelectedFlag) { ShowToast('校准后零点数值不能为空'); return }
+                            if (!this.state[pic3Name + '_PIC']?.length) { ShowToast('校准后量程数值不能为空'); return }
+                            if (!this.state[pic4Name + '_PIC']?.length) { ShowToast('使用标气浓度及标签不能为空'); return }
+                        } else if (isLs) {
+                            imgFiles = {
+                                JZUSZJGZZ: this.state[pic1Name],
+                                JZDSZJGZZ: this.state[pic2Name],
+                            }
+                            if (!this.state[pic1Name + '_PIC']?.length) { ShowToast('校准前数值及工作照不能为空'); return }
+                            if (!this.state[pic2Name + '_PIC']?.length) { ShowToast('校准后数值及工作照不能为空'); return }
+                        } else if (isSd) {
+                            imgFiles = {
+                                TRKQDQCLZ: this.state[pic1Name],
+                                SDYQWHGZ: this.state[pic2Name],
+                            }
+                            if (!this.state[pic1Name + '_PIC']?.length) { ShowToast('通入空气/氮气测量值不能为空'); return }
+                            if (!this.state[pic2Name + '_PIC']?.length) { ShowToast('湿度仪器维护工作不能为空'); return }
+                        } else {
+                            imgFiles = {
+                                LDSZU: this.state[pic1Name],
+                                LDSZD: this.state[pic2Name],
+                                LCSJU: this.state[pic3Name],
+                                LCSJD: this.state[pic4Name],
+                            }
+                            if (!this.state[pic1Name + '_PIC']?.length) { ShowToast('零点数值（校准前）不能为空'); return }
+                            if (!this.state[pic2Name + '_PIC']?.length) { ShowToast('零点数值（校准后）不能为空'); return }
+                            if (!this.state[pic3Name + '_PIC']?.length) { ShowToast('量程数值（校准前）不能为空'); return }
+                            if (!this.state[pic4Name + '_PIC']?.length) { ShowToast('量程数值（校准后）不能为空'); return }
+
+                        }
+
 
                         // 构造提交数据
                         const submitData = this.state.modules.map((module, index) => ({
@@ -1179,8 +1325,12 @@ class CalibrationRecordEditZb extends Component {
                             JlUnit: this.state.JlUnit,
                             ModuleIndex: index,
                             TRQT: this.state.TRQT,
+                            TRKQDQCLZ: this.state.TRKQDQCLZ,
+                            Remark: this.state.Remark,
+                            ...imgFiles
+
                         }));
-                        console.log('submitData', submitData);
+                        // console.log('submitData',this.state['JZQSZ' + '_PIC'], submitData);
                         // return;
 
                         this.props.dispatch(

@@ -769,13 +769,23 @@ export default api = {
             DeleteErrorSystemResponseRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecord', // 删除示值误差及响应时间
         
              /**
-             * 淄博项目 校准
+             * 淄博项目 校准 废气
              */
             GetJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/GetCemsCalibrationRecordZB', // 获取单个任务的校准记录
             AddOrUpdateJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateCemsCalibrationRecordListZB', // 新增或更新校准记录  
-            GetJzItemZBCEMS: 'rest/PollutantSourceApi/GasOperationFormApi/GetJzItemZBCEMS', // 废气校准
-            DeleteJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/GetJzItemZBCEMS', //删除指定任务的校准表单数据
+            GetJzItemZBCEMS: 'rest/PollutantSourceApi/GasOperationFormApi/GetJzItemZBCEMS', // 废气校准项
+            DeleteJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteCemsCalibrationRecordZB', //删除指定任务的校准表单数据
+            DeleteJzItemZb: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteJzItemZB', // 校准 删除子表
 
+             /**
+             * 淄博项目 校准 废水
+             */
+            GetJzRecordZbFs: 'rest/PollutantSourceApi/GasOperationFormApi/GetFSCalibrationRecordZB', // 获取单个任务的校准记录
+            AddOrUpdateJzRecordZbFs: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateFSCalibrationRecordListZB', // 新增或更新校准记录  
+            GetJzItemZBCEMSFs: 'rest/PollutantSourceApi/GasOperationFormApi/GetJzItemZBFS', // 废水校准项
+            DeleteJzRecordZbFs: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteFSCalibrationRecordZB', //删除指定任务的校准表单数据
+            DeleteJzItemZbFs: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteJzItemZBFS', // 校准 删除子表
+            
             /**
              * 2025.3.26
              * 淄博巡检

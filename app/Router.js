@@ -2,7 +2,7 @@
  * @Description:
  * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2025-03-28 08:54:28
+ * @LastEditTime: 2025-03-31 19:34:07
  * @FilePath: /SDLSourceOfPollutionS_dev/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
@@ -249,10 +249,14 @@ import IndicationErrorAndResponseTimeEditor from './operationContainers/taskView
 import Patrol_CEM from './operationContainers/taskViews/taskExecution/formViews/Patrol_CEM';
 import SignaturePage from './operationContainers/taskViews/taskExecution/formViews/components/SignaturePage';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
-
+//淄博 废气校准
 import CalibrationRecordListZb from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordListZb';
 import CalibrationRecordTimeZb from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordTimeZb';
 import CalibrationRecordEditZb from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordEditZb';
+//淄博 废水校准
+import CalibrationRecordListZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordListZbFs';
+import CalibrationRecordTimeZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordTimeZbFs';
+import CalibrationRecordEditZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordEditZbFs';
 
 function Test() {
     return (
@@ -583,11 +587,14 @@ Actions.pushViewWithName(ProvisioningRecords, 'ProvisioningRecords', { title: '�
 Actions.pushViewWithName(IndicationErrorAndResponseTimeList, 'IndicationErrorAndResponseTimeList', { title: '示值误差和响应时间' });
 Actions.pushViewWithName(IndicationErrorAndResponseTimeEditor, 'IndicationErrorAndResponseTimeEditor', { title: '示值误差和响应时间' });
 
-//淄博项目
+//淄博项目 废气
 Actions.pushViewWithName(CalibrationRecordListZb, 'CalibrationRecordListZb', { title: '零点量程漂移校准' });
 Actions.pushViewWithName(CalibrationRecordTimeZb, 'CalibrationRecordTimeZb', { title: '校准执行时间' });
 Actions.pushViewWithName(CalibrationRecordEditZb, 'CalibrationRecordEditZb', { title: '校准记录表' });
-
+//淄博项目 废水
+Actions.pushViewWithName(CalibrationRecordListZbFs, 'CalibrationRecordListZbFs', { title: '零点量程漂移校准' });
+Actions.pushViewWithName(CalibrationRecordTimeZbFs, 'CalibrationRecordTimeZbFs', { title: '校准执行时间' });
+Actions.pushViewWithName(CalibrationRecordEditZbFs, 'CalibrationRecordEditZbFs', { title: '校准记录表' });
 // 巡检完全抽取法
 Actions.pushViewWithName(Patrol_CEM, 'Patrol_CEM', { title: '完全抽取法CEMS日常巡检记录表' });
 Actions.pushViewWithName(SignaturePage, 'SignaturePage', { title: '签名'});

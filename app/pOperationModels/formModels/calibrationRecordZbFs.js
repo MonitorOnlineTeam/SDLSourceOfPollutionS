@@ -6,13 +6,14 @@ import { Model } from '../../dvapack';
 import { GetRepairList, GetPatrolList } from '../../utils/formutils';
 import moment from 'moment';
 import { getToken, getEncryptData } from '../../dvapack/storage';
+import { dataConsistencyModel } from '../taskModel';
 
 /**
- * 零点量程漂移与校准 淄博
+ * 零点量程漂移与校准 淄博 废水
  *
  */
 export default Model.extend({
-    namespace: 'calibrationRecordZb',
+    namespace: 'calibrationRecordZbFs',
     state: {
         //列表页面state
         liststatus: {status:-1},
@@ -68,8 +69,8 @@ export default Model.extend({
             },
             { call, put, update, take, select }
         ) {
-            const { RecordList, MainInfo } = yield select(state => state.calibrationRecordZb);
-            const result = yield call(authService.axiosAuthPost, api.pOperationApi.OperationForm.DeleteJzItemZb, params);
+            const { RecordList, MainInfo } = yield select(state => state.calibrationRecordZbFs);
+            const result = yield call(authService.axiosAuthPost, api.pOperationApi.OperationForm.DeleteJzItemZbFs, params);
             if (result.status == 200) {
                 if (SentencedToEmpty(result, ['data', 'IsSuccess'], false)) {
                     yield update({jzDeleteResult:result});
@@ -102,12 +103,12 @@ export default Model.extend({
         ) {
             const { taskDetail } = yield select(state => state.taskDetailModel);
             let user = getToken();
-            const { RecordList, MainInfo, TypeID, TaskID } = yield select(state => state.calibrationRecordZb);
+            const { RecordList, MainInfo, TypeID, TaskID,JzConfigItemSelectedList } = yield select(state => state.calibrationRecordZbFs);
             const body = {
                 TypeID:TypeID,
                 TaskID:TaskID
             }; 
-            const result = yield call(authService.axiosAuthPost, api.pOperationApi.OperationForm.GetJzItemZBCEMS, body);
+            const result = yield call(authService.axiosAuthPost, api.pOperationApi.OperationForm.GetJzItemZBCEMSFs, body);
             if (result.status == 200) {
                 if (SentencedToEmpty(result, ['data', 'IsSuccess'], false)) {
                     yield update({JzConfigItemResult:result});
@@ -138,21 +139,21 @@ export default Model.extend({
         ) {
             const { taskDetail } = yield select(state => state.taskDetailModel);
             let user = getToken();
-            const { RecordList, MainInfo } = yield select(state => state.calibrationRecordZb);
+            const { RecordList, MainInfo } = yield select(state => state.calibrationRecordZbFs);
             const body = {
                 TaskID: taskDetail.ID,
                 CreateUserID: user.UserId,
                 Content: MainInfo,
                 RecordList:submitList  // 新逻辑，只提交一条
             };
-            const result = yield call(authService.axiosAuthPost, api.pOperationApi.OperationForm.AddOrUpdateJzRecordZb, body);
+            const result = yield call(authService.axiosAuthPost, api.pOperationApi.OperationForm.AddOrUpdateJzRecordZbFs, body);
             yield update({editstatus:{status:200}})
             if (result.status == 200) {
                 if (SentencedToEmpty(result, ['data', 'IsSuccess'], false)) {
                     //提交成功
                     yield put(createAction('taskDetailModel/updateFormStatus')({ 
-                        cID: 82 }));
-                        callback();
+                        cID: 81 }));
+                        callback && callback();
                 } else {
                     //提交失败
                     ShowToast('发生错误');
@@ -171,12 +172,12 @@ export default Model.extend({
         },
         *getInfo({ payload }, { call, put, update, take, select }) {
             const { taskDetail } = yield select(state => state.taskDetailModel);
-            const { JzConfigItemSelectedList, JzConfigItemResult } = yield select(state => state.calibrationRecordZb);
+            const { JzConfigItemSelectedList, JzConfigItemResult } = yield select(state => state.calibrationRecordZbFs);
             const body = {
                 TaskID: taskDetail.ID
             };
             let index = taskDetail.TaskFormList.findIndex(item => {
-                if (item.TypeName == 'Fq82' && item.FormMainID) {
+                if (item.TypeName == 'Fs81' && item.FormMainID) {
                     return true;
                 } else {
                     return false;
@@ -185,7 +186,7 @@ export default Model.extend({
             if (index == -1) {
                 yield put(createAction('excuteTask/getTaskDetailWithoutTaskDescription')({ taskID: taskDetail.ID }));
             }
-            const result = yield call(authService.axiosAuthPost, api.pOperationApi.OperationForm.GetJzRecordZb, body);
+            const result = yield call(authService.axiosAuthPost, api.pOperationApi.OperationForm.GetJzRecordZbFs, body);
             if (result.status == 200) {
                 if (SentencedToEmpty(result, ['data', 'IsSuccess'], false)) {
                     data = SentencedToEmpty(result, ['data', 'Datas'], {});
@@ -196,15 +197,7 @@ export default Model.extend({
                         if( recordList?.[0]){
                             let data = [];
                             recordList.map(item=>{
-                                if(item.ChildList){
-                                    data.push({...item,ChildList: item.ChildList.map(childItem=>({
-                                        ...childItem,
-                                        ...childItem?.Data,
-                                        Data: undefined
-                                    }))})
-                                }else{
-                                    data.push({...item,...item?.Data, Data: undefined})
-                                }
+                                data.push({...item,...item?.Data, Data: undefined})
                             })
                             recordList = data
                         }
@@ -222,18 +215,10 @@ export default Model.extend({
                     } else {
                         recordList = JzConfigItemSelectedList.concat([]);
                         let dataList = SentencedToEmpty(data, ['Record', 'RecordList'], []);
-                        if(dataList?.[0]){
+                        if( dataList?.[0]){
                             let data = [];
                             dataList.map(item=>{
-                                if(item.ChildList){
-                                    data.push({...item,ChildList: item.ChildList.map(childItem=>({
-                                        ...childItem,
-                                        ...childItem?.Data,
-                                        Data: undefined
-                                    }))})
-                                }else{
-                                    data.push({...item,...item?.Data, Data: undefined})
-                                }
+                                data.push({...item,...item?.Data, Data: undefined})
                             })
                             dataList = data
                         }
@@ -250,16 +235,16 @@ export default Model.extend({
                     }
                     recordList = recordList.sort((a, b) => {
                         let sortA, sortB;
-                        if ((a.LdCalibrationIsOk && a.LdCalibrationIsOk != '') || (a.LcCalibrationIsOk && a.LcCalibrationIsOk != '')) {
-                            sortA = true;
-                        } else {
-                            sortA = false;
-                        }
-                        if ((b.LdCalibrationIsOk && b.LdCalibrationIsOk != '') || (b.LcCalibrationIsOk && b.LcCalibrationIsOk != '')) {
-                            sortB = true;
-                        } else {
-                            sortB = false;
-                        }
+                        // if ((a.LdCalibrationIsOk && a.LdCalibrationIsOk != '') || (a.LcCalibrationIsOk && a.LcCalibrationIsOk != '')) {
+                        //     sortA = true;
+                        // } else {
+                        //     sortA = false;
+                        // }
+                        // if ((b.LdCalibrationIsOk && b.LdCalibrationIsOk != '') || (b.LcCalibrationIsOk && b.LcCalibrationIsOk != '')) {
+                        //     sortB = true;
+                        // } else {
+                        //     sortB = false;
+                        // }
                         if ((sortA && sortB) || (!sortA && !sortB)) {
                             return 0;
                         } else {
@@ -308,12 +293,13 @@ export default Model.extend({
         *checkDelForm({ payload }, { call, put, update, take, select }) {
             const { taskDetail } = yield select(state => state.taskDetailModel);
             let index = taskDetail.TaskFormList.findIndex(item => {
-                if (item.TypeName == 'Fq82' && item.FormMainID) {
+                if (item.TypeName == 'Fs81' && item.FormMainID) {
                     return true;
                 } else {
                     return false;
                 }
             });
+            
             if (index != -1) {
                 payload.callback();
             } else {
@@ -326,13 +312,13 @@ export default Model.extend({
             let body = {
                 TaskID: taskDetail.ID
             };
-            const result = yield call(authService.axiosAuthPost, api.pOperationApi.OperationForm.DeleteJzRecordZb, body);
+            const result = yield call(authService.axiosAuthPost, api.pOperationApi.OperationForm.DeleteJzRecordZbFs, body);
             yield update({editstatus:{status:200}})
             if (result.status == 200) {
                 if (SentencedToEmpty(result, ['data', 'IsSuccess'], false)) {
                     //删除成功
                     yield put(createAction('taskDetailModel/updateFormStatus')({ 
-                        cID: 82, isAdd:false }));
+                        cID: 81, isAdd:false }));
                     payload.callback(taskDetail.ID);
                 } else {
                     //删除失败
@@ -345,13 +331,6 @@ export default Model.extend({
                 yield update({ editstatus: { status: 200 } });
             }
 
-        },
-        *delItem(
-            {
-                payload: { index, record, callback }
-            },
-            { call, put, update, take, select }
-        ) {
         },
         *saveItem(
             {
@@ -372,14 +351,14 @@ export default Model.extend({
         *addOrUpdateSign({ payload,callback }, { call, put, update, take, select }) {
             const user = getToken();
             const { taskDetail } = yield select(state => state.taskDetailModel);
-            const { MainInfo } = yield select(state => state.calibrationRecordZb);
+            const { MainInfo } = yield select(state => state.calibrationRecordZbFs);
             const body = {
                 TaskID: taskDetail.ID,
                 CreateUserID: user.UserId,
                 Content: MainInfo,
                 ...payload,
             };
-            const result = yield call(authService.axiosAuthPost, api.pOperationApi.OperationForm.AddOrUpdateJzRecordZb, body);
+            const result = yield call(authService.axiosAuthPost, api.pOperationApi.OperationForm.AddOrUpdateJzRecordZbFs, body);
             if (result.status == 200) {
                 ShowToast(result?.data?.Message || '提交签名成功');
             } else {
@@ -391,8 +370,8 @@ export default Model.extend({
     subscriptions: {
         setupSubscriber({ dispatch, listen, take }) {
             listen({
-                CalibrationRecordListZb: ({ params }) => {
-                    if (params.TypeName == 'Fq82') {
+                CalibrationRecordListZbFs: ({ params }) => {
+                    if (params.TypeName == 'Fs81') {
                         dispatch({
                             type: 'getJzItem',
                             payload: params

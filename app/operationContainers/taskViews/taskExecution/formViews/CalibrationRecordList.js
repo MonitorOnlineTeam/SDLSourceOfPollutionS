@@ -643,6 +643,7 @@ class CalibrationRecordList extends Component {
             };
           }
         });
+        console.log(selectData,'erewrew2222222222')
         if (deleteIndexList.length > 0) {
           this.setState({
             newData: selectData,
