@@ -866,7 +866,7 @@ class CalibrationRecordEditZb extends Component {
                         {this.state.modules.map((module, index) => this.renderZeroCalibrationModule(module, index))}
                         {
                             // ItemID: "流速"   ItemId: "780"
-                            ItemId != '780' || ItemId != '782' ? <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 24 }]}>
+                            ItemId != '780' && ItemId != '782' ? <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 24 }]}>
                                 <Text
                                     style={[
                                         {
@@ -881,7 +881,7 @@ class CalibrationRecordEditZb extends Component {
                             </View> : null
                         }
                         {   // ItemID: "流速"   ItemId: "780"
-                            ItemId != '780' || ItemId != '782' ? <View
+                            ItemId != '780' && ItemId != '782' ? <View
                                 style={[
                                     {
                                         width: SCREEN_WIDTH - 24,
@@ -893,7 +893,7 @@ class CalibrationRecordEditZb extends Component {
                                 ]}
                             >
                                 {
-                                    (ItemId != '780' || ItemId != '782') && ItemId != '773'
+                                    (ItemId != '780' && ItemId != '782') && ItemId != '773'
                                         ? <View
                                             style={[{
                                                 flexDirection: 'row', alignItems: 'center'
@@ -968,7 +968,7 @@ class CalibrationRecordEditZb extends Component {
                                 }
                                 {
                                     this.state.IsChange === 0 ? <View style={[styles.layoutWithBottomBorder
-                                        , (ItemId != '780' || ItemId != '782') && ItemId != '773' ? { marginTop: 0 } : null]}>
+                                        , (ItemId != '780' && ItemId != '782') && ItemId != '773' ? { marginTop: 0 } : null]}>
                                         <Text style={[styles.labelStyle]}>标气浓度值：</Text>
                                         <MyTextInput
                                             keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
@@ -1047,7 +1047,7 @@ class CalibrationRecordEditZb extends Component {
                         }
                         {
                             // ItemID: "流速"   ItemId: "780"
-                            ItemId != '780' || ItemId != '782' ? <View
+                            ItemId != '780' && ItemId != '782' ? <View
                                 style={[
                                     {
                                         width: SCREEN_WIDTH - 24,
@@ -1238,7 +1238,7 @@ class CalibrationRecordEditZb extends Component {
                             }
                         }
                         let ItemId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ItemId'], '');
-                        if (IsLiangCheng == 1 && (ItemId != '780' || ItemId != '782')) {
+                        if (IsLiangCheng == 1 && (ItemId != '780' && ItemId != '782')) {
                             if (SentencedToEmpty(this.state, ['BqNdz'], '') == '') {
                                 ShowToast('标气浓度不能为空');
                                 return;
