@@ -7,7 +7,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import globalcolor from '../../../../config/globalcolor';
 import { SCREEN_WIDTH } from '../../../../config/globalsize';
 import MyTextInput from '../../../../components/base/TextInput';
-import { ModalParent, OperationAlertDialog, SimpleLoadingComponent, SDLText,PickerSingleTimeTouchable, } from '../../../../components';
+import { ModalParent, OperationAlertDialog, SimpleLoadingComponent, SDLText, PickerSingleTimeTouchable, } from '../../../../components';
 import Mask from '../../../../components/Mask';
 import ConfirmDialog from '../components/ConfirmDialog';
 import { ShowToast, createAction, NavigationActions, SentencedToEmpty } from '../../../../utils';
@@ -62,10 +62,12 @@ class CalibrationRecordEditZbFs extends Component {
             ItemID: item.ItemID || '',  // 用于显示
             ItemName: item.ItemName || '',
             lastJZTime: item.LastJZTime || moment().format('YYYY-MM-DD HH:mm:ss'),
-            newJZTime: item.NewJZTime ||  moment().format('YYYY-MM-DD HH:mm:ss'),
+            newJZTime: item.NewJZTime || moment().format('YYYY-MM-DD HH:mm:ss'),
             jzcsmc: item.JZCSMC || '',
             zxjzcsz: item.ZXJZCSZ || '',
             Remark: item.Remark || '',
+            YQName: item.YQName || '',
+            YQCode: item.YQCode || '',
         };
 
         this.props.navigation.setOptions({
@@ -78,14 +80,14 @@ class CalibrationRecordEditZbFs extends Component {
         const { ItemId } = item;
         let pic1Name;
         pic1Name = 'YQZXJZRQXXHCSZ';
-            this.setState({
-                pic1Name,
-                [pic1Name]: item?.[pic1Name + '_PIC']?.AttachID || new Date().getTime() + pic1Name?.toLowerCase(),
-                [pic1Name + '_PIC']: item?.[pic1Name + '_PIC']?.ImgNameList?.map(item => ({ AttachID: item, })) || [],
+        this.setState({
+            pic1Name,
+            [pic1Name]: item?.[pic1Name + '_PIC']?.AttachID || new Date().getTime() + pic1Name?.toLowerCase(),
+            [pic1Name + '_PIC']: item?.[pic1Name + '_PIC']?.ImgNameList?.map(item => ({ AttachID: item, })) || [],
 
-            })
-        
-  
+        })
+
+
     }
 
 
@@ -185,6 +187,11 @@ class CalibrationRecordEditZbFs extends Component {
     upLoadImg = (label, id) => {
         return <View>
             <View key={id} style={styles.imageUploadContainer}>
+                <View style={{ display: 'flex', flexDirection: 'row' }}>
+                    <Text style={[styles.labelStyle, { color: 'red' }]}>* </Text>
+                    <Text style={[styles.labelStyle]}>{label}：</Text>
+                </View>
+
                 <ImageGrid
                     componentType={'taskhandle'}
                     style={{
@@ -219,16 +226,16 @@ class CalibrationRecordEditZbFs extends Component {
                 this.setState({
                     [par]: moment(time).format('YYYY-MM-DD HH:mm:ss')
                 })
-               
+
             }
         };
     };
     render() {
         let Item = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item'], {});
         let ItemId = SentencedToEmpty(this.props, ['route', 'params', 'params', 'item', 'ItemId'], '');
-  
 
-        const { pic1Name,} = this.state
+
+        const { pic1Name, } = this.state
         return (
             <View style={styles.container}>
                 {/* <KeyboardAwareScrollView> */}
@@ -244,58 +251,88 @@ class CalibrationRecordEditZbFs extends Component {
                                 }
                             ]}
                         >
-                             <View style={[styles.layoutWithBottomBorder]}>
-                             <Text style={[styles.labelStyle]}>上次校准日期：</Text>
-                             <PickerSingleTimeTouchable option={this.getTimeSelectOption('lastJZTime')} style={{ flexDirection: 'row', height: 45, alignItems: 'center', justifyContent: 'flex-end', flex: 1 }}>
+                            <View style={[styles.layoutWithBottomBorder]}>
+                                <Text style={[styles.labelStyle]}>上次校准日期：</Text>
+                                <PickerSingleTimeTouchable option={this.getTimeSelectOption('lastJZTime')} style={{ flexDirection: 'row', height: 45, alignItems: 'center', justifyContent: 'flex-end', flex: 1 }}>
                                     <Text style={{ fontSize: 14, color: '#666' }}>{SentencedToEmpty(this.state, ['lastJZTime'], moment().format('YYYY-MM-DD HH:mm'))}</Text>
                                     <Image style={{ width: 10, height: 10, marginLeft: 4 }} source={ic_filt_arrows} />
                                 </PickerSingleTimeTouchable>
                             </View>
                             <View style={[styles.layoutWithBottomBorder]}>
-                            <Text style={[styles.labelStyle]}>最近校准日期：</Text>
-                             <PickerSingleTimeTouchable option={this.getTimeSelectOption('newJZTime')} style={{ flexDirection: 'row', height: 45, alignItems: 'center', justifyContent: 'flex-end', flex: 1 }}>
+                                <Text style={[styles.labelStyle]}>最近校准日期：</Text>
+                                <PickerSingleTimeTouchable option={this.getTimeSelectOption('newJZTime')} style={{ flexDirection: 'row', height: 45, alignItems: 'center', justifyContent: 'flex-end', flex: 1 }}>
                                     <Text style={{ fontSize: 14, color: '#666' }}>{SentencedToEmpty(this.state, ['newJZTime'], moment().format('YYYY-MM-DD HH:mm'))}</Text>
                                     <Image style={{ width: 10, height: 10, marginLeft: 4 }} source={ic_filt_arrows} />
                                 </PickerSingleTimeTouchable>
                             </View>
                             <View
-                               style={[styles.layoutWithBottomBorder]}
+                                style={[styles.layoutWithBottomBorder]}
                             >
-                                 <Text style={[styles.labelStyle]}>标准参数名称：</Text>
-                                 <MyTextInput
-                                           
-                                            value={this.state.jzcsmc}
-                                            ref={ref => (this._inputNewMachineHaltReason = ref)}
-                                            style={[styles.textStyle, { flex: 1 }]}
-                                            placeholder={'请填写标准参数名称'}
-                                            onChangeText={text => {
-                                                // 动态更新组件内State记录
-                                                this.setState({
-                                                    jzcsmc: text
-                                                });
-                                            }}
-                                        />
+                                <Text style={[styles.labelStyle]}>标准参数名称：</Text>
+                                <MyTextInput
+
+                                    value={this.state.jzcsmc}
+                                    ref={ref => (this._inputNewMachineHaltReason = ref)}
+                                    style={[styles.textStyle, { flex: 1 }]}
+                                    placeholder={'请填写标准参数名称'}
+                                    onChangeText={text => {
+                                        // 动态更新组件内State记录
+                                        this.setState({
+                                            jzcsmc: text
+                                        });
+                                    }}
+                                />
                             </View>
-                            
+
                             <View style={[styles.layoutWithBottomBorder]}>
-                                        <Text style={[styles.labelStyle]}>最新校准参数：</Text>
-                                        <MyTextInput
-                                            keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                                            value={this.state.zxjzcsz}
-                                            ref={ref => (this._inputNewMachineHaltReason = ref)}
-                                            style={[styles.textStyle, { flex: 1 }]}
-                                            placeholder={'请填写最新校准参数'}
-                                            onChangeText={text => {
-                                                // 动态更新组件内State记录
-                                                this.setState({
-                                                    zxjzcsz: text
-                                                });
-                                            }}
-                                        />
-                                    </View> 
-                    
+                                <Text style={[styles.labelStyle]}>最新校准参数：</Text>
+                                <MyTextInput
+                                    keyboardType={Platform.OS == 'ios' ? 'numbers-and-punctuation' : 'numeric'}
+                                    value={this.state.zxjzcsz}
+                                    ref={ref => (this._inputNewMachineHaltReason = ref)}
+                                    style={[styles.textStyle, { flex: 1 }]}
+                                    placeholder={'请填写最新校准参数'}
+                                    onChangeText={text => {
+                                        // 动态更新组件内State记录
+                                        this.setState({
+                                            zxjzcsz: text
+                                        });
+                                    }}
+                                />
                             </View>
-                        
+                            <View style={[styles.layoutWithBottomBorder]}>
+                                <Text style={[styles.labelStyle]}>仪器名称：</Text>
+                                <MyTextInput
+                                    value={this.state.YQName}
+                                    ref={ref => (this._inputNewMachineHaltReason = ref)}
+                                    style={[styles.textStyle, { flex: 1 }]}
+                                    placeholder={'请填写仪器名称'}
+                                    onChangeText={text => {
+                                        this.setState({
+                                            YQName: text
+                                        });
+                                    }}
+                                />
+                            </View>
+
+                            <View style={[styles.layoutWithBottomBorder]}>
+                                <Text style={[styles.labelStyle]}>仪器型号：</Text>
+                                <MyTextInput
+                                    value={this.state.YQCode}
+                                    ref={ref => (this._inputNewMachineHaltReason = ref)}
+                                    style={[styles.textStyle, { flex: 1 }]}
+                                    placeholder={'请填写仪器型号'}
+                                    onChangeText={text => {
+                                        this.setState({
+                                            YQCode: text
+                                        });
+                                    }}
+                                />
+                            </View>
+                        </View>
+
+
+
                         <View style={[
                             {
                                 width: SCREEN_WIDTH - 24,
@@ -324,30 +361,30 @@ class CalibrationRecordEditZbFs extends Component {
                             </View>
                         </View>
                         <View style={[
-                        {
-                            width: SCREEN_WIDTH - 24,
-                            paddingHorizontal: 24,
-                            borderRadius: 2,
-                            backgroundColor: globalcolor.white,
-                            marginTop: 10,
-                            paddingTop:16,
-                            paddingBottom:8,
-                        }
-                    ]}>
-                        {
-                         [{ label: '仪器最新校准日期信息和参数值', picName: pic1Name }].map(item => {
-                            return this.upLoadImg(item.label, item.picName)
-                        })
-                    }
+                            {
+                                width: SCREEN_WIDTH - 24,
+                                paddingHorizontal: 24,
+                                borderRadius: 2,
+                                backgroundColor: globalcolor.white,
+                                marginTop: 10,
+                                paddingTop: 16,
+                                paddingBottom: 8,
+                            }
+                        ]}>
+                            {
+                                [{ label: '仪器最新校准日期信息和参数值', picName: pic1Name }].map(item => {
+                                    return this.upLoadImg(item.label, item.picName)
+                                })
+                            }
 
+                        </View >
                     </View >
-                    </View >
-                 
+
                 </ScrollView >
                 {/* </KeyboardAwareScrollView> */}
                 {
                     this.props.route.params.params.index != -1 &&
-                        this.props.route.params.params.item.FormMainID  ? (
+                        this.props.route.params.params.item.FormMainID ? (
                             <TouchableOpacity
                                 style={[styles.button, { backgroundColor: globalcolor.orange }, { marginVertical: 10 }]}
                                 onPress={() => {
@@ -365,17 +402,17 @@ class CalibrationRecordEditZbFs extends Component {
                 <TouchableOpacity
                     style={[styles.button, { backgroundColor: globalcolor.blue }, { marginVertical: 20 }]}
                     onPress={() => {
-                  
+
                         let imgFiles = {}
-                
-                            imgFiles = {
-                                yqzxjzrqxxhcsz: this.state[pic1Name],
 
-                            }
-                            if (!this.state[pic1Name + '_PIC']?.length) { ShowToast('仪器最新校准日期信息和参数值不能为空'); return }
-                         
+                        imgFiles = {
+                            yqzxjzrqxxhcsz: this.state[pic1Name],
 
-                        
+                        }
+                        if (!this.state[pic1Name + '_PIC']?.length) { ShowToast('仪器最新校准日期信息和参数值不能为空'); return }
+
+
+
 
 
                         // 构造提交数据
@@ -386,6 +423,8 @@ class CalibrationRecordEditZbFs extends Component {
                             // ItemId: this.state.ItemId,
                             itemID: this.state.ItemID,
                             ItemName: this.state.ItemName,
+                            YQName: this.state.YQName,
+                            YQCode: this.state.YQCode,
                             lastJZTime: this.state.lastJZTime,
                             newJZTime: this.state.newJZTime,
                             jzcsmc: this.state.jzcsmc,
@@ -393,7 +432,7 @@ class CalibrationRecordEditZbFs extends Component {
                             remark: this.state.Remark,
                             ...imgFiles
                         }]
-                         console.log(submitData,'62222')
+                        // console.log(submitData, '62222', )
                         this.props.dispatch(
                             createAction('calibrationRecordZbFs/saveItem')({
                                 index: this.props.route.params.params.index,
