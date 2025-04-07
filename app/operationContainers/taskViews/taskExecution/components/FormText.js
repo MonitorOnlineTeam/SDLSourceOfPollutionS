@@ -14,10 +14,11 @@ import globalcolor from '../../../../config/globalcolor';
 
 export default class FormText extends Component {
     render() {
-        const { label='标题', showString, last=false, itemHeight=44 } = this.props;
+        const { label='标题', showString, last=false, itemHeight=44, required=false } = this.props;
         return (
             <View style={[styles.layout,last?{}:styles.bottomBorder,{height:itemHeight}]}>
                 <View style={{ flexDirection: 'row', height: 44, alignItems: 'center', flex: 1, height:itemHeight }}>
+                    {required ? <Text style={[styles.labelStyle, { color: 'red' }]}>*</Text> : null}
                     <Text style={[styles.labelStyle]}>{`${label}：`}</Text>
                     <View style={[styles.innerlayout]}>
                         <Text style={[styles.textStyle,{marginLeft: 16}]}>{showString}</Text>

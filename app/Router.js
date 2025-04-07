@@ -246,7 +246,11 @@ import QualityControlDailyRecord from './pOperationContainers/qualityControl/Qua
 import QualityControlRecordDetail from './pOperationContainers/qualityControl/QualityControlRecordDetail';
 import IndicationErrorAndResponseTimeList from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeList';
 import IndicationErrorAndResponseTimeEditor from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeEditor';
-import Patrol_CEM from './operationContainers/taskViews/taskExecution/formViews/Patrol_CEM';
+import Patrol_CEM from './operationContainers/taskViews/taskExecution/formViews/zibo/Patrol_CEM';
+import RMR from './operationContainers/taskViews/taskExecution/formViews/zibo/RMR';
+import RMRForm from './operationContainers/taskViews/taskExecution/formViews/zibo/RMR_Form';
+import ConsumableReplace from './operationContainers/taskViews/taskExecution/formViews/zibo/ConsumableReplace';
+import ConsumableReplaceForm from './operationContainers/taskViews/taskExecution/formViews/zibo/ConsumableReplaceForm';
 import SignaturePage from './operationContainers/taskViews/taskExecution/formViews/components/SignaturePage';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
 //淄博 废气校准
@@ -595,8 +599,15 @@ Actions.pushViewWithName(CalibrationRecordEditZb, 'CalibrationRecordEditZb', { t
 Actions.pushViewWithName(CalibrationRecordListZbFs, 'CalibrationRecordListZbFs', { title: '零点量程漂移校准' });
 Actions.pushViewWithName(CalibrationRecordTimeZbFs, 'CalibrationRecordTimeZbFs', { title: '校准执行时间' });
 Actions.pushViewWithName(CalibrationRecordEditZbFs, 'CalibrationRecordEditZbFs', { title: '校准记录表' });
-// 巡检完全抽取法
+
+// 巡检5个表单
 Actions.pushViewWithName(Patrol_CEM, 'Patrol_CEM', { title: '完全抽取法CEMS日常巡检记录表' });
+// 标准物质更换记录表
+Actions.pushViewWithName(RMR, 'RMR', { title: '标准物质更换记录表' });
+Actions.pushViewWithName(RMRForm, 'RMRForm', { title: '标准物质更换记录表' });
+// 易耗品更换记录表
+Actions.pushViewWithName(ConsumableReplace, 'ConsumableReplace', { title: '易耗品更换记录表' });
+Actions.pushViewWithName(ConsumableReplaceForm, 'ConsumableReplaceForm', { title: '易耗品更换记录表' });
 Actions.pushViewWithName(SignaturePage, 'SignaturePage', { title: '签名'});
 
 Actions.pushView(Test, { headerShown: false });

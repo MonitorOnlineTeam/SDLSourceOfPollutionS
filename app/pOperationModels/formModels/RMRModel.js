@@ -17,7 +17,7 @@ import moment from 'moment';
 import {getToken} from '../../dvapack/storage';
 
 export default Model.extend({
-  namespace: 'patrolModel',
+  namespace: 'RMRModel',
   state: {},
   reducers: {
     updateState(state, {payload}) {
@@ -25,7 +25,7 @@ export default Model.extend({
     },
   },
   effects: {
-    //添加修改 CEMS 日常巡检
+    //添加修改
     *AddOrUpdateRecord(
       {payload: {params, actionType, callback}},
       {call, put, update, take, select},
@@ -40,7 +40,7 @@ export default Model.extend({
       }
       callback && callback(result);
     },
-    // 获取 CEMS 日常巡检
+    // 获取
     *GetAllRecord(
       {payload: {params, actionType, callback}},
       {call, put, update, take, select},
@@ -55,7 +55,7 @@ export default Model.extend({
       }
       callback && callback(result);
     },
-    // 删除 CEMS 日常巡检
+    // 删除
     *DeleteRecord(
       {payload: {params, actionType, callback}},
       {call, put, update, take, select},
@@ -63,21 +63,6 @@ export default Model.extend({
       const result = yield call(
         authService.axiosAuthPost,
         api.pOperationApi.OperationForm[actionType],
-        params,
-      );
-      if (result.status != 200) {
-        ShowToast(result.message);
-      }
-      callback && callback(result);
-    },
-    // 计算上次更换日期和浓度中高低
-    *GetStandardGasRepalceLastDate(
-      {payload: {params, actionType, callback}},
-      {call, put, update, take, select},
-    ) {
-      const result = yield call(
-        authService.axiosAuthPost,
-        api.pOperationApi.OperationForm.GetStandardGasRepalceLastDate,
         params,
       );
       if (result.status != 200) {

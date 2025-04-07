@@ -1,3 +1,10 @@
+/*
+ * @Author: JiaQi 
+ * @Date: 2025-04-02 10:48:34 
+ * @Last Modified by: JiaQi
+ * @Last Modified time: 2025-04-02 10:50:26
+ * @Description: 5个 CEMS 日常巡检
+ */
 import React, {Component} from 'react';
 import {
   View,
@@ -12,25 +19,25 @@ import {
 import {connect} from 'react-redux';
 import moment from 'moment';
 import Signature from 'react-native-signature-canvas';
-import globalcolor from '../../../../config/globalcolor';
-import {SCREEN_WIDTH} from '../../../../config/globalsize';
+import globalcolor from '../../../../../config/globalcolor';
+import {SCREEN_WIDTH} from '../../../../../config/globalsize';
 import {
   ShowToast,
   createAction,
   NavigationActions,
   SentencedToEmpty,
-} from '../../../../utils';
+} from '../../../../../utils';
 import {
   SimpleLoadingComponent,
   DeclareModule,
   StatusPage,
   SelectButton,
   AlertDialog,
-} from '../../../../components';
-import FormTextArea from '../components/FormTextArea';
-import FormDatePicker from '../components/FormDatePicker';
-import ImageGrid from '../../../../components/form/images/ImageGrid';
-import FORM_CONST from './Patrol_Form_CONST';
+} from '../../../../../components';
+import FormTextArea from '../../components/FormTextArea';
+import FormDatePicker from '../../components/FormDatePicker';
+import ImageGrid from '../../../../../components/form/images/ImageGrid';
+import FORM_CONST from './Patrol_Form_CONST';  
 @connect(({patrolModel}) => ({
   editstatus: patrolModel.editstatus,
   workTimeStart: patrolModel.workTimeStart,
@@ -441,7 +448,7 @@ class Patrol_CEM extends Component {
             {section.id}. {section.title}
           </Text>
           <Image
-            source={require('../../../../images/ic_arrows_up.png')}
+            source={require('../../../../../images/ic_arrows_up.png')}
             style={[
               styles.arrow,
               {
@@ -676,7 +683,7 @@ class Patrol_CEM extends Component {
                     width: 18,
                   }}
                   resizeMode={'contain'}
-                  source={require('../../../../images/icon_submit.png')}
+                  source={require('../../../../../images/icon_submit.png')}
                 />
                 <Text
                   style={[
