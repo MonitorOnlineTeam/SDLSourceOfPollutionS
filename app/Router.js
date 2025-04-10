@@ -1,8 +1,8 @@
 /*
  * @Description:
- * @LastEditors: outman0611 jia_anbo@163.com
+ * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2025-03-31 19:34:07
+ * @LastEditTime: 2025-04-10 14:01:53
  * @FilePath: /SDLSourceOfPollutionS_dev/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
@@ -257,6 +257,7 @@ import CalibrationRecordEditZb from './operationContainers/taskViews/taskExecuti
 import CalibrationRecordListZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordListZbFs';
 import CalibrationRecordTimeZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordTimeZbFs';
 import CalibrationRecordEditZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordEditZbFs';
+import WasteLiquidDisposalRecord from './operationContainers/taskViews/taskExecution/formViews/WasteLiquidDisposalRecord';
 
 function Test() {
     return (
@@ -380,7 +381,7 @@ Actions.pushViewWithName(OverData, 'OverData', { title: '超标数据' });
 Actions.pushViewWithName(ExceptionData, 'ExceptionData', { title: '异常数据' });
 Actions.pushViewWithName(MissDataList, 'MissDataList', { title: '缺失数据' });
 // Actions.pushViewWithName(OverAlarmVerify, 'OverAlarmVerify', { title: '超标核实记录' });
-Actions.    pushViewWithName(VerifyRecords, 'VerifyRecords', { title: '超标核实记录' });
+Actions.pushViewWithName(VerifyRecords, 'VerifyRecords', { title: '超标核实记录' });
 Actions.pushViewWithName(AlarmVerifyDetail, 'AlarmVerifyDetail', { title: '核实信息' });
 
 Actions.pushViewWithName(SignInEnter, 'SignInEnter', { title: '签到' });
@@ -597,7 +598,10 @@ Actions.pushViewWithName(CalibrationRecordTimeZbFs, 'CalibrationRecordTimeZbFs',
 Actions.pushViewWithName(CalibrationRecordEditZbFs, 'CalibrationRecordEditZbFs', { title: '校准记录表' });
 // 巡检完全抽取法
 Actions.pushViewWithName(Patrol_CEM, 'Patrol_CEM', { title: '完全抽取法CEMS日常巡检记录表' });
-Actions.pushViewWithName(SignaturePage, 'SignaturePage', { title: '签名'});
+Actions.pushViewWithName(SignaturePage, 'SignaturePage', { title: '签名' });
+
+
+Actions.pushViewWithName(WasteLiquidDisposalRecord, 'WasteLiquidDisposalRecord', { title: '废液处置记录表' });
 
 Actions.pushView(Test, { headerShown: false });
 

@@ -569,23 +569,23 @@ export default class TaskHandle extends Component {
                             break;
                         /**淄博项目 */
                         case 81: //零点量程漂移校准 废水
-                        this.props.dispatch(
-                            createAction('calibrationRecordZbFs/updateState')({
-                                liststatus: { status: -1 },
-                                JzConfigItemResult: { status: -1 },
-                                JzConfigItemSelectedList: [],
-                                TypeID: item.TypeID,
-                                TaskID: item.TaskID
-                            })
-                        );
-                        this.props.dispatch(createAction('calibrationRecordZbFs/getJzItem')({ ...item, createForm: true }));
-                        this.props.dispatch(
-                            NavigationActions.navigate({
-                                routeName: 'CalibrationRecordListZbFs',
-                                params: { ...item, createForm: true, }
-                            })
-                        );
-                        break;
+                            this.props.dispatch(
+                                createAction('calibrationRecordZbFs/updateState')({
+                                    liststatus: { status: -1 },
+                                    JzConfigItemResult: { status: -1 },
+                                    JzConfigItemSelectedList: [],
+                                    TypeID: item.TypeID,
+                                    TaskID: item.TaskID
+                                })
+                            );
+                            this.props.dispatch(createAction('calibrationRecordZbFs/getJzItem')({ ...item, createForm: true }));
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'CalibrationRecordListZbFs',
+                                    params: { ...item, createForm: true, }
+                                })
+                            );
+                            break;
                         case 82: //零点量程漂移校准 废气
                             this.props.dispatch(
                                 createAction('calibrationRecordZb/updateState')({
