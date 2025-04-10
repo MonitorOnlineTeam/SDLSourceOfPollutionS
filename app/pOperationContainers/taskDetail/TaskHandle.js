@@ -458,6 +458,26 @@ export default class TaskHandle extends Component {
                                 })
                             );
                             break;
+                        case 83: // 标准物质更换
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'RMR',
+                                    params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
+                                })
+                            );
+                            break;
+                        case 84: // 废气-易耗品更换
+                        case 85: // 废水-易耗品更换
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'ConsumableReplace',
+                                    params: { ...item, PollutantType: this.props.taskDetail?.PollutantType, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
+                                })
+                            );
+                            break;
+                        case 86: // 校验测试记录表
+                            this.props.dispatch(NavigationActions.navigate({ routeName: 'BdRecordList_zb', params: {} }));
+                            break;
                         case 59: // 异常小时数记录 废气
                         case 58: // 异常小时数记录 废水
                             this.props.dispatch(

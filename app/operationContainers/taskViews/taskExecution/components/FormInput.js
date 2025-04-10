@@ -26,6 +26,7 @@ export default class FormInput extends Component {
             required = false
             , propsLabelStyle = {}, propsTextStyle = {}, propsHolderStyle = {}
             , hasColon = true, requireIconPosition = 'left'
+            , onBlur = () => { }
         } = this.props;
         return (
             <View style={[styles.layoutStyle, last ? {} : styles.bottomBorder]}>
@@ -42,6 +43,9 @@ export default class FormInput extends Component {
                     placeholderTextColor={'#999999'}
                     onChangeText={text => {
                         onChangeText(text);
+                    }}
+                    onBlur={() => {
+                        onBlur();
                     }}
                 />
             </View>

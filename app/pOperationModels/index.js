@@ -28,6 +28,7 @@ import taskDetailModel from './taskDetailModel';
 import notice from './notice';
 // import configLoad from '../pollutionModels/configLoad';
 import bdRecordModel from './formModels/bdRecordModel';
+import bdRecordZBModel from './formModels/bdRecordZBModel';
 // import patrolRecordModel from './formModels/patrolRecordModel';
 import calibrationRecord from './formModels/calibrationRecord';
 import patrolModel from './formModels/patrolModel';
@@ -108,6 +109,7 @@ export function registerModels(app) {
     app.model(taskDetailModel);
     // app.model(configLoad);
     app.model(bdRecordModel); //比对校验
+    app.model(bdRecordZBModel); //比对校验 淄博
     // app.model(patrolRecordModel); //巡检
     app.model(calibrationRecord); //零点量程漂移与校准
     app.model(patrolModel); //巡检

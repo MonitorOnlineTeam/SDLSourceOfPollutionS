@@ -2,7 +2,7 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2025-04-10 14:01:53
+ * @LastEditTime: 2025-04-10 15:58:44
  * @FilePath: /SDLSourceOfPollutionS_dev/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
@@ -148,6 +148,9 @@ import CalibrationRecordEdit from './operationContainers/taskViews/taskExecution
 import SparePartsRecord from './operationContainers/taskViews/taskExecution/formViews/PoSparePartsRecord';
 import BdRecordList from './operationContainers/taskViews/taskExecution/formViews/BdRecordList';
 import BdRecordEdit from './operationContainers/taskViews/taskExecution/formViews/BdRecordEdit';
+import BdRecordList_zb from './operationContainers/taskViews/taskExecution/formViews/zibo/BdRecordList';
+import BdRecordEdit_zb from './operationContainers/taskViews/taskExecution/formViews/zibo/BdRecordEdit';
+import BdSelectedEdit_zb from './operationContainers/taskViews/taskExecution/formViews/zibo/BdSelectedEdit';
 import SparePartsForm from './operationContainers/taskViews/taskExecution/formViews/PoSparePartsForm';
 import BdSelectedEdit from './operationContainers/taskViews/taskExecution/formViews/BdSelectedEdit';
 import BdItemSetting from './operationContainers/taskViews/taskExecution/formViews/BdItemSetting';
@@ -246,7 +249,11 @@ import QualityControlDailyRecord from './pOperationContainers/qualityControl/Qua
 import QualityControlRecordDetail from './pOperationContainers/qualityControl/QualityControlRecordDetail';
 import IndicationErrorAndResponseTimeList from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeList';
 import IndicationErrorAndResponseTimeEditor from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeEditor';
-import Patrol_CEM from './operationContainers/taskViews/taskExecution/formViews/Patrol_CEM';
+import Patrol_CEM from './operationContainers/taskViews/taskExecution/formViews/zibo/Patrol_CEM';
+import RMR from './operationContainers/taskViews/taskExecution/formViews/zibo/RMR';
+import RMRForm from './operationContainers/taskViews/taskExecution/formViews/zibo/RMR_Form';
+import ConsumableReplace from './operationContainers/taskViews/taskExecution/formViews/zibo/ConsumableReplace';
+import ConsumableReplaceForm from './operationContainers/taskViews/taskExecution/formViews/zibo/ConsumableReplaceForm';
 import SignaturePage from './operationContainers/taskViews/taskExecution/formViews/components/SignaturePage';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
 //淄博 废气校准
@@ -322,6 +329,9 @@ Actions.pushViewWithName(SelectSearchList, 'SelectSearchList', { title: '备件�
 Actions.pushViewWithName(BdRecordList, 'BdRecordList', { title: '校验测试记录' });
 Actions.pushViewWithName(BdRecordEdit, 'BdRecordEdit', { title: '校验测试记录' });
 Actions.pushViewWithName(BdSelectedEdit, 'BdSelectedEdit', { title: '校验测试记录' });
+Actions.pushViewWithName(BdRecordList_zb, 'BdRecordList_zb', { title: '校验测试记录' });
+Actions.pushViewWithName(BdRecordEdit_zb, 'BdRecordEdit_zb', { title: '校验测试记录' });
+Actions.pushViewWithName(BdSelectedEdit_zb, 'BdSelectedEdit_zb', { title: '校验测试记录' });
 Actions.pushViewWithName(BdItemSetting, 'BdItemSetting', { title: '校验测试配置' });
 Actions.pushViewWithName(PoConsumablesReplaceRecord, 'PoConsumablesReplaceRecord', { title: '易耗品更换记录' });
 Actions.pushViewWithName(PoConsumablesReplaceForm, 'PoConsumablesReplaceForm', { title: '易耗品更换记录表' });
@@ -596,12 +606,20 @@ Actions.pushViewWithName(CalibrationRecordEditZb, 'CalibrationRecordEditZb', { t
 Actions.pushViewWithName(CalibrationRecordListZbFs, 'CalibrationRecordListZbFs', { title: '零点量程漂移校准' });
 Actions.pushViewWithName(CalibrationRecordTimeZbFs, 'CalibrationRecordTimeZbFs', { title: '校准执行时间' });
 Actions.pushViewWithName(CalibrationRecordEditZbFs, 'CalibrationRecordEditZbFs', { title: '校准记录表' });
-// 巡检完全抽取法
+
+// 巡检5个表单
 Actions.pushViewWithName(Patrol_CEM, 'Patrol_CEM', { title: '完全抽取法CEMS日常巡检记录表' });
 Actions.pushViewWithName(SignaturePage, 'SignaturePage', { title: '签名' });
 
 
 Actions.pushViewWithName(WasteLiquidDisposalRecord, 'WasteLiquidDisposalRecord', { title: '废液处置记录表' });
+// 标准物质更换记录表
+Actions.pushViewWithName(RMR, 'RMR', { title: '标准物质更换记录表' });
+Actions.pushViewWithName(RMRForm, 'RMRForm', { title: '标准物质更换记录表' });
+// 易耗品更换记录表
+Actions.pushViewWithName(ConsumableReplace, 'ConsumableReplace', { title: '易耗品更换记录表' });
+Actions.pushViewWithName(ConsumableReplaceForm, 'ConsumableReplaceForm', { title: '易耗品更换记录表' });
+Actions.pushViewWithName(SignaturePage, 'SignaturePage', { title: '签名' });
 
 Actions.pushView(Test, { headerShown: false });
 
