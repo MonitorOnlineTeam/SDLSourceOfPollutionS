@@ -2,7 +2,7 @@
  * @Author: JiaQi 
  * @Date: 2025-04-02 10:48:34 
  * @Last Modified by: JiaQi
- * @Last Modified time: 2025-04-02 10:50:26
+ * @Last Modified time: 2025-04-10 16:12:09
  * @Description: 5个 CEMS 日常巡检
  */
 import React, { Component } from 'react';
@@ -19,8 +19,8 @@ import {
 import { connect } from 'react-redux';
 import moment from 'moment';
 import Signature from 'react-native-signature-canvas';
-import globalcolor from '../../../../config/globalcolor';
-import { SCREEN_WIDTH } from '../../../../config/globalsize';
+import globalcolor from '../../../../../config/globalcolor';
+import { SCREEN_WIDTH } from '../../../../../config/globalsize';
 import {
   ShowToast,
   createAction,
@@ -33,10 +33,10 @@ import {
   StatusPage,
   SelectButton,
   AlertDialog,
-} from '../../../../components';
-import FormTextArea from '../components/FormTextArea';
-import FormDatePicker from '../components/FormDatePicker';
-import ImageGrid from '../../../../components/form/images/ImageGrid';
+} from '../../../../../components';
+import FormTextArea from '../../components/FormTextArea';
+import FormDatePicker from '../../components/FormDatePicker';
+import ImageGrid from '../../../../../components/form/images/ImageGrid';
 import FORM_CONST from './Patrol_Form_CONST';
 @connect(({ patrolModel }) => ({
   editstatus: patrolModel.editstatus,
@@ -505,8 +505,6 @@ class Patrol_CEM extends Component {
   renderCheckList = items => {
     const { TaskID } = this.props.route.params.params;
     const { formData, signContent } = this.state;
-    console.log('formData', formData);
-    console.log('state', this.state);
     return (
       <View style={styles.checkListContainer}>
         {items.map((item, index) => {
