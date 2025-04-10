@@ -1,4 +1,11 @@
-import React, {Component} from 'react';
+/*
+ * @Author: JiaQi 
+ * @Date: 2025-04-02 10:48:34 
+ * @Last Modified by: JiaQi
+ * @Last Modified time: 2025-04-02 10:50:26
+ * @Description: 5个 CEMS 日常巡检
+ */
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -9,17 +16,17 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import moment from 'moment';
 import Signature from 'react-native-signature-canvas';
 import globalcolor from '../../../../config/globalcolor';
-import {SCREEN_WIDTH} from '../../../../config/globalsize';
+import { SCREEN_WIDTH } from '../../../../config/globalsize';
 import {
   ShowToast,
   createAction,
   NavigationActions,
   SentencedToEmpty,
-} from '../../../../utils';
+} from '../../../../../utils';
 import {
   SimpleLoadingComponent,
   DeclareModule,
@@ -31,7 +38,7 @@ import FormTextArea from '../components/FormTextArea';
 import FormDatePicker from '../components/FormDatePicker';
 import ImageGrid from '../../../../components/form/images/ImageGrid';
 import FORM_CONST from './Patrol_Form_CONST';
-@connect(({patrolModel}) => ({
+@connect(({ patrolModel }) => ({
   editstatus: patrolModel.editstatus,
   workTimeStart: patrolModel.workTimeStart,
   workTimeEnd: patrolModel.workTimeEnd,
@@ -68,7 +75,7 @@ class Patrol_CEM extends Component {
 
   // 初始化状态
   initState = () => {
-    const {ID, FormMainID} = this.props.route.params.params;
+    const { ID, FormMainID } = this.props.route.params.params;
     let pic1Name, pic2Name;
     switch (ID) {
       case 76:
@@ -104,9 +111,9 @@ class Patrol_CEM extends Component {
 
   // 获取 CEMS 日常巡检  
   GetAllRecord = () => {
-    this.setState({loading: true});
-    const {TaskID, TypeID} = this.props.route.params.params;
-    const {pic1Name, pic2Name} = this.state;
+    this.setState({ loading: true });
+    const { TaskID, TypeID } = this.props.route.params.params;
+    const { pic1Name, pic2Name } = this.state;
 
     let actionType = '';
     switch (TypeID) {
@@ -163,7 +170,7 @@ class Patrol_CEM extends Component {
               Content: Main?.Content || {},
             }));
           }
-          this.setState({loading: false});
+          this.setState({ loading: false });
         },
       }),
     );
@@ -171,8 +178,8 @@ class Patrol_CEM extends Component {
 
   // 添加修改完全抽取法 CEMS 日常巡检
   onSubmit = () => {
-    const {TaskID, ID, TypeID} = this.props.route.params.params;
-    const {signContent, Content, formData, pic1Name, pic2Name} = this.state;
+    const { TaskID, ID, TypeID } = this.props.route.params.params;
+    const { signContent, Content, formData, pic1Name, pic2Name } = this.state;
 
     if (!Content.MaintenanceBeginTime || !Content.MaintenanceEndTime) {
       ShowToast('请选择运行维护开始时间和结束时间');
@@ -191,13 +198,13 @@ class Patrol_CEM extends Component {
       return;
     }
 
-    this.setState({loading: true});
+    this.setState({ loading: true });
     let body = {
       id: ID,
       taskID: TaskID,
       typeID: TypeID,
       content: Content,
-      recordList: [{...this.state.formData}],
+      recordList: [{ ...this.state.formData }],
       signContent: signContent,
     };
     console.log('body', body);
@@ -235,7 +242,7 @@ class Patrol_CEM extends Component {
             this.props.navigation.goBack();
             ShowToast('提交成功');
           }
-          this.setState({loading: false});
+          this.setState({ loading: false });
         },
       }),
     );
@@ -243,9 +250,9 @@ class Patrol_CEM extends Component {
 
   // 删除完全抽取法 CEMS 日常巡检
   onDeleteRecord = () => {
-    this.setState({loading: true});
-    const {FormMainID} = this.state;
-    const {TypeID} = this.props.route.params.params;
+    this.setState({ loading: true });
+    const { FormMainID } = this.state;
+    const { TypeID } = this.props.route.params.params;
     let actionType = '';
     switch (TypeID) {
       case 76: // 完全抽取法
@@ -267,9 +274,9 @@ class Patrol_CEM extends Component {
     this.props.dispatch(
       createAction('patrolModel/DeleteRecord')({
         actionType,
-        params: {formMainID: FormMainID},
+        params: { formMainID: FormMainID },
         callback: result => {
-          this.setState({loading: false});
+          this.setState({ loading: false });
           if (result.status == 200) {
             ShowToast('删除成功');
             this.props.dispatch(
@@ -292,7 +299,7 @@ class Patrol_CEM extends Component {
 
   // 点击展开/收起
   toggleSection = index => {
-    const {expandedSections} = this.state;
+    const { expandedSections } = this.state;
     const isExpanded = expandedSections.includes(index);
 
     if (isExpanded) {
@@ -307,7 +314,7 @@ class Patrol_CEM extends Component {
   };
 
   getMaintenanceStartTimeOption = () => {
-    const {Content} = this.state;
+    const { Content } = this.state;
     console.log('Content', Content);
     return {
       defaultTime: Content.MaintenanceBeginTime
@@ -326,7 +333,7 @@ class Patrol_CEM extends Component {
   };
 
   getMaintenanceEndTimeOption = () => {
-    const {Content} = this.state;
+    const { Content } = this.state;
     return {
       defaultTime: Content.MaintenanceEndTime
         ? moment(Content.MaintenanceEndTime).format('YYYY-MM-DD HH:mm:ss')
@@ -357,7 +364,7 @@ class Patrol_CEM extends Component {
   };
 
   renderTimeSection = () => {
-    const {Content} = this.state;
+    const { Content } = this.state;
     return (
       <View
         style={[
@@ -374,7 +381,7 @@ class Patrol_CEM extends Component {
         <View style={styles.layoutWithBottomBorder}>
           <Text style={styles.labelStyle}>工作时间：</Text>
           <View style={styles.timeRangeContainer}>
-            <Text style={[styles.timeValue, {flex: 1}]}>
+            <Text style={[styles.timeValue, { flex: 1 }]}>
               {Content.WorkingDateBegin}
             </Text>
             <Text
@@ -386,7 +393,7 @@ class Patrol_CEM extends Component {
               }}>
               ~
             </Text>
-            <Text style={[styles.timeValue, {flex: 1}]}>
+            <Text style={[styles.timeValue, { flex: 1 }]}>
               {Content.WorkingDateEnd}
             </Text>
           </View>
@@ -398,8 +405,8 @@ class Patrol_CEM extends Component {
           timeString={
             Content.MaintenanceBeginTime
               ? moment(Content.MaintenanceBeginTime).format(
-                  'YYYY-MM-DD HH:mm:ss',
-                )
+                'YYYY-MM-DD HH:mm:ss',
+              )
               : '请选择开始时间'
           }
         />
@@ -441,11 +448,11 @@ class Patrol_CEM extends Component {
             {section.id}. {section.title}
           </Text>
           <Image
-            source={require('../../../../images/ic_arrows_up.png')}
+            source={require('../../../../../images/ic_arrows_up.png')}
             style={[
               styles.arrow,
               {
-                transform: [{rotate: isExpanded ? '0deg' : '180deg'}],
+                transform: [{ rotate: isExpanded ? '0deg' : '180deg' }],
               },
             ]}
           />
@@ -496,8 +503,8 @@ class Patrol_CEM extends Component {
 
   // 渲染检查项
   renderCheckList = items => {
-    const {TaskID} = this.props.route.params.params;
-    const {formData, signContent} = this.state;
+    const { TaskID } = this.props.route.params.params;
+    const { formData, signContent } = this.state;
     console.log('formData', formData);
     console.log('state', this.state);
     return (
@@ -508,7 +515,8 @@ class Patrol_CEM extends Component {
             return (
               <View key={index} style={styles.imageUploadContainer}>
                 <ImageGrid
-                  componentType={'taskhandle'}
+                  // componentType={'taskhandle'} 
+                  componentType={'normalWaterMaskCamera'}
                   style={{
                     // paddingLeft: 13,
                     // paddingRight: 13,
@@ -520,7 +528,7 @@ class Patrol_CEM extends Component {
                   isDel={true}
                   UUID={formData[item.id]}
                   uploadCallback={items => {
-                    console.log('items', items);
+                    console.log('items = ', items);
                     // let newFormData = {...this.state.formData};
                     // let newImgList = [].concat(
                     //   this.state.formData[item.id] || [],
@@ -529,12 +537,12 @@ class Patrol_CEM extends Component {
                     items.map(imageItem => {
                       newImgList.push(imageItem);
                     });
-                    this.setState({[item.id + '_PIC']: newImgList});
+                    this.setState({ [item.id + '_PIC']: newImgList });
                   }}
                   delCallback={index => {
                     let newImgList = [...this.state[item.id + '_PIC']];
                     newImgList.splice(index, 1);
-                    this.setState({[item.id + '_PIC']: newImgList});
+                    this.setState({ [item.id + '_PIC']: newImgList });
                   }}
                 />
               </View>
@@ -547,7 +555,7 @@ class Patrol_CEM extends Component {
               <FormTextArea
                 key={item.id}
                 label={item.title}
-                labelStyle={{color: globalcolor.taskFormLabel, fontSize: 14}}
+                labelStyle={{ color: globalcolor.taskFormLabel, fontSize: 14 }}
                 value={this.getFormValue(item.id) || ''}
                 onChangeText={value =>
                   this.handleFormDataChange(item.id, value)
@@ -564,7 +572,7 @@ class Patrol_CEM extends Component {
               <FormTextArea
                 key={item.id}
                 label={item.title}
-                labelStyle={{color: globalcolor.taskFormLabel, fontSize: 14}}
+                labelStyle={{ color: globalcolor.taskFormLabel, fontSize: 14 }}
                 value={this.getFormValue(item.id) || ''}
                 onChangeText={value =>
                   this.handleFormDataChange(item.id, value)
@@ -585,7 +593,7 @@ class Patrol_CEM extends Component {
                   onPress={this.openSignaturePage}>
                   {signContent ? (
                     <Image
-                      source={{uri: signContent}}
+                      source={{ uri: signContent }}
                       style={styles.signaturePreview}
                     />
                   ) : (
@@ -609,9 +617,9 @@ class Patrol_CEM extends Component {
                     width: 120,
                     paddingHorizontal: 10,
                   }}
-                  conTainStyle={{height: 44, width: 40}}
-                  imageStyle={{width: 18, height: 18}}
-                  textStyle={{color: '#666'}}
+                  conTainStyle={{ height: 44, width: 40 }}
+                  imageStyle={{ width: 18, height: 18 }}
+                  textStyle={{ color: '#666' }}
                   selectIndex={
                     value == undefined ? '' : value === 1 ? '0' : '1'
                   }
@@ -641,7 +649,7 @@ class Patrol_CEM extends Component {
   };
 
   render() {
-    const {FormMainID, loading} = this.state;
+    const { FormMainID, loading } = this.state;
     return (
       <StatusPage
         status={1} // 1表示正常状态
@@ -653,15 +661,15 @@ class Patrol_CEM extends Component {
         }}
         emptyBtnText={'重新请求'}
         errorBtnText={'点击重试'}
-        onEmptyPress={() => {}}
-        onErrorPress={() => {}}>
+        onEmptyPress={() => { }}
+        onErrorPress={() => { }}>
         <ScrollView style={styles.scrollView}>
           {this.renderTimeSection()}
           {this.state.sections.map((section, index) =>
             this.renderSection(section, index),
           )}
         </ScrollView>
-        <View style={[{width: SCREEN_WIDTH - 24, alignItems: 'center'}]}>
+        <View style={[{ width: SCREEN_WIDTH - 24, alignItems: 'center' }]}>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={[styles.button, styles.submitButton]}
@@ -676,11 +684,11 @@ class Patrol_CEM extends Component {
                     width: 18,
                   }}
                   resizeMode={'contain'}
-                  source={require('../../../../images/icon_submit.png')}
+                  source={require('../../../../../images/icon_submit.png')}
                 />
                 <Text
                   style={[
-                    {color: globalcolor.whiteFont, fontSize: 15, marginLeft: 8},
+                    { color: globalcolor.whiteFont, fontSize: 15, marginLeft: 8 },
                   ]}>
                   确定提交
                 </Text>
@@ -709,14 +717,14 @@ class Patrol_CEM extends Component {
             buttons: [
               {
                 txt: '取消',
-                btnStyle: {backgroundColor: 'transparent'},
-                txtStyle: {color: globalcolor.headerBackgroundColor},
-                onpress: () => {},
+                btnStyle: { backgroundColor: 'transparent' },
+                txtStyle: { color: globalcolor.headerBackgroundColor },
+                onpress: () => { },
               },
               {
                 txt: '确定',
-                btnStyle: {backgroundColor: globalcolor.headerBackgroundColor},
-                txtStyle: {color: '#ffffff'},
+                btnStyle: { backgroundColor: globalcolor.headerBackgroundColor },
+                txtStyle: { color: '#ffffff' },
                 onpress: this.onDeleteRecord,
               },
             ],

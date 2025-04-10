@@ -43,9 +43,7 @@ export default class ImageUploadTouch extends Component {
     uploadImageCallBack = (img, isSuccess, type = 'online') => {
         console.log('上传图片回调', img, isSuccess);
         CloseToast();
-        console.log('isSuccess = ', isSuccess);
         if (isSuccess) {
-            console.log('isSuccess2 = ', isSuccess);
             this.props.callback(img, type);
             if (type == 'online') {
                 ShowToast({
@@ -108,19 +106,24 @@ export default class ImageUploadTouch extends Component {
                             routeName: 'WaterMaskCamera',
                             params: {
                                 // uuid
+                                componentType,
                                 uuid: _this.props.uuid,
                                 picType: 'normal', // 普通图片 不传就是水印相机
                                 callback: this.uploadImageCallBack
                             }
                         })
                     );
-                } else if (componentType == 'taskhandle') {
+                } else if (componentType == 'taskhandle'
+                    || componentType == 'normalWaterMaskCamera'
+                ) {
                     _this.props.dispatch(
                         NavigationActions.navigate({
                             routeName: 'WaterMaskCamera',
                             params: {
+                                componentType,
                                 // uuid
                                 uuid: _this.props.uuid,
+                                callback: this.uploadImageCallBack
                             }
                         })
                     );
@@ -134,6 +137,7 @@ export default class ImageUploadTouch extends Component {
                         NavigationActions.navigate({
                             routeName: 'WaterMaskCamera',
                             params: {
+                                componentType,
                                 // uuid
                                 uuid: _this.props.uuid,
                                 callback: _this.uploadImageCallBack
@@ -246,6 +250,7 @@ export default class ImageUploadTouch extends Component {
                                             NavigationActions.navigate({
                                                 routeName: 'WaterMaskCamera',
                                                 params: {
+                                                    componentType,
                                                     uuid: _this.props.uuid,
                                                     saveType: 'offline',
                                                 }
@@ -261,6 +266,7 @@ export default class ImageUploadTouch extends Component {
                                             NavigationActions.navigate({
                                                 routeName: 'WaterMaskCamera',
                                                 params: {
+                                                    componentType,
                                                     uuid: _this.props.uuid,
                                                     saveType: 'offline',
                                                     callback: _this.uploadImageCallBack
@@ -350,7 +356,9 @@ export default class ImageUploadTouch extends Component {
                     onpress: () => {
                         {
                             const _this = this;
-                            if (componentType == 'taskhandle' || componentType == 'signIn') {
+                            if (componentType == 'taskhandle' || componentType == 'signIn'
+                                || componentType == 'normalWaterMaskCamera'
+                            ) {
                                 CameraWaterMaskModule.checkPermission(function (args) {
                                     if (args) {
                                         // setShowState(true);
@@ -359,6 +367,7 @@ export default class ImageUploadTouch extends Component {
                                                 NavigationActions.navigate({
                                                     routeName: 'WaterMaskCamera',
                                                     params: {
+                                                        componentType,
                                                         // uuid
                                                         uuid: _this.props.uuid,
                                                     }
@@ -375,6 +384,7 @@ export default class ImageUploadTouch extends Component {
                                                     routeName: 'WaterMaskCamera',
                                                     params: {
                                                         // uuid
+                                                        componentType,
                                                         uuid: _this.props.uuid,
                                                         callback: _this.uploadImageCallBack
                                                     }
@@ -455,6 +465,7 @@ export default class ImageUploadTouch extends Component {
                         {
                             // const _this = this;
                             if (componentType == 'taskhandle' || componentType == 'signIn'
+                                || componentType == 'normalWaterMaskCamera'
                                 // || componentType == 'normal'
                             ) {
                                 this.requestCameraPermission();
@@ -647,7 +658,9 @@ export default class ImageUploadTouch extends Component {
                             return;
                         }
                         // 下面是Android逻辑
-                        if (componentType == 'taskhandle' || componentType == 'signIn') {
+                        if (componentType == 'taskhandle' || componentType == 'signIn'
+                            || componentType == 'normalWaterMaskCamera'
+                        ) {
                             this.refs.doAlert.show();
                         } else {
                             SyanImagePicker.showImagePicker(iosOptions, (err, selectedPhotos) => {

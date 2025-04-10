@@ -820,7 +820,36 @@ export default api = {
             GetFSExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/GetFSExInspectionRecord',
             // 删除废水监测日常巡检
             DeleteFSExInspectionRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteFSExInspectionRecord',
+
+            /**
+             * 2025.4.1
+             * 淄博标准物质更换
+             */
+            GetStandardGasRepalceRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/GetStandardGasRepalceRecordZB', // 获取标准物质更换记录
+            AddOrUpdateStandardGasRepalceRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateStandardGasRepalceRecordZB', // 新增或更新标准物质更换记录
+            DeletetStandardGasRepalceRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/DeletetStandardGasRepalceRecordZB', // 删除标准物质更换记录
+            GetStandardGasRepalceLastDate: 'rest/PollutantSourceApi/GasOperationFormApi/GetStandardGasRepalceLastDate', // 计算上次更换日期和浓度中高低
+            SubmitStandardGasRepalceRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/SubmitStandardGasRepalceRecordZB', // 提交标准物质更换记录
+            DeletetStandardGasRepalceRecordZBById: 'rest/PollutantSourceApi/GasOperationFormApi/DeletetStandardGasRepalceRecordZBById', // 删除标准物质更换记录
             
+            /**
+             * 2025.4.7
+             * 淄博易耗品更换
+             */
+            GetConsumablesReplaceRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/GetConsumablesReplaceRecordZB', // 获取易耗品更换记录
+            AddOrUpdateConsumablesReplaceRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateConsumablesReplaceRecordZB', // 新增或更新易耗品更换记录
+            DeletetConsumablesReplaceRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/DeletetConsumablesReplaceRecordZB', // 删除易耗品更换记录
+            DeletetConsumablesReplaceRecordZBById: 'rest/PollutantSourceApi/GasOperationFormApi/DeletetConsumablesReplaceRecordZBById', // 删除易耗品更换记录 - 单条
+            SubmitConsumablesReplaceRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/SubmitConsumablesReplaceRecordZB', // 提交易耗品更换记录 签名等信息
+
+            /**
+             * 2025.4.8
+             * 淄博校验测试
+             */
+            GetVerificationTestRecordZBList: 'rest/PollutantSourceApi/GasOperationFormApi/GetVerificationTestRecordZBList', // 获取
+            AddOrUpdateVerificationTestRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateVerificationTestRecordZB', // 添加
+            DeleteVerificationTestRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteVerificationTestRecordZB', // 删除
+            AddorUpdateVerificationTestParamsZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddorUpdateVerificationTestParamsZB', // 添加表格
         },
         /**
          * 2022.11.30

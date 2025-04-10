@@ -201,9 +201,10 @@ export default class ImageGrid extends PureComponent {
                                         }
                                         largImage.push(tempObject);
                                     });
-
                                     this.setState({ Imgs: Imgs, largImage });
-                                    uploadCallback(newItem);
+                                    if (this.props.componentType != 'taskhandle') {
+                                        uploadCallback(newItem);
+                                    }
                                 }}
                             >
                                 <Image source={require('../../../images/home_point_add.png')} style={{ width: 60, height: 60 }} />
