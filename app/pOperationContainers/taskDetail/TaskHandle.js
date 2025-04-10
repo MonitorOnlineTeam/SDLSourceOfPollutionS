@@ -475,6 +475,9 @@ export default class TaskHandle extends Component {
                                 })
                             );
                             break;
+                        case 86: // 校验测试记录表
+                            this.props.dispatch(NavigationActions.navigate({ routeName: 'BdRecordList_zb', params: {} }));
+                            break;
                         case 59: // 异常小时数记录 废气
                         case 58: // 异常小时数记录 废水
                             this.props.dispatch(

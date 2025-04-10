@@ -841,6 +841,15 @@ export default api = {
             DeletetConsumablesReplaceRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/DeletetConsumablesReplaceRecordZB', // 删除易耗品更换记录
             DeletetConsumablesReplaceRecordZBById: 'rest/PollutantSourceApi/GasOperationFormApi/DeletetConsumablesReplaceRecordZBById', // 删除易耗品更换记录 - 单条
             SubmitConsumablesReplaceRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/SubmitConsumablesReplaceRecordZB', // 提交易耗品更换记录 签名等信息
+
+            /**
+             * 2025.4.8
+             * 淄博校验测试
+             */
+            GetVerificationTestRecordZBList: 'rest/PollutantSourceApi/GasOperationFormApi/GetVerificationTestRecordZBList', // 获取
+            AddOrUpdateVerificationTestRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateVerificationTestRecordZB', // 添加
+            DeleteVerificationTestRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteVerificationTestRecordZB', // 删除
+            AddorUpdateVerificationTestParamsZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddorUpdateVerificationTestParamsZB', // 添加表格
         },
         /**
          * 2022.11.30
