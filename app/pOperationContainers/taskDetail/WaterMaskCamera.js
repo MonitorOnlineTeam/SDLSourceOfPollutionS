@@ -2,8 +2,8 @@
  * @Description: 水印相机
  * @LastEditors: hxf
  * @Date: 2023-06-01 14:09:24
- * @LastEditTime: 2024-11-11 11:38:40
- * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/taskDetail/WaterMaskCamera.js
+ * @LastEditTime: 2025-04-10 15:51:09
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/taskDetail/WaterMaskCamera.js
  */
 import React, { Component } from 'react'
 import { Text, View, Platform, TouchableOpacity } from 'react-native'
@@ -51,35 +51,45 @@ export default class WaterMaskCamera extends Component {
     uploadImageCallBack = (images, isSuccess) => {
         CloseToast();
         if (isSuccess) {
-            // this.props.callback(img);
-            const { taskDetail } = this.props;
-            let newTaskDetail = { ...taskDetail };
-            // let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], []));
-            let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []));
-            images.map((imageItem) => {
-                newImgList.push(imageItem.attachID)
-            });
-            let Attachments = SentencedToEmpty(taskDetail, ['Attachments'], {});
-            Attachments.ImgNameList = newImgList;
-            newTaskDetail.Attachments = Attachments;
-            const navigationCallback = SentencedToEmpty(this.props, ['route', 'params', 'params', 'callback'], () => { return false; });
-            const callbackHandle = navigationCallback(images, true, SentencedToEmpty(this.props
-                , ['route', 'params', 'params', 'saveType'], 'online'
-            ));
-            if (!callbackHandle) {
-                this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
+            const componentType = SentencedToEmpty(this.props, ['route', 'params', 'params', 'componentType'], 'taskhandle');
+            if (componentType == 'normalWaterMaskCamera') {
+                const navigationCallback = SentencedToEmpty(this.props, ['route', 'params', 'params', 'callback'], () => { return false; });
+                this.props.dispatch(NavigationActions.back());
+                ShowToast({
+                    message: '上传成功',
+                    alertType: 'success',
+                });
+                navigationCallback(images, isSuccess);
+            } else {
+                const { taskDetail } = this.props;
+                let newTaskDetail = { ...taskDetail };
+                let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []));
+                images.map((imageItem) => {
+                    newImgList.push(imageItem.attachID)
+                });
+                let Attachments = SentencedToEmpty(taskDetail, ['Attachments'], {});
+                Attachments.ImgNameList = newImgList;
+                newTaskDetail.Attachments = Attachments;
+                const navigationCallback = SentencedToEmpty(this.props, ['route', 'params', 'params', 'callback'], () => { return false; });
+                const callbackHandle = navigationCallback(images, true, SentencedToEmpty(this.props
+                    , ['route', 'params', 'params', 'saveType'], 'online'
+                ));
+                if (!callbackHandle) {
+                    this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
+                }
+                this.props.dispatch(NavigationActions.back());
+                ShowToast({
+                    message: '上传成功',
+                    alertType: 'success',
+                });
             }
-            this.props.dispatch(NavigationActions.back());
-            ShowToast({
-                message: '上传成功',
-                alertType: 'success',
-            });
-            let logObject = {};
-            logObject.result = images;
-            this.props.dispatch(createAction('app/addClockInLog')({
-                //提交异常日志
-                msg: `${JSON.stringify(logObject)}`
-            }));
+
+            // let logObject = {};
+            // logObject.result = images;
+            // this.props.dispatch(createAction('app/addClockInLog')({
+            //     //提交异常日志
+            //     msg: `${JSON.stringify(logObject)}`
+            // }));
         } else {
             let logObject = {};
             logObject.result = images;
