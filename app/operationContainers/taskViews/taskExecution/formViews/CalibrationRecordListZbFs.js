@@ -64,8 +64,14 @@ class CalibrationRecordListZb extends Component {
         };
         _me = this;
     }
+    componentDidMount(prevProps, prevState) {
+        this.setState({
+            signContent: this.props.signContent
+        })
+
+    }
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.signContent != this.props.signContent) {
+        if (prevProps.signContent && prevProps.signContent != this.props.signContent) {
             if (this.props.signContent) {
                 this.setState({
                     signContent: this.props.signContent
@@ -170,111 +176,111 @@ class CalibrationRecordListZb extends Component {
                                     {item.ItemID + '分析仪校准'}
                                 </Text>
                             </View>
-                            
-                                    <View
+
+                            <View
+                                style={[
+                                    {
+                                        width: SCREEN_WIDTH - 24,
+                                        flexDirection: 'row',
+                                        marginTop: 10,
+                                    },
+                                ]}>
+                                <View style={[{ flexDirection: 'row', height: 30, flex: 1 }]}>
+                                    <Text
+                                        style={[
+                                            { fontSize: 14, color: globalcolor.datepickerGreyText },
+                                        ]}>
+                                        {'上次校准日期：'}
+                                    </Text>
+                                    <Text
+                                        numberOfLines={1}
                                         style={[
                                             {
-                                                width: SCREEN_WIDTH - 24,
-                                                flexDirection: 'row',
-                                                marginTop: 10,
+                                                width: (SCREEN_WIDTH - 24) / 2 - 100,
+                                                fontSize: 14,
+                                                color: globalcolor.datepickerGreyText,
                                             },
                                         ]}>
-                                        <View style={[{ flexDirection: 'row', height: 30, flex: 1 }]}>
-                                            <Text
-                                                style={[
-                                                    { fontSize: 14, color: globalcolor.datepickerGreyText },
-                                                ]}>
-                                                {'上次校准日期：'}
-                                            </Text>
-                                            <Text
-                                                numberOfLines={1}
-                                                style={[
-                                                    {
-                                                        width: (SCREEN_WIDTH - 24) / 2 - 100,
-                                                        fontSize: 14,
-                                                        color: globalcolor.datepickerGreyText,
-                                                    },
-                                                ]}>
-                                                {item.LastJZTime &&
-                                                    item.LastJZTime != ''
-                                                    ? item.LastJZTime
-                                                    : '--'}
-                                            </Text>
-                                        </View>
-                                        <View style={[{ flexDirection: 'row', height: 30, flex: 1 }]}>
-                                            <Text
-                                                style={[
-                                                    { fontSize: 14, color: globalcolor.datepickerGreyText },
-                                                ]}>
-                                                {'最新校准日期：'}
-                                            </Text>
-                                            <Text
-                                                numberOfLines={1}
-                                                style={[
-                                                    {
-                                                        width: (SCREEN_WIDTH - 24) / 2 - 100,
-                                                        fontSize: 14,
-                                                        color: globalcolor.datepickerGreyText,
-                                                    },
-                                                ]}>
-                                                {item.NewJZTime && item.NewJZTime != '' ? item.NewJZTime : '--'}
-                                            </Text>
-                                        </View>
-                                    </View>
-
-                                    <View
+                                        {item.LastJZTime &&
+                                            item.LastJZTime != ''
+                                            ? item.LastJZTime
+                                            : '--'}
+                                    </Text>
+                                </View>
+                                <View style={[{ flexDirection: 'row', height: 30, flex: 1 }]}>
+                                    <Text
+                                        style={[
+                                            { fontSize: 14, color: globalcolor.datepickerGreyText },
+                                        ]}>
+                                        {'最新校准日期：'}
+                                    </Text>
+                                    <Text
+                                        numberOfLines={1}
                                         style={[
                                             {
-                                                width: SCREEN_WIDTH - 24,
-                                                flexDirection: 'row',
-                                                marginTop: 10,
+                                                width: (SCREEN_WIDTH - 24) / 2 - 100,
+                                                fontSize: 14,
+                                                color: globalcolor.datepickerGreyText,
                                             },
                                         ]}>
-                                        <View style={[{ flexDirection: 'row', height: 30, flex: 1 }]}>
-                                            <Text
-                                                style={[
-                                                    { fontSize: 14, color: globalcolor.datepickerGreyText },
-                                                ]}>
-                                                {'校准参数名称：'}
-                                            </Text>
-                                            <Text
-                                                numberOfLines={1}
-                                                style={[
-                                                    {
-                                                        width: (SCREEN_WIDTH - 24) / 2 - 100,
-                                                        fontSize: 14,
-                                                        color: globalcolor.datepickerGreyText,
-                                                    },
-                                                ]}>
-                                                {item.JZCSMC &&
-                                                    item.JZCSMC != ''
-                                                    ? item.JZCSMC
-                                                    : '--'}
-                                            </Text>
-                                        </View>
-                                        <View style={[{ flexDirection: 'row', height: 30, flex: 1 }]}>
-                                            <Text
-                                                style={[
-                                                    {fontSize: 14, color: globalcolor.datepickerGreyText },
-                                                ]}>
-                                                {'最新校准参数：'}
-                                            </Text>
-                                            <Text
-                                               numberOfLines={1}
-                                                style={[
-                                                    {    width: (SCREEN_WIDTH - 24) / 2 - 100,  fontSize: 14, color: globalcolor.datepickerGreyText },
-                                                ]}>
-                                                {item.ZXJZCSZ && item.ZXJZCSZ != ''
-                                                    ? item.ZXJZCSZ
-                                                    : '--'}
-                                            </Text>
-                                        </View>
-                                    </View>
+                                        {item.NewJZTime && item.NewJZTime != '' ? item.NewJZTime : '--'}
+                                    </Text>
+                                </View>
+                            </View>
+
+                            <View
+                                style={[
+                                    {
+                                        width: SCREEN_WIDTH - 24,
+                                        flexDirection: 'row',
+                                        marginTop: 10,
+                                    },
+                                ]}>
+                                <View style={[{ flexDirection: 'row', height: 30, flex: 1 }]}>
+                                    <Text
+                                        style={[
+                                            { fontSize: 14, color: globalcolor.datepickerGreyText },
+                                        ]}>
+                                        {'校准参数名称：'}
+                                    </Text>
+                                    <Text
+                                        numberOfLines={1}
+                                        style={[
+                                            {
+                                                width: (SCREEN_WIDTH - 24) / 2 - 100,
+                                                fontSize: 14,
+                                                color: globalcolor.datepickerGreyText,
+                                            },
+                                        ]}>
+                                        {item.JZCSMC &&
+                                            item.JZCSMC != ''
+                                            ? item.JZCSMC
+                                            : '--'}
+                                    </Text>
+                                </View>
+                                <View style={[{ flexDirection: 'row', height: 30, flex: 1 }]}>
+                                    <Text
+                                        style={[
+                                            { fontSize: 14, color: globalcolor.datepickerGreyText },
+                                        ]}>
+                                        {'最新校准参数：'}
+                                    </Text>
+                                    <Text
+                                        numberOfLines={1}
+                                        style={[
+                                            { width: (SCREEN_WIDTH - 24) / 2 - 100, fontSize: 14, color: globalcolor.datepickerGreyText },
+                                        ]}>
+                                        {item.ZXJZCSZ && item.ZXJZCSZ != ''
+                                            ? item.ZXJZCSZ
+                                            : '--'}
+                                    </Text>
+                                </View>
+                            </View>
 
 
 
 
-                            
+
                         </View>
                     </View>
                 </TouchableOpacity>

@@ -64,8 +64,14 @@ class CalibrationRecordEditZbFs extends Component {
         };
         _me = this;
     }
+    componentDidMount(prevProps, prevState){
+            this.setState({
+                signContent:this.props.signContent
+            })
+           
+    }
     componentDidUpdate(prevProps, prevState){
-        if (prevProps.signContent != this.props.signContent) {
+        if (prevProps.signContent && prevProps.signContent != this.props.signContent) {
             if(this.props.signContent){
                 this.setState({
                     signContent:this.props.signContent

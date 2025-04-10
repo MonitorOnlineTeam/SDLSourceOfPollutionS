@@ -710,7 +710,7 @@ class CalibrationRecordEditZb extends Component {
 
             <View key={id} style={styles.imageUploadContainer}>
                 <ImageGrid
-                    componentType={'taskhandle'}
+                    componentType={'normalWaterMaskCamera'}
                     style={{
                         backgroundColor: '#fff',
                     }}
