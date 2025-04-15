@@ -1,8 +1,8 @@
 /*
  * @Description: 运维计划入口
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-05-08 16:06:31
- * @LastEditTime: 2024-10-12 15:52:03
+ * @LastEditTime: 2025-04-10 15:14:26
  * @FilePath: /SDLMainProject/app/pOperationContainers/operationPlan/OperationPlanEnter.js
  */
 import { Platform, Text, TouchableOpacity, View } from 'react-native'
@@ -41,7 +41,7 @@ export default class OperationPlanEnter extends Component {
                     width: SCREEN_WIDTH, flex: 1
                 }]}
             >
-                <View style={[{
+                {/* <View style={[{
                     flexDirection: 'row', height: 44
                     , width: SCREEN_WIDTH, alignItems: 'center'
                     , justifyContent: 'space-between'
@@ -118,7 +118,7 @@ export default class OperationPlanEnter extends Component {
                             </View>
                         </TouchableOpacity>
                     </View>
-                </View>
+                </View> */}
                 {/* <StatusPage
                     backRef={true}
                     status={200}

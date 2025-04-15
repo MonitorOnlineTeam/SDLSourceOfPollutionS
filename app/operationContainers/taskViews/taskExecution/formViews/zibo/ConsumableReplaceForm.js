@@ -2,7 +2,7 @@
  * @Author: JiaQi
  * @Date: 2025-04-02 16:00:00
  * @Last Modified by: JiaQi
- * @Last Modified time: 2025-04-07 17:09:13
+ * @Last Modified time: 2025-04-10 16:09:38
  * @Description: 标准物质更换记录表单
  */
 
@@ -312,7 +312,7 @@ class ConsumableReplaceForm extends Component {
               <Text style={[{color: 'red'}]}>*</Text>易耗品更换前：
             </Text>
             <ImageGrid
-              componentType={'taskhandle'}
+              componentType={'normalWaterMaskCamera'}
               style={{
                 backgroundColor: '#fff',
               }}
@@ -339,7 +339,7 @@ class ConsumableReplaceForm extends Component {
               <Text style={[{color: 'red'}]}>*</Text>易耗品更换后：
             </Text>
             <ImageGrid
-              componentType={'taskhandle'}
+              componentType={'normalWaterMaskCamera'}
               style={{
                 backgroundColor: '#fff',
               }}

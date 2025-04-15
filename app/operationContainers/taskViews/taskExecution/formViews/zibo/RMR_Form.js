@@ -2,7 +2,7 @@
  * @Author: JiaQi
  * @Date: 2025-04-02 16:00:00
  * @Last Modified by: JiaQi
- * @Last Modified time: 2025-04-07 17:08:38
+ * @Last Modified time: 2025-04-10 16:09:58
  * @Description: 标准物质更换记录表单
  */
 
@@ -519,7 +519,7 @@ class RMR_Form extends Component {
               <Text style={[{color: 'red'}]}>*</Text>标准气体更换前：
             </Text>
             <ImageGrid
-              componentType={'taskhandle'}
+              componentType={'normalWaterMaskCamera'}
               style={{
                 backgroundColor: '#fff',
               }}
@@ -546,7 +546,7 @@ class RMR_Form extends Component {
               <Text style={[{color: 'red'}]}>*</Text>标准气体更换后：
             </Text>
             <ImageGrid
-              componentType={'taskhandle'}
+              componentType={'normalWaterMaskCamera'}
               style={{
                 backgroundColor: '#fff',
               }}

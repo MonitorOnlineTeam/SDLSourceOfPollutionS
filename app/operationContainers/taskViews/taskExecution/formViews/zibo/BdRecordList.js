@@ -417,7 +417,7 @@ class BdRecordList extends PureComponent {
                   对比工作-人员操作对比过程：
                 </Text>
                 <ImageGrid
-                  componentType={'taskhandle'}
+                  componentType={'normalWaterMaskCamera'}
                   style={{
                     backgroundColor: '#fff',
                   }}
@@ -445,7 +445,7 @@ class BdRecordList extends PureComponent {
                   对比工作-人工设备对比过程：
                 </Text>
                 <ImageGrid
-                  componentType={'taskhandle'}
+                  componentType={'normalWaterMaskCamera'}
                   style={{
                     backgroundColor: '#fff',
                   }}
@@ -473,7 +473,7 @@ class BdRecordList extends PureComponent {
                   对比工作-数据对比结果体现（设备界面、数据凭条、小票等）：
                 </Text>
                 <ImageGrid
-                  componentType={'taskhandle'}
+                  componentType={'normalWaterMaskCamera'}
                   style={{
                     backgroundColor: '#fff',
                   }}

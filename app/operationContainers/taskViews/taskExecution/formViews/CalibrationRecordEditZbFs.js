@@ -193,7 +193,7 @@ class CalibrationRecordEditZbFs extends Component {
                 </View>
 
                 <ImageGrid
-                    componentType={'taskhandle'}
+                    componentType={'normalWaterMaskCamera'}
                     style={{
                         backgroundColor: '#fff',
                     }}

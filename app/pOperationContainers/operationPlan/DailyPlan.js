@@ -1,8 +1,8 @@
 /*
  * @Description: 
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-05-08 18:21:09
- * @LastEditTime: 2024-05-18 14:49:07
+ * @LastEditTime: 2025-04-10 15:24:08
  * @FilePath: /SDLMainProject37/app/pOperationContainers/operationPlan/DailyPlan.js
  */
 import { Animated, Image, Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native'
@@ -256,8 +256,9 @@ export default class DailyPlan extends Component {
                 }]}
             >
                 <View style={[{
-                    width: SCREEN_WIDTH, marginTop: 6
-                    , backgroundColor: '#ffffff'
+                    width: SCREEN_WIDTH,
+                    // marginTop: 6,
+                     backgroundColor: '#ffffff'
                     , alignItems: 'center'
                 }]}>
                     <View style={[{

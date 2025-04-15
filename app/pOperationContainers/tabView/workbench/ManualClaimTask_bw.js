@@ -1,8 +1,8 @@
 /*
  * @Description: 手动领取工单
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2021-09-29 16:40:17
- * @LastEditTime: 2024-11-11 13:42:48
+ * @LastEditTime: 2025-04-10 14:38:56
  * @FilePath: /SDLSourceOfPollutionS/app/pOperationContainers/tabView/workbench/ManualClaimTask_bw.js
  */
 
@@ -26,7 +26,7 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
     claimTaskResultWater: claimTaskModels.claimTaskResultWater,
     claimTaskResultGas: claimTaskModels.claimTaskResultGas,
     tabPageIndex: claimTaskModels.tabPageIndex,
-    selectedTaskType: claimTaskModels.selectedTaskType, //1 废气巡检 3 废气校准 7 废水巡检 9 废水校准
+    selectedTaskType: claimTaskModels.selectedTaskType, //1 废气巡检 3 废气校准 7 废水巡检 9 废水校准 20 废气示值误差  33 废气检验测试
     unclaimedWaterTaskCountResult: claimTaskModels.unclaimedWaterTaskCountResult,
     unclaimedGasTaskCountResult: claimTaskModels.unclaimedGasTaskCountResult
 }))
@@ -558,6 +558,70 @@ export default class ManualClaimTask extends Component {
                                                     <Text style={{ fontSize: 7, color: '#ffffff' }}>{SentencedToEmpty(this.props
                                                         , ['unclaimedGasTaskCountResult', 'data'
                                                             , 'Datas', 'calibrationCount'], 0)}</Text>
+                                                </View>
+                                        }
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        let params = {}, listParams = {};
+                                        params.selectedTaskType = 33;
+                                        params.claimTaskResultGas = { status: -1 }
+                                        this.props.dispatch(createAction('claimTaskModels/updateState')(params));
+                                        listParams.PollutantType = 2;
+                                        listParams.TaskType = '33';
+                                        this.props.dispatch(createAction('claimTaskModels/getUnclaimedTaskList')({ params: listParams }))
+                                    }}
+                                    style={{ marginLeft: 12 }}>
+                                    <View style={[selectedTaskType == 33 ? styles.selectedContainer : styles.unSelectedContainer,
+                                     {width:80}
+                                    ]}>
+                                        <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
+                                        <Text style={[selectedTaskType == 33 ? styles.selectedText : styles.unSelectedText]}>{'示值误差'}</Text>
+                                        {
+                                            SentencedToEmpty(this.props
+                                                , ['unclaimedGasTaskCountResult', 'data'
+                                                    , 'Datas', 'szwcCount'], 0) == 0
+                                                ? <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
+                                                : <View style={[{
+                                                    width: 12, height: 12, backgroundColor: '#ff0000', borderRadius: 6, marginBottom: 17.5
+                                                    , justifyContent: 'center', alignItems: 'center'
+                                                }]}>
+                                                    <Text style={{ fontSize: 7, color: '#ffffff' }}>{SentencedToEmpty(this.props
+                                                        , ['unclaimedGasTaskCountResult', 'data'
+                                                            , 'Datas', 'szwcCount'], 0)}</Text>
+                                                </View>
+                                        }
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        let params = {}, listParams = {};
+                                        params.selectedTaskType = 20;
+                                        params.claimTaskResultGas = { status: -1 }
+                                        this.props.dispatch(createAction('claimTaskModels/updateState')(params));
+                                        listParams.PollutantType = 2;
+                                        listParams.TaskType = '20';
+                                        this.props.dispatch(createAction('claimTaskModels/getUnclaimedTaskList')({ params: listParams }))
+                                    }}
+                                    style={{ marginLeft: 12 }}>
+                                    <View style={[selectedTaskType == 20 ? styles.selectedContainer : styles.unSelectedContainer,
+                                    {width:80}
+                                    ]}>
+                                        <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
+                                        <Text style={[selectedTaskType == 20 ? styles.selectedText : styles.unSelectedText]}>{'校验测试'}</Text>
+                                        {
+                                            SentencedToEmpty(this.props
+                                                , ['unclaimedGasTaskCountResult', 'data'
+                                                    , 'Datas', 'jycsCount'], 0) == 0
+                                                ? <View style={[{ width: 12, height: 12, backgroundColor: '#00000000', borderRadius: 6 }]}></View>
+                                                : <View style={[{
+                                                    width: 12, height: 12, backgroundColor: '#ff0000', borderRadius: 6, marginBottom: 17.5
+                                                    , justifyContent: 'center', alignItems: 'center'
+                                                }]}>
+                                                    <Text style={{ fontSize: 7, color: '#ffffff' }}>{SentencedToEmpty(this.props
+                                                        , ['unclaimedGasTaskCountResult', 'data'
+                                                            , 'Datas', 'jycsCount'], 0)}</Text>
                                                 </View>
                                         }
                                     </View>
