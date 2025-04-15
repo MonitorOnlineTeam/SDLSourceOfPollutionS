@@ -19,8 +19,8 @@ import {
 import { connect } from 'react-redux';
 import moment from 'moment';
 import Signature from 'react-native-signature-canvas';
-import globalcolor from '../../../../config/globalcolor';
-import { SCREEN_WIDTH } from '../../../../config/globalsize';
+import globalcolor from '../../../../../config/globalcolor';
+import { SCREEN_WIDTH } from '../../../../../config/globalsize';
 import {
   ShowToast,
   createAction,
@@ -33,10 +33,10 @@ import {
   StatusPage,
   SelectButton,
   AlertDialog,
-} from '../../../../components';
-import FormTextArea from '../components/FormTextArea';
-import FormDatePicker from '../components/FormDatePicker';
-import ImageGrid from '../../../../components/form/images/ImageGrid';
+} from '../../../../../components';
+import FormTextArea from '../../components/FormTextArea';
+import FormDatePicker from '../../components/FormDatePicker';
+import ImageGrid from '../../../../../components/form/images/ImageGrid';
 import FORM_CONST from './Patrol_Form_CONST';
 @connect(({ patrolModel }) => ({
   editstatus: patrolModel.editstatus,
