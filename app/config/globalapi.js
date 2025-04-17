@@ -767,6 +767,20 @@ export default api = {
             DeleteErrorSystemResponseRecordInfo: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecordInfo', // 删除示值误差及响应时间
             // 删除示值误差及响应时间整个表单
             DeleteErrorSystemResponseRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecord', // 删除示值误差及响应时间
+
+            /**
+             * 淄博项目 示值误差
+             */
+            // 示值误差和响应时间
+            GetIndicationErrorSystemResponseRecordListForAppZB: 'rest/PollutantSourceApi/GasOperationFormApi/GetIndicationErrorSystemResponseRecordListForAppZB', // 获取示值误差列表
+            // 添加或修改示值误差及响应时间
+            AddOrUpdateIndicationErrorSystemResponseRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateIndicationErrorSystemResponseRecordZB', // 添加或修改示值误差及响应时间
+            // 提交示值误差及响应时间 - 主表
+            SubmitIndicationErrorSystemResponseRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/SubmitIndicationErrorSystemResponseRecordZB', // 提交示值误差及响应时间
+            // 删除示值误差及响应时间量程
+            DeleteErrorSystemResponseRecordInfoZB: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecordInfoZB', // 删除示值误差及响应时间
+            // 删除示值误差及响应时间整个表单
+            DeleteErrorSystemResponseRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecordZB', // 删除示值误差及响应时间
         
              /**
              * 淄博项目 校准 废气
