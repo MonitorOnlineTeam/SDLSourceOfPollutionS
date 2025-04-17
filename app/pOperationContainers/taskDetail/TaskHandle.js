@@ -446,6 +446,14 @@ export default class TaskHandle extends Component {
                                 })
                             );
                             break;
+                        case 92: // 示值误差和响应时间 - 淄博
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'IndicationErrorAndResponseTimeList_zb',
+                                    params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
+                                })
+                            );
+                            break;
                         case 76: // 巡检完全抽取法
                         case 77: // 巡检稀释采样法
                         case 78: // 巡检直接测量法

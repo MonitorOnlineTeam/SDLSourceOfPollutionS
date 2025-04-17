@@ -248,7 +248,9 @@ import SignInstatisticsWithPersonal from './pOperationContainers/tabView/workben
 import QualityControlDailyRecord from './pOperationContainers/qualityControl/QualityControlDailyRecord';
 import QualityControlRecordDetail from './pOperationContainers/qualityControl/QualityControlRecordDetail';
 import IndicationErrorAndResponseTimeList from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeList';
+import IndicationErrorAndResponseTimeList_zb from './operationContainers/taskViews/taskExecution/formViews/zibo/IndicationErrorAndResponseTimeList';
 import IndicationErrorAndResponseTimeEditor from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeEditor';
+import IndicationErrorAndResponseTimeEditor_zb from './operationContainers/taskViews/taskExecution/formViews/zibo/IndicationErrorAndResponseTimeEditor_zb';
 import Patrol_CEM from './operationContainers/taskViews/taskExecution/formViews/zibo/Patrol_CEM';
 import RMR from './operationContainers/taskViews/taskExecution/formViews/zibo/RMR';
 import RMRForm from './operationContainers/taskViews/taskExecution/formViews/zibo/RMR_Form';
@@ -597,6 +599,10 @@ Actions.pushViewWithName(ProvisioningRecords, 'ProvisioningRecords', { title: '�
 // 任务表单 示值误差和响应时间 入口
 Actions.pushViewWithName(IndicationErrorAndResponseTimeList, 'IndicationErrorAndResponseTimeList', { title: '示值误差和响应时间' });
 Actions.pushViewWithName(IndicationErrorAndResponseTimeEditor, 'IndicationErrorAndResponseTimeEditor', { title: '示值误差和响应时间' });
+
+//淄博项目 示值误差和响应时间
+Actions.pushViewWithName(IndicationErrorAndResponseTimeList_zb, 'IndicationErrorAndResponseTimeList_zb', { title: '示值误差和响应时间' });
+Actions.pushViewWithName(IndicationErrorAndResponseTimeEditor_zb, 'IndicationErrorAndResponseTimeEditor_zb', { title: '示值误差和响应时间' });
 
 //淄博项目 废气
 Actions.pushViewWithName(CalibrationRecordListZb, 'CalibrationRecordListZb', { title: '零点量程漂移校准' });

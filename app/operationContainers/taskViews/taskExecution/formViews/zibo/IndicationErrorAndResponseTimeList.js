@@ -10,27 +10,26 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Platform,
   Image,
   StyleSheet,
 } from 'react-native';
 import React, {Component} from 'react';
-import {SCREEN_WIDTH} from '../../../../config/globalsize';
-import FormInput from '../components/FormInput';
-import globalcolor from '../../../../config/globalcolor';
-import {MoreSelectTouchable} from '../../../../components';
+import {SCREEN_WIDTH} from '../../../../../config/globalsize';
+import FormInput from '../../components/FormInput';
+import globalcolor from '../../../../../config/globalcolor';
+import {MoreSelectTouchable} from '../../../../../components';
 import {connect} from 'react-redux';
 import {
   createAction,
   NavigationActions,
-  createNavigationOptions,
-  getPlatformValue,
-  SentencedToEmpty,
   ShowToast,
   ShowLoadingToast,
   CloseToast,
-} from '../../../../utils';
-import AlertDialog from '../../../../components/modal/AlertDialog';
+} from '../../../../../utils';
+import AlertDialog from '../../../../../components/modal/AlertDialog';
+import moment from 'moment';
+import FormDatePicker from '../../components/FormDatePicker';
+import ImageGrid from '../../../../../components/form/images/ImageGrid';
 
 // 通用的表单输入配置
 const commonFormInputProps = {
@@ -49,12 +48,35 @@ const commonFormInputProps = {
   keyboardType: 'default',
 };
 
-class IndicationErrorAndResponseTimeList extends Component {
-  static navigationOptions = createNavigationOptions({
-    title: '设备保养记录表',
-    headerTitleStyle: {marginRight: Platform.OS === 'android' ? 76 : 0},
-  });
+// 图片上传渲染数据
+const IMAGE_LIST = [
+  {
+    name: '示值误差工作过程及数据（低浓度）',
+    key: 'DFile',
+  },
+  {
+    name: '示值误差工作过程及数据（中浓度）',
+    key: 'ZFile',
+  },
+  {
+    name: '示值误差工作过程及数据（高浓度）',
+    key: 'GFile',
+  },
+  {
+    name: '工作标气标签',
+    key: 'BFile',
+  },
+  {
+    name: '系统响应时间测量工作照片',
+    key: 'BeforeFile',
+  },
+  {
+    name: '系统响应时间（秒表）照片',
+    key: 'AfterFile',
+  },
+];
 
+class IndicationErrorAndResponseTimeList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -84,6 +106,12 @@ class IndicationErrorAndResponseTimeList extends Component {
       // selectedPollutants 存储当前选中的污染物数据，结构同 PointInfoList 中的元素
       selectedPollutants: [],
       FormMainID: props.route.params.params.FormMainID,
+      imageList1: [],
+      imageList2: [],
+      imageList3: [],
+      imageList4: [],
+      imageList5: [],
+      imageList6: [],
     };
     console.log('props1111', props);
   }
@@ -120,6 +148,34 @@ class IndicationErrorAndResponseTimeList extends Component {
           }
         }
       }
+      console.log('this.props.dataSource', this.props.dataSource)
+      // 处理图片数据
+      this.setState({
+        imageList1:
+          this.state.dataSource?.DFilePic?.ImgNameList?.map(item => ({
+            AttachID: item,
+          })) || [],
+        imageList2:
+          this.state.dataSource?.ZFilePic?.ImgNameList?.map(item => ({
+            AttachID: item,
+          })) || [],
+        imageList3:
+          this.state.dataSource?.GFilePic?.ImgNameList?.map(item => ({
+            AttachID: item,
+          })) || [],
+        imageList4:
+          this.state.dataSource?.BFilePic?.ImgNameList?.map(item => ({
+            AttachID: item,
+          })) || [],
+        imageList5:
+          this.state.dataSource?.BeforeFilePic?.ImgNameList?.map(item => ({
+            AttachID: item,
+          })) || [],
+        imageList6:
+          this.state.dataSource?.AfterFilePic?.ImgNameList?.map(item => ({
+            AttachID: item,
+          })) || [],
+      });
     }
   }
 
@@ -130,14 +186,20 @@ class IndicationErrorAndResponseTimeList extends Component {
       createAction(
         'indicationErrorAndResponseTimeModel/GetIndicationErrorSystemResponseRecordList',
       )({
+        isZB: true,
         params: {
           taskID: params.TaskID,
           typeID: params.TypeID,
         },
         callback: res => {
-          console.log('res', res);
           this.setState({
             dataSource: res,
+            AfterFile: res.AfterFile || new Date().getTime() + 'AfterFile',
+            BeforeFile: res.BeforeFile || new Date().getTime() + 'BeforeFile',
+            BFile: res.BFile || new Date().getTime() + 'BFile',
+            DFile: res.DFile || new Date().getTime() + 'DFile',
+            GFile: res.GFile || new Date().getTime() + 'GFile',
+            ZFile: res.ZFile || new Date().getTime() + 'ZFile',
           });
           if (!params.FormMainID) {
             this.setState({
@@ -145,7 +207,7 @@ class IndicationErrorAndResponseTimeList extends Component {
             });
             // this.props.dispatch(
             //   createAction('taskDetailModel/updateFormStatus')({
-            //     cID: 74,
+            //     cID: 92,
             //     isAdd: true,
             //   }),
             // );
@@ -300,6 +362,126 @@ class IndicationErrorAndResponseTimeList extends Component {
 
   cancelButton = () => {};
 
+  // 提交表单
+  onSubmit = () => {
+    const {
+      dataSource,
+      selectedPollutants,
+      imageList1,
+      imageList2,
+      imageList3,
+      imageList4,
+      imageList5,
+      imageList6,
+    } = this.state;
+    const {params} = this.props.route.params;
+    // 检验必填项是否已填写
+    // 判断是否存在污染物
+    if (selectedPollutants.length === 0) {
+      ShowToast('请选择污染物');
+      return;
+    }
+    console.log('body', {
+      taskID: params.TaskID,
+      typeID: params.TypeID,
+      content: {
+        MaintenanceManagementUnit: dataSource.MaintenanceManagementUnit,
+        Tester: dataSource.Tester,
+        LastCheckTime: dataSource.LastCheckTime,
+        CheckBTime: dataSource.CheckBTime,
+        CheckETime: dataSource.CheckETime,
+        DFile: dataSource.DFile,
+        ZFile: dataSource.ZFile,
+        GFile: dataSource.GFile,
+        BFile: dataSource.BFile,
+        BeforeFile: dataSource.BeforeFile,
+        AfterFile: dataSource.AfterFile,
+        WorkingDateBegin: dataSource.WorkingDateBegin,
+        WorkingDateEnd: dataSource.WorkingDateEnd,
+      },
+      signContent: dataSource.SignContent,
+      signTime: dataSource.SignTime,
+    });
+    if (!dataSource.MaintenanceManagementUnit) {
+      ShowToast('请填写运维管理单位');
+      return;
+    }
+    if (!dataSource.Tester) {
+      ShowToast('请填写测试人员');
+      return;
+    }
+    if (!dataSource.SignContent) {
+      ShowToast('请签名');
+      return;
+    }
+    if (!dataSource.LastCheckTime) {
+      ShowToast('请填写上次测试时间');
+      return;
+    }
+    if (!dataSource.CheckBTime) {
+      ShowToast('请填写本次测试开始时间');
+      return;
+    }
+    if (!dataSource.CheckETime) {
+      ShowToast('请填写本次测试结束时间');
+      return;
+    }
+    if (!imageList1.length) {
+      ShowToast('示值误差工作过程及数据（低浓度）不能为空');
+      return;
+    }
+    if (!imageList2.length) {
+      ShowToast('示值误差工作过程及数据（中浓度）不能为空');
+      return;
+    }
+    if (!imageList3.length) {
+      ShowToast('示值误差工作过程及数据（高浓度）不能为空');
+      return;
+    }
+    if (!imageList4.length) {
+      ShowToast('工作标气标签不能为空');
+      return;
+    }
+    if (!imageList5.length) {
+      ShowToast('系统响应时间测量工作照片不能为空');
+      return;
+    }
+    if (!imageList6.length) {
+      ShowToast('系统响应时间（秒表）照片不能为空');
+      return;
+    }
+    this.props.dispatch(
+      createAction(
+        'indicationErrorAndResponseTimeModel/SubmitIndicationErrorSystemResponseRecordZB',
+      )({
+        params: {
+          taskID: params.TaskID,
+          typeID: params.TypeID,
+          content: {
+            MaintenanceManagementUnit: dataSource.MaintenanceManagementUnit,
+            Tester: dataSource.Tester,
+            LastCheckTime: dataSource.LastCheckTime,
+            CheckBTime: dataSource.CheckBTime,
+            CheckETime: dataSource.CheckETime,
+            DFile: dataSource.DFile,
+            ZFile: dataSource.ZFile,
+            GFile: dataSource.GFile,
+            BFile: dataSource.BFile,
+            BeforeFile: dataSource.BeforeFile,
+            AfterFile: dataSource.AfterFile,
+            WorkingDateBegin: dataSource.WorkingDateBegin,
+            WorkingDateEnd: dataSource.WorkingDateEnd,
+          },
+          signContent: dataSource.SignContent,
+          signTime: dataSource.SignTime,
+        },
+        callback: () => {
+          this.props.navigation.goBack();
+        },
+      }),
+    );
+  };
+
   // 删除整个表单
   deleteForm = () => {
     const {FormMainID} = this.state;
@@ -308,6 +490,7 @@ class IndicationErrorAndResponseTimeList extends Component {
       createAction(
         'indicationErrorAndResponseTimeModel/DeleteErrorSystemResponseRecord',
       )({
+        isZB: true,
         params: {
           FormMainID,
         },
@@ -317,7 +500,7 @@ class IndicationErrorAndResponseTimeList extends Component {
           this.props.dispatch(NavigationActions.back());
           this.props.dispatch(
             createAction('taskDetailModel/updateFormStatus')({
-              cID: 74,
+              cID: 92,
               isAdd: false,
             }),
           );
@@ -333,6 +516,7 @@ class IndicationErrorAndResponseTimeList extends Component {
         createAction(
           'indicationErrorAndResponseTimeModel/DeleteErrorSystemResponseRecordInfo',
         )({
+          isZB: true,
           params: {
             id: rangeToDelete.ID,
           },
@@ -408,7 +592,8 @@ class IndicationErrorAndResponseTimeList extends Component {
   // 渲染量程项
   renderRangeItem = (pollutant, rangeData, index) => {
     const {params} = this.props.route.params;
-    const {dataSource} = this.state;
+    const {dataSource, DFile, ZFile, GFile, BFile, BeforeFile, AfterFile} =
+      this.state;
 
     const handleRangePress = () => {
       // 检查必填项是否已填写
@@ -420,11 +605,22 @@ class IndicationErrorAndResponseTimeList extends Component {
         ShowToast('请先填写测试人员');
         return;
       }
-
+      if (!dataSource.LastCheckTime) {
+        ShowToast('请先填写上次测试日期');
+        return;
+      }
+      if (!dataSource.CheckBTime) {
+        ShowToast('请先填写本次测试开始时间');
+        return;
+      }
+      if (!dataSource.CheckETime) {
+        ShowToast('请先填写本次测试结束时间');
+        return;
+      }
       // 跳转到量程编辑页面
       this.props.dispatch(
         NavigationActions.navigate({
-          routeName: 'IndicationErrorAndResponseTimeEditor',
+          routeName: 'IndicationErrorAndResponseTimeEditor_zb',
           params: {
             pollutant,
             rangeTitle: `量程 ${index + 1}`,
@@ -435,10 +631,26 @@ class IndicationErrorAndResponseTimeList extends Component {
             maintenanceManagementUnit: dataSource.MaintenanceManagementUnit,
             tester: dataSource.Tester,
             UnitList: dataSource.UnitList,
+            MainInfo: {
+              DFile,
+              ZFile,
+              GFile,
+              BFile,
+              BeforeFile,
+              AfterFile,
+              LastCheckTime: dataSource.LastCheckTime,
+              CheckBTime: dataSource.CheckBTime,
+              CheckETime: dataSource.CheckETime,
+              WorkingDateBegin: dataSource.WorkingDateBegin,
+              WorkingDateEnd: dataSource.WorkingDateEnd,
+              SignContent: dataSource.SignContent,
+              SignTime: dataSource.SignTime,
+            },
+
             onResult: () => {
               this.props.dispatch(
                 createAction('taskDetailModel/updateFormStatus')({
-                  cID: 74,
+                  cID: 92,
                 }),
               );
               this.getPageData();
@@ -517,7 +729,7 @@ class IndicationErrorAndResponseTimeList extends Component {
             style={styles.addRangeButton}
             onPress={() => this.handleAddRange(pollutant.ChildID)}>
             <Image
-              source={require('../../../../images/jiarecord.png')}
+              source={require('../../../../../images/jiarecord.png')}
               style={styles.addButtonIcon}
             />
             <Text style={styles.addButtonText}>添加量程</Text>
@@ -530,6 +742,51 @@ class IndicationErrorAndResponseTimeList extends Component {
             )}
         </View>
       </View>
+    );
+  };
+
+  // 上传图片回调
+  uploadCallback = (items, imageIndex) => {
+    let newImgList = [...this.state[`imageList${imageIndex}`]];
+    items.map(imageItem => {
+      newImgList.push(imageItem);
+    });
+    this.setState({[`imageList${imageIndex}`]: newImgList});
+  };
+
+  // 删除图片回调
+  delCallback = index => {
+    let newImgList = [...this.state[`imageList${index + 1}`]];
+    newImgList.splice(index, 1);
+    this.setState({[`imageList${index + 1}`]: newImgList});
+  };
+
+  // 处理签名完成
+  handleSignature = signature => {
+    this.setState(prevState => ({
+      dataSource: {
+        ...prevState.dataSource,
+        SignContent: signature,
+        SignTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+      },
+    }));
+  };
+
+  // 处理签名取消
+  handleSignatureCancel = () => {
+    this.props.navigation.goBack();
+  };
+
+  // 打开签名页面
+  openSignaturePage = () => {
+    this.props.dispatch(
+      NavigationActions.navigate({
+        routeName: 'SignaturePage',
+        params: {
+          onOK: this.handleSignature,
+          onCancel: this.handleSignatureCancel,
+        },
+      }),
     );
   };
 
@@ -593,6 +850,27 @@ class IndicationErrorAndResponseTimeList extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.formContainer}>
+          <View
+            style={{
+              width: '100%',
+              height: 45,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderBottomWidth: 1,
+              borderBottomColor: globalcolor.borderBottomColor,
+            }}>
+            <Text
+              style={{
+                fontSize: 14,
+                color: globalcolor.textBlack,
+              }}>
+              工作时间：
+            </Text>
+            <Text style={{fontSize: 14, color: globalcolor.datepickerGreyText}}>
+              {dataSource.WorkingDateBegin} ～ {dataSource.WorkingDateEnd}
+            </Text>
+          </View>
           <FormInput
             {...commonFormInputProps}
             label={'维护管理单位'}
@@ -629,8 +907,85 @@ class IndicationErrorAndResponseTimeList extends Component {
               });
             }}
           />
+          <FormDatePicker
+            required={true}
+            getPickerOption={() => ({
+              defaultTime: dataSource.LastCheckTime,
+              type: 'day',
+              onSureClickListener: time => {
+                // 只更新对应字段，保持其他数据不变
+                const newDataSource = {
+                  ...this.state.dataSource,
+                  LastCheckTime: time,
+                };
+                // 确保 PointInfoList 的引用不变
+                newDataSource.PointInfoList =
+                  this.state.dataSource.PointInfoList;
+                this.setState({
+                  dataSource: newDataSource,
+                });
+              },
+            })}
+            label={'上次测试日期'}
+            timeString={
+              dataSource.LastCheckTime
+                ? moment(dataSource.LastCheckTime).format('YYYY-MM-DD')
+                : '请选择上次测试日期'
+            }
+          />
+          <FormDatePicker
+            required={true}
+            getPickerOption={() => ({
+              defaultTime: dataSource.CheckBTime,
+              type: 'day',
+              onSureClickListener: time => {
+                // 只更新对应字段，保持其他数据不变
+                const newDataSource = {
+                  ...this.state.dataSource,
+                  CheckBTime: time,
+                };
+                // 确保 PointInfoList 的引用不变
+                newDataSource.PointInfoList =
+                  this.state.dataSource.PointInfoList;
+                this.setState({
+                  dataSource: newDataSource,
+                });
+              },
+            })}
+            label={'本次测试开始时间'}
+            timeString={
+              dataSource.CheckBTime
+                ? moment(dataSource.CheckBTime).format('YYYY-MM-DD HH:mm:ss')
+                : '请选择本次测试开始时间'
+            }
+          />
+          <FormDatePicker
+            required={true}
+            getPickerOption={() => ({
+              defaultTime: dataSource.CheckETime,
+              type: 'day',
+              onSureClickListener: time => {
+                // 只更新对应字段，保持其他数据不变
+                const newDataSource = {
+                  ...this.state.dataSource,
+                  CheckETime: time,
+                };
+                // 确保 PointInfoList 的引用不变
+                newDataSource.PointInfoList =
+                  this.state.dataSource.PointInfoList;
+                this.setState({
+                  dataSource: newDataSource,
+                });
+              },
+            })}
+            label={'本次测试结束时间'}
+            timeString={
+              dataSource.CheckETime
+                ? moment(dataSource.CheckETime).format('YYYY-MM-DD HH:mm:ss')
+                : '请选择本次测试结束时间'
+            }
+          />
         </View>
-
         <MoreSelectTouchable
           ref={ref => (this._picker = ref)}
           option={this.getJzConfigItemOption()}
@@ -644,7 +999,76 @@ class IndicationErrorAndResponseTimeList extends Component {
           {selectedPollutants.map(pollutant =>
             this.renderPollutantCard(pollutant),
           )}
+
+          {IMAGE_LIST.map((item, index) => {
+            console.log('this.state[item.key]', this.state[item.key]);
+            return (
+              <View style={styles.content2}>
+                <Text style={styles.title}>
+                  <Text style={[{fontSize: 15, color: 'red'}]}>*</Text>
+                  {item.name}：
+                </Text>
+                <ImageGrid
+                  componentType={'normalWaterMaskCamera'}
+                  style={{
+                    backgroundColor: '#fff',
+                  }}
+                  Imgs={this.state[`imageList${index + 1}`]}
+                  isUpload={true}
+                  isDel={true}
+                  UUID={this.state[item.key]}
+                  uploadCallback={items => {
+                    this.uploadCallback(items, index + 1);
+                  }}
+                  delCallback={index => {
+                    this.delCallback(index);
+                  }}
+                />
+              </View>
+            );
+          })}
+          <Text style={styles.title}>
+            <Text style={[{fontSize: 15, color: 'red'}]}>*</Text>
+            签名：
+          </Text>
+          <TouchableOpacity
+            style={styles.signatureContainer}
+            onPress={this.openSignaturePage}>
+            {dataSource.SignContent ? (
+              <Image
+                source={{uri: dataSource.SignContent}}
+                style={styles.signaturePreview}
+              />
+            ) : (
+              <Text style={styles.signaturePlaceholder}>点击此处签名</Text>
+            )}
+          </TouchableOpacity>
         </ScrollView>
+        <View style={styles.bottomButtonContainer}>
+          <TouchableOpacity
+            style={[styles.button, styles.submitButton]}
+            onPress={() => {
+              this.onSubmit();
+            }}>
+            <View style={styles.button}>
+              <Image
+                style={{
+                  tintColor: globalcolor.whiteFont,
+                  height: 16,
+                  width: 18,
+                }}
+                resizeMode={'contain'}
+                source={require('../../../../../images/icon_submit.png')}
+              />
+              <Text
+                style={[
+                  {color: globalcolor.whiteFont, fontSize: 15, marginLeft: 8},
+                ]}>
+                确定提交
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
         {FormMainID && (
           <TouchableOpacity
             style={styles.deleteFormButton}
@@ -665,6 +1089,37 @@ class IndicationErrorAndResponseTimeList extends Component {
 }
 
 const styles = StyleSheet.create({
+  // content1: {
+  //   flexDirection: 'column',
+  //   backgroundColor: '#ffffff',
+  //   borderRadius: 2,
+  //   paddingLeft: 10,
+  //   paddingRight: 10,
+  // },
+  title: {
+    marginLeft: 10,
+    lineHeight: 36,
+    fontSize: 15,
+    color: '#333333',
+  },
+  signatureContainer: {
+    width: SCREEN_WIDTH - 16,
+    height: 80,
+    backgroundColor: globalcolor.white,
+    borderRadius: 2,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  signaturePreview: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
+  signaturePlaceholder: {
+    color: '#999',
+    fontSize: 14,
+  },
   container: {
     width: SCREEN_WIDTH,
     flex: 1,
@@ -672,7 +1127,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     width: SCREEN_WIDTH,
-    paddingHorizontal: 24,
+    paddingHorizontal: 12,
     backgroundColor: 'white',
     marginBottom: 6,
   },
@@ -693,13 +1148,14 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     width: SCREEN_WIDTH,
-    marginBottom: 6,
+    marginBottom: 64,
+    paddingHorizontal: 8,
   },
   pollutantCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 2,
     marginBottom: 8,
-    marginHorizontal: 8,
+    // marginHorizontal: 8,
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
@@ -821,7 +1277,7 @@ const styles = StyleSheet.create({
   deleteFormButton: {
     position: 'absolute',
     right: 18,
-    bottom: 40,
+    bottom: 60,
   },
   deleteFormButtonInner: {
     height: 60,
@@ -833,6 +1289,31 @@ const styles = StyleSheet.create({
   },
   deleteFormButtonText: {
     color: '#ffffff',
+  },
+  bottomButtonContainer: {
+    width: SCREEN_WIDTH,
+    height: 64,
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    justifyContent: 'center',
+    backgroundColor: '#F5F5F5',
+    position: 'absolute',
+    bottom: 0,
+  },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 40,
+    borderRadius: 4,
+    paddingHorizontal: 16,
+    flex: 1,
+    marginHorizontal: 6,
+  },
+  submitButton: {
+    backgroundColor: globalcolor.blue,
+    // width: SCREEN_WIDTH - 40,
   },
 });
 
