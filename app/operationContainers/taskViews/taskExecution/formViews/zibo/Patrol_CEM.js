@@ -2,7 +2,7 @@
  * @Author: JiaQi 
  * @Date: 2025-04-02 10:48:34 
  * @Last Modified by: JiaQi
- * @Last Modified time: 2025-04-10 16:12:09
+ * @Last Modified time: 2025-04-17 11:44:48
  * @Description: 5个 CEMS 日常巡检
  */
 import React, { Component } from 'react';
@@ -176,7 +176,7 @@ class Patrol_CEM extends Component {
     );
   };
 
-  // 添加修改完全抽取法 CEMS 日常巡检
+  // 添加修改日常巡检
   onSubmit = () => {
     const { TaskID, ID, TypeID } = this.props.route.params.params;
     const { signContent, Content, formData, pic1Name, pic2Name } = this.state;
@@ -248,7 +248,7 @@ class Patrol_CEM extends Component {
     );
   };
 
-  // 删除完全抽取法 CEMS 日常巡检
+  // 删除巡检
   onDeleteRecord = () => {
     this.setState({ loading: true });
     const { FormMainID } = this.state;
@@ -382,7 +382,7 @@ class Patrol_CEM extends Component {
           <Text style={styles.labelStyle}>工作时间：</Text>
           <View style={styles.timeRangeContainer}>
             <Text style={[styles.timeValue, { flex: 1 }]}>
-              {Content.WorkingDateBegin}
+              {moment(Content.WorkingDateBegin).format('YYYY-MM-DD')}
             </Text>
             <Text
               style={{
@@ -394,7 +394,7 @@ class Patrol_CEM extends Component {
               ~
             </Text>
             <Text style={[styles.timeValue, { flex: 1 }]}>
-              {Content.WorkingDateEnd}
+              {moment(Content.WorkingDateEnd).format('YYYY-MM-DD')}
             </Text>
           </View>
         </View>
@@ -427,6 +427,8 @@ class Patrol_CEM extends Component {
 
   renderSection = (section, index) => {
     const isExpanded = this.state.expandedSections.includes(index);
+    // 检查此部分是否有填写内容
+    const hasContent = this.checkSectionHasContent(section);
 
     return (
       <View
@@ -444,9 +446,17 @@ class Patrol_CEM extends Component {
         <TouchableOpacity
           style={styles.sectionHeader}
           onPress={() => this.toggleSection(index)}>
-          <Text style={styles.sectionTitle}>
-            {section.id}. {section.title}
-          </Text>
+          <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
+            <Text style={styles.sectionTitle}>
+              {section.required ? <Text style={{ color: 'red' }}>*</Text> : null}
+              {section.id}. {section.title}
+            </Text>
+            {hasContent && (
+              <View style={styles.filledIndicator}>
+                <Text style={styles.filledIndicatorText}>已填写</Text>
+              </View>
+            )}
+          </View>
           <Image
             source={require('../../../../../images/ic_arrows_up.png')}
             style={[
@@ -464,6 +474,45 @@ class Patrol_CEM extends Component {
         )}
       </View>
     );
+  };
+
+  // 检查部分是否有填写内容
+  checkSectionHasContent = (section) => {
+    if (!section.items || section.items.length === 0) {
+      return false;
+    }
+
+    const { formData, signContent, pic1Name, pic2Name } = this.state;
+    // 遍历每个item，检查是否有填写内容
+    for (const item of section.items) {
+      // 检查不同类型的item
+      if (item.type === 'upload') {
+        // 检查上传图片 - 只有真正上传了图片的才算填写
+        const imgList = this.state[item.id + '_PIC'] || [];
+        if (imgList.length > 0) {
+          return true;
+        }
+      } else if (item.type === 'signature') {
+        // 检查签名 - 只有确实签名了的才算填写
+        if (signContent) {
+          return true;
+        }
+      } else if (item.type === 'input' || item.type === 'textarea') {
+        // 检查输入框或文本域 - 有内容且不是简单的空格才算填写
+        const value = formData[item.id];
+        if (value && typeof value === 'string' && value.trim() !== '') {
+          return true;
+        }
+      } else {
+        // 检查正常/异常选择按钮 - 明确选择了正常或异常才算填写
+        const value = formData[item.id];
+        // 判断是否是用户真正设置的值，而不是默认值
+        if (value === 0 || value === 1) {
+          return true;
+        }
+      }
+    }
+    return false;
   };
 
   // 渲染section内容
@@ -876,6 +925,18 @@ const styles = StyleSheet.create({
   buttonText: {
     color: globalcolor.whiteFont,
     fontSize: 15,
+  },
+  filledIndicator: {
+    backgroundColor: '#52c41a', // 使用绿色表示已填写
+    borderRadius: 10,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  filledIndicatorText: {
+    fontSize: 12,
+    color: '#fff',
   },
 });
 

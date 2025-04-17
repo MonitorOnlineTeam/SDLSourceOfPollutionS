@@ -771,6 +771,20 @@ export default api = {
             /**
             * 淄博项目 校准 废气
             */
+            // 示值误差和响应时间
+            GetIndicationErrorSystemResponseRecordListForAppZB: 'rest/PollutantSourceApi/GasOperationFormApi/GetIndicationErrorSystemResponseRecordListForAppZB', // 获取示值误差列表
+            // 添加或修改示值误差及响应时间
+            AddOrUpdateIndicationErrorSystemResponseRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateIndicationErrorSystemResponseRecordZB', // 添加或修改示值误差及响应时间
+            // 提交示值误差及响应时间 - 主表
+            SubmitIndicationErrorSystemResponseRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/SubmitIndicationErrorSystemResponseRecordZB', // 提交示值误差及响应时间
+            // 删除示值误差及响应时间量程
+            DeleteErrorSystemResponseRecordInfoZB: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecordInfoZB', // 删除示值误差及响应时间
+            // 删除示值误差及响应时间整个表单
+            DeleteErrorSystemResponseRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecordZB', // 删除示值误差及响应时间
+
+            /**
+            * 淄博项目 校准 废气
+            */
             GetJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/GetCemsCalibrationRecordZB', // 获取单个任务的校准记录
             AddOrUpdateJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateCemsCalibrationRecordListZB', // 新增或更新校准记录  
             GetJzItemZBCEMS: 'rest/PollutantSourceApi/GasOperationFormApi/GetJzItemZBCEMS', // 废气校准项

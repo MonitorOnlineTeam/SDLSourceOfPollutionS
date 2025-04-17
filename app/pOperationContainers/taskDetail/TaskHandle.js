@@ -527,6 +527,14 @@ export default class TaskHandle extends Component {
                                 })
                             );
                             break;
+                        case 92: // 示值误差和响应时间 - 淄博
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'IndicationErrorAndResponseTimeList_zb',
+                                    params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
+                                })
+                            );
+                            break;
                         case 76: // 巡检完全抽取法
                         case 77: // 巡检稀释采样法
                         case 78: // 巡检直接测量法
@@ -739,6 +747,7 @@ export default class TaskHandle extends Component {
     render() {
         // console.log('updateStatus = ',this.props.updateStatus);
         const { taskDetail } = this.props;
+        const isZB = taskDetail.OperationOrderType === '1';
         // const ImgList = SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], []);
         const ImgList = SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []);
         const Images = [];
@@ -801,19 +810,20 @@ export default class TaskHandle extends Component {
                         {this.renderUpdateButton()}
                         {this.renderBar(require('../../images/icon_add_new_form.png'), '运维台账')}
                         {this.renderForms()}
-                        {this.renderBar(require('../../images/icon_upload_pictures.png'), '上传图片')}
-                        <ImageGrid
-                            componentType={'taskhandle'}
-                            extraInfo={taskDetail}
-                            style={{ paddingLeft: 13, paddingRight: 13, paddingBottom: 10, backgroundColor: '#fff' }}
-                            Imgs={Images}
-                            isUpload={this.isEdit()}
-                            isDel={this.isEdit()}
+                        {!isZB && this.renderBar(require('../../images/icon_upload_pictures.png'), '上传图片')}
+                        {!isZB && (
+                            <ImageGrid
+                                componentType={'taskhandle'}
+                                extraInfo={taskDetail}
+                                style={{ paddingLeft: 13, paddingRight: 13, paddingBottom: 10, backgroundColor: '#fff' }}
+                                Imgs={Images}
+                                isUpload={this.isEdit()}
+                                isDel={this.isEdit()}
                             UUID={SentencedToEmpty(taskDetail, ['AttachmentsId'], taskID)}
                             uploadCallback={items => {
                                 console.log('uploadCallback', items);
                                 let newTaskDetail = { ...taskDetail };
-                                // let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], [])); 
+                                // let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], []));
                                 let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []));
                                 items.map(imageItem => {
                                     newImgList.push(imageItem.AttachID);
@@ -834,10 +844,11 @@ export default class TaskHandle extends Component {
                                 newTaskDetail.Attachments = Attachments;
                                 this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
                                 CloseToast();
-                            }}
-                        />
-                        {this.renderBar(require('../../images/ic_add_helper.png'), '协助人员')}
-                        {this.renderTaskHelpersList()}
+                                }}
+                            />
+                        )}
+                        {!isZB && this.renderBar(require('../../images/ic_add_helper.png'), '协助人员')}
+                        {!isZB && this.renderTaskHelpersList()}
                     </KeyboardAvoidingView>
                 </ScrollView>
                 {this.renderBottomBtn()}
