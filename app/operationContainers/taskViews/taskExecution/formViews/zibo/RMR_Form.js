@@ -2,7 +2,7 @@
  * @Author: JiaQi
  * @Date: 2025-04-02 16:00:00
  * @Last Modified by: JiaQi
- * @Last Modified time: 2025-04-17 14:57:38
+ * @Last Modified time: 2025-04-17 16:44:21
  * @Description: 标准物质更换记录表单
  */
 
@@ -208,11 +208,11 @@ class RMR_Form extends Component {
       return;
     }
     if (!formData.ChangeBTime) {
-      ShowToast('请选择本次更换开始日期');
+      ShowToast('请选择本次更换开始时间');
       return;
     }
     if (!formData.ChangeETime) {
-      ShowToast('请选择本次更换结束日期');
+      ShowToast('请选择本次更换结束时间');
       return;
     }
     if (!formData.StandardGasModel) {
@@ -393,9 +393,9 @@ class RMR_Form extends Component {
             )}
 
             <FormDatePicker
-              label="本次更换开始日期"
+              label="本次更换开始时间"
               required={true}
-              timeString={formData.ChangeBTime || '请选择开始日期'}
+              timeString={formData.ChangeBTime || '请选择开始时间'}
               getPickerOption={() => ({
                 type: 'realtime',
                 onSureClickListener: date => {
@@ -409,9 +409,9 @@ class RMR_Form extends Component {
               })}
             />
             <FormDatePicker
-              label="本次更换结束日期"
+              label="本次更换结束时间"
               required={true}
-              timeString={formData.ChangeETime || '请选择结束日期'}
+              timeString={formData.ChangeETime || '请选择结束时间'}
               getPickerOption={() => ({
                 type: 'realtime',
                 onSureClickListener: date => {
