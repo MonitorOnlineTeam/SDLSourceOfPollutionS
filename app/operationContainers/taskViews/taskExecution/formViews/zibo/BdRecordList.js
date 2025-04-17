@@ -328,7 +328,7 @@ class BdRecordList extends PureComponent {
                     工作时间：
                   </Text>
                   <Text style={{fontSize: 14, color: '#666'}}>
-                    {MainInfo.WorkingDateBegin} ～ {MainInfo.WorkingDateEnd}
+                    {moment(MainInfo.WorkingDateBegin).format('YYYY-MM-DD')} ～ {moment(MainInfo.WorkingDateEnd).format('YYYY-MM-DD')}
                   </Text>
                 </View>
               </View>

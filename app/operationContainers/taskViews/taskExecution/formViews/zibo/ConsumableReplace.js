@@ -2,7 +2,7 @@
  * @Author: JiaQi
  * @Date: 2025-04-02 10:51:04
  * @Last Modified by: JiaQi
- * @Last Modified time: 2025-04-07 16:24:04
+ * @Last Modified time: 2025-04-17 15:31:15
  * @Description:  废气、废水易耗品更换记录
  */
 
@@ -302,7 +302,7 @@ class ConsumableReplace extends Component {
           required={true}
           getPickerOption={() => ({
             defaultTime: Content.WorkingDateBegin,
-            type: 'day',
+            type: 'minute',
             onSureClickListener: time => {
               this.setState(prevState => ({
                 Content: {
@@ -321,7 +321,7 @@ class ConsumableReplace extends Component {
           required={true}
           getPickerOption={() => ({
             defaultTime: Content.WorkingDateEnd,
-            type: 'day',
+            type: 'minute',
             onSureClickListener: time => {
               this.setState(prevState => ({
                 Content: {
