@@ -2,7 +2,7 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2025-04-10 15:58:44
+ * @LastEditTime: 2025-04-17 17:02:21
  * @FilePath: /SDLSourceOfPollutionS_dev/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
@@ -264,7 +264,11 @@ import CalibrationRecordEditZb from './operationContainers/taskViews/taskExecuti
 import CalibrationRecordListZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordListZbFs';
 import CalibrationRecordTimeZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordTimeZbFs';
 import CalibrationRecordEditZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordEditZbFs';
-import WasteLiquidDisposalRecord from './operationContainers/taskViews/taskExecution/formViews/WasteLiquidDisposalRecord';
+import WasteLiquidDisposalRecord from './operationContainers/taskViews/taskExecution/formViews/zibo/WasteLiquidDisposalRecord';
+// import PipelineFlowMeterMaintenanceRecord from './operationContainers/taskViews/taskExecution/formViews/zibo/PipelineFlowMeterMaintenanceRecord';
+import CEMSMaintenanceRecordSheet from './operationContainers/taskViews/taskExecution/formViews/zibo/CEMSMaintenanceRecordSheet';
+import CEMSMaintenanceItem from './operationContainers/taskViews/taskExecution/formViews/zibo/CEMSMaintenanceItem';
+import ContactOperationMultiple from './pOperationContainers/components/ContactOperationMultiple';
 
 function Test() {
     return (
@@ -611,8 +615,13 @@ Actions.pushViewWithName(CalibrationRecordEditZbFs, 'CalibrationRecordEditZbFs',
 Actions.pushViewWithName(Patrol_CEM, 'Patrol_CEM', { title: '完全抽取法CEMS日常巡检记录表' });
 Actions.pushViewWithName(SignaturePage, 'SignaturePage', { title: '签名' });
 
+Actions.pushViewWithName(CEMSMaintenanceRecordSheet, 'CEMSMaintenanceRecordSheet', { title: 'CMES维修记录表' });
+Actions.pushViewWithName(CEMSMaintenanceItem, 'CEMSMaintenanceItem', { title: 'CMES维修项目编辑' });
 
 Actions.pushViewWithName(WasteLiquidDisposalRecord, 'WasteLiquidDisposalRecord', { title: '废液处置记录表' });
+// Actions.pushViewWithName(PipelineFlowMeterMaintenanceRecord, 'PipelineFlowMeterMaintenanceRecord', { title: '管道流量计维护记录' });
+Actions.pushViewWithName(ContactOperationMultiple, 'ContactOperationMultiple', { title: '监测目标' });
+
 // 标准物质更换记录表
 Actions.pushViewWithName(RMR, 'RMR', { title: '标准物质更换记录表' });
 Actions.pushViewWithName(RMRForm, 'RMRForm', { title: '标准物质更换记录表' });

@@ -2,8 +2,8 @@
  * @Description: 
  * @LastEditors: hxf
  * @Date: 2024-07-15 09:12:04
- * @LastEditTime: 2024-09-05 14:03:00
- * @FilePath: /SDLMainProject/index.js
+ * @LastEditTime: 2025-03-11 11:13:36
+ * @FilePath: /SDLSourceOfPollutionS_dev/index.js
  */
 /**
  * @format
@@ -26,8 +26,6 @@ const { app, dispatch } = dva({
     }
 });
 registerModels(app);
-console.log('app = ', app);
-console.log('store = ', app.store);
 
 const _App = app.start(<App />);
 export { dispatch };
