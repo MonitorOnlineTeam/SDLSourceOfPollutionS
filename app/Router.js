@@ -2,7 +2,7 @@
  * @Description:
  * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2025-04-17 17:02:21
+ * @LastEditTime: 2025-04-18 13:59:41
  * @FilePath: /SDLSourceOfPollutionS_dev/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
