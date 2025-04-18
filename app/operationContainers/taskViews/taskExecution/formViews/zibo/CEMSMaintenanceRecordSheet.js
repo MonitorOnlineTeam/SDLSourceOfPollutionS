@@ -2,7 +2,7 @@
  * @Description: CMES维修记录表
  * @LastEditors: hxf
  * @Date: 2025-04-11 11:00:45
- * @LastEditTime: 2025-04-17 16:31:26
+ * @LastEditTime: 2025-04-18 11:32:58
  * @FilePath: /SDLSourceOfPollutionS_dev/app/operationContainers/taskViews/taskExecution/formViews/zibo/CEMSMaintenanceRecordSheet.js
  */
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, DeviceEventEmitter } from 'react-native'
@@ -280,14 +280,14 @@ export default function CEMSMaintenanceRecordSheet(props) {
         }
         // EntUserName
         // BDSB
-        if (SentencedToEmpty(Content, ['EntUserName'], '') == '') {
-            // ShowToast('运维人不能为空！');
-            ShowToast({
-                message: '运维人不能为空！',
-                alertType: 'error',
-            });
-            return false;
-        }
+        // if (SentencedToEmpty(Content, ['EntUserName'], '') == '') {
+        //     // ShowToast('运维人不能为空！');
+        //     ShowToast({
+        //         message: '运维人不能为空！',
+        //         alertType: 'error',
+        //     });
+        //     return false;
+        // }
 
         if (SentencedToEmpty(Content, ['CheckBTime'], '') == '') {
             // ShowToast('故障开始时间不能为空！');
@@ -461,7 +461,7 @@ export default function CEMSMaintenanceRecordSheet(props) {
                             }}
                         />
                     </View>
-                    <View
+                    {true ? null : <View
                         style={[styles.rowLayout, {}]}
                     >
                         <FormText
@@ -499,7 +499,7 @@ export default function CEMSMaintenanceRecordSheet(props) {
                                 );
                             }}
                         />
-                    </View>
+                    </View>}
                     <View
                         style={[
                             styles.rowLayout, {}
@@ -573,7 +573,7 @@ export default function CEMSMaintenanceRecordSheet(props) {
                     <TouchableOpacity
                         style={[{ marginVertical: 6 }]}
                         onPress={() => {
-                            if (masterTableCheck({ checkList: false }) || true) {
+                            if (masterTableCheck({ checkList: false })) {
                                 dispatch(createAction('zbRepairRecordModel/updateState')({
                                     repairRecordIndex: -1,
                                     oneRepairRecord: {}
