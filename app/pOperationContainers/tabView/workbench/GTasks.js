@@ -15,10 +15,11 @@ import { SCREEN_HEIGHT } from '../../../components/SDLPicker/constant/globalsize
  * @class Audit
  * @extends {Component}
  */
-@connect(({ taskModel }) => ({
+@connect(({ taskModel, app }) => ({
     unhandleTaskListResult: taskModel.unhandleTaskListResult,
     unhandleTaskListTotal: taskModel.unhandleTaskListTotal,
-    unhandleTaskListData: taskModel.unhandleTaskListData
+    unhandleTaskListData: taskModel.unhandleTaskListData,
+    configInfo: app.configInfo
 }))
 export default class GTasks extends Component {
     static navigationOptions = ({ navigation }) =>
@@ -38,7 +39,8 @@ export default class GTasks extends Component {
         };
 
         this.props.navigation.setOptions({
-            headerRight: () => <TouchableOpacity
+            // 根据配置信息判断是否显示转发按钮
+            headerRight: () => props.configInfo.OperationOrderType === '1' ? null : <TouchableOpacity
                 onPress={() => {
                     this.changeHeaderRight();
                     this.setState({ editState: !this.state.editState, selectArr: [] });
