@@ -2,7 +2,7 @@
  * @Description: 维修项目编辑
  * @LastEditors: hxf
  * @Date: 2025-04-11 16:27:30
- * @LastEditTime: 2025-04-17 16:30:46
+ * @LastEditTime: 2025-04-18 11:36:05
  * @FilePath: /SDLSourceOfPollutionS_dev/app/operationContainers/taskViews/taskExecution/formViews/zibo/CEMSMaintenanceItem.js
  */
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
@@ -124,14 +124,14 @@ export default function CEMSMaintenanceItem(props) {
         }
         // EntUserName
         // BDSB
-        if (SentencedToEmpty(Content, ['EntUserName'], '') == '') {
-            // ShowToast('运维人不能为空！');
-            ShowToast({
-                message: '运维人不能为空！',
-                alertType: 'error',
-            });
-            return false;
-        }
+        // if (SentencedToEmpty(Content, ['EntUserName'], '') == '') {
+        //     // ShowToast('运维人不能为空！');
+        //     ShowToast({
+        //         message: '运维人不能为空！',
+        //         alertType: 'error',
+        //     });
+        //     return false;
+        // }
 
         if (SentencedToEmpty(Content, ['CheckBTime'], '') == '') {
             // ShowToast('故障开始时间不能为空！');
@@ -293,6 +293,9 @@ export default function CEMSMaintenanceItem(props) {
                                     let newData = { ...oneRepairRecord };
                                     newData.EquipmentId = callBackItem.ChildID;
                                     newData.EquipmentName = callBackItem.showStr;
+                                    if (callBackItem.ChildID == 830 || callBackItem.ChildID == 840) {
+                                        newData.OtherEquipment = '';
+                                    }
                                     dispatch(createAction('zbRepairRecordModel/updateState')({
                                         oneRepairRecord: newData
                                     }));

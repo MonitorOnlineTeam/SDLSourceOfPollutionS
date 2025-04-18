@@ -606,7 +606,7 @@ class RecordList extends PureComponent {
               // BdItemSetting
               this.props.dispatch(
                 NavigationActions.navigate({
-                  routeName: 'BdItemSetting',
+                  routeName: 'BdItemSetting_zb',
                   params: {
                     // item,
                     // columns,

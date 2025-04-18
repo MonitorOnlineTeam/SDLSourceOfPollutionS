@@ -910,31 +910,31 @@ export default class TaskHandle extends Component {
                                 Imgs={Images}
                                 isUpload={this.isEdit()}
                                 isDel={this.isEdit()}
-                            UUID={SentencedToEmpty(taskDetail, ['AttachmentsId'], taskID)}
-                            uploadCallback={items => {
-                                console.log('uploadCallback', items);
-                                let newTaskDetail = { ...taskDetail };
-                                // let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], []));
-                                let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []));
-                                items.map(imageItem => {
-                                    newImgList.push(imageItem.AttachID);
-                                });
-                                let Attachments = SentencedToEmpty(taskDetail, ['Attachments'], {});
-                                Attachments.ImgNameList = newImgList;
-                                newTaskDetail.Attachments = Attachments;
-                                this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
-                            }}
-                            delCallback={index => {
-                                console.log('delCallback=', index);
-                                let newTaskDetail = { ...taskDetail };
-                                // let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], []));
-                                let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []));
-                                newImgList.splice(index, 1);
-                                let Attachments = SentencedToEmpty(taskDetail, ['Attachments'], {});
-                                Attachments.ImgNameList = newImgList;
-                                newTaskDetail.Attachments = Attachments;
-                                this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
-                                CloseToast();
+                                UUID={SentencedToEmpty(taskDetail, ['AttachmentsId'], taskID)}
+                                uploadCallback={items => {
+                                    console.log('uploadCallback', items);
+                                    let newTaskDetail = { ...taskDetail };
+                                    // let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], []));
+                                    let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []));
+                                    items.map(imageItem => {
+                                        newImgList.push(imageItem.AttachID);
+                                    });
+                                    let Attachments = SentencedToEmpty(taskDetail, ['Attachments'], {});
+                                    Attachments.ImgNameList = newImgList;
+                                    newTaskDetail.Attachments = Attachments;
+                                    this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
+                                }}
+                                delCallback={index => {
+                                    console.log('delCallback=', index);
+                                    let newTaskDetail = { ...taskDetail };
+                                    // let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], []));
+                                    let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []));
+                                    newImgList.splice(index, 1);
+                                    let Attachments = SentencedToEmpty(taskDetail, ['Attachments'], {});
+                                    Attachments.ImgNameList = newImgList;
+                                    newTaskDetail.Attachments = Attachments;
+                                    this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
+                                    CloseToast();
                                 }}
                             />
                         )}
