@@ -151,6 +151,7 @@ import BdRecordEdit from './operationContainers/taskViews/taskExecution/formView
 import BdRecordList_zb from './operationContainers/taskViews/taskExecution/formViews/zibo/BdRecordList';
 import BdRecordEdit_zb from './operationContainers/taskViews/taskExecution/formViews/zibo/BdRecordEdit';
 import BdSelectedEdit_zb from './operationContainers/taskViews/taskExecution/formViews/zibo/BdSelectedEdit';
+import BdItemSetting_zb from './operationContainers/taskViews/taskExecution/formViews/zibo/BdItemSetting';
 import SparePartsForm from './operationContainers/taskViews/taskExecution/formViews/PoSparePartsForm';
 import BdSelectedEdit from './operationContainers/taskViews/taskExecution/formViews/BdSelectedEdit';
 import BdItemSetting from './operationContainers/taskViews/taskExecution/formViews/BdItemSetting';
@@ -361,6 +362,7 @@ Actions.pushViewWithName(BdSelectedEdit, 'BdSelectedEdit', { title: '校验测�
 Actions.pushViewWithName(BdRecordList_zb, 'BdRecordList_zb', { title: '校验测试记录' });
 Actions.pushViewWithName(BdRecordEdit_zb, 'BdRecordEdit_zb', { title: '校验测试记录' });
 Actions.pushViewWithName(BdSelectedEdit_zb, 'BdSelectedEdit_zb', { title: '校验测试记录' });
+Actions.pushViewWithName(BdItemSetting_zb, 'BdItemSetting_zb', { title: '校验测试配置' });
 Actions.pushViewWithName(BdItemSetting, 'BdItemSetting', { title: '校验测试配置' });
 Actions.pushViewWithName(PoConsumablesReplaceRecord, 'PoConsumablesReplaceRecord', { title: '易耗品更换记录' });
 Actions.pushViewWithName(PoConsumablesReplaceForm, 'PoConsumablesReplaceForm', { title: '易耗品更换记录表' });
