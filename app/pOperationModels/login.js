@@ -494,7 +494,6 @@ export default Model.extend({
         // 获取系统配置信息
         * getSystemConfigInfo(action, { call, put }) {
             const result = yield call(authService.axiosGet, api.pollutionApi.Account.GetSystemConfigInfo, {});
-            console.log('result1212', result)
             if (result.data.IsSuccess) {
                 yield put({
                     type: 'app/updateState',
