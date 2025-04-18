@@ -229,6 +229,7 @@ export default api = {
             GetToken: 'rest/PollutantSourceOAuth/connect/token', //身份认证token
             UpdateConfig: 'rest/PollutantSourceApi/SystemSettingApi/GetAndroidOrIosSettings', //更新配置
             getIsNeedSecret: 'rest/PollutantSourceApi/SystemSettingApi/GetSystemConfigInfo', //获取是否需要对参数加密
+            GetSystemConfigInfo: 'rest/PollutantSourceApi/ConfigureApi/GetSystemConfigInfo', // 获取系统配置
 
             //修改密码
             //获取码表

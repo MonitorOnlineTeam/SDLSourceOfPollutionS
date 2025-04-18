@@ -14,6 +14,7 @@ export default Model.extend({
             isSecret: false,
             name: '百度'
         },
+        configInfo: {},
         networkTest: false,// 是否需要网络测试
         screenOrientation: 'Portrait',// 数据查询 屏幕方向 // Portrait Landscape
         // MenuID: '317a708d-f762-44a3-b27e-a96beffbec65',

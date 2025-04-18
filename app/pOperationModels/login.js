@@ -491,6 +491,20 @@ export default Model.extend({
             // }
         },
 
+        // 获取系统配置信息
+        * getSystemConfigInfo(action, { call, put }) {
+            const result = yield call(authService.axiosGet, api.pollutionApi.Account.GetSystemConfigInfo, {});
+            console.log('result1212', result)
+            if (result.data.IsSuccess) {
+                yield put({
+                    type: 'app/updateState',
+                    payload: {
+                        configInfo: result.data.Datas
+                    }
+                })
+            }
+        },
+
         /**
          * PostMessageCode
          * 获取验证码
@@ -512,7 +526,7 @@ export default Model.extend({
              * yield put('getIsNeedSecrect', {});
              * yield take('getIsNeedSecrect/@@end');
              */
-
+            yield put('getSystemConfigInfo', {});
             var encrypt = new JSEncrypt();
             encrypt.setPublicKey(RSAPubSecret);
 
