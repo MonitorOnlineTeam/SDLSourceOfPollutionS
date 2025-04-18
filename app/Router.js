@@ -2,7 +2,7 @@
  * @Description:
  * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2025-04-17 17:58:57
+ * @LastEditTime: 2025-04-18 09:46:11
  * @FilePath: /SDLSourceOfPollutionS_dev/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
@@ -272,7 +272,21 @@ import CEMSMaintenanceRecordSheet from './operationContainers/taskViews/taskExec
 import CEMSMaintenanceItem from './operationContainers/taskViews/taskExecution/formViews/zibo/CEMSMaintenanceItem';
 import ContactOperationMultiple from './pOperationContainers/components/ContactOperationMultiple';
 
-//宝武
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**宝武 */
 import PersonList from './components/PersonList'
 import RMR_BW from './operationContainers/taskViews/taskExecution/formViews/baowu/RMR';
 import RMRForm_BW from './operationContainers/taskViews/taskExecution/formViews/baowu/RMR_Form';
@@ -647,17 +661,21 @@ Actions.pushViewWithName(ConsumableReplace, 'ConsumableReplace', { title: '易�
 Actions.pushViewWithName(ConsumableReplaceForm, 'ConsumableReplaceForm', { title: '易耗品更换记录表' });
 Actions.pushViewWithName(SignaturePage, 'SignaturePage', { title: '签名' });
 
-/**宝武 电子表单 */
 
+
+
+
+
+
+
+/**宝武 */
 Actions.pushViewWithName(PersonList, 'PersonList', { title: '人员清单' });
 //标准物质更换
 Actions.pushViewWithName(RMR_BW, 'RMR_BW', { title: '标准物质更换记录表' });
 Actions.pushViewWithName(RMRForm_BW, 'RMRForm_BW', { title: '标准物质更换记录表' });
-
 //易耗品更换
 Actions.pushViewWithName(ConsumableReplace_BW, 'ConsumableReplace_BW', { title: '易耗品更换记录表' });
 Actions.pushViewWithName(ConsumableReplaceForm_BW, 'ConsumableReplaceForm_BW', { title: '易耗品更换记录表' });
-
 //校验测试
 Actions.pushViewWithName(BdRecordList_BW, 'BdRecordList_BW', { title: '校验测试记录' });
 Actions.pushViewWithName(BdRecordEdit_BW, 'BdRecordEdit_BW', { title: '校验测试记录' });
@@ -670,7 +688,6 @@ Actions.pushViewWithName(BdItemSetting_BW, 'BdItemSetting_BW', { title: '校验�
 
 
 Actions.pushView(Test, { headerShown: false });
-
 const Stack = createNativeStackNavigator();
 export default function Router() {
     // const { currentRoute } = useSelector(state => state.sdlNavigate);
