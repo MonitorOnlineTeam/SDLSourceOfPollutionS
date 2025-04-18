@@ -2,7 +2,7 @@
  * @Description:
  * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2025-04-18 09:46:11
+ * @LastEditTime: 2025-04-18 10:16:07
  * @FilePath: /SDLSourceOfPollutionS_dev/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
@@ -53,7 +53,6 @@ import InformationBankOfEquipment from './pollutionContainers/pointDetails/Infor
 import SuspendProductionDetail from './pollutionContainers/pointDetails/SuspendProductionDetail';
 import TestView from './pOperationContainers/TestView';
 import ContactOperation from './pOperationContainers/components/ContactOperation';
-import ContactOperationMultiple from './pOperationContainers/components/ContactOperationMultiple';
 import SearchListWithoutLoad from './components/page/SearchListWithoutLoad';
 import GTasks from './pOperationContainers/tabView/workbench/GTasks';
 import TaskDetail from './pOperationContainers/taskDetail/TaskDetail';
