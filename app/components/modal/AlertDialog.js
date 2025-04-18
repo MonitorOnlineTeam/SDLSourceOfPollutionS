@@ -95,7 +95,7 @@ export default class AlertDialog extends Component {
     }
 
     CreateBtns(item, i) {
-        return <CreateButton key={i} btnW={this.state.btnW} onClick={this.hideModal} item={item} indexs={i} />;
+        return <CreateButton key={i} btnW={this.state.btnW} onClick={()=>this.hideModal(item)} item={item} indexs={i} />;
     }
 
     show = () => {
@@ -106,8 +106,9 @@ export default class AlertDialog extends Component {
         this.setState({ modalVisible: false });
     };
 
-    hideModal = () => {
+    hideModal = (item) => {
         this.setState({ modalVisible: false });
+        item?.txt=='确定' &&  this.props.options?.submitCallback && this.props.options.submitCallback()
     };
     componentDidMount() {
         if (this.props.options) {

@@ -769,7 +769,7 @@ export default api = {
             DeleteErrorSystemResponseRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecord', // 删除示值误差及响应时间
         
              /**
-             * 淄博项目 校准 废气
+             * 淄博项目 校准 废气废水
              */
             GetJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/GetCemsCalibrationRecordZB', // 获取单个任务的校准记录
             AddOrUpdateJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateCemsCalibrationRecordListZB', // 新增或更新校准记录  
@@ -777,9 +777,6 @@ export default api = {
             DeleteJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteCemsCalibrationRecordZB', //删除指定任务的校准表单数据
             DeleteJzItemZb: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteJzItemZB', // 校准 删除子表
 
-             /**
-             * 淄博项目 校准 废水
-             */
             GetJzRecordZbFs: 'rest/PollutantSourceApi/GasOperationFormApi/GetFSCalibrationRecordZB', // 获取单个任务的校准记录
             AddOrUpdateJzRecordZbFs: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateFSCalibrationRecordListZB', // 新增或更新校准记录  
             GetJzItemZBCEMSFs: 'rest/PollutantSourceApi/GasOperationFormApi/GetJzItemZBFS', // 废水校准项
@@ -850,6 +847,31 @@ export default api = {
             AddOrUpdateVerificationTestRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateVerificationTestRecordZB', // 添加
             DeleteVerificationTestRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteVerificationTestRecordZB', // 删除
             AddorUpdateVerificationTestParamsZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddorUpdateVerificationTestParamsZB', // 添加表格
+       
+            /**
+             * 2025.4.15
+             * 宝武项目
+             */
+            AddOperationUserBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddOperationUserBW', //人员清单 添加
+            GetOperationUserBW: 'rest/PollutantSourceApi/GasOperationFormApi/GetOperationUserBW', //人员清单
+            DelOperationUserBW: 'rest/PollutantSourceApi/GasOperationFormApi/DelOperationUserBW', //人员清单 删除
+            //标准物质更换
+            GetStandardGasRepalceRecordBW: '/rest/PollutantSourceApi/GasOperationFormApi/GetStandardGasRepalceRecordBW', //废气-获取更换记录
+            AddOrUpdateStandardGasRepalceRecordBW: '/rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateStandardGasRepalceRecordBW', //废气-新增或者更新单条记录
+            SubmitStandardGasRepalceRecordBW: '/rest/PollutantSourceApi/GasOperationFormApi/SubmitStandardGasRepalceRecordBW', //废气-提交记录
+            DeletetStandardGasRepalceRecordBWById: '/rest/PollutantSourceApi/GasOperationFormApi/DeletetStandardGasRepalceRecordBWById', //废气-单条记录删除
+            DeletetStandardGasRepalceRecordBW: '/rest/PollutantSourceApi/GasOperationFormApi/DeletetStandardGasRepalceRecordBW', //废气-表单删除
+            //易耗品更换
+            GetConsumablesReplaceRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/GetConsumablesReplaceRecordBW', //废气-获取更换记录
+            AddOrUpdateConsumablesReplaceRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateConsumablesReplaceRecordBW', // 废气-新增或者更新单条记录
+            SubmitConsumablesReplaceRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/SubmitConsumablesReplaceRecordBW', //废气-提交记录
+            DeletetConsumablesReplaceRecordBWById: 'rest/PollutantSourceApi/GasOperationFormApi/DeletetConsumablesReplaceRecordBWById', // 废气-单条记录删除
+            DeletetConsumablesReplaceRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/DeletetConsumablesReplaceRecordBW', // 废气-表单删除
+             //校验测试
+            GetVerificationTestRecordBWList: 'rest/PollutantSourceApi/GasOperationFormApi/GetVerificationTestRecordBWList', //废气-获取更换记录
+            AddorUpdateVerificationTestParamsBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddorUpdateVerificationTestParamsBW', // 废气-添加或修改标气或测试设备或参比监测信息
+            AddOrUpdateVerificationTestRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateVerificationTestRecordBW', //废气-新增或者更新记录
+            DeleteVerificationTestRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteVerificationTestRecordBW', // 废气-表单或者记录删除
         },
         /**
          * 2022.11.30

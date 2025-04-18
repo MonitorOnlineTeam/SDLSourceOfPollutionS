@@ -32,6 +32,7 @@ import moment from 'moment';
     RecordList: calibrationRecordZbFs.RecordList,
     editstatus: calibrationRecordZbFs.editstatus,
     JzConfigItemSelectedList: calibrationRecordZbFs.JzConfigItemSelectedList,
+    signContent: calibrationRecordZbFs.signContent,
 }))
 // @connect() 
 class CalibrationRecordEditZbFs extends Component {
@@ -403,6 +404,10 @@ class CalibrationRecordEditZbFs extends Component {
                     style={[styles.button, { backgroundColor: globalcolor.blue }, { marginVertical: 20 }]}
                     onPress={() => {
 
+                        if(!this.props.signContent){
+                            ShowToast('请返回上一级进行签名');
+                            return;
+                        }
                         let imgFiles = {}
 
                         imgFiles = {

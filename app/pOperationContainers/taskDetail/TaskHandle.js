@@ -624,6 +624,29 @@ export default class TaskHandle extends Component {
                                 })
                             );
                             break;
+
+
+                        /** 宝武表单 */
+                        case 89: // 废气易耗品更换
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'ConsumableReplace_BW',
+                                    params: { ...item, PollutantType: this.props.taskDetail?.PollutantType, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
+                                })
+                            );
+                            break;
+                        case 90: // 废气标准物质更换
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'RMR_BW',
+                                    params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
+                                })
+                            );
+                            break;
+                         case 91: // 校验测试记录表
+                            this.props.dispatch(NavigationActions.navigate({ routeName: 'BdRecordList_BW', params: {} }));
+                            break;
+
                     }
                 }
             }

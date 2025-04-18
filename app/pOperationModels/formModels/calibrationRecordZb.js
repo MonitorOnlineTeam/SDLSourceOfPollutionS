@@ -382,6 +382,9 @@ export default Model.extend({
             const result = yield call(authService.axiosAuthPost, api.pOperationApi.OperationForm.AddOrUpdateJzRecordZb, body);
             if (result.status == 200) {
                 ShowToast(result?.data?.Message || '提交签名成功');
+                yield update({
+                    signContent: payload?.signContent || '' ,
+                });
             } else {
                 ShowToast(result?.data?.Message || '网络连接失败，请检查');
             }

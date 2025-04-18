@@ -64,24 +64,24 @@ class CalibrationRecordEditZbFs extends Component {
         };
         _me = this;
     }
-    componentDidMount(prevProps, prevState){
-            this.setState({
-                signContent:this.props.signContent
-            })
-           
+    componentDidMount(prevProps, prevState) {
+        this.setState({
+            signContent: this.props.signContent
+        })
+
     }
-    componentDidUpdate(prevProps, prevState){
+    componentDidUpdate(prevProps, prevState) {
         if (prevProps.signContent && prevProps.signContent != this.props.signContent) {
-            if(this.props.signContent){
+            if (this.props.signContent) {
                 this.setState({
-                    signContent:this.props.signContent
+                    signContent: this.props.signContent
                 })
-           
+
             }
-           
+
         }
     }
-    
+
     componentWillUnmount() {
         DeviceEventEmitter.emit('refreshTask', {
             newMessage: '刷新',
@@ -105,8 +105,8 @@ class CalibrationRecordEditZbFs extends Component {
         return index + '';
     };
 
-    // 零点漂移内容，参数isLS为true时，表示是流速
-    _renderLDContent = (item, isLS, index) => {
+    // 零点漂移内容，参数isLS为true时，表示是流速  782 湿度只有一个
+    _renderLDContent = (item, isLS, index) => { 
         const { formData } = this.state;
         return (
             <>
@@ -331,7 +331,7 @@ class CalibrationRecordEditZbFs extends Component {
                                                     }),
                                                 );
                                             }}>
-                                            {this._renderLDContent(child, true, index)}
+                                            {this._renderLDContent(child, false, index)}
                                         </TouchableOpacity>
                                     );
                                 })}
@@ -552,6 +552,11 @@ class CalibrationRecordEditZbFs extends Component {
                     //返回任务执行，刷新数据
                     // this.props.dispatch(createAction('excuteTask/getTaskDetailWithoutTaskDescription')({ taskID: ID }));
                     this.props.dispatch(NavigationActions.back());
+                    this.props.dispatch(
+                        createAction('calibrationRecordZb/updateState')({
+                            signContent: ''
+                        })
+                    );
                 },
             }),
         );
@@ -796,52 +801,52 @@ class CalibrationRecordEditZbFs extends Component {
             headTitle: '提示',
             messText: '确定要删除这条记录吗？',
             headStyle: {
-              backgroundColor: globalcolor.headerBackgroundColor,
-              color: '#ffffff',
-              fontSize: 18,
+                backgroundColor: globalcolor.headerBackgroundColor,
+                color: '#ffffff',
+                fontSize: 18,
             },
             buttons: [
-              {
-                txt: '取消',
-                btnStyle: {backgroundColor: 'transparent'},
-                txtStyle: {color: globalcolor.headerBackgroundColor},
-                // onpress: this.cancelButton
-                onpress: () => {
-                  this._picker.setData(this.state.lastSelectCodes);
+                {
+                    txt: '取消',
+                    btnStyle: { backgroundColor: 'transparent' },
+                    txtStyle: { color: globalcolor.headerBackgroundColor },
+                    // onpress: this.cancelButton
+                    onpress: () => {
+                        this._picker.setData(this.state.lastSelectCodes);
+                    },
                 },
-              },
-              {
-                txt: '确定',
-                btnStyle: {backgroundColor: globalcolor.headerBackgroundColor},
-                txtStyle: {color: '#ffffff'},
-                // onpress: this.confirm
-                onpress: () => {
-                  let nameStr = '';
-                  let idStr = '';
-                  this.state.deleteIndexList.map((item, index) => {
-                    if (index == 0) {
-                      nameStr = item.recordName;
-                      idStr = item.recordId;
-                    } else {
-                      nameStr = nameStr + '、' + item.recordName;
-                      idStr = idStr + ',' + item.recordId;
-                    }
-                  });
-                  this.props.dispatch(
-                    createAction('calibrationRecordZb/updateState')({
-                      RecordList: this.state.newData,
-                      jzDeleteResult: {status: -1},
-                    }),
-                  );
-                  this.props.dispatch(
-                    createAction('calibrationRecordZb/deleteJzItem')({
-                      params: {ID: idStr},
-                    }),
-                  );
+                {
+                    txt: '确定',
+                    btnStyle: { backgroundColor: globalcolor.headerBackgroundColor },
+                    txtStyle: { color: '#ffffff' },
+                    // onpress: this.confirm
+                    onpress: () => {
+                        let nameStr = '';
+                        let idStr = '';
+                        this.state.deleteIndexList.map((item, index) => {
+                            if (index == 0) {
+                                nameStr = item.recordName;
+                                idStr = item.recordId;
+                            } else {
+                                nameStr = nameStr + '、' + item.recordName;
+                                idStr = idStr + ',' + item.recordId;
+                            }
+                        });
+                        this.props.dispatch(
+                            createAction('calibrationRecordZb/updateState')({
+                                RecordList: this.state.newData,
+                                jzDeleteResult: { status: -1 },
+                            }),
+                        );
+                        this.props.dispatch(
+                            createAction('calibrationRecordZb/deleteJzItem')({
+                                params: { ID: idStr },
+                            }),
+                        );
+                    },
                 },
-              },
             ],
-          };
+        };
         let signConfigItemsAlertOption = {
             headTitle: '提示',
             messText: '确定要提交签名吗？',
@@ -879,10 +884,11 @@ class CalibrationRecordEditZbFs extends Component {
                 },
             ],
         };
-        const calibratedList = this.props.calibrationRecordList.filter(item => item.LcCalibrationIsOk &&
-            item.LcCalibrationIsOk != '' &&
-            item.LcCalibrationSufValue &&
-            item.LcCalibrationSufValue != '') //已经校准的污染物
+        // const calibratedList = this.props.calibrationRecordList.filter(item => item.LcCalibrationIsOk &&
+        //     item.LcCalibrationIsOk != '' &&
+        //     item.LcCalibrationSufValue &&
+        //     item.LcCalibrationSufValue != '') //已经校准的污染物
+        const calibratedList = this.props.calibrationRecordList
         return (
             <StatusPage
                 //页面是否有回调按钮，如果不传，没有按钮，
@@ -906,11 +912,11 @@ class CalibrationRecordEditZbFs extends Component {
                         style={[
                             {
                                 width: SCREEN_WIDTH,
-                                paddingHorizontal: 24,
+                                paddingHorizontal: 10,
                                 backgroundColor: globalcolor.white,
                             },
                         ]}>
-                        <View
+                        {/* <View
                             style={[
                                 {
                                     flexDirection: 'row',
@@ -955,6 +961,28 @@ class CalibrationRecordEditZbFs extends Component {
                                             '----/--/-- --:--',
                                         )}
                             </Text>
+                        </View> */}
+                        <View
+                            style={{
+                                width: '100%',
+                                height: 45,
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                marginTop: 10,
+                                borderBottomWidth: 1,
+                                borderBottomColor: globalcolor.borderBottomColor,
+                            }}>
+                            <Text
+                                style={{
+                                    fontSize: 14,
+                                    color: '#333333',
+                                }}>
+                                工作时间：
+                            </Text>
+                            <Text style={{ fontSize: 14, color: '#666' }}>
+                                {this.props.MainInfo.WorkingDateBegin} ～ {this.props.MainInfo.WorkingDateEnd}
+                            </Text>
                         </View>
                     </View>
                     <TouchableOpacity
@@ -971,7 +999,7 @@ class CalibrationRecordEditZbFs extends Component {
                             style={[
                                 {
                                     width: SCREEN_WIDTH,
-                                    paddingHorizontal: 24,
+                                    paddingHorizontal: 10,
                                     backgroundColor: globalcolor.white,
                                 },
                             ]}>
@@ -988,7 +1016,7 @@ class CalibrationRecordEditZbFs extends Component {
                                     },
                                 ]}>
                                 <Text
-                                    style={[{ fontSize: 15, color: globalcolor.taskImfoLabel }]}>
+                                    style={[{ fontSize: 14, color: globalcolor.taskImfoLabel }]}>
                                     校准开始时间：
                 </Text>
                                 <View
@@ -1003,7 +1031,7 @@ class CalibrationRecordEditZbFs extends Component {
                                     <Text
                                         style={[
                                             {
-                                                fontSize: 15,
+                                                fontSize: 14,
                                                 color: globalcolor.taskFormLabel,
                                                 flex: 1,
                                                 textAlign: 'right',
@@ -1030,7 +1058,7 @@ class CalibrationRecordEditZbFs extends Component {
                                     },
                                 ]}>
                                 <Text
-                                    style={[{ fontSize: 15, color: globalcolor.taskImfoLabel }]}>
+                                    style={[{ fontSize: 14, color: globalcolor.taskImfoLabel }]}>
                                     校准结束时间：
                                   </Text>
                                 <View
@@ -1045,7 +1073,7 @@ class CalibrationRecordEditZbFs extends Component {
                                     <Text
                                         style={[
                                             {
-                                                fontSize: 15,
+                                                fontSize: 14,
                                                 color: globalcolor.taskFormLabel,
                                                 flex: 1,
                                                 textAlign: 'right',
@@ -1109,7 +1137,7 @@ class CalibrationRecordEditZbFs extends Component {
                         keyExtractor={this._keyExtractor}
                         renderItem={this._renderItem}
                     />
-                    {calibratedList?.[0] && this.signatureComponents()}
+                    {this.signatureComponents()}
                     <TouchableOpacity
                         style={[{ position: 'absolute', right: 18, bottom: 128 }]}
                         onPress={() => {
@@ -1141,10 +1169,10 @@ class CalibrationRecordEditZbFs extends Component {
                         options={signConfigItemsAlertOption}
                         ref="signConfigItemsAlert"
                     />
-                     <AlertDialog
-                         options={delConfigItemsAlert}
-                          ref="delConfigItemsAlert"
-                     />
+                    <AlertDialog
+                        options={delConfigItemsAlert}
+                        ref="delConfigItemsAlert"
+                    />
                     {this.state.signLoading ? <SimpleLoadingView message={'提交签名中'} /> : null}
 
                 </View>
