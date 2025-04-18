@@ -985,7 +985,7 @@ class CalibrationRecordEditZbFs extends Component {
                                 工作时间：
                             </Text>
                             <Text style={{ fontSize: 14, color: '#666' }}>
-                                {this.props.MainInfo.WorkingDateBegin} ～ {this.props.MainInfo.WorkingDateEnd}
+                                {this.props.MainInfo.WorkingDateBegin && moment(this.props.MainInfo.WorkingDateBegin).format('YYYY-MM-DD')} ～ {this.props.MainInfo.WorkingDateEnd  && moment(this.props.MainInfo.WorkingDateEnd).format('YYYY-MM-DD')}
                             </Text>
                         </View>
                     </View>
