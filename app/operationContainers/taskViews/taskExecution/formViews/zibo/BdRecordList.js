@@ -97,7 +97,6 @@ class BdRecordList extends PureComponent {
         this._modalParent.showModal();
       },
     });
-    console.log('liststatus', this.props.liststatus);
     this.props.navigation.setOptions({
       headerRight: () => {
         if (SentencedToEmpty(this.props, ['liststatus', 'status'], -1) == 200) {
@@ -274,7 +273,6 @@ class BdRecordList extends PureComponent {
   render() {
     const {imageList1, imageList2, imageList3} = this.state;
     const {MainInfo, BaseInfo} = this.props;
-    console.log('BaseInfo1', BaseInfo);
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
         <StatusPage
@@ -330,7 +328,7 @@ class BdRecordList extends PureComponent {
                     工作时间：
                   </Text>
                   <Text style={{fontSize: 14, color: '#666'}}>
-                    {MainInfo.WorkingDateBegin} ～ {MainInfo.WorkingDateEnd}
+                    {moment(MainInfo.WorkingDateBegin).format('YYYY-MM-DD')} ～ {moment(MainInfo.WorkingDateEnd).format('YYYY-MM-DD')}
                   </Text>
                 </View>
               </View>

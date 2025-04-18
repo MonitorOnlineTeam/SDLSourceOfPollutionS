@@ -767,22 +767,35 @@ export default api = {
             DeleteErrorSystemResponseRecordInfo: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecordInfo', // 删除示值误差及响应时间
             // 删除示值误差及响应时间整个表单
             DeleteErrorSystemResponseRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecord', // 删除示值误差及响应时间
-        
-             /**
-             * 淄博项目 校准 废气废水
-             */
+            // 示值误差和响应时间
+            GetIndicationErrorSystemResponseRecordListForAppZB: 'rest/PollutantSourceApi/GasOperationFormApi/GetIndicationErrorSystemResponseRecordListForAppZB', // 获取示值误差列表
+            // 添加或修改示值误差及响应时间
+            AddOrUpdateIndicationErrorSystemResponseRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateIndicationErrorSystemResponseRecordZB', // 添加或修改示值误差及响应时间
+            // 提交示值误差及响应时间 - 主表
+            SubmitIndicationErrorSystemResponseRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/SubmitIndicationErrorSystemResponseRecordZB', // 提交示值误差及响应时间
+            // 删除示值误差及响应时间量程
+            DeleteErrorSystemResponseRecordInfoZB: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecordInfoZB', // 删除示值误差及响应时间
+            // 删除示值误差及响应时间整个表单
+            DeleteErrorSystemResponseRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecordZB', // 删除示值误差及响应时间
+
+            /**
+            * 淄博项目 校准 废气
+            */
             GetJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/GetCemsCalibrationRecordZB', // 获取单个任务的校准记录
             AddOrUpdateJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateCemsCalibrationRecordListZB', // 新增或更新校准记录  
             GetJzItemZBCEMS: 'rest/PollutantSourceApi/GasOperationFormApi/GetJzItemZBCEMS', // 废气校准项
             DeleteJzRecordZb: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteCemsCalibrationRecordZB', //删除指定任务的校准表单数据
             DeleteJzItemZb: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteJzItemZB', // 校准 删除子表
 
+            /**
+            * 淄博项目 校准 废水
+            */
             GetJzRecordZbFs: 'rest/PollutantSourceApi/GasOperationFormApi/GetFSCalibrationRecordZB', // 获取单个任务的校准记录
             AddOrUpdateJzRecordZbFs: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateFSCalibrationRecordListZB', // 新增或更新校准记录  
             GetJzItemZBCEMSFs: 'rest/PollutantSourceApi/GasOperationFormApi/GetJzItemZBFS', // 废水校准项
             DeleteJzRecordZbFs: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteFSCalibrationRecordZB', //删除指定任务的校准表单数据
             DeleteJzItemZbFs: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteJzItemZBFS', // 校准 删除子表
-            
+
             /**
              * 2025.3.26
              * 淄博巡检
@@ -828,7 +841,7 @@ export default api = {
             GetStandardGasRepalceLastDate: 'rest/PollutantSourceApi/GasOperationFormApi/GetStandardGasRepalceLastDate', // 计算上次更换日期和浓度中高低
             SubmitStandardGasRepalceRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/SubmitStandardGasRepalceRecordZB', // 提交标准物质更换记录
             DeletetStandardGasRepalceRecordZBById: 'rest/PollutantSourceApi/GasOperationFormApi/DeletetStandardGasRepalceRecordZBById', // 删除标准物质更换记录
-            
+
             /**
              * 2025.4.7
              * 淄博易耗品更换
@@ -847,7 +860,35 @@ export default api = {
             AddOrUpdateVerificationTestRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateVerificationTestRecordZB', // 添加
             DeleteVerificationTestRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteVerificationTestRecordZB', // 删除
             AddorUpdateVerificationTestParamsZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddorUpdateVerificationTestParamsZB', // 添加表格
-       
+            /**
+             * 2025.4.14
+             * CEMS设备维修记录
+             */
+            AddOrUpdateRepairRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateRepairRecordZB',// 新增或更新维修记录-淄博
+            GetRepairRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/GetRepairRecordZB',// 获取维修记录-淄博
+            DeleteRepairRecordZB: '/rest/PollutantSourceApi/GasOperationFormApi/DeleteRepairRecordZB',// 删除维修记录-淄博
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
             /**
              * 2025.4.15
              * 宝武项目
@@ -872,6 +913,7 @@ export default api = {
             AddorUpdateVerificationTestParamsBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddorUpdateVerificationTestParamsBW', // 废气-添加或修改标气或测试设备或参比监测信息
             AddOrUpdateVerificationTestRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateVerificationTestRecordBW', //废气-新增或者更新记录
             DeleteVerificationTestRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteVerificationTestRecordBW', // 废气-表单或者记录删除
+
         },
         /**
          * 2022.11.30

@@ -207,9 +207,9 @@ export default class TaskDetail extends Component {
         this.props.dispatch(
             createAction('taskDetailModel/getTaskDetail')({
                 params: {
-                    callback: (isSign, isMyTask, taskStatus) => {
+                    callback: (isSign, isMyTask, taskStatus, taskDetail) => {
                         // 任务是我的，切任务状态不是完成和系统关闭，则可以转发
-                        if (isMyTask && (taskStatus != '3' && taskStatus != '10')) {
+                        if (isMyTask && (taskStatus != '3' && taskStatus != '10') && taskDetail.OperationOrderType !== '1') {
                             //设置标题右侧按钮
                             //需要判断是否支持转发
                             this.props.navigation.setOptions({

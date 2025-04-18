@@ -217,11 +217,13 @@ const FORM_CONST = {
     {
       id: 13,
       title: '站房全景照片（室内与室外）',
+      required: true,
       items: [{ id: 'ZFQJZP', title: '站房全景照片（室内）', type: 'upload' }],
     },
     {
       id: 14,
       title: '维护各个单元工作过程照片',
+      required: true,
       items: [
         {
           id: 'WHGGDYGZGCZP',
@@ -233,6 +235,7 @@ const FORM_CONST = {
     {
       id: 15,
       title: '异常情况处理记录',
+      required: true,
       items: [
         {
           id: 'ExceptionRecord',
@@ -244,6 +247,7 @@ const FORM_CONST = {
     {
       id: 16,
       title: '巡检人员签字',
+      required: true,
       items: [{ id: 'XJRYQZ', title: '签名', type: 'signature' }],
     },
   ],
@@ -446,6 +450,7 @@ const FORM_CONST = {
     {
       id: 13,
       title: '站房全景照片（室内与室外）',
+      required: true,
       items: [
         {id: 'ZFQJZP', title: '站房全景照片（室内与室外）', type: 'upload'},
       ],
@@ -453,6 +458,7 @@ const FORM_CONST = {
     {
       id: 14,
       title: '维护各个单元工作过程照片',
+      required: true,
       items: [
         {id: 'WHGGDYGZGCZP', title: '维护各个单元工作过程照片', type: 'upload'},
       ],
@@ -460,6 +466,7 @@ const FORM_CONST = {
     {
       id: 15,
       title: '异常情况处理记录',
+      required: true,
       items: [
         {id: 'ExceptionRecord', title: '异常情况处理记录', type: 'textarea'},
       ],
@@ -467,6 +474,7 @@ const FORM_CONST = {
     {
       id: 16,
       title: '巡检人员签字',
+      required: true,
       items: [{id: 'XJRYQZ', title: '签名', type: 'signature'}],
     },
   ],
@@ -663,6 +671,7 @@ const FORM_CONST = {
     {
       id: 13,
       title: '站房全景照片（室内与室外）',
+      required: true,
       items: [
         {id: 'ZFQJZP', title: '站房全景照片（室内与室外）', type: 'upload'},
       ],
@@ -670,6 +679,7 @@ const FORM_CONST = {
     {
       id: 14,
       title: '维护各个单元工作过程照片',
+      required: true,
       items: [
         {id: 'WHGGDYGZGCZP', title: '维护各个单元工作过程照片', type: 'upload'},
       ],
@@ -677,6 +687,7 @@ const FORM_CONST = {
     {
       id: 15,
       title: '异常情况处理记录',
+      required: true,
       items: [
         {id: 'ExceptionRecord', title: '异常情况处理记录', type: 'textarea'},
       ],
@@ -684,6 +695,7 @@ const FORM_CONST = {
     {
       id: 16,
       title: '巡检人员签字',
+      required: true,
       items: [{id: 'XJRYQZ', title: '签名', type: 'signature'}],
     },
   ],
@@ -785,6 +797,7 @@ const FORM_CONST = {
     {
       id: 7,
       title: '站房全景照片（室内与室外）',
+      required: true,
       items: [
         {id: 'ZFQJZP', title: '站房全景照片（室内与室外）', type: 'upload'},
       ],
@@ -792,6 +805,7 @@ const FORM_CONST = {
     {
       id: 8,
       title: '维护各个单元工作过程照片',
+      required: true,
       items: [
         {id: 'WHGGDYGZGCZP', title: '维护各个单元工作过程照片', type: 'upload'},
       ],
@@ -799,6 +813,7 @@ const FORM_CONST = {
     {
       id: 9,
       title: '异常情况处理记录',
+      required: true,
       items: [
         {id: 'ExceptionRecord', title: '异常情况处理记录', type: 'textarea'},
       ],
@@ -806,6 +821,7 @@ const FORM_CONST = {
     {
       id: 10,
       title: '巡检人员签字',
+      required: true,
       items: [{id: 'XJRYQZ', title: '签名', type: 'signature'}],
     },
   ],
@@ -1005,6 +1021,7 @@ const FORM_CONST = {
     {
       id: 15,
       title: '站房全景照片（室内与室外）',
+      required: true,
       items: [
         {id: 'ZFQJZP', title: '站房全景照片（室内与室外）', type: 'upload'},
       ],
@@ -1012,6 +1029,7 @@ const FORM_CONST = {
     {
       id: 16,
       title: '维护各个单元工作过程照片',
+      required: true,
       items: [
         {id: 'WHGGDYGZGCZP', title: '维护各个单元工作过程照片', type: 'upload'},
       ],
@@ -1019,6 +1037,7 @@ const FORM_CONST = {
     {
       id: 17,
       title: '异常情况处理记录',
+      required: true,
       items: [
         {id: 'ExceptionRecord', title: '异常情况处理记录', type: 'textarea'},
       ],
@@ -1026,6 +1045,7 @@ const FORM_CONST = {
     {
       id: 18,
       title: '巡检人员签字',
+      required: true,
       items: [{id: 'XJRYQZ', title: '签名', type: 'signature'}],
     },
   ],

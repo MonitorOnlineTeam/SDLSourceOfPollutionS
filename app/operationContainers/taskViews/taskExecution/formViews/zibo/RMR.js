@@ -2,7 +2,7 @@
  * @Author: JiaQi
  * @Date: 2025-04-02 10:51:04
  * @Last Modified by: JiaQi
- * @Last Modified time: 2025-04-10 16:10:03
+ * @Last Modified time: 2025-04-17 15:32:14
  * @Description:  标准物质更换记录表
  */
 
@@ -46,7 +46,7 @@ class RMR extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      FormMainID: props.route.params.params.ID,
+      FormMainID: props.route.params.params.FormMainID,
       loading: false,
       Content: {
         WorkingDateBegin: moment().format('YYYY-MM-DD 00:00:00'),
@@ -300,7 +300,7 @@ class RMR extends Component {
           required={true}
           getPickerOption={() => ({
             defaultTime: Content.WorkingDateBegin,
-            type: 'day',
+            type: 'minute',
             onSureClickListener: time => {
               this.setState(prevState => ({
                 Content: {
@@ -319,7 +319,7 @@ class RMR extends Component {
           required={true}
           getPickerOption={() => ({
             defaultTime: Content.WorkingDateEnd,
-            type: 'day',
+            type: 'minute',
             onSureClickListener: time => {
               this.setState(prevState => ({
                 Content: {
@@ -341,7 +341,6 @@ class RMR extends Component {
 
   // 渲染标准物质列表项
   renderStandardItem = ({item, index}) => {
-    console.log('record', record);
     let record = item.Data || {};
     return (
       <TouchableOpacity
@@ -354,7 +353,7 @@ class RMR extends Component {
           <View style={styles.standardContent}>
             <View style={styles.standardRow}>
               <Text style={styles.label}>供应商：</Text>
-              <Text style={styles.value}>{record.Supplier}</Text>
+              <Text style={styles.value}>{record.Supplier || '-'}</Text>
             </View>
             <View style={styles.standardRow}>
               <View style={{...styles.standardRowItem, flex: 2}}>
@@ -364,7 +363,7 @@ class RMR extends Component {
               <View
                 style={{...styles.standardRowItem, flex: 1, paddingLeft: 8}}>
                 <Text style={[styles.label, {width: 42}]}>单位：</Text>
-                <Text style={styles.value}>{record.Unit}</Text>
+                <Text style={styles.value}>{record.Unit || '-'}</Text>
               </View>
             </View>
             <View style={styles.standardRow}>
@@ -405,7 +404,6 @@ class RMR extends Component {
 
   render() {
     const {FormMainID, loading, standardList} = this.state;
-    console.log('standardList', standardList);
     return (
       <View style={styles.container}>
         <View style={styles.formContainer}>{this.renderTimeSection()}</View>

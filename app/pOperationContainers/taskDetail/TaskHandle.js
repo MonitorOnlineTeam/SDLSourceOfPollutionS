@@ -289,6 +289,55 @@ export default class TaskHandle extends Component {
         const selectFormList = [];
         const noSelectFormList = [];
         const { TaskFormList } = this.props.taskDetail;
+        // console.log('TaskFormList = ', TaskFormList);
+        // noSelectFormList.push({
+        //     Abbreviation: "CMES维修记录表",
+        //     CnName: "CMES维修记录表",
+        //     // FormMainID: "2657933b-e31b-4785-8547-a6dab80bb6f9",
+        //     ID: 1182,
+        //     IsRequired: 0,
+        //     IsSign: true,
+        //     RecordType: "1",
+        //     Status: 1,
+        //     TaskID: "bb1b4687-eee1-4f75-b894-7a6b3c1cdcfd",
+        //     taskStatus: 2,
+        //     Type: "1",
+        //     TypeID: 80,
+        //     TypeName: "Fs80",
+        //     formUrl: "",
+        // });
+        // noSelectFormList.push({
+        //     Abbreviation: "废水-废液处置记录表",
+        //     CnName: "废水-废液处置记录表",
+        //     // FormMainID: "2657933b-e31b-4785-8547-a6dab80bb6f9",
+        //     ID: 1180,
+        //     IsRequired: 0,
+        //     IsSign: true,
+        //     RecordType: "1",
+        //     Status: 1,
+        //     TaskID: "bb1b4687-eee1-4f75-b894-7a6b3c1cdcfd",
+        //     taskStatus: 2,
+        //     Type: "1",
+        //     TypeID: 80,
+        //     TypeName: "Fs80",
+        //     formUrl: "",
+        // });
+        // noSelectFormList.push({
+        //     Abbreviation: "管道流量计维护记录表",
+        //     CnName: "管道流量计维护记录表",
+        //     // FormMainID: "2657933b-e31b-4785-8547-a6dab80bb6f9",
+        //     ID: 1181,
+        //     IsRequired: 0,
+        //     IsSign: true,
+        //     RecordType: "1",
+        //     Status: 1,
+        //     TaskID: "bb1b4687-eee1-4f75-b894-7a6b3c1cdcfd",
+        //     taskStatus: 2,
+        //     Type: "1",
+        //     TypeID: 80,
+        //     TypeName: "Fs80",
+        //     formUrl: "",
+        // });
         TaskFormList.map(item => {
             if (item.FormMainID) {
                 selectFormList.push(item); //有FormMainID为已经填写了的表单
@@ -438,10 +487,50 @@ export default class TaskHandle extends Component {
 
                 } else if (item.Type == '1') {
                     switch (item.ID) {
+                        case 88:
+                            // CEMS维护记录表
+                            this.props.dispatch(createAction('zbRepairRecordModel/updateState')({
+                                RepairRecordZBResult: { status: -1 },
+                                Content: {},
+                                signContent: ''
+                            }));
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'CEMSMaintenanceRecordSheet',
+                                    params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
+                                })
+                            );
+                            break
+                        case 1181:
+                            // 管道流量计维护记录表
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'PipelineFlowMeterMaintenanceRecord',
+                                    params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
+                                })
+                            );
+                            break;
+                        case 1180:
+                            // 废液处置记录表
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'WasteLiquidDisposalRecord',
+                                    params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
+                                })
+                            );
+                            break;
                         case 74: // 示值误差和响应时间
                             this.props.dispatch(
                                 NavigationActions.navigate({
                                     routeName: 'IndicationErrorAndResponseTimeList',
+                                    params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
+                                })
+                            );
+                            break;
+                        case 92: // 示值误差和响应时间 - 淄博
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'IndicationErrorAndResponseTimeList_zb',
                                     params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
                                 })
                             );
@@ -457,26 +546,6 @@ export default class TaskHandle extends Component {
                                     params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
                                 })
                             );
-                            break;
-                        case 83: // 标准物质更换
-                            this.props.dispatch(
-                                NavigationActions.navigate({
-                                    routeName: 'RMR',
-                                    params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
-                                })
-                            );
-                            break;
-                        case 84: // 废气-易耗品更换
-                        case 85: // 废水-易耗品更换
-                            this.props.dispatch(
-                                NavigationActions.navigate({
-                                    routeName: 'ConsumableReplace',
-                                    params: { ...item, PollutantType: this.props.taskDetail?.PollutantType, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
-                                })
-                            );
-                            break;
-                        case 86: // 校验测试记录表
-                            this.props.dispatch(NavigationActions.navigate({ routeName: 'BdRecordList_zb', params: {} }));
                             break;
                         case 59: // 异常小时数记录 废气
                         case 58: // 异常小时数记录 废水
@@ -701,6 +770,7 @@ export default class TaskHandle extends Component {
     render() {
         // console.log('updateStatus = ',this.props.updateStatus);
         const { taskDetail } = this.props;
+        const isZB = taskDetail.OperationOrderType === '1';
         // const ImgList = SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], []);
         const ImgList = SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []);
         const Images = [];
@@ -763,19 +833,20 @@ export default class TaskHandle extends Component {
                         {this.renderUpdateButton()}
                         {this.renderBar(require('../../images/icon_add_new_form.png'), '运维台账')}
                         {this.renderForms()}
-                        {this.renderBar(require('../../images/icon_upload_pictures.png'), '上传图片')}
-                        <ImageGrid
-                            componentType={'taskhandle'}
-                            extraInfo={taskDetail}
-                            style={{ paddingLeft: 13, paddingRight: 13, paddingBottom: 10, backgroundColor: '#fff' }}
-                            Imgs={Images}
-                            isUpload={this.isEdit()}
-                            isDel={this.isEdit()}
+                        {!isZB && this.renderBar(require('../../images/icon_upload_pictures.png'), '上传图片')}
+                        {!isZB && (
+                            <ImageGrid
+                                componentType={'taskhandle'}
+                                extraInfo={taskDetail}
+                                style={{ paddingLeft: 13, paddingRight: 13, paddingBottom: 10, backgroundColor: '#fff' }}
+                                Imgs={Images}
+                                isUpload={this.isEdit()}
+                                isDel={this.isEdit()}
                             UUID={SentencedToEmpty(taskDetail, ['AttachmentsId'], taskID)}
                             uploadCallback={items => {
                                 console.log('uploadCallback', items);
                                 let newTaskDetail = { ...taskDetail };
-                                // let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], [])); 
+                                // let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgList'], []));
                                 let newImgList = [].concat(SentencedToEmpty(taskDetail, ['Attachments', 'ImgNameList'], []));
                                 items.map(imageItem => {
                                     newImgList.push(imageItem.AttachID);
@@ -796,10 +867,11 @@ export default class TaskHandle extends Component {
                                 newTaskDetail.Attachments = Attachments;
                                 this.props.dispatch(createAction('taskDetailModel/updateState')({ taskDetail: newTaskDetail }));
                                 CloseToast();
-                            }}
-                        />
-                        {this.renderBar(require('../../images/ic_add_helper.png'), '协助人员')}
-                        {this.renderTaskHelpersList()}
+                                }}
+                            />
+                        )}
+                        {!isZB && this.renderBar(require('../../images/ic_add_helper.png'), '协助人员')}
+                        {!isZB && this.renderTaskHelpersList()}
                     </KeyboardAvoidingView>
                 </ScrollView>
                 {this.renderBottomBtn()}

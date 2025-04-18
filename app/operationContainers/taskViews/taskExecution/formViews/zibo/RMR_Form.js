@@ -2,7 +2,7 @@
  * @Author: JiaQi
  * @Date: 2025-04-02 16:00:00
  * @Last Modified by: JiaQi
- * @Last Modified time: 2025-04-10 16:09:58
+ * @Last Modified time: 2025-04-17 16:44:21
  * @Description: 标准物质更换记录表单
  */
 
@@ -20,7 +20,7 @@ import moment from 'moment';
 import globalcolor from '../../../../../config/globalcolor';
 import {SCREEN_WIDTH} from '../../../../../config/globalsize';
 import {ShowToast, createAction} from '../../../../../utils';
-import {SimpleLoadingComponent} from '../../../../../components';
+import {SimpleLoadingComponent, AlertDialog} from '../../../../../components';
 import FormDatePicker from '../../components/FormDatePicker';
 import FormInput from '../../components/FormInput';
 import FormPicker from '../../components/FormPicker';
@@ -208,21 +208,21 @@ class RMR_Form extends Component {
       return;
     }
     if (!formData.ChangeBTime) {
-      ShowToast('请选择本次更换开始日期');
+      ShowToast('请选择本次更换开始时间');
       return;
     }
     if (!formData.ChangeETime) {
-      ShowToast('请选择本次更换结束日期');
+      ShowToast('请选择本次更换结束时间');
       return;
     }
     if (!formData.StandardGasModel) {
       ShowToast('请输入气瓶编号');
       return;
     }
-    if (!formData.Unit) {
-      ShowToast('请输入单位');
-      return;
-    }
+    // if (!formData.Unit) {
+    //   ShowToast('请输入单位');
+    //   return;
+    // }
     if (!formData.Num) {
       ShowToast('请输入数量');
       return;
@@ -279,6 +279,11 @@ class RMR_Form extends Component {
 
   // 删除记录
   onDelete = () => {
+    this.refs.doAlert.show();
+  };
+
+  // 执行删除操作
+  doDeleteRecord = () => {
     this.setState({loading: true});
     const {ID} = this.state.formData;
 
@@ -388,9 +393,9 @@ class RMR_Form extends Component {
             )}
 
             <FormDatePicker
-              label="本次更换开始日期"
+              label="本次更换开始时间"
               required={true}
-              timeString={formData.ChangeBTime || '请选择开始日期'}
+              timeString={formData.ChangeBTime || '请选择开始时间'}
               getPickerOption={() => ({
                 type: 'realtime',
                 onSureClickListener: date => {
@@ -404,9 +409,9 @@ class RMR_Form extends Component {
               })}
             />
             <FormDatePicker
-              label="本次更换结束日期"
+              label="本次更换结束时间"
               required={true}
-              timeString={formData.ChangeETime || '请选择结束日期'}
+              timeString={formData.ChangeETime || '请选择结束时间'}
               getPickerOption={() => ({
                 type: 'realtime',
                 onSureClickListener: date => {
@@ -591,6 +596,33 @@ class RMR_Form extends Component {
         </View>
 
         {this.state.loading && <SimpleLoadingComponent message="加载中..." />}
+        
+        <AlertDialog
+          ref="doAlert"
+          options={{
+            headTitle: '提示',
+            messText: '是否确定要删除此表单吗？',
+            headStyle: {
+              backgroundColor: globalcolor.headerBackgroundColor,
+              color: '#ffffff',
+              fontSize: 18,
+            },
+            buttons: [
+              {
+                txt: '取消',
+                btnStyle: { backgroundColor: 'transparent' },
+                txtStyle: { color: globalcolor.headerBackgroundColor },
+                onpress: () => { },
+              },
+              {
+                txt: '确定',
+                btnStyle: { backgroundColor: globalcolor.headerBackgroundColor },
+                txtStyle: { color: '#ffffff' },
+                onpress: this.doDeleteRecord,
+              },
+            ],
+          }}
+        />
       </View>
     );
   }

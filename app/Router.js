@@ -249,7 +249,9 @@ import SignInstatisticsWithPersonal from './pOperationContainers/tabView/workben
 import QualityControlDailyRecord from './pOperationContainers/qualityControl/QualityControlDailyRecord';
 import QualityControlRecordDetail from './pOperationContainers/qualityControl/QualityControlRecordDetail';
 import IndicationErrorAndResponseTimeList from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeList';
+import IndicationErrorAndResponseTimeList_zb from './operationContainers/taskViews/taskExecution/formViews/zibo/IndicationErrorAndResponseTimeList';
 import IndicationErrorAndResponseTimeEditor from './operationContainers/taskViews/taskExecution/formViews/IndicationErrorAndResponseTimeEditor';
+import IndicationErrorAndResponseTimeEditor_zb from './operationContainers/taskViews/taskExecution/formViews/zibo/IndicationErrorAndResponseTimeEditor_zb';
 import Patrol_CEM from './operationContainers/taskViews/taskExecution/formViews/zibo/Patrol_CEM';
 import RMR from './operationContainers/taskViews/taskExecution/formViews/zibo/RMR';
 import RMRForm from './operationContainers/taskViews/taskExecution/formViews/zibo/RMR_Form';
@@ -264,7 +266,11 @@ import CalibrationRecordEditZb from './operationContainers/taskViews/taskExecuti
 import CalibrationRecordListZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordListZbFs';
 import CalibrationRecordTimeZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordTimeZbFs';
 import CalibrationRecordEditZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordEditZbFs';
-import WasteLiquidDisposalRecord from './operationContainers/taskViews/taskExecution/formViews/WasteLiquidDisposalRecord';
+import WasteLiquidDisposalRecord from './operationContainers/taskViews/taskExecution/formViews/zibo/WasteLiquidDisposalRecord';
+// import PipelineFlowMeterMaintenanceRecord from './operationContainers/taskViews/taskExecution/formViews/zibo/PipelineFlowMeterMaintenanceRecord';
+import CEMSMaintenanceRecordSheet from './operationContainers/taskViews/taskExecution/formViews/zibo/CEMSMaintenanceRecordSheet';
+import CEMSMaintenanceItem from './operationContainers/taskViews/taskExecution/formViews/zibo/CEMSMaintenanceItem';
+import ContactOperationMultiple from './pOperationContainers/components/ContactOperationMultiple';
 
 //宝武
 import PersonList from './components/PersonList'
@@ -609,6 +615,10 @@ Actions.pushViewWithName(ProvisioningRecords, 'ProvisioningRecords', { title: '�
 Actions.pushViewWithName(IndicationErrorAndResponseTimeList, 'IndicationErrorAndResponseTimeList', { title: '示值误差和响应时间' });
 Actions.pushViewWithName(IndicationErrorAndResponseTimeEditor, 'IndicationErrorAndResponseTimeEditor', { title: '示值误差和响应时间' });
 
+//淄博项目 示值误差和响应时间
+Actions.pushViewWithName(IndicationErrorAndResponseTimeList_zb, 'IndicationErrorAndResponseTimeList_zb', { title: '示值误差和响应时间' });
+Actions.pushViewWithName(IndicationErrorAndResponseTimeEditor_zb, 'IndicationErrorAndResponseTimeEditor_zb', { title: '示值误差和响应时间' });
+
 //淄博项目 废气
 Actions.pushViewWithName(CalibrationRecordListZb, 'CalibrationRecordListZb', { title: '零点量程漂移校准' });
 Actions.pushViewWithName(CalibrationRecordTimeZb, 'CalibrationRecordTimeZb', { title: '校准执行时间' });
@@ -622,8 +632,13 @@ Actions.pushViewWithName(CalibrationRecordEditZbFs, 'CalibrationRecordEditZbFs',
 Actions.pushViewWithName(Patrol_CEM, 'Patrol_CEM', { title: '完全抽取法CEMS日常巡检记录表' });
 Actions.pushViewWithName(SignaturePage, 'SignaturePage', { title: '签名' });
 
+Actions.pushViewWithName(CEMSMaintenanceRecordSheet, 'CEMSMaintenanceRecordSheet', { title: 'CMES维修记录表' });
+Actions.pushViewWithName(CEMSMaintenanceItem, 'CEMSMaintenanceItem', { title: 'CMES维修项目编辑' });
 
 Actions.pushViewWithName(WasteLiquidDisposalRecord, 'WasteLiquidDisposalRecord', { title: '废液处置记录表' });
+// Actions.pushViewWithName(PipelineFlowMeterMaintenanceRecord, 'PipelineFlowMeterMaintenanceRecord', { title: '管道流量计维护记录' });
+Actions.pushViewWithName(ContactOperationMultiple, 'ContactOperationMultiple', { title: '监测目标' });
+
 // 标准物质更换记录表
 Actions.pushViewWithName(RMR, 'RMR', { title: '标准物质更换记录表' });
 Actions.pushViewWithName(RMRForm, 'RMRForm', { title: '标准物质更换记录表' });
