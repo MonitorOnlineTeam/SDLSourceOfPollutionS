@@ -28,7 +28,7 @@ import {
   SimplePickerSingleTime,
 } from '../../../../../components';
 import FormDatePicker from '../../components/FormDatePicker';
-
+import FormInput from '../../components/FormInput';
 import Mask from '../../../../../components/Mask';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import moment from 'moment';
@@ -590,7 +590,7 @@ class RecordList extends PureComponent {
     //跳转到编辑界面
     this.props.dispatch(
       NavigationActions.navigate({
-        routeName: 'BdRecordEdit_zb',
+        routeName: 'BdRecordEdit_BW',
         params: {ItemData: item},
       }),
     ); //跳转到编辑页面

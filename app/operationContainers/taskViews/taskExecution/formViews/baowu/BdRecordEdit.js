@@ -1,4 +1,4 @@
-import React, {Component, PureComponent} from 'react';
+import React, { Component, PureComponent } from 'react';
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -16,7 +16,7 @@ import {
   ShowToast,
   SentencedToEmpty,
 } from '../../../../../utils';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import moment from 'moment';
 
 import globalcolor from '../../../../../config/globalcolor';
@@ -29,6 +29,7 @@ import {
 import MyTextInput from '../../../../../components/base/TextInput';
 import Picker from 'react-native-picker';
 import FormText from '../../components/FormText';
+import FormInput from '../../components/FormInput';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -40,45 +41,16 @@ const ic_arrows_down = require('../../../../../images/ic_arrows_right.png');
  * @extends {PureComponent}
  */
 @connect(
-  ({bdRecordZBModel}) => ({
+  ({ bdRecordZBModel }) => ({
     editstatus: bdRecordZBModel.editstatus,
     delSubtableStatus: bdRecordZBModel.delSubtableStatus,
   }),
   null,
   null,
-  {withRef: true},
+  { withRef: true },
 )
 class BdRecordEdit extends PureComponent {
-  static navigationOptions = ({navigation}) => {
-    return {
-      title: navigation.state.params.ItemData.Name + '校验测试记录',
-      tabBarLable: navigation.state.params.ItemData.Name + '校验测试记录',
-      animationEnabled: false,
-      headerBackTitle: null,
-      headerTintColor: '#ffffff',
-      headerTitleStyle: {flex: 1, textAlign: 'center', fontSize: 17},
-      headerStyle: {
-        backgroundColor: globalcolor.headerBackgroundColor,
-        height: 45,
-      },
-      labelStyle: {fontSize: 14},
-      headerRight:
-        SentencedToEmpty(
-          navigation,
-          ['state', 'params', 'ItemData', 'ID'],
-          '',
-        ) != '' ? (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.state.params.navigatePress();
-            }}>
-            <Text style={{color: 'white', marginRight: 16}}>删除</Text>
-          </TouchableOpacity>
-        ) : (
-          <View />
-        ),
-    };
-  };
+
 
   static defaultProps = {
     editstatus: 200,
@@ -98,13 +70,15 @@ class BdRecordEdit extends PureComponent {
       CemsTextValue: '', //CEMS测定值的平均值
       TestResult: [], //校验值(多组)
       Completed: false,
-      // 校验值的实体
-      // {
-      //     "ItemID":"161",
-      //     "TestTime":"2018-12-07 09:24:18",
-      //     "CbValue":"10",//参比方法测定值
-      //     "CemsTextValue":"10"//CEMS测定值
-      // }
+      baseInfoForm: {
+        yqName: "",
+        modelName: "",
+        company: "",
+        testName: "",
+        clyl: "",
+        xdwc: ""
+      },
+
     };
     props.navigation.setParams({
       navigatePress: () => {
@@ -126,7 +100,7 @@ class BdRecordEdit extends PureComponent {
               onPress={() => {
                 this.refs.doAlert.show();
               }}>
-              <Text style={{color: 'white', marginRight: 16}}>删除</Text>
+              <Text style={{ color: 'white', marginRight: 16 }}>删除</Text>
             </TouchableOpacity>
           );
         } else {
@@ -156,19 +130,50 @@ class BdRecordEdit extends PureComponent {
           CemsTextValue: '', //CEMS测定值
         },
       ];
-    this.setState({...this.state, ...ItemData});
+    this.setState({ ...this.state, ...ItemData });
     this.initUnit(ItemData.ItemID);
   }
 
   deleteConfirm = () => {
     // const { ItemID } = this.props.navigation.state.params.ItemData;
-    const {ItemID} = this.props.route.params.params.ItemData;
+    const { ItemID } = this.props.route.params.params.ItemData;
     this.props.dispatch(
       createAction('bdRecordZBModel/delSubtable')({
-        params: {ID: ItemID},
+        params: { ID: ItemID },
       }),
     );
   };
+
+  basicInfo = () => {
+    const { baseInfoForm } = this.state;
+    const dataList = [
+      { label: '仪器名称', filesName: 'yqName', value: baseInfoForm.yqName },
+      {label: '设备型号', filesName: 'modelName', value: baseInfoForm.modelName },
+      {label: '制造商', filesName: 'company', value: baseInfoForm.company },
+      {label: '测试项目', filesName: 'testName', value: baseInfoForm.testName },
+      {label: '测试原理', filesName: 'clyl', value: baseInfoForm.clyl },
+      {label: '相对误差', filesName: 'xdwc', value: baseInfoForm.xdwc, required:false },
+    ]
+    return <View style={[styles.itemContent, { paddingLeft: 13, paddingRight: 13 }]}>
+      {dataList?.map(item => {
+       return <FormInput
+          label={item.label}
+          required={item.required===false? false : true}
+          value={item?.value}
+          placeholder="请输入"
+          onChangeText={text => {
+            this.setState(prevState => ({
+              baseInfoForm: {
+                ...prevState.baseInfoForm,
+                baseInfoForm: text,
+              },
+            }));
+          }}
+        />
+      })}
+
+    </View>
+  }
 
   render() {
     let options = {
@@ -183,14 +188,14 @@ class BdRecordEdit extends PureComponent {
       buttons: [
         {
           txt: '取消',
-          btnStyle: {backgroundColor: 'transparent'},
-          txtStyle: {color: globalcolor.headerBackgroundColor},
-          onpress: () => {},
+          btnStyle: { backgroundColor: 'transparent' },
+          txtStyle: { color: globalcolor.headerBackgroundColor },
+          onpress: () => { },
         },
         {
           txt: '确定',
-          btnStyle: {backgroundColor: globalcolor.headerBackgroundColor},
-          txtStyle: {color: '#ffffff'},
+          btnStyle: { backgroundColor: globalcolor.headerBackgroundColor },
+          txtStyle: { color: '#ffffff' },
           onpress: this.deleteConfirm,
         },
       ],
@@ -202,16 +207,19 @@ class BdRecordEdit extends PureComponent {
       ['route', 'params', 'params'],
       '-',
     );
-    const {ItemData} = this.props.route.params.params;
+    const { ItemData } = this.props.route.params.params;
     console.log('ItemData', ItemData);
     return (
       <StatusPage style={styles.container} status={200}>
         <KeyboardAvoidingView
-          style={{alignItems: 'center'}}
+          style={{ alignItems: 'center' }}
           behavior={Platform.OS == 'ios' ? 'padding' : ''}
           keyboardVerticalOffset={100}>
           <ScrollView style={styles.scroll}>
+
             <View style={styles.scrollContent}>
+
+              {this.basicInfo()}
               <View
                 style={[
                   {
@@ -227,7 +235,7 @@ class BdRecordEdit extends PureComponent {
                     paddingBottom: 12,
                   },
                 ]}>
-                <Text style={[styles.textlabel, {flex: 1}]}>{'评价标准:'}</Text>
+                <Text style={[styles.textlabel, { flex: 1 }]}>{'评价标准:'}</Text>
                 <Text
                   style={{
                     fontSize: 14,
@@ -251,7 +259,7 @@ class BdRecordEdit extends PureComponent {
               <View
                 style={[
                   styles.item,
-                  {backgroundColor: '#ffffff', flexDirection: 'column'},
+                  { backgroundColor: '#ffffff', flexDirection: 'column' },
                 ]}>
                 <FormText
                   last={true}
@@ -272,18 +280,18 @@ class BdRecordEdit extends PureComponent {
                     ) == 1
                       ? '合格'
                       : SentencedToEmpty(
-                          this.props,
-                          [
-                            'route',
-                            'params',
-                            'params',
-                            'ItemData',
-                            'EvaluateResults',
-                          ],
-                          '',
-                        ) == ''
-                      ? '提交保存后系统生成'
-                      : '不合格'
+                        this.props,
+                        [
+                          'route',
+                          'params',
+                          'params',
+                          'ItemData',
+                          'EvaluateResults',
+                        ],
+                        '',
+                      ) == ''
+                        ? '提交保存后系统生成'
+                        : '不合格'
                   }
                 />
               </View>
@@ -291,7 +299,7 @@ class BdRecordEdit extends PureComponent {
               <View
                 style={[
                   styles.item,
-                  {backgroundColor: '#ffffff', flexDirection: 'column'},
+                  { backgroundColor: '#ffffff', flexDirection: 'column' },
                 ]}>
                 <FormText
                   last={true}
@@ -308,7 +316,7 @@ class BdRecordEdit extends PureComponent {
               <View
                 style={[
                   styles.item,
-                  {backgroundColor: '#ffffff', flexDirection: 'column'},
+                  { backgroundColor: '#ffffff', flexDirection: 'column' },
                 ]}>
                 <FormText
                   last={true}
@@ -324,36 +332,36 @@ class BdRecordEdit extends PureComponent {
               {
                 // 颗粒物、流速、温度、湿度不显示
                 ItemData.ItemID !== '161' &&
-                  ItemData.ItemID !== '165' &&
-                  ItemData.ItemID !== '166' &&
-                  ItemData.ItemID !== '167' && (
-                    <>
-                      <Text style={styles.line} />
-                      <View
-                        style={[
-                          styles.item,
-                          {backgroundColor: '#ffffff', flexDirection: 'column'},
-                        ]}>
-                        <FormText
-                          last={true}
-                          label="数据对差平均值"
-                          itemHeight={40}
-                          showString={
-                            ItemData.CbAvgValue && ItemData.CemsTextValue
-                              ? (
-                                  parseFloat(ItemData.CemsTextValue) -
-                                  parseFloat(ItemData.CbAvgValue)
-                                ).toFixed(3)
-                              : '提交保存后系统生成'
-                          }
-                        />
-                      </View>
-                    </>
-                  )
+                ItemData.ItemID !== '165' &&
+                ItemData.ItemID !== '166' &&
+                ItemData.ItemID !== '167' && (
+                  <>
+                    <Text style={styles.line} />
+                    <View
+                      style={[
+                        styles.item,
+                        { backgroundColor: '#ffffff', flexDirection: 'column' },
+                      ]}>
+                      <FormText
+                        last={true}
+                        label="数据对差平均值"
+                        itemHeight={40}
+                        showString={
+                          ItemData.CbAvgValue && ItemData.CemsTextValue
+                            ? (
+                              parseFloat(ItemData.CemsTextValue) -
+                              parseFloat(ItemData.CbAvgValue)
+                            ).toFixed(3)
+                            : '提交保存后系统生成'
+                        }
+                      />
+                    </View>
+                  </>
+                )
               }
               <Text style={styles.line} />
               <TouchableOpacity
-                style={[styles.item, {backgroundColor: '#ffffff'}]}
+                style={[styles.item, { backgroundColor: '#ffffff' }]}
                 onPress={() => {
                   Picker.toggle();
                 }}>
@@ -405,10 +413,10 @@ class BdRecordEdit extends PureComponent {
                   this.del();
                 }}>
                 <Image
-                  style={{width: 15, height: 15}}
+                  style={{ width: 15, height: 15 }}
                   source={require('../../../../../images/ic_commit.png')}
                 />
-                <Text style={{marginLeft: 20, fontSize: 15, color: '#ffffff'}}>
+                <Text style={{ marginLeft: 20, fontSize: 15, color: '#ffffff' }}>
                   删除记录
                 </Text>
               </TouchableOpacity>
@@ -420,10 +428,10 @@ class BdRecordEdit extends PureComponent {
                 this.commit();
               }}>
               <Image
-                style={{width: 15, height: 15}}
+                style={{ width: 15, height: 15 }}
                 source={require('../../../../../images/ic_commit.png')}
               />
-              <Text style={{marginLeft: 20, fontSize: 15, color: '#ffffff'}}>
+              <Text style={{ marginLeft: 20, fontSize: 15, color: '#ffffff' }}>
                 提交保存
               </Text>
             </TouchableOpacity>
@@ -451,14 +459,14 @@ class BdRecordEdit extends PureComponent {
       CbValue: '', //参比方法测定值
       CemsTextValue: '', //CEMS测定值
     });
-    this.setState({TestResult});
+    this.setState({ TestResult });
   }
 
   del(index) {
     let TestResult = [];
     TestResult.push(...this.state.TestResult);
     TestResult.splice(index, 1);
-    this.setState({TestResult});
+    this.setState({ TestResult });
   }
   getTimeSelectOption = index => {
     let type = this.props.datatype;
@@ -471,7 +479,7 @@ class BdRecordEdit extends PureComponent {
       onSureClickListener: time => {
         let TestResult = this.state.TestResult;
         TestResult[index].TestTime = moment(time).format('YYYY-MM-DD HH:mm:ss');
-        this.setState({TestResult});
+        this.setState({ TestResult });
       },
     };
   };
@@ -486,7 +494,7 @@ class BdRecordEdit extends PureComponent {
       onSureClickListener: time => {
         let TestResult = this.state.TestResult;
         TestResult[index].EndTime = moment(time).format('YYYY-MM-DD HH:mm:ss');
-        this.setState({TestResult});
+        this.setState({ TestResult });
       },
     };
   };
@@ -495,7 +503,7 @@ class BdRecordEdit extends PureComponent {
     return (
       <View key={`item${i}`} style={styles.itemcontainer}>
         <View style={styles.itemtitle}>
-          <Text style={{color: '#666666', fontSize: 12}}>
+          <Text style={{ color: '#666666', fontSize: 12 }}>
             {'监测记录(' + i + ')'}
           </Text>
           <TouchableOpacity
@@ -518,7 +526,7 @@ class BdRecordEdit extends PureComponent {
           <View style={styles.item}>
             <Text style={styles.textlabel}>监测开始时间：</Text>
             <SimplePickerSingleTime
-              style={{width: 160}}
+              style={{ width: 160 }}
               option={this.getTimeSelectOption(index)}
             />
           </View>
@@ -526,7 +534,7 @@ class BdRecordEdit extends PureComponent {
           <View style={styles.item}>
             <Text style={styles.textlabel}>监测结束时间：</Text>
             <SimplePickerSingleTime
-              style={{width: 160}}
+              style={{ width: 160 }}
               option={this.getEndTimeSelectOption(index)}
             />
           </View>
@@ -542,7 +550,7 @@ class BdRecordEdit extends PureComponent {
               onChangeText={text => {
                 let TestResult = this.state.TestResult;
                 TestResult[index].CbValue = text;
-                this.setState({TestResult});
+                this.setState({ TestResult });
               }}
               underlineColorAndroid="transparent"
               placeholder="请填写"
@@ -562,7 +570,7 @@ class BdRecordEdit extends PureComponent {
               onChangeText={text => {
                 let TestResult = this.state.TestResult;
                 TestResult[index].CemsTextValue = text;
-                this.setState({TestResult});
+                this.setState({ TestResult });
               }}
               underlineColorAndroid="transparent"
               placeholder="请填写"
@@ -635,7 +643,7 @@ class BdRecordEdit extends PureComponent {
       }),
     );
     // 提交本地的数据
-    this.props.dispatch(createAction('bdRecordZBModel/saveForm')({params: {}}));
+    this.props.dispatch(createAction('bdRecordZBModel/saveForm')({ params: {} }));
   };
 
   /**
@@ -675,11 +683,11 @@ class BdRecordEdit extends PureComponent {
     if (UnitList.length == 0) {
       UnitList = ['mg/m3', 'ppm', '%'];
     }
-    this.setState({UnitList});
+    this.setState({ UnitList });
     this.initPicker(UnitList);
     if (this.state.Unit == '' || this.state.Unit == null) {
       if (UnitList.length > 0) {
-        this.setState({Unit: UnitList[0]}); //未填写单位时候默认显示单位列表中的第一个
+        this.setState({ Unit: UnitList[0] }); //未填写单位时候默认显示单位列表中的第一个
       }
     }
   };
@@ -693,7 +701,7 @@ class BdRecordEdit extends PureComponent {
       pickerCancelBtnText: '取消',
       pickerTitleText: '测量单位选择',
       onPickerConfirm: data => {
-        this.setState({Unit: data[0]});
+        this.setState({ Unit: data[0] });
         //     Picker.hide();//调用后ios会主动销毁，建议不写
       },
       // onPickerCancel: data => {

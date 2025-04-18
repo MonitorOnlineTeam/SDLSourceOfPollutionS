@@ -256,10 +256,14 @@ class CalibrationRecordEditZbFs extends Component {
             <TouchableOpacity
                 style={[styles.button]}
                 onPress={() => {
+                    if(!this.state.signContent){
+                        ShowToast('签名不能为空');
+                        return
+                    }
                     this.submitSign()
                 }}
             >
-                <Text style={[{ color: globalcolor.whiteFont, }]}>提交签名</Text>
+                <Text style={[{ color: globalcolor.whiteFont, }]}>确认提交</Text>
             </TouchableOpacity>
         </View>
     }

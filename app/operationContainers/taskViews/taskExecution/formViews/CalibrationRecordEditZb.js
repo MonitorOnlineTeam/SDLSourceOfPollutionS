@@ -1168,10 +1168,6 @@ class CalibrationRecordEditZb extends Component {
                 <TouchableOpacity
                     style={[styles.button, { backgroundColor: globalcolor.blue }, { marginVertical: 20 }]}
                     onPress={() => {
-                        if(!this.props.signContent){
-                            ShowToast('请返回上一级进行签名');
-                            return;
-                        }
                         /**
                          * IsPiaoYi
                          * IsLiangCheng
@@ -1330,7 +1326,7 @@ class CalibrationRecordEditZb extends Component {
                 >
                     <View style={styles.button}>
                         <Image style={{ tintColor: globalcolor.white, height: 16, width: 18 }} resizeMode={'contain'} source={require('../../../../images/icon_submit.png')} />
-                        <Text style={[{ color: globalcolor.whiteFont, fontSize: 15, marginLeft: 8 }]}>确定提交</Text>
+                        <Text style={[{ color: globalcolor.whiteFont, fontSize: 15, marginLeft: 8 }]}>保存</Text>
                     </View>
                 </TouchableOpacity>
                 {this._renderModal()}
