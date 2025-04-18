@@ -458,14 +458,6 @@ export default class TaskHandle extends Component {
                                 })
                             );
                             break;
-                        case 83: // 标准物质更换
-                            this.props.dispatch(
-                                NavigationActions.navigate({
-                                    routeName: 'RMR',
-                                    params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
-                                })
-                            );
-                            break;
                         case 84: // 废气-易耗品更换
                         case 85: // 废水-易耗品更换
                             this.props.dispatch(
@@ -645,6 +637,49 @@ export default class TaskHandle extends Component {
                             );
                             break;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            
 
                         /** 宝武表单 */
                         case 89: // 废气易耗品更换
