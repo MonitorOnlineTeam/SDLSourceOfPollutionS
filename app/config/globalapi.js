@@ -229,6 +229,7 @@ export default api = {
             GetToken: 'rest/PollutantSourceOAuth/connect/token', //身份认证token
             UpdateConfig: 'rest/PollutantSourceApi/SystemSettingApi/GetAndroidOrIosSettings', //更新配置
             getIsNeedSecret: 'rest/PollutantSourceApi/SystemSettingApi/GetSystemConfigInfo', //获取是否需要对参数加密
+            GetSystemConfigInfo: 'rest/PollutantSourceApi/ConfigureApi/GetSystemConfigInfo', // 获取系统配置
 
             //修改密码
             //获取码表
@@ -767,10 +768,6 @@ export default api = {
             DeleteErrorSystemResponseRecordInfo: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecordInfo', // 删除示值误差及响应时间
             // 删除示值误差及响应时间整个表单
             DeleteErrorSystemResponseRecord: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteErrorSystemResponseRecord', // 删除示值误差及响应时间
-
-            /**
-            * 淄博项目 校准 废气
-            */
             // 示值误差和响应时间
             GetIndicationErrorSystemResponseRecordListForAppZB: 'rest/PollutantSourceApi/GasOperationFormApi/GetIndicationErrorSystemResponseRecordListForAppZB', // 获取示值误差列表
             // 添加或修改示值误差及响应时间
@@ -864,7 +861,6 @@ export default api = {
             AddOrUpdateVerificationTestRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateVerificationTestRecordZB', // 添加
             DeleteVerificationTestRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteVerificationTestRecordZB', // 删除
             AddorUpdateVerificationTestParamsZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddorUpdateVerificationTestParamsZB', // 添加表格
-
             /**
              * 2025.4.14
              * CEMS设备维修记录
@@ -872,6 +868,52 @@ export default api = {
             AddOrUpdateRepairRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateRepairRecordZB',// 新增或更新维修记录-淄博
             GetRepairRecordZB: 'rest/PollutantSourceApi/GasOperationFormApi/GetRepairRecordZB',// 获取维修记录-淄博
             DeleteRepairRecordZB: '/rest/PollutantSourceApi/GasOperationFormApi/DeleteRepairRecordZB',// 删除维修记录-淄博
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+            /**
+             * 2025.4.15
+             * 宝武项目
+             */
+            AddOperationUserBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddOperationUserBW', //人员清单 添加
+            GetOperationUserBW: 'rest/PollutantSourceApi/GasOperationFormApi/GetOperationUserBW', //人员清单
+            DelOperationUserBW: 'rest/PollutantSourceApi/GasOperationFormApi/DelOperationUserBW', //人员清单 删除
+            //标准物质更换
+            GetStandardGasRepalceRecordBW: '/rest/PollutantSourceApi/GasOperationFormApi/GetStandardGasRepalceRecordBW', //废气-获取更换记录
+            AddOrUpdateStandardGasRepalceRecordBW: '/rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateStandardGasRepalceRecordBW', //废气-新增或者更新单条记录
+            SubmitStandardGasRepalceRecordBW: '/rest/PollutantSourceApi/GasOperationFormApi/SubmitStandardGasRepalceRecordBW', //废气-提交记录
+            DeletetStandardGasRepalceRecordBWById: '/rest/PollutantSourceApi/GasOperationFormApi/DeletetStandardGasRepalceRecordBWById', //废气-单条记录删除
+            DeletetStandardGasRepalceRecordBW: '/rest/PollutantSourceApi/GasOperationFormApi/DeletetStandardGasRepalceRecordBW', //废气-表单删除
+            //易耗品更换
+            GetConsumablesReplaceRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/GetConsumablesReplaceRecordBW', //废气-获取更换记录
+            AddOrUpdateConsumablesReplaceRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateConsumablesReplaceRecordBW', // 废气-新增或者更新单条记录
+            SubmitConsumablesReplaceRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/SubmitConsumablesReplaceRecordBW', //废气-提交记录
+            DeletetConsumablesReplaceRecordBWById: 'rest/PollutantSourceApi/GasOperationFormApi/DeletetConsumablesReplaceRecordBWById', // 废气-单条记录删除
+            DeletetConsumablesReplaceRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/DeletetConsumablesReplaceRecordBW', // 废气-表单删除
+             //校验测试
+            GetVerificationTestRecordBWList: 'rest/PollutantSourceApi/GasOperationFormApi/GetVerificationTestRecordBWList', //废气-获取更换记录
+            AddorUpdateVerificationTestParamsBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddorUpdateVerificationTestParamsBW', // 废气-添加或修改标气或测试设备或参比监测信息
+            AddOrUpdateVerificationTestRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateVerificationTestRecordBW', //废气-新增或者更新记录
+            DeleteVerificationTestRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteVerificationTestRecordBW', // 废气-表单或者记录删除
 
         },
         /**

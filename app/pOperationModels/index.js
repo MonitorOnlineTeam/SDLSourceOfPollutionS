@@ -1,8 +1,8 @@
 /*
  * @Description:
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2023-06-16 17:09:37
- * @LastEditTime: 2025-04-14 16:56:48
+ * @LastEditTime: 2025-04-18 09:30:23
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationModels/index.js
  */
 /**
@@ -87,6 +87,9 @@ import SignInTeamStatisticsModel from './SignInTeamStatisticsModel';
 /**淄博项目 */
 import calibrationRecordZb from './formModels/calibrationRecordZb';
 import calibrationRecordZbFs from './formModels/calibrationRecordZbFs';
+/**宝武项目 */
+import patrolModelBw from './formModels/patrolModelBw';
+import bdRecordBWModel from './formModels/bdRecordBWModel';
 import zbRepairRecordModel from './zbRepairRecordModel';
 
 
@@ -167,5 +170,13 @@ export function registerModels(app) {
     app.model(calibrationRecordZb); //零点量程漂移与校准 淄博 废气
     app.model(calibrationRecordZbFs); //零点量程漂移与校准 淄博 废水
     app.model(zbRepairRecordModel); //CEMS设备维修记录 淄博 废气
+
+
+
+
+
+    /**宝武 */
+    app.model(patrolModelBw);
+    app.model(bdRecordBWModel); //比对校验测试 
 
 }

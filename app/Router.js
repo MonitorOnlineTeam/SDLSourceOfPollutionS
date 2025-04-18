@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2024-09-02 19:17:19
  * @LastEditTime: 2025-04-18 13:59:41
  * @FilePath: /SDLSourceOfPollutionS_dev/app/Router.js
@@ -258,11 +258,10 @@ import ConsumableReplace from './operationContainers/taskViews/taskExecution/for
 import ConsumableReplaceForm from './operationContainers/taskViews/taskExecution/formViews/zibo/ConsumableReplaceForm';
 import SignaturePage from './operationContainers/taskViews/taskExecution/formViews/components/SignaturePage';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
-//淄博 废气校准
+//淄博 废气废水校准
 import CalibrationRecordListZb from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordListZb';
 import CalibrationRecordTimeZb from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordTimeZb';
 import CalibrationRecordEditZb from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordEditZb';
-//淄博 废水校准
 import CalibrationRecordListZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordListZbFs';
 import CalibrationRecordTimeZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordTimeZbFs';
 import CalibrationRecordEditZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordEditZbFs';
@@ -272,6 +271,30 @@ import CEMSMaintenanceRecordSheet from './operationContainers/taskViews/taskExec
 import CEMSMaintenanceItem from './operationContainers/taskViews/taskExecution/formViews/zibo/CEMSMaintenanceItem';
 import ContactOperationMultiple from './pOperationContainers/components/ContactOperationMultiple';
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**宝武 */
+import PersonList from './components/PersonList'
+import RMR_BW from './operationContainers/taskViews/taskExecution/formViews/baowu/RMR';
+import RMRForm_BW from './operationContainers/taskViews/taskExecution/formViews/baowu/RMR_Form';
+import ConsumableReplace_BW from './operationContainers/taskViews/taskExecution/formViews/baowu/ConsumableReplace';
+import ConsumableReplaceForm_BW from './operationContainers/taskViews/taskExecution/formViews/baowu/ConsumableReplaceForm';
+import BdRecordList_BW from './operationContainers/taskViews/taskExecution/formViews/baowu/BdRecordList';
+import BdRecordEdit_BW from './operationContainers/taskViews/taskExecution/formViews/baowu/BdRecordEdit';
+import BdSelectedEdit_BW from './operationContainers/taskViews/taskExecution/formViews/baowu/BdSelectedEdit';
+import BdItemSetting_BW from './operationContainers/taskViews/taskExecution/formViews/baowu/BdItemSetting';
 function Test() {
     return (
         <View>
@@ -387,6 +410,7 @@ Actions.pushViewWithName(InformationBankOfEquipment, 'InformationBankOfEquipment
 
 Actions.pushViewWithName(TestView, 'TestView', { title: '测试页面' });
 Actions.pushViewWithName(ContactOperation, 'ContactOperation', { title: '监测目标' });
+Actions.pushViewWithName(ContactOperationMultiple, 'ContactOperationMultiple', { title: '人员清单' });
 Actions.pushViewWithName(SearchListWithoutLoad, 'SearchListWithoutLoad', { title: '监测点选择' });
 Actions.pushViewWithName(GTasks, 'GTasks', { title: '待办任务' });
 Actions.pushViewWithName(TaskTransfer, 'TaskTransfer', { title: '任务转移' });
@@ -636,8 +660,33 @@ Actions.pushViewWithName(ConsumableReplace, 'ConsumableReplace', { title: '易�
 Actions.pushViewWithName(ConsumableReplaceForm, 'ConsumableReplaceForm', { title: '易耗品更换记录表' });
 Actions.pushViewWithName(SignaturePage, 'SignaturePage', { title: '签名' });
 
-Actions.pushView(Test, { headerShown: false });
 
+
+
+
+
+
+
+/**宝武 */
+Actions.pushViewWithName(PersonList, 'PersonList', { title: '人员清单' });
+//标准物质更换
+Actions.pushViewWithName(RMR_BW, 'RMR_BW', { title: '标准物质更换记录表' });
+Actions.pushViewWithName(RMRForm_BW, 'RMRForm_BW', { title: '标准物质更换记录表' });
+//易耗品更换
+Actions.pushViewWithName(ConsumableReplace_BW, 'ConsumableReplace_BW', { title: '易耗品更换记录表' });
+Actions.pushViewWithName(ConsumableReplaceForm_BW, 'ConsumableReplaceForm_BW', { title: '易耗品更换记录表' });
+//校验测试
+Actions.pushViewWithName(BdRecordList_BW, 'BdRecordList_BW', { title: '校验测试记录' });
+Actions.pushViewWithName(BdRecordEdit_BW, 'BdRecordEdit_BW', { title: '校验测试记录' });
+Actions.pushViewWithName(BdSelectedEdit_BW, 'BdSelectedEdit_BW', { title: '校验测试记录' });
+Actions.pushViewWithName(BdItemSetting_BW, 'BdItemSetting_BW', { title: '校验测试配置' });
+
+
+
+
+
+
+Actions.pushView(Test, { headerShown: false });
 const Stack = createNativeStackNavigator();
 export default function Router() {
     // const { currentRoute } = useSelector(state => state.sdlNavigate);

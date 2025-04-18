@@ -32,6 +32,7 @@ import moment from 'moment';
     RecordList: calibrationRecordZbFs.RecordList,
     editstatus: calibrationRecordZbFs.editstatus,
     JzConfigItemSelectedList: calibrationRecordZbFs.JzConfigItemSelectedList,
+    signContent: calibrationRecordZbFs.signContent,
 }))
 // @connect() 
 class CalibrationRecordEditZbFs extends Component {
@@ -402,7 +403,6 @@ class CalibrationRecordEditZbFs extends Component {
                 <TouchableOpacity
                     style={[styles.button, { backgroundColor: globalcolor.blue }, { marginVertical: 20 }]}
                     onPress={() => {
-
                         let imgFiles = {}
 
                         imgFiles = {
@@ -450,7 +450,7 @@ class CalibrationRecordEditZbFs extends Component {
                 >
                     <View style={styles.button}>
                         <Image style={{ tintColor: globalcolor.white, height: 16, width: 18 }} resizeMode={'contain'} source={require('../../../../images/icon_submit.png')} />
-                        <Text style={[{ color: globalcolor.whiteFont, fontSize: 15, marginLeft: 8 }]}>确定提交</Text>
+                        <Text style={[{ color: globalcolor.whiteFont, fontSize: 15, marginLeft: 8 }]}>保存</Text>
                     </View>
                 </TouchableOpacity>
                 {this._renderModal()}

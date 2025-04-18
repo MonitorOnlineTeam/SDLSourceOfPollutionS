@@ -126,10 +126,14 @@ class CalibrationRecordListZb extends Component {
             <TouchableOpacity
                 style={[styles.button]}
                 onPress={() => {
+                    if(!this.state.signContent){
+                        ShowToast('签名不能为空');
+                        return
+                    }
                     this.submitSign()
                 }}
             >
-                <Text style={[{ color: globalcolor.whiteFont, }]}>提交签名</Text>
+                <Text style={[{ color: globalcolor.whiteFont, }]}>确认提交</Text>
             </TouchableOpacity>
         </View>
     }
@@ -297,6 +301,11 @@ class CalibrationRecordListZb extends Component {
                     //返回任务执行，刷新数据
                     // this.props.dispatch(createAction('excuteTask/getTaskDetailWithoutTaskDescription')({ taskID: ID }));
                     this.props.dispatch(NavigationActions.back());
+                    this.props.dispatch(
+                        createAction('calibrationRecordZbFs/updateState')({
+                            signContent: ''
+                        })
+                    );
                 },
             }),
         );
@@ -565,7 +574,7 @@ class CalibrationRecordListZb extends Component {
                 },
             ],
         };
-        const calibratedList = this.props.calibrationRecordList.filter(item => item.FormMainID) //已经校准的污染物
+        const calibratedList = this.props.calibrationRecordList //已经校准的污染物
         return (
             <StatusPage
                 //页面是否有回调按钮，如果不传，没有按钮，
@@ -589,11 +598,11 @@ class CalibrationRecordListZb extends Component {
                         style={[
                             {
                                 width: SCREEN_WIDTH,
-                                paddingHorizontal: 24,
+                                paddingHorizontal: 10,
                                 backgroundColor: globalcolor.white,
                             },
                         ]}>
-                        <View
+                        {/* <View
                             style={[
                                 {
                                     flexDirection: 'row',
@@ -638,6 +647,28 @@ class CalibrationRecordListZb extends Component {
                                     '----/--/-- --:--',
                                 )}
                             </Text>
+                        </View> */}
+                          <View
+                            style={{
+                                width: '100%',
+                                height: 45,
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                marginTop: 10,
+                                borderBottomWidth: 1,
+                                borderBottomColor: globalcolor.borderBottomColor,
+                            }}>
+                            <Text
+                                style={{
+                                    fontSize: 14,
+                                    color: '#333333',
+                                }}>
+                                工作时间：
+                            </Text>
+                            <Text style={{ fontSize: 14, color: '#666' }}>
+                            {this.props.MainInfo.WorkingDateBegin && moment(this.props.MainInfo.WorkingDateBegin).format('YYYY-MM-DD')} ～ {this.props.MainInfo.WorkingDateEnd  && moment(this.props.MainInfo.WorkingDateEnd).format('YYYY-MM-DD')}
+                            </Text>
                         </View>
                     </View>
                     <TouchableOpacity
@@ -654,7 +685,7 @@ class CalibrationRecordListZb extends Component {
                             style={[
                                 {
                                     width: SCREEN_WIDTH,
-                                    paddingHorizontal: 24,
+                                    paddingHorizontal: 10,
                                     backgroundColor: globalcolor.white,
                                 },
                             ]}>
@@ -671,7 +702,7 @@ class CalibrationRecordListZb extends Component {
                                     },
                                 ]}>
                                 <Text
-                                    style={[{ fontSize: 15, color: globalcolor.taskImfoLabel }]}>
+                                    style={[{ fontSize: 14, color: globalcolor.taskImfoLabel }]}>
                                     校准开始时间：
                 </Text>
                                 <View
@@ -686,7 +717,7 @@ class CalibrationRecordListZb extends Component {
                                     <Text
                                         style={[
                                             {
-                                                fontSize: 15,
+                                                fontSize: 14,
                                                 color: globalcolor.taskFormLabel,
                                                 flex: 1,
                                                 textAlign: 'right',
@@ -713,7 +744,7 @@ class CalibrationRecordListZb extends Component {
                                     },
                                 ]}>
                                 <Text
-                                    style={[{ fontSize: 15, color: globalcolor.taskImfoLabel }]}>
+                                    style={[{ fontSize: 14, color: globalcolor.taskImfoLabel }]}>
                                     校准结束时间：
                                   </Text>
                                 <View
@@ -728,7 +759,7 @@ class CalibrationRecordListZb extends Component {
                                     <Text
                                         style={[
                                             {
-                                                fontSize: 15,
+                                                fontSize: 14,
                                                 color: globalcolor.taskFormLabel,
                                                 flex: 1,
                                                 textAlign: 'right',
@@ -792,7 +823,7 @@ class CalibrationRecordListZb extends Component {
                         keyExtractor={this._keyExtractor}
                         renderItem={this._renderItem}
                     />
-                    {calibratedList?.[0] && this.signatureComponents()}
+                    {this.signatureComponents()}
                     <TouchableOpacity
                         style={[{ position: 'absolute', right: 18, bottom: 128 }]}
                         onPress={() => {

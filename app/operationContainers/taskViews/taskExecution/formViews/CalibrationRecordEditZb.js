@@ -30,6 +30,7 @@ const rangSeparator = '-';
     unitsList: calibrationRecordZb.unitsList,
     editstatus: calibrationRecordZb.editstatus,
     JzConfigItemSelectedList: calibrationRecordZb.JzConfigItemSelectedList,
+    signContent: calibrationRecordZb.signContent,
 }))
 // @connect() 
 class CalibrationRecordEditZb extends Component {
@@ -464,10 +465,10 @@ class CalibrationRecordEditZb extends Component {
         return (
             <View key={index} style={{ marginTop: index > 0 ? 20 : 0 }}>
                 <View style={[{ flexDirection: 'row', alignItems: 'center', height: 40, width: SCREEN_WIDTH - 28 }]}>
-                    <Text style={[{ color: '#333333', flex: 1, marginVertical: 12 }]}>
-                        {this.state.ItemId === '780' || this.state.ItemId === '782' ? `零点漂移校准（差压表 ${this.props.route.params.params.index + index + 1})` : '零点漂移校准'}
+                    <Text style={[{ color: '#333333', flex: 1, marginVertical: 12 }]}> {/**782 湿度只有一个 */}
+                        {this.state.ItemId === '780' ? `零点漂移校准（差压表 ${this.props.route.params.params.index + index + 1})` : '零点漂移校准'}
                     </Text>
-                    {(this.state.ItemId === '780' || this.state.ItemId === '782') && (
+                    {(this.state.ItemId === '780') && (
                         <View style={{ flexDirection: 'row' }}>
                             {index === 0 && (
                                 <TouchableOpacity
@@ -1168,31 +1169,6 @@ class CalibrationRecordEditZb extends Component {
                     style={[styles.button, { backgroundColor: globalcolor.blue }, { marginVertical: 20 }]}
                     onPress={() => {
                         /**
-                        * {
-                                        "ID":"0f0d7b42-d69a-4bb3-b40b-97834526bf95",
-                                        "ItemID":"颗粒物",
-                                        "LqNdz":"3",        //零气浓度值
-                                        "LdLastCalibrationValue":"33",//上一次校准值
-                                        "LdCalibrationPreValue":"44",//校准前
-                                        "LdPy":"55",        //零点漂移%F.S.
-                                        "LdCalibrationIsOk":"是",//是否正常
-                                        "LdCalibrationSufValue":"66",//校准后
-                                        "BqNdz":"77",        //标气浓度值
-                                        "LcLastCalibrationValue":"88",//量程 上一次校准值
-                                        "LcCalibrationPreValue":"999",//校准前
-                                        "LcPy":"10111",     //量程漂移%F.S.
-                                        "LcCalibrationIsOk":"是",//是否正常
-                                        "LcCalibrationSufValue":"222",//校准后
-                                        "FormMainID":"d2409e78-8d89-42f7-b17f-017d24cc61ce",   //主表ID
-                                        "FxyYl":"52",           //分析仪原理
-                                        "FxyLc":"45",          //分析仪量程
-                                        "JlUnit":"26"//计量单位
-                
-                                        upperLimitValue={this.getUpperLimitValue(SentencedToEmpty(this.state, ['FxyLc'], ''))}
-                                        lowerLimitValue={this.getLowerLimitValue(SentencedToEmpty(this.state, ['FxyLc'], ''))}
-                                    }
-                        */
-                        /**
                          * IsPiaoYi
                          * IsLiangCheng
                          * 1表示必填
@@ -1350,7 +1326,7 @@ class CalibrationRecordEditZb extends Component {
                 >
                     <View style={styles.button}>
                         <Image style={{ tintColor: globalcolor.white, height: 16, width: 18 }} resizeMode={'contain'} source={require('../../../../images/icon_submit.png')} />
-                        <Text style={[{ color: globalcolor.whiteFont, fontSize: 15, marginLeft: 8 }]}>确定提交</Text>
+                        <Text style={[{ color: globalcolor.whiteFont, fontSize: 15, marginLeft: 8 }]}>保存</Text>
                     </View>
                 </TouchableOpacity>
                 {this._renderModal()}
