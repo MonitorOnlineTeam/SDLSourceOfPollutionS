@@ -2,7 +2,7 @@
  * @Author: JiaQi 
  * @Date: 2025-04-02 10:48:34 
  * @Last Modified by: JiaQi
- * @Last Modified time: 2025-04-18 14:59:22
+ * @Last Modified time: 2025-04-18 17:02:33
  * @Description: 5个 CEMS 日常巡检
  */
 import React, { Component } from 'react';
@@ -189,7 +189,7 @@ class Patrol_CEM extends Component {
       ShowToast('请签名');
       return;
     }
-    if (!formData[pic1Name].length || !formData[pic2Name].length) {
+    if (!this.state[pic1Name + '_PIC'].length || !this.state[pic2Name + '_PIC'].length) {
       ShowToast('请上传照片');
       return;
     }

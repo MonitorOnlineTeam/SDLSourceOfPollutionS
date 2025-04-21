@@ -51,9 +51,9 @@ class CusWebView extends PureComponent {
             , ['route', 'params', 'params', 'CusUrl']
             , 'https://www.baidu.com'
         );
-        if (this.props.navigation.state.params && this.props.navigation.state.params.CusUrl && this.props.navigation.state.params.CusUrl != '') {
-            url = this.props.navigation.state.params.CusUrl;
-        }
+        // if (this.props.navigation.state.params && this.props.navigation.state.params.CusUrl && this.props.navigation.state.params.CusUrl != '') {
+        //     url = this.props.navigation.state.params.CusUrl;
+        // }
         let Ticket = getToken().dataAnalyzeTicket;
         url = url + '?Ticket=' + Ticket;
         // console.log('url = ', url);

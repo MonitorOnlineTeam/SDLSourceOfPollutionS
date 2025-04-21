@@ -2,8 +2,8 @@
  * @Author: JiaQi
  * @Date: 2025-04-02 16:00:00
  * @Last Modified by: JiaQi
- * @Last Modified time: 2025-04-17 16:49:32
- * @Description: 标准物质更换记录表单
+ * @Last Modified time: 2025-04-21 16:04:16
+ * @Description: 废气、废水易耗品更换记录
  */
 
 import React, {Component} from 'react';
@@ -68,7 +68,6 @@ class ConsumableReplaceForm extends Component {
   // 初始化表单数据
   initState = () => {
     const {record} = this.props.route.params.params;
-    console.log('record11', record);
     if (record) {
       this.setState({
         formData: {
@@ -105,10 +104,10 @@ class ConsumableReplaceForm extends Component {
       ShowToast('请选择本次更换结束时间');
       return;
     }
-    if (!formData.Unit) {
-      ShowToast('请输入单位');
-      return;
-    }
+    // if (!formData.Unit) {
+    //   ShowToast('请输入单位');
+    //   return;
+    // }
     if (!formData.Num) {
       ShowToast('请输入数量');
       return;
@@ -151,7 +150,7 @@ class ConsumableReplaceForm extends Component {
         // 接口请求失败处理
         this.setState({loading: false});
         ShowToast('提交失败，请重试');
-        console.error('提交表单失败:', error);
+        console.error('保存表单失败:', error);
       });
   };
 
@@ -221,12 +220,17 @@ class ConsumableReplaceForm extends Component {
               required={true}
               timeString={formData.ChangeBTime || '请选择开始时间'}
               getPickerOption={() => ({
-                type: 'realtime',
+                type: 'minute',
                 onSureClickListener: date => {
+                  // 开始时间不能大于结束时间
+                  if (formData.ChangeETime && moment(date).isAfter(moment(formData.ChangeETime))) {
+                    ShowToast('开始时间不能大于结束时间');
+                    return;
+                  }
                   this.setState(prevState => ({
                     formData: {
                       ...prevState.formData,
-                      ChangeBTime: moment(date).format('YYYY-MM-DD HH:mm:ss'),
+                      ChangeBTime: moment(date).format('YYYY-MM-DD HH:mm:00'),
                     },
                   }));
                 },
@@ -237,12 +241,17 @@ class ConsumableReplaceForm extends Component {
               required={true}
               timeString={formData.ChangeETime || '请选择结束时间'}
               getPickerOption={() => ({
-                type: 'realtime',
+                type: 'minute',
                 onSureClickListener: date => {
+                  // 结束时间不能小于开始时间
+                  if (formData.ChangeBTime && moment(date).isBefore(moment(formData.ChangeBTime))) {
+                    ShowToast('结束时间不能小于开始时间');
+                    return;
+                  }
                   this.setState(prevState => ({
                     formData: {
                       ...prevState.formData,
-                      ChangeETime: moment(date).format('YYYY-MM-DD HH:mm:ss'),
+                      ChangeETime: moment(date).format('YYYY-MM-DD HH:mm:00'),
                     },
                   }));
                 },
@@ -377,7 +386,7 @@ class ConsumableReplaceForm extends Component {
               style={styles.buttonIcon}
               source={require('../../../../../images/icon_submit.png')}
             />
-            <Text style={styles.buttonText}>提交表单</Text>
+            <Text style={styles.buttonText}>保存</Text>
           </TouchableOpacity>
           {this.state.formData.ID && (
             <TouchableOpacity

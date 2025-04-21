@@ -2,7 +2,7 @@
  * @Author: JiaQi
  * @Date: 2025-04-02 16:00:00
  * @Last Modified by: JiaQi
- * @Last Modified time: 2025-04-17 16:44:21
+ * @Last Modified time: 2025-04-21 16:03:16
  * @Description: 标准物质更换记录表单
  */
 
@@ -273,7 +273,7 @@ class RMR_Form extends Component {
         // 接口请求失败处理
         this.setState({loading: false});
         ShowToast('提交失败，请重试');
-        console.error('提交表单失败:', error);
+        console.error('保存表单失败:', error);
       });
   };
 
@@ -397,12 +397,17 @@ class RMR_Form extends Component {
               required={true}
               timeString={formData.ChangeBTime || '请选择开始时间'}
               getPickerOption={() => ({
-                type: 'realtime',
+                type: 'minute',
                 onSureClickListener: date => {
+                  // 开始时间不能大于结束时间
+                  if (formData.ChangeETime && moment(date).isAfter(moment(formData.ChangeETime))) {
+                    ShowToast('开始时间不能大于结束时间');
+                    return;
+                  }
                   this.setState(prevState => ({
                     formData: {
                       ...prevState.formData,
-                      ChangeBTime: moment(date).format('YYYY-MM-DD HH:mm:ss'),
+                      ChangeBTime: moment(date).format('YYYY-MM-DD HH:mm:00'),
                     },
                   }));
                 },
@@ -413,12 +418,17 @@ class RMR_Form extends Component {
               required={true}
               timeString={formData.ChangeETime || '请选择结束时间'}
               getPickerOption={() => ({
-                type: 'realtime',
+                type: 'minute',
                 onSureClickListener: date => {
+                  // 结束时间不能小于开始时间
+                  if (formData.ChangeBTime && moment(date).isBefore(moment(formData.ChangeBTime))) {
+                    ShowToast('结束时间不能小于开始时间');
+                    return;
+                  }
                   this.setState(prevState => ({
                     formData: {
                       ...prevState.formData,
-                      ChangeETime: moment(date).format('YYYY-MM-DD HH:mm:ss'),
+                      ChangeETime: moment(date).format('YYYY-MM-DD HH:mm:00'),
                     },
                   }));
                 },
@@ -584,7 +594,7 @@ class RMR_Form extends Component {
               style={styles.buttonIcon}
               source={require('../../../../../images/icon_submit.png')}
             />
-            <Text style={styles.buttonText}>提交表单</Text>
+            <Text style={styles.buttonText}>保存</Text>
           </TouchableOpacity>
           {this.state.formData.ID && (
             <TouchableOpacity
