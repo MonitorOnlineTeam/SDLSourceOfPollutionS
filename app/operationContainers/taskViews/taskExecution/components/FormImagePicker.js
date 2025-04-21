@@ -2,8 +2,8 @@
  * @Description: 表单图片选择器
  * @LastEditors: hxf
  * @Date: 2021-11-30 15:36:39
- * @LastEditTime: 2024-03-01 15:06:26
- * @FilePath: /SDLMainProject37/app/operationContainers/taskViews/taskExecution/components/FormImagePicker.js
+ * @LastEditTime: 2025-04-21 16:14:06
+ * @FilePath: /SDLSourceOfPollutionS_dev/app/operationContainers/taskViews/taskExecution/components/FormImagePicker.js
  */
 
 import React, { Component } from 'react'
@@ -25,6 +25,7 @@ export default class FormImagePicker extends Component {
             imageGridWidth = SCREEN_WIDTH - 72,
             uploadCallback = () => { },
             delCallback = () => { },
+            componentType = 'normal',
         } = this.props;
         return (
             <View style={[styles.layoutStyle, false ? {} : styles.bottomBorder]}>
@@ -40,6 +41,7 @@ export default class FormImagePicker extends Component {
                     justifyContent: 'center'
                 }]}>
                     <ImageGrid
+                        componentType={componentType}
                         uploadCallback={uploadCallback}
                         delCallback={delCallback}
                         style={{ paddingLeft: 13, paddingRight: 13, paddingBottom: 10, backgroundColor: '#fff' }}

@@ -2,7 +2,7 @@
  * @Description: CMES维修记录表
  * @LastEditors: hxf
  * @Date: 2025-04-11 11:00:45
- * @LastEditTime: 2025-04-18 11:32:58
+ * @LastEditTime: 2025-04-21 17:30:09
  * @FilePath: /SDLSourceOfPollutionS_dev/app/operationContainers/taskViews/taskExecution/formViews/zibo/CEMSMaintenanceRecordSheet.js
  */
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, DeviceEventEmitter } from 'react-native'
@@ -449,13 +449,16 @@ export default function CEMSMaintenanceRecordSheet(props) {
                             editable={isEdit()}
                             // label={'行业俗称/去向单位内部名称'}
                             label={'维护管理单位'}
-                            placeholder="请记录"
+                            placeholder="请填写"
                             keyboardType="default"
-                            value={SentencedToEmpty(Content, ['EntName'], '')}
+                            // value={SentencedToEmpty(Content, ['EntName'], '')} 
+                            value={SentencedToEmpty(Content, ['MaintenanceManagementUnit'], '')}
                             onChangeText={text => {
                                 let newData = { ...Content };
-                                newData.EntName = text;
-                                dispatch(createAction()({
+                                // newData.EntName = text; 
+                                newData.MaintenanceManagementUnit = text;
+                                console.log('newData = ', newData);
+                                dispatch(createAction('zbRepairRecordModel/updateState')({
                                     Content: newData
                                 }));
                             }}
@@ -729,6 +732,7 @@ export default function CEMSMaintenanceRecordSheet(props) {
                         ]}>
                         <FormImagePicker
                             required={true}
+                            componentType={'normalWaterMaskCamera'}
                             label={'维修前（故障体现、报警等）'}
                             imageGridWidth={SCREEN_WIDTH - 40}
                             localId={SentencedToEmpty(Content
@@ -761,6 +765,7 @@ export default function CEMSMaintenanceRecordSheet(props) {
                         ]}>
                         <FormImagePicker
                             required={true}
+                            componentType={'normalWaterMaskCamera'}
                             label={'维修后'}
                             imageGridWidth={SCREEN_WIDTH - 40}
                             localId={SentencedToEmpty(Content

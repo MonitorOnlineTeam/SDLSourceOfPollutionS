@@ -2,7 +2,7 @@
  * @Description: 水印相机
  * @LastEditors: hxf
  * @Date: 2023-06-01 14:09:24
- * @LastEditTime: 2025-04-10 15:51:09
+ * @LastEditTime: 2025-04-21 17:30:59
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/taskDetail/WaterMaskCamera.js
  */
 import React, { Component } from 'react'
@@ -162,6 +162,7 @@ export default class WaterMaskCamera extends Component {
                                                             , tail5, tail6, tail7;
                                                         let r_lat = o_lat;
                                                         let r_long = o_long;
+
                                                         if (regPos.test(o_lat)) {
                                                             if (o_lat.indexOf('.') != -1) {
                                                                 tempArr = o_lat.split('.');
@@ -240,22 +241,35 @@ export default class WaterMaskCamera extends Component {
                                                                     })
                                                                 );
                                                             } else {
-                                                                that.props.dispatch(
-                                                                    createAction('imageModel/uploadimageWaterMask')({
-                                                                        // createAction('imageModel/uploadimage')({
-                                                                        image: imageObj,
-                                                                        images: assets,
-                                                                        uuid: uuid,
-                                                                        imageParams: {
-                                                                            EntName: response.EntName,
-                                                                            PointName: response.PointName,
-                                                                            RegionName: response.RegionName,
-                                                                            str_lat: r_lat,
-                                                                            str_long: r_long,
-                                                                        },
-                                                                        callback: this.uploadImageCallBack
-                                                                    })
-                                                                );
+                                                                if (!regPos.test(o_lat)
+                                                                    || !regPos.test(o_long)
+                                                                    || response.RegionName == '定位中，请稍后') {
+                                                                    ShowToast({
+                                                                        message: '未获取地理信息，请稍后',
+                                                                        alertType: 'error',
+                                                                    });
+                                                                    that.setState({
+                                                                        takingPhoto: false
+                                                                    });
+                                                                } else {
+                                                                    that.props.dispatch(
+                                                                        createAction('imageModel/uploadimageWaterMask')({
+                                                                            // createAction('imageModel/uploadimage')({
+                                                                            image: imageObj,
+                                                                            images: assets,
+                                                                            uuid: uuid,
+                                                                            imageParams: {
+                                                                                EntName: response.EntName,
+                                                                                PointName: response.PointName,
+                                                                                RegionName: response.RegionName,
+                                                                                str_lat: r_lat,
+                                                                                str_long: r_long,
+                                                                            },
+                                                                            callback: this.uploadImageCallBack
+                                                                        })
+                                                                    );
+                                                                }
+
                                                             }
                                                         }
                                                     }
