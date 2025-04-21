@@ -89,7 +89,7 @@ export default Model.extend({
     // 删除 标准气体/测试设备项目
     delAdditionItmeStatus: {status: 200},
     // 上次校验日期
-    LastCheckTime: moment().format('YYYY-MM-DD HH:mm:00'),
+    EquipmentInfoList:[],
   },
 
   reducers: {
@@ -152,7 +152,7 @@ export default Model.extend({
       //修改基础信息
       BaseInfo.CreateUserID = user.User_ID;
       BaseInfo.TaskID = taskDetail.ID;
-      BaseInfo.TypeID = 86;
+      BaseInfo.TypeID = 91;
       //加上主表信息
       BaseInfo.Content = MainInfo;
       //加上附表信息
@@ -160,7 +160,7 @@ export default Model.extend({
       console.log('BaseInfo', BaseInfo);
       const result = yield call(
         authService.axiosAuthPost,
-        api.pOperationApi.OperationForm.AddOrUpdateVerificationTestRecordZB,
+        api.pOperationApi.OperationForm.AddOrUpdateVerificationTestRecordBW,
         BaseInfo,
       );
       let needRefreshTask = false;
@@ -174,7 +174,7 @@ export default Model.extend({
           // 本地修改任务详情表单列表状态 9 对比校验
           yield put(
             createAction('taskDetailModel/updateFormStatus')({
-              cID: 86,
+              cID: 91,
             }),
           );
           //刷新任务详情的信息
@@ -204,36 +204,15 @@ export default Model.extend({
     /** 最外层提交表单信息 */
     *saveMainForm({payload: {params}}, {call, put, update, take, select}) {
       yield update({editstatus: {status: -2}});
-      const {BaseInfo, MainInfo, RecordList, LastCheckTime} = yield select(
+      const {BaseInfo, MainInfo, RecordList,} = yield select(
         state => state.bdRecordBWModel,
       );
-      if (LastCheckTime == '') {
-        ShowToast('上次日期为必填');
-        yield update({editstatus: {status: 200}});
-        return;
-      }
-      if (!MainInfo.CheckBTime) {
-        ShowToast('本次校验开始时间为必填');
-        yield update({editstatus: {status: 200}});
-        return;
-      }
-      if (!MainInfo.CheckETime) {
-        ShowToast('本次校验结束时间为必填');
-        yield update({editstatus: {status: 200}});
-        return;
-      }
-      if (!BaseInfo.SignContent) {
-        ShowToast('手写签名不能为空');
-        yield update({editstatus: {status: 200}});
-        return;
-      }
       const {taskDetail} = yield select(state => state.taskDetailModel);
       let user = getToken();
       //修改基础信息
       BaseInfo.CreateUserID = user.User_ID;
       BaseInfo.TaskID = taskDetail.ID;
       //加上主表信息
-      MainInfo.LastCheckTime = LastCheckTime;
       BaseInfo.Content = MainInfo;
       //加上附表信息
       BaseInfo.RecordList = RecordList;
@@ -244,8 +223,8 @@ export default Model.extend({
       console.log('BaseInfo', BaseInfo)
       const result = yield call(
         authService.axiosAuthPost,
-        api.pOperationApi.OperationForm.AddOrUpdateVerificationTestRecordZB,
-        BaseInfo,
+        api.pOperationApi.OperationForm.AddOrUpdateVerificationTestRecordBW,
+        {...BaseInfo, ...params },
       );
       let data = {};
       if (result.status == 200) {
@@ -254,7 +233,7 @@ export default Model.extend({
           // 本地修改任务详情表单列表状态 9 对比校验
           yield put(
             createAction('taskDetailModel/updateFormStatus')({
-              cID: 86,
+              cID: 91,
             }),
           );
           //刷新任务详情的信息
@@ -282,20 +261,21 @@ export default Model.extend({
     },
 
     /** 根据TaskID获取表单信息 */
-    *getForm({payload: {params}}, {call, put, update, select, take}) {
+    *getForm({payload: {params,callback}}, {call, put, update, select, take}) {
       yield update({liststatus: {status: -1}});
       const {taskDetail} = yield select(state => state.taskDetailModel);
       const {initPage, List} = yield select(state => state.bdRecordBWModel);
-      params = {TaskID: taskDetail.ID, TypeID: 86};
+      params = {TaskID: taskDetail.ID, TypeID: 91};
       const result = yield call(
         authService.axiosAuthPost,
-        api.pOperationApi.OperationForm.GetVerificationTestRecordZBList,
+        api.pOperationApi.OperationForm.GetVerificationTestRecordBWList,
         params,
       );
       let data = {};
       if (result.status == 200) {
         if (SentencedToEmpty(result, ['data', 'IsSuccess'], false)) {
           data = SentencedToEmpty(result, ['data', 'Datas'], {});
+          callback && callback(data)
           //数据不为空
           let BaseInfo = data.Record; //基本信息
           let MainInfo = {
@@ -344,10 +324,7 @@ export default Model.extend({
             bdSelectedStandardGas: StandardGasList,
             bdSelectedEquipment: TestEquipmentList,
             ParamsList: data.ParamsList,
-            LastCheckTime:
-              SentencedToEmpty(MainInfo, ['LastCheckTime'], '') == ''
-                ? moment().format('YYYY-MM-DD HH:mm:00')
-                : MainInfo.LastCheckTime,
+            EquipmentInfoList : data.EquipmentInfoList, 
           });
         } else {
           //数据获取失败
@@ -377,7 +354,7 @@ export default Model.extend({
         };
         const result = yield call(
           authService.axiosAuthPost,
-          api.pOperationApi.OperationForm.DeleteVerificationTestRecordZB,
+          api.pOperationApi.OperationForm.DeleteVerificationTestRecordBW,
           params,
         );
         if (result.status == 200) {
@@ -388,7 +365,7 @@ export default Model.extend({
             // 本地修改任务详情表单列表状态 9 对比校验
             yield put(
               createAction('taskDetailModel/updateFormStatus')({
-                cID: 86,
+                cID: 91,
                 isAdd: false,
               }),
             );
@@ -424,7 +401,7 @@ export default Model.extend({
         params.FormMainID = BaseInfo.ID;
         const result = yield call(
           authService.axiosAuthPost,
-          api.pOperationApi.OperationForm.DeleteVerificationTestRecordZB,
+          api.pOperationApi.OperationForm.DeleteVerificationTestRecordBW,
           params,
         );
         if (result.status == 200) {
@@ -499,7 +476,7 @@ export default Model.extend({
       params.FormMainID = BaseInfo.ID;
       const result = yield call(
         authService.axiosAuthPost,
-        api.pOperationApi.OperationForm.AddorUpdateVerificationTestParamsZB,
+        api.pOperationApi.OperationForm.AddorUpdateVerificationTestParamsBW,
         params,
       );
       if (result.status == 200) {
@@ -528,7 +505,7 @@ export default Model.extend({
       params.DType = 3;
       const result = yield call(
         authService.axiosAuthPost,
-        api.pOperationApi.OperationForm.DeleteVerificationTestRecordZB,
+        api.pOperationApi.OperationForm.DeleteVerificationTestRecordBW,
         params,
       );
       if (result.status == 200) {

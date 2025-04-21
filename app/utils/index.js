@@ -962,3 +962,15 @@ export const isNum = (val) => {
     }
 };
 
+/**
+ * 判断是否为空
+ * @param value
+ * @returns {Boolean}
+ */
+export const isEmpty = (value) => {
+    if (value == null) return true; // null/undefined
+    if (typeof value === 'string' && value.trim() === '') return true; // 空字符串
+    if (Array.isArray(value) && value.length === 0) return true; // 空数组
+    if (typeof value === 'object' && Object.keys(value).length === 0) return true; // 空对象
+    return false;
+  };

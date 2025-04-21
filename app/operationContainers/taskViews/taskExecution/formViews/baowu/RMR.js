@@ -55,7 +55,6 @@ class RMR extends Component {
       maintenanceManageUnit: '',
       operationPerson: '',
       uploadPicture: new Date().getTime(),
-      imageList: [],
       signContent: '',
       signTime: '',
     };
@@ -329,11 +328,11 @@ class RMR extends Component {
         <MaintenanceOpera
           {...this.props}
           maintenanceManageUnit={maintenanceManageUnit}
-          unitCallback={(text) => {
+          unitChange={(text) => {
             this.setState({ maintenanceManageUnit: text })
           }}
           operationPerson={operationPerson}
-          userCallback={(userName) => {
+          userChange={(userName) => {
             this.setState({ operationPerson: userName })
           }}
         />

@@ -9,8 +9,8 @@ import { connect } from 'react-redux';
 
 
 @connect(
-    ({ bdRecordModel }) => ({
-        List: bdRecordModel.List
+    ({ bdRecordBWModel }) => ({
+        List: bdRecordBWModel.List
     })
 )
 export default class BdItemSetting extends Component {
@@ -108,11 +108,14 @@ export default class BdItemSetting extends Component {
                 selected.push(item);
                 /**
                  * todo list
-                 * CO、HCL、NMHC 创建时提示应大于9条
+                 * SO₂、NOX、O₂、CO、HCL、NMHC 创建时提示应大于9条
                  */
                 if (item.ItemID == '162'
                     || item.ItemID == '163'
                     || item.ItemID == '164'
+                    || item.ItemID == '841'
+                    || item.ItemID == '855'
+                    || item.ItemID == '859'
                 ) {
                     if (less9TimePollutant == '') {
                         less9TimePollutant = item.Name;
@@ -137,10 +140,12 @@ export default class BdItemSetting extends Component {
         if (typeof parseInt(this.state.times) != 'number') {
             ShowToast('记录数量必须为数字！');
             return;
-        } else if (this.state.times < 5) {
-            ShowToast('记录数量应该大于5！');
+        } 
+        // else if (this.state.times < 5) {
+            // ShowToast('记录数量应该大于5！');
             // return;
-        } else if (less9TimePollutant != '' && this.state.times < 9) {
+        // } 
+        else if (less9TimePollutant != '' && this.state.times < 9) {
             ShowToast(`包含${less9TimePollutant}，记录数量需要大于9`);
             // return;
         }
@@ -215,7 +220,7 @@ export default class BdItemSetting extends Component {
             });
         });
         this.props.dispatch(
-            createAction('bdRecordModel/updateState')({
+            createAction('bdRecordBWModel/updateState')({
                 List: listTemp
             })
         );

@@ -160,7 +160,7 @@ export default class ImageGrid extends PureComponent {
          * componentType    normal      普通相机 
          *                  taskhandle  水印相机
          */
-        const { componentType = 'normal', isUpload = false, isDel = false, UUID = '', uploadCallback = () => { }, delCallback = () => { }, extraInfo = {} } = this.props;
+        const { componentType = 'normal', justRealTimePhotos, isUpload = false, isDel = false, UUID = '', uploadCallback = () => { }, delCallback = () => { }, extraInfo = {} } = this.props;
         const { style, interfaceName = 'original', buttonPosition = 'front' } = this.props;
         /**
          * interfaceName    original:原有接口       netCore:netCore接口
@@ -180,6 +180,7 @@ export default class ImageGrid extends PureComponent {
                             <ImageUploadTouch
                                 style={{ width: 60, height: 60, marginRight: 4, marginLeft: 8, marginBottom: 5, marginTop: 8 }}
                                 componentType={componentType}
+                                justRealTimePhotos={justRealTimePhotos}
                                 extraInfo={extraInfo}
                                 uuid={UUID}
                                 callback={images => {

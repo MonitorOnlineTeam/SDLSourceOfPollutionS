@@ -15,6 +15,7 @@ import {
   createAction,
   ShowToast,
   SentencedToEmpty,
+  isEmpty,
 } from '../../../../../utils';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -41,9 +42,9 @@ const ic_arrows_down = require('../../../../../images/ic_arrows_right.png');
  * @extends {PureComponent}
  */
 @connect(
-  ({ bdRecordZBModel }) => ({
-    editstatus: bdRecordZBModel.editstatus,
-    delSubtableStatus: bdRecordZBModel.delSubtableStatus,
+  ({ bdRecordBWModel }) => ({
+    editstatus: bdRecordBWModel.editstatus,
+    delSubtableStatus: bdRecordBWModel.delSubtableStatus,
   }),
   null,
   null,
@@ -70,15 +71,13 @@ class BdRecordEdit extends PureComponent {
       CemsTextValue: '', //CEMS测定值的平均值
       TestResult: [], //校验值(多组)
       Completed: false,
-      baseInfoForm: {
+      deviceInfoFormData: {
         yqName: "",
         modelName: "",
         company: "",
         testName: "",
         clyl: "",
-        xdwc: ""
       },
-
     };
     props.navigation.setParams({
       navigatePress: () => {
@@ -108,7 +107,6 @@ class BdRecordEdit extends PureComponent {
         }
       },
     });
-
     this.props.navigation.setOptions({
       title: this.props.route.params.params.ItemData.Name + '校验测试记录',
     });
@@ -130,7 +128,23 @@ class BdRecordEdit extends PureComponent {
           CemsTextValue: '', //CEMS测定值
         },
       ];
-    this.setState({ ...this.state, ...ItemData });
+     const equipmentInfoList = ItemData?.EquipmentInfoList;
+
+     let defaultData = equipmentInfoList?.[0] && equipmentInfoList.filter(item => 
+         ItemData?.Name=='NOX'? ItemData?.Name.includes(item.PollutantName) : item.Name == ItemData?.PollutantName
+      );
+     defaultData = defaultData?.[0]
+     this.setState({ ...this.state, ...ItemData,
+      deviceInfoFormData:{
+        yqName: ItemData?.YQName || `${ItemData?.Name}分析仪`,
+        modelName: ItemData?.ModelName || defaultData?.EquipmentType,
+        company:  ItemData?.Company || defaultData?.ManufacturerName,
+        testName: ItemData?.TestName || ItemData?.Name,
+        clyl:  ItemData?.CLYL || defaultData?.AnalyticalMethod ,
+
+      }
+    
+    });
     this.initUnit(ItemData.ItemID);
   }
 
@@ -138,34 +152,37 @@ class BdRecordEdit extends PureComponent {
     // const { ItemID } = this.props.navigation.state.params.ItemData;
     const { ItemID } = this.props.route.params.params.ItemData;
     this.props.dispatch(
-      createAction('bdRecordZBModel/delSubtable')({
+      createAction('bdRecordBWModel/delSubtable')({
         params: { ID: ItemID },
       }),
     );
   };
+  deviceInfoData = () => {
+    const { deviceInfoFormData } = this.state;
+    return [
+      { label: '仪器名称', filesName: 'yqName', value: deviceInfoFormData.yqName },
+      { label: '设备型号', filesName: 'modelName', value: deviceInfoFormData.modelName },
+      { label: '制造商', filesName: 'company', value: deviceInfoFormData.company },
+      { label: '测试项目', filesName: 'testName', value: deviceInfoFormData.testName },
+      { label: '测试原理', filesName: 'clyl', value: deviceInfoFormData.clyl, last: true, },
+    ]
+  }
 
   basicInfo = () => {
-    const { baseInfoForm } = this.state;
-    const dataList = [
-      { label: '仪器名称', filesName: 'yqName', value: baseInfoForm.yqName },
-      {label: '设备型号', filesName: 'modelName', value: baseInfoForm.modelName },
-      {label: '制造商', filesName: 'company', value: baseInfoForm.company },
-      {label: '测试项目', filesName: 'testName', value: baseInfoForm.testName },
-      {label: '测试原理', filesName: 'clyl', value: baseInfoForm.clyl },
-      {label: '相对误差', filesName: 'xdwc', value: baseInfoForm.xdwc, required:false },
-    ]
+    const dataList = this.deviceInfoData()
     return <View style={[styles.itemContent, { paddingLeft: 13, paddingRight: 13 }]}>
       {dataList?.map(item => {
-       return <FormInput
+        return <FormInput
           label={item.label}
-          required={item.required===false? false : true}
+          required={item.required === false ? false : true}
+          last={item.last}
           value={item?.value}
           placeholder="请输入"
           onChangeText={text => {
             this.setState(prevState => ({
-              baseInfoForm: {
-                ...prevState.baseInfoForm,
-                baseInfoForm: text,
+              deviceInfoFormData: {
+                ...prevState.deviceInfoFormData,
+                [item.filesName]: text,
               },
             }));
           }}
@@ -220,13 +237,26 @@ class BdRecordEdit extends PureComponent {
             <View style={styles.scrollContent}>
 
               {this.basicInfo()}
+
+
+             {ItemData.Formula && <><View style={[styles.item,{backgroundColor: '#ffffff', flexDirection: 'column', marginTop: 10,}]}>
+                <FormText
+                  label={`${ItemData.Formula}`}
+                  itemHeight={40}
+                  last
+                  showString={
+                    ItemData.WcValue || ''
+                  }
+                />
+              </View>
+              <Text style={styles.line} /></>}
               <View
                 style={[
                   {
                     backgroundColor: '#ffffff',
-                    marginTop: 10,
                     width: '100%',
                     minHeight: 40,
+                    marginTop:!ItemData.Formula && 10,
                     paddingLeft: 13,
                     paddingRight: 13,
                     flexDirection: 'row',
@@ -296,7 +326,7 @@ class BdRecordEdit extends PureComponent {
                 />
               </View>
               <Text style={styles.line} />
-              <View
+              {/* <View
                 style={[
                   styles.item,
                   { backgroundColor: '#ffffff', flexDirection: 'column' },
@@ -359,7 +389,7 @@ class BdRecordEdit extends PureComponent {
                   </>
                 )
               }
-              <Text style={styles.line} />
+              <Text style={styles.line} /> */}
               <TouchableOpacity
                 style={[styles.item, { backgroundColor: '#ffffff' }]}
                 onPress={() => {
@@ -584,6 +614,20 @@ class BdRecordEdit extends PureComponent {
   };
 
   commit = () => {
+
+    const deviceInfoList = this.deviceInfoData()
+    const invalidItem = deviceInfoList.find(item => {
+      if (item.required === false) return false; // 跳过非必填项
+      return isEmpty(item.value);
+    });
+    // 发现空值时弹出提示并终止流程
+    if (invalidItem) {
+      ShowToast(`请输入${invalidItem.label}`);
+      return; // 阻止后续代码执行
+    }
+
+    const { deviceInfoFormData } = this.state;
+
     let CbAvgValue = 0;
     let CemsTextValue = 0;
     if (
@@ -628,7 +672,7 @@ class BdRecordEdit extends PureComponent {
     ).toFixed(3);
     // 修改本地的数据
     this.props.dispatch(
-      createAction('bdRecordZBModel/saveItem')({
+      createAction('bdRecordBWModel/saveItem')({
         params: {
           ItemID: this.state.ItemID,
           ItemName: this.state.Name,
@@ -639,11 +683,12 @@ class BdRecordEdit extends PureComponent {
           CbAvgValue: CbAvgValue,
           CemsTextValue: CemsTextValue,
           TestResult: this.state.TestResult,
+          ...deviceInfoFormData,
         },
       }),
     );
     // 提交本地的数据
-    this.props.dispatch(createAction('bdRecordZBModel/saveForm')({ params: {} }));
+    this.props.dispatch(createAction('bdRecordBWModel/saveForm')({ params: {} }));
   };
 
   /**

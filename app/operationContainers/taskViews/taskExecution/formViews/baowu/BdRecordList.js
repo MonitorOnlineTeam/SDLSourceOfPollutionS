@@ -1,4 +1,4 @@
-import React, {Component, PureComponent} from 'react';
+import React, { Component, PureComponent } from 'react';
 import {
   ScrollView,
   TextInput,
@@ -18,7 +18,7 @@ import {
   SentencedToEmpty,
   ShowToast,
 } from '../../../../../utils';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import ImageGrid from '../../../../../components/form/images/ImageGrid';
 import globalcolor from '../../../../../config/globalcolor';
 import {
@@ -43,7 +43,7 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
  * @extends {PureComponent}
  */
 @connect(
-  ({bdRecordBWModel}) => ({
+  ({ bdRecordBWModel }) => ({
     BaseInfo: bdRecordBWModel.BaseInfo,
     liststatus: bdRecordBWModel.liststatus,
     editstatus: bdRecordBWModel.editstatus,
@@ -52,35 +52,10 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
   }),
   null,
   null,
-  {withRef: true},
+  { withRef: true },
 )
 class BdRecordList extends PureComponent {
-  static navigationOptions = ({navigation}) => ({
-    // title: 'CEMS校验测试记录',
-    title: '校验测试记录',
-    tabBarLable: 'CEMS校验测试记录',
-    animationEnabled: false,
-    headerBackTitle: null,
-    headerTintColor: '#ffffff',
-    headerTitleStyle: {flex: 1, textAlign: 'center', fontSize: 17},
-    headerStyle: {
-      backgroundColor: globalcolor.headerBackgroundColor,
-      height: 45,
-    },
-    labelStyle: {fontSize: 14},
-    headerRight:
-      SentencedToEmpty(navigation, ['state', 'params', 'liststatus'], -1) ==
-      200 ? (
-        <TouchableOpacity
-          onPress={() => {
-            navigation.state.params.navigatePress();
-          }}>
-          <Text style={{color: 'white', marginRight: 12}}>删除</Text>
-        </TouchableOpacity>
-      ) : (
-        <View />
-      ),
-  });
+
 
   static defaultProps = {
     liststatus: 200,
@@ -89,19 +64,25 @@ class BdRecordList extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      imageList1: [],
-      imageList2: [],
-      imageList3: [],
-      cemsSupplier:'',
-      checkDate:'',
-      lastCheckDate:'',
+      equipmentInfoList:[],
+      basicInfo:{
+        cemsSupplier: '',
+        maintenanceManageUnit: '',
+        operationPerson: '',
+        checkDate: '',
+        lastCheckDate: '',
+        uploadPicture: new Date().getTime(),
+        signContent: '',
+        signTime: '',
+      },
+      imageList: [],
     };
     props.navigation.setParams({
       navigatePress: () => {
         this._modalParent.showModal();
       },
     });
-    console.log('liststatus', this.props.liststatus);
+    // console.log('liststatus', this.props.liststatus);
     this.props.navigation.setOptions({
       headerRight: () => {
         if (SentencedToEmpty(this.props, ['liststatus', 'status'], -1) == 200) {
@@ -110,7 +91,7 @@ class BdRecordList extends PureComponent {
               onPress={() => {
                 this._modalParent.showModal();
               }}>
-              <Text style={{color: 'white', marginRight: 12}}>删除</Text>
+              <Text style={{ color: 'white', marginRight: 12 }}>删除</Text>
             </TouchableOpacity>
           );
         } else {
@@ -125,31 +106,6 @@ class BdRecordList extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    // 处理图片
-    if (prevProps.MainInfo.BDRYPic !== this.props.MainInfo.BDRYPic) {
-      this.setState({
-        imageList1:
-          this.props.MainInfo.BDRYPic?.ImgNameList?.map(item => ({
-            AttachID: item,
-          })) || [],
-      });
-    }
-    if (prevProps.MainInfo.BDSBPic !== this.props.MainInfo.BDSBPic) {
-      this.setState({
-        imageList2:
-          this.props.MainInfo.BDSBPic?.ImgNameList?.map(item => ({
-            AttachID: item,
-          })) || [],
-      });
-    }
-    if (prevProps.MainInfo.BDJGPic !== this.props.MainInfo.BDJGPic) {
-      this.setState({
-        imageList3:
-          this.props.MainInfo.BDJGPic?.ImgNameList?.map(item => ({
-            AttachID: item,
-          })) || [],
-      });
-    }
   }
   componentWillUnmount() {
     DeviceEventEmitter.emit('refreshTask', {
@@ -172,12 +128,35 @@ class BdRecordList extends PureComponent {
   }
 
   onRefresh = () => {
+
+
     // 第一次加载数据
     this.props.dispatch(
-      createAction('bdRecordBWModel/updateState')({initPage: true}),
+      createAction('bdRecordBWModel/updateState')({ initPage: true }),
     );
     //刷新数据
-    this.props.dispatch(createAction('bdRecordBWModel/getForm')({params: {}}));
+    this.props.dispatch(createAction('bdRecordBWModel/getForm')({ params: {}, callback:(data)=>{
+      const record = data?.Record || {};
+      // const content = record?.Content || {};
+      // const recordList = record?.RecordList || [];
+      this.setState({
+        basicInfo: {
+          cemsSupplier:  record?.CEMSSupplier || '',
+          maintenanceManageUnit:  record?.MaintenanceManageUnit || '',
+          operationPerson:  record?.OperationPerson || '',
+          checkDate: record?.CheckDate || '',
+          lastCheckDate: record?.LastCheckDate || '',
+          uploadPicture: record?.UploadPicture || this.state.basicInfo.uploadPicture,
+          signContent: record?.SignContent || '',
+          signTime: record?.SignTime || '',
+        },
+        imageList: record.AttachmentViewModel?.ImgNameList?.map(item => ({
+            AttachID: item,
+          })) || [],
+      });
+
+
+    } }));
   };
 
   _deleteForm() {
@@ -185,104 +164,55 @@ class BdRecordList extends PureComponent {
   }
 
   commit() {
-    const {imageList1, imageList2, imageList3} = this.state;
-    if (
-      imageList1.length === 0 &&
-      imageList2.length === 0 &&
-      imageList3.length === 0
-    ) {
+    const {basicInfo, basicInfo:{cemsSupplier, maintenanceManageUnit, operationPerson,checkDate,lastCheckDate,signContent,},imageList, } = this.state;
+
+
+    if (!cemsSupplier) {
+      ShowToast('请输入CEMS供应商');
+      return;
+    }
+    if (!maintenanceManageUnit) {
+      ShowToast('请输入维护管理单位');
+      return;
+    }
+    if (!operationPerson) {
+      ShowToast('请选择运维人');
+      return;
+    }
+    if (!checkDate) {
+      ShowToast('请选择本次校验日期');
+      return;
+    }
+    if (!lastCheckDate) {
+      ShowToast('请选择上次校验日期');
+      return;
+    }
+    if (!imageList.length ) {
       ShowToast('请上传图片');
       return;
     }
-
-    SentencedToEmpty(this._RecordResult, ['saveResult'], () => {})();
+    if (!signContent) {
+      ShowToast('请签名');
+      return;
+    }
+    SentencedToEmpty(this._RecordResult, ['saveResult'], () => { })();
     // this.RecordResult.wrappedInstance.saveResult();
     // 提交本地的数据
     this.props.dispatch(
-      createAction('bdRecordBWModel/saveMainForm')({params: {}}),
+      createAction('bdRecordBWModel/saveMainForm')({ params: basicInfo }),
     );
   }
 
-  getTimeSelectOption = () => {
-    // let type = this.props.datatype;
-    let type = 'day';
-    return {
-      // formatStr: 'YYYY-MM-DD HH:mm',
-      formatStr: 'YYYY-MM-DD',
-      type: type,
-      defaultTime: this.props.LastCheckTime
-        ? moment(this.props.LastCheckTime).format('YYYY-MM-DD HH:mm:ss')
-        : '',
-      onSureClickListener: time => {
-        this.props.dispatch(
-          createAction('bdRecordBWModel/updateState')({
-            LastCheckTime: moment(time).format('YYYY-MM-DD HH:mm:00'),
-          }),
-        );
-      },
-    };
-  };
 
-  // 获取时间选择器
-  getTimeOption = key => {
-    return {
-      defaultTime: moment(this.props.MainInfo[key]).format(
-        'YYYY-MM-DD HH:mm:ss',
-      ),
-      //   type: 'hour',
-      onSureClickListener: time => {
-        this.props.dispatch(
-          createAction('bdRecordBWModel/updateState')({
-            MainInfo: {
-              ...this.props.MainInfo,
-              [key]: moment(time).format('YYYY-MM-DD HH:mm:ss'),
-            },
-          }),
-        );
-      },
-    };
-  };
 
-  // 处理签名完成
-  handleSignature = signature => {
-    this.props.dispatch(
-      createAction('bdRecordBWModel/updateState')({
-        BaseInfo: {
-          ...this.props.BaseInfo,
-          SignContent: signature,
-          SignTime: moment().format('YYYY-MM-DD HH:mm:ss'),
-        },
-      }),
-    );
-  };
-
-  // 处理签名取消
-  handleSignatureCancel = () => {
-    this.props.navigation.goBack();
-  };
-
-  // 打开签名页面
-  openSignaturePage = () => {
-    this.props.dispatch(
-      NavigationActions.navigate({
-        routeName: 'SignaturePage',
-        params: {
-          onOK: this.handleSignature,
-          onCancel: this.handleSignatureCancel,
-          signature: this.props.BaseInfo.SignContent,
-        },
-      }),
-    );
-  };
-
-  render() {
-    const {imageList1, imageList2, imageList3} = this.state;
-    const {MainInfo, BaseInfo} = this.props;
-    console.log('BaseInfo1', BaseInfo);
+  render() { 
+    const { basicInfo:{cemsSupplier, maintenanceManageUnit, operationPerson,checkDate,lastCheckDate,uploadPicture,signContent}, imageList,} = this.state;
+    const { MainInfo, BaseInfo } = this.props;
+    // console.log('BaseInfo1', BaseInfo);
     return (
-      <View style={{flex: 1, flexDirection: 'column'}}>
+      <View style={{ flex: 1, flexDirection: 'column' }}>
         <StatusPage
-          style={[styles.container, {justifyContent: 'center'}]}
+          style={[styles.container, { justifyContent: 'center' }]}
           status={this.props.liststatus.status}
           errorBtnText={'点击重试'}
           onErrorPress={() => {
@@ -317,210 +247,70 @@ class BdRecordList extends PureComponent {
           <KeyboardAvoidingView
             behavior={Platform.OS == 'ios' ? 'padding' : ''}>
             <ScrollView style={styles.scroll}>
-              <View style={styles.content1}>
-                <View
-                  style={{
-                    width: '100%',
-                    height: 40,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: '#333333',
-                    }}>
-                    工作时间：
-                  </Text>
-                  <Text style={{fontSize: 14, color: '#666'}}>
-                    {MainInfo.WorkingDateBegin} ～ {MainInfo.WorkingDateEnd}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.content1}>
-                <View
-                  style={{
-                    width: '100%',
-                    height: 40,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: '#333333',
-                    }}>
-                    上次校验日期：
-                  </Text>
-                  <SimplePickerSingleTime
-                    lastIcon={require('../../../../../images/right.png')}
-                    lastIconStyle={{width: 14, height: 14}}
-                    style={{
-                      width: 160,
-                      paddingRight: 0,
-                      justifyContent: 'flex-end',
-                    }}
-                    option={this.getTimeSelectOption()}
-                  />
-                </View>
-              </View>
-              <View style={styles.content1}>
-                <FormDatePicker
-                  required={true}
-                  getPickerOption={() => this.getTimeOption('CheckBTime')}
-                  label={'本次校验开始时间'}
-                  timeString={
-                    MainInfo.CheckBTime
-                      ? moment(MainInfo.CheckBTime).format(
-                          'YYYY-MM-DD HH:mm:ss',
-                        )
-                      : '请选择开始时间'
-                  }
-                />
-              </View>
-              <View style={styles.content1}>
-                <FormDatePicker
-                  required={true}
-                  getPickerOption={() => this.getTimeOption('CheckETime')}
-                  label={'本次校验结束时间'}
-                  timeString={
-                    MainInfo.CheckETime
-                      ? moment(MainInfo.CheckETime).format(
-                          'YYYY-MM-DD HH:mm:ss',
-                        )
-                      : '请选择结束时间'
-                  }
-                />
-              </View>
+              <MaintenanceOpera
+                {...this.props}
+                isJycs
+                isOperationPersonBorder
+                formContainerSty={{marginHorizontal:0,paddingHorizontal:12}}
+                cemsSupplier={cemsSupplier}
+                cemsChange={(text) => {
+                  this.setState(prevState => ({
+                    basicInfo: {...prevState.basicInfo, cemsSupplier: text},
+                  }));
+                }}
+                checkDate={checkDate}
+                checkDateChange={(text) => {
+                  this.setState(prevState => ({
+                    basicInfo: {...prevState.basicInfo, checkDate: text},
+                  }));
+                }}
+                lastCheckDate={lastCheckDate}
+                lastDateChange={(text) => {
+                  this.setState(prevState => ({
+                    basicInfo: {...prevState.basicInfo, lastCheckDate: text},
+                  }));
+                }}
+                maintenanceManageUnit={maintenanceManageUnit}
+                unitChange={(text) => {
+                  this.setState(prevState => ({
+                    basicInfo: {...prevState.basicInfo, maintenanceManageUnit: text},
+                  }));
+                }}
+                operationPerson={operationPerson}
+                userChange={(text) => {
+                  this.setState(prevState => ({
+                    basicInfo: {...prevState.basicInfo, operationPerson: text},
+                  }));
+                }}
+              />
               <RecordList />
               <BdSelectedStandardGas />
               <BdSelectedEquipment />
               <BdSelectedCompany />
-              {/* <ListComponent/>
-                            <ListComponent label='参比方法测试设备'/> */}
-              {/* <RecordResult ref={ref => {
-                                console.log('ref = ', ref);
-                                return (this.RecordResult = ref)
-                            }} /> */}
               <RecordResult
                 onRef={ref => {
                   console.log('RecordResult ref = ', ref);
                   return (this._RecordResult = ref);
                 }}
-                // ref={this._RecordResult}
-                // ref={ref => (this._RecordResult = ref)}
               />
-              {/* BDRY: '', //人员操作uuid
-      BDSB: '', //比对设备uuid
-      BDJG: '', //比对结果uuid */}
-              <View style={styles.content2}>
-                <Text style={styles.title}>
-                  <Text style={[{fontSize: 15, color: 'red'}]}>*</Text>
-                  对比工作-人员操作对比过程：
-                </Text>
-                <ImageGrid
-                  componentType={'normalWaterMaskCamera'}
-                  style={{
-                    backgroundColor: '#fff',
-                  }}
-                  Imgs={imageList1}
-                  isUpload={true}
-                  isDel={true}
-                  UUID={MainInfo.BDRY}
-                  uploadCallback={items => {
-                    let newImgList = [...imageList1];
-                    items.map(imageItem => {
-                      newImgList.push(imageItem);
-                    });
-                    this.setState({imageList1: newImgList});
-                  }}
-                  delCallback={index => {
-                    let newImgList = [...imageList1];
-                    newImgList.splice(index, 1);
-                    this.setState({imageList1: newImgList});
-                  }}
-                />
-              </View>
-              <View style={styles.content2}>
-                <Text style={styles.title}>
-                  <Text style={[{fontSize: 15, color: 'red'}]}>*</Text>
-                  对比工作-人工设备对比过程：
-                </Text>
-                <ImageGrid
-                  componentType={'normalWaterMaskCamera'}
-                  style={{
-                    backgroundColor: '#fff',
-                  }}
-                  Imgs={imageList2}
-                  isUpload={true}
-                  isDel={true}
-                  UUID={MainInfo.BDSB}
-                  uploadCallback={items => {
-                    let newImgList = [...imageList2];
-                    items.map(imageItem => {
-                      newImgList.push(imageItem);
-                    });
-                    this.setState({imageList2: newImgList});
-                  }}
-                  delCallback={index => {
-                    let newImgList = [...imageList2];
-                    newImgList.splice(index, 1);
-                    this.setState({imageList2: newImgList});
-                  }}
-                />
-              </View>
-              <View style={styles.content2}>
-                <Text style={styles.title}>
-                  <Text style={[{fontSize: 15, color: 'red'}]}>*</Text>
-                  对比工作-数据对比结果体现（设备界面、数据凭条、小票等）：
-                </Text>
-                <ImageGrid
-                  componentType={'normalWaterMaskCamera'}
-                  style={{
-                    backgroundColor: '#fff',
-                  }}
-                  Imgs={imageList3}
-                  isUpload={true}
-                  isDel={true}
-                  UUID={MainInfo.BDJG}
-                  uploadCallback={items => {
-                    let newImgList = [...imageList3];
-                    items.map(imageItem => {
-                      newImgList.push(imageItem);
-                    });
-                    this.setState({imageList3: newImgList});
-                  }}
-                  delCallback={index => {
-                    let newImgList = [...imageList3];
-                    newImgList.splice(index, 1);
-                    this.setState({imageList3: newImgList});
-                  }}
-                />
-              </View>
-              <View style={styles.content2}>
-                <Text style={styles.title}>
-                  <Text style={[{fontSize: 15, color: 'red'}]}>*</Text>
-                  手写签名：
-                </Text>
-                <TouchableOpacity
-                  style={styles.signatureContainer}
-                  onPress={this.openSignaturePage}>
-                  {BaseInfo.SignContent ? (
-                    <Image
-                      source={{uri: BaseInfo.SignContent}}
-                      style={styles.signaturePreview}
-                    />
-                  ) : (
-                    <Text style={styles.signaturePlaceholder}>
-                      点击此处签名
-                    </Text>
-                  )}
-                </TouchableOpacity>
-              </View>
+            
               {/* 选择的标气<StandardGas></StandardGas>*/}
               {/* 选择的测试设备<CbTestEquipment></CbTestEquipment>*/}
+              <ImageSignature
+                    {...this.props}
+                    formContainerSty={{paddingHorizontal:0}}
+                    signContent={signContent}
+                    handleSignatureCallback={(signature,signTime) => {
+                      this.setState(prevState => ({
+                        basicInfo: {...prevState.basicInfo, signContent: signature,signTime: signTime},
+                      }));
+                    }}
+                    uuid={uploadPicture}
+                    imageList={imageList}
+                    uploadCallback={(item) => {
+                      this.setState({ imageList: item })
+                    }}
+                  />
             </ScrollView>
             <View style={styles.commitContainer}>
               <TouchableOpacity
@@ -529,10 +319,10 @@ class BdRecordList extends PureComponent {
                   this.commit();
                 }}>
                 <Image
-                  style={{width: 15, height: 15}}
+                  style={{ width: 15, height: 15 }}
                   source={require('../../../../../images/ic_commit.png')}
                 />
-                <Text style={{marginLeft: 20, fontSize: 15, color: '#ffffff'}}>
+                <Text style={{ marginLeft: 20, fontSize: 15, color: '#ffffff' }}>
                   提交保存
                 </Text>
               </TouchableOpacity>
@@ -544,7 +334,7 @@ class BdRecordList extends PureComponent {
             hideDialog={() => {
               this._modalParent.hideModal();
             }}
-            style={{justifyContent: 'center'}}>
+            style={{ justifyContent: 'center' }}>
             <ConfirmDialog
               title={'确认'}
               description={'确认要删除CEMS校验测试记录？'}
@@ -573,12 +363,13 @@ class BdRecordList extends PureComponent {
  * 校验项目
  */
 @connect(
-  ({bdRecordBWModel}) => ({
+  ({ bdRecordBWModel }) => ({
     List: bdRecordBWModel.List,
+    EquipmentInfoList: bdRecordBWModel.EquipmentInfoList,
   }),
   null,
   null,
-  {withRef: true},
+  { withRef: true },
 )
 class RecordList extends PureComponent {
   static defaultProps = {
@@ -586,18 +377,20 @@ class RecordList extends PureComponent {
   };
 
   goTo = item => {
-    // console.log('goTo item = ',item);
     //跳转到编辑界面
     this.props.dispatch(
       NavigationActions.navigate({
         routeName: 'BdRecordEdit_BW',
-        params: {ItemData: item},
+        params: { ItemData: {...item,EquipmentInfoList: this.props.EquipmentInfoList}},
       }),
     ); //跳转到编辑页面
   };
 
   render() {
     // console.log('List = ',this.props.List)
+    const configList = this.props.List?.filter(item=>item.EvaluateResults==2 || item.IsComplete)
+    // const configList = this.props.List
+  
     return (
       <View>
         <Text style={styles.title}>校验项目</Text>
@@ -631,14 +424,14 @@ class RecordList extends PureComponent {
                 },
               ]}>
               <Image
-                style={[{width: 20, height: 20, marginRight: 8}]}
+                style={[{ width: 20, height: 20, marginRight: 8 }]}
                 source={require('../../../../../images/ic_tab_operation_selected.png')}
               />
-              <Text style={{fontSize: 15, color: '#0080ff'}}>配置测试项目</Text>
+              <Text style={{ fontSize: 15, color: '#0080ff' }}>配置测试项目</Text>
             </View>
-            <Text style={styles.line} />
+            {configList?.[0] && <Text style={styles.line} /> }
           </TouchableOpacity>
-          {this.props.List.map((item, key) => {
+          {configList.map((item, key) => {
             return (
               <TouchableOpacity
                 key={`checkout${item.ItemID}`}
@@ -658,7 +451,7 @@ class RecordList extends PureComponent {
                       {this.getValue(item.EvaluateResults)}
                     </Text>
                     <Image
-                      style={{width: 14, height: 14}}
+                      style={{ width: 14, height: 14 }}
                       source={require('../../../../../images/right.png')}
                     />
                   </View>
@@ -690,7 +483,7 @@ class RecordList extends PureComponent {
 /**
  * 校验结论
  */
-@connect(({bdRecordBWModel}) => ({
+@connect(({ bdRecordBWModel }) => ({
   MainInfo: bdRecordBWModel.MainInfo,
 }))
 class RecordResult extends PureComponent {
@@ -740,7 +533,7 @@ class RecordResult extends PureComponent {
           <TextInput
             style={styles.textInput}
             onChangeText={text => {
-              this.setState({CheckConclusionResult1: text});
+              this.setState({ CheckConclusionResult1: text });
             }}
             underlineColorAndroid="transparent"
             placeholder="如校验合格前对系统进行过处理、调整、参数修改，请说明："
@@ -750,12 +543,12 @@ class RecordResult extends PureComponent {
             {this.state.CheckConclusionResult1}
           </TextInput>
         </View>
-        <View style={[styles.itemEdit, {marginTop: 10}]}>
+        <View style={[styles.itemEdit, { marginTop: 10 }]}>
           <Text style={[styles.text]}>校后修改说明</Text>
           <TextInput
             style={styles.textInput}
             onChangeText={text => {
-              this.setState({CheckConclusionResult2: text});
+              this.setState({ CheckConclusionResult2: text });
             }}
             underlineColorAndroid="transparent"
             placeholder="如校验后，颗粒物测量仪、流速仪的原校正系统改动，请说明："
@@ -766,17 +559,17 @@ class RecordResult extends PureComponent {
           </TextInput>
         </View>
         {SentencedToEmpty(this.props, ['MainInfo', 'CheckIsOk'], '') ==
-        '' ? null : (
-          <View style={[styles.itemEdit, {marginTop: 10}]}>
-            <Text style={[styles.text]}>总体校验是否合格</Text>
-            <Text style={[styles.textInput, {fontSize: 14, color: '#666666'}]}>
-              {this.props.MainInfo.CheckIsOk == 1 ? '合格' : '不合格'}
-            </Text>
-          </View>
-        )}
+          '' ? null : (
+            <View style={[styles.itemEdit, { marginTop: 10 }]}>
+              <Text style={[styles.text]}>总体校验是否合格</Text>
+              <Text style={[styles.textInput, { fontSize: 14, color: '#666666' }]}>
+                {this.props.MainInfo.CheckIsOk == 1 ? '合格' : '不合格'}
+              </Text>
+            </View>
+          )}
 
-        <View style={[styles.itemRadio, {marginTop: 10}]}>
-          {/* <Text style={styles.text}>校验是否合格</Text>
+        {/* <View style={[styles.itemRadio, { marginTop: 10 }]}>
+           <Text style={styles.text}>校验是否合格</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <TouchableOpacity
                             style={{ flexDirection: 'row', alignItems: 'center', padding: 20 }}
@@ -796,14 +589,14 @@ class RecordResult extends PureComponent {
                             <Text style={styles.radioValue}>否</Text>
                             <Image style={{ width: 15, height: 15, marginLeft: 12 }} source={this.state.CheckIsOk == '否' ? require('../../../../../images/ic_reported_check.png') : require('../../../../../images/ic_reported_uncheck.png')} />
                         </TouchableOpacity>
-                    </View> */}
-        </View>
+                    </View> 
+        </View> */}
       </View>
     );
   }
 }
 
-@connect(({bdRecordBWModel}) => ({
+@connect(({ bdRecordBWModel }) => ({
   bdSelectedStandardGas: bdRecordBWModel.bdSelectedStandardGas,
 }))
 class BdSelectedStandardGas extends PureComponent {
@@ -814,7 +607,7 @@ class BdSelectedStandardGas extends PureComponent {
   }
 }
 
-@connect(({bdRecordBWModel}) => ({
+@connect(({ bdRecordBWModel }) => ({
   bdSelectedEquipment: bdRecordBWModel.bdSelectedEquipment,
 }))
 class BdSelectedEquipment extends PureComponent {
@@ -828,7 +621,7 @@ class BdSelectedEquipment extends PureComponent {
   }
 }
 
-@connect(({bdRecordBWModel}) => ({
+@connect(({ bdRecordBWModel }) => ({
   ParamsList: bdRecordBWModel.ParamsList,
 }))
 class BdSelectedCompany extends PureComponent {
@@ -840,8 +633,9 @@ class BdSelectedCompany extends PureComponent {
 /**
  * 测试所用标气
  */
-@connect(({bdRecordBWModel}) => ({
+@connect(({ bdRecordBWModel }) => ({
   BaseInfo: bdRecordBWModel.BaseInfo,
+  List: bdRecordBWModel.List,
 }))
 class ListComponent extends Component {
   constructor(props) {
@@ -858,34 +652,34 @@ class ListComponent extends Component {
         FormMainID 主表ID
      */
   render() {
-    const {label = '标准气体', list = []} = this.props;
+    const { label = '标准气体', list = [] } = this.props;
     let columns = [
-      {name: '标准气体名称', code: 'Name'},
-      {name: '浓度值', code: 'ConcentrationValue'},
-      {name: '生产厂商名称', code: 'Manufacturer'},
+      { name: '标准气体名称', code: 'Name' },
+      { name: '浓度值', code: 'ConcentrationValue' },
+      { name: '生产厂商名称', code: 'Manufacturer' },
     ];
     let addLabel = '增加标气';
     if (label == '标准气体') {
       columns = [
-        {name: '标准气体名称', code: 'Name'},
-        {name: '浓度值', code: 'ConcentrationValue'},
-        {name: '单位', code: 'Unit'},
-        {name: '生产厂商名称', code: 'Manufacturer'},
+        { name: '标准气体名称', code: 'Name' },
+        { name: '浓度值', code: 'ConcentrationValue' },
+        { name: '单位', code: 'Unit' },
+        { name: '生产厂商名称', code: 'Manufacturer' },
       ];
     } else if (label == '参比方法测试设备') {
       addLabel = '增加测试设备';
       columns = [
-        {name: '测试项目', code: 'Name'},
-        {name: '生产厂商名称', code: 'Manufacturer'},
-        {name: '设备型号', code: 'EquipmentModel'},
-        {name: '方法依据', code: 'TestMethod'},
+        { name: '测试项目', code: 'Name' },
+        { name: '测试设备生产厂商', code: 'Manufacturer' },
+        { name: '测试设备型号', code: 'EquipmentModel' },
+        { name: '方法依据', code: 'TestMethod' },
       ];
     } else if (label == '参比监测公司') {
       addLabel = '增加公司';
       columns = [
-        {name: '公司名称（对比方）', code: 'Name'},
-        {name: '设备品牌', code: 'Manufacturer'},
-        {name: '设备型号', code: 'EquipmentModel'},
+        { name: '公司名称（对比方）', code: 'Name' },
+        { name: '设备品牌', code: 'Manufacturer' },
+        { name: '设备型号', code: 'EquipmentModel' },
       ];
     }
     let holderItem = [];
@@ -897,12 +691,14 @@ class ListComponent extends Component {
       holderItem = [];
     }
     let columnWidth = (SCREEN_WIDTH - 49) / columns.length;
+    const configList = this.props.List?.filter(item=>item.EvaluateResults==2 ||  item.IsComplete)
+    // console.log(configList,'333333333333')
     return (
       <View style={styles.content3}>
         <Text style={styles.title}>{label}</Text>
         <View
           style={[
-            {flexDirection: 'row', height: 42, backgroundColor: 'white'},
+            { flexDirection: 'row', height: 42, backgroundColor: 'white' },
           ]}>
           {columns.map((item, index) => {
             return (
@@ -914,11 +710,11 @@ class ListComponent extends Component {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={[{color: '#333333'}]}>{item.name}</Text>
+                <Text style={[{ color: '#333333' }]}>{item.name}</Text>
               </View>
             );
           })}
-          <View style={[{width: 29}]} />
+          <View style={[{ width: 29 }]} />
         </View>
         <Text style={styles.line} />
         {list.map((item, key) => {
@@ -928,7 +724,7 @@ class ListComponent extends Component {
               onPress={() => {
                 this.props.dispatch(
                   NavigationActions.navigate({
-                    routeName: 'BdRecordEdit_BW',
+                    routeName: 'BdSelectedEdit_BW',
                     params: {
                       item,
                       columns,
@@ -937,7 +733,7 @@ class ListComponent extends Component {
                   }),
                 );
               }}
-              style={[{height: 41, backgroundColor: 'white'}]}>
+              style={[{ height: 41, backgroundColor: 'white' }]}>
               <View
                 style={[
                   {
@@ -959,14 +755,14 @@ class ListComponent extends Component {
                           alignItems: 'center',
                         },
                       ]}>
-                      <Text numberOfLines={1} style={[{maxWidth: columnWidth}]}>
+                      <Text numberOfLines={1} style={[{ maxWidth: columnWidth }]}>
                         {SentencedToEmpty(item, [columnItem.code], '--')}
                       </Text>
                     </View>
                   );
                 })}
                 <Image
-                  style={[{height: 15, width: 15, marginHorizontal: 7}]}
+                  style={[{ height: 15, width: 15, marginHorizontal: 7 }]}
                   source={require('../../../../../images/ic_edit.png')}
                 />
               </View>
@@ -980,7 +776,7 @@ class ListComponent extends Component {
               <View
                 style={[
                   styles.itemStandardGas,
-                  {flexDirection: 'row', height: 40},
+                  { flexDirection: 'row', height: 40 },
                 ]}
               />
               <Text style={styles.line} />
@@ -998,10 +794,11 @@ class ListComponent extends Component {
             } else {
               this.props.dispatch(
                 NavigationActions.navigate({
-                  routeName: 'BdSelectedEdit_zb',
+                  routeName: 'BdSelectedEdit_BW',
                   params: {
                     columns,
                     label,
+                    configList,
                   },
                 }),
               );
@@ -1010,7 +807,7 @@ class ListComponent extends Component {
           <View
             style={[
               styles.item,
-              {justifyContent: 'center', backgroundColor: 'white', height: 64},
+              { justifyContent: 'center', backgroundColor: 'white', height: 64 },
             ]}>
             <View
               style={{
@@ -1022,7 +819,7 @@ class ListComponent extends Component {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={[styles.text, {color: '#4DA9FF'}]}>{addLabel}</Text>
+              <Text style={[styles.text, { color: '#4DA9FF' }]}>{addLabel}</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -1035,12 +832,12 @@ class ListComponent extends Component {
  * 标准气体
  */
 @connect(
-  ({bdRecordBWModel}) => ({
+  ({ bdRecordBWModel }) => ({
     MainInfo: bdRecordBWModel.MainInfo,
   }),
   null,
   null,
-  {withRef: true},
+  { withRef: true },
 )
 class StandardGas extends PureComponent {
   render() {
@@ -1059,7 +856,7 @@ class StandardGas extends PureComponent {
               <View
                 style={[
                   styles.itemStandardGas,
-                  key > 0 ? {marginTop: 10} : {},
+                  key > 0 ? { marginTop: 10 } : {},
                 ]}>
                 <View style={[styles.item]}>
                   <Text style={styles.text}>标准气体名称</Text>
@@ -1088,12 +885,12 @@ class StandardGas extends PureComponent {
  * 参比方法测试设备
  */
 @connect(
-  ({bdRecordBWModel}) => ({
+  ({ bdRecordBWModel }) => ({
     MainInfo: bdRecordBWModel.MainInfo,
   }),
   null,
   null,
-  {withRef: true},
+  { withRef: true },
 )
 class CbTestEquipment extends PureComponent {
   render() {

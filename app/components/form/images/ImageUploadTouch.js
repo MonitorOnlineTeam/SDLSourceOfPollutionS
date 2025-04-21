@@ -227,7 +227,7 @@ export default class ImageUploadTouch extends Component {
     };
 
     render() {
-        const { hasOffline = false, interfaceName = '', style, children, uploadMethods, uuid, delegate, onPress = () => { }, componentType, extraInfo } = this.props;
+        const { hasOffline = false,justRealTimePhotos = false, interfaceName = '', style, children, uploadMethods, uuid, delegate, onPress = () => { }, componentType, extraInfo } = this.props;
         const user = getToken();
         let dialogOptions = {
             headTitle: '选择照片',
@@ -456,7 +456,85 @@ export default class ImageUploadTouch extends Component {
                         });
                     }
                 }
-            ] : [
+            ] : justRealTimePhotos ? //只让实时拍照
+            [{
+                txt: '打开相机',
+                btnStyle: { backgroundColor: '#fff' },
+                txtStyle: { color: '#f97740', fontSize: 15, fontWeight: 'bold' },
+                onpress: () => {
+                    {
+                        // const _this = this;
+                        if (componentType == 'taskhandle' || componentType == 'signIn'
+                            || componentType == 'normalWaterMaskCamera'
+                            // || componentType == 'normal'
+                        ) {
+                            this.requestCameraPermission();
+                            //     CameraWaterMaskModule.checkPermission(function (args) {
+                            //         console.log('checkPermission:', args);
+                            //         if (args) {
+                            //             // setShowState(true);
+                            //             if (componentType == 'taskhandle') {
+                            //                 _this.props.dispatch(
+                            //                     NavigationActions.navigate({
+                            //                         routeName: 'WaterMaskCamera',
+                            //                         params: {
+                            //                             // uuid
+                            //                             uuid: _this.props.uuid,
+                            //                         }
+                            //                     })
+                            //                 );
+                            //             } else if (componentType == 'signIn') {
+                            //                 _this.props.dispatch(
+                            //                     createAction('taskDetailModel/updateState')({
+                            //                         taskDetail: { EnterpriseName: _this.props.extraInfo.EnterpriseName }
+                            //                     })
+                            //                 );
+                            //                 _this.props.dispatch(
+                            //                     NavigationActions.navigate({
+                            //                         routeName: 'WaterMaskCamera',
+                            //                         params: {
+                            //                             // uuid
+                            //                             uuid: _this.props.uuid,
+                            //                             callback: _this.uploadImageCallBack
+                            //                         }
+                            //                     })
+                            //                 );
+                            //             }
+
+                            //         } else {
+                            //             // ToastAndroid.show('请先开启相机权限', ToastAndroid.SHORT);
+                            //             console.log('请先开启相机权限');
+                            //         }
+                            //     });
+
+                            //     // this.props.dispatch(NavigationActions.navigate({ routeName: 'WaterMaskCamera' }));
+                        } else {
+                            launchCamera(options, response => {
+                                const { assets = [] } = response;
+                                let imageObj = null;
+                                if (assets.length <= 0) {
+                                    return;
+                                } else {
+                                    imageObj = assets[0];
+                                    ShowLoadingToast('正在上传图片');
+                                    // this.props.dispatch(createAction('imageFormModel/updateState')({ imageStatus: { status: -1 } }));
+                                    that.props.dispatch(
+                                        createAction('imageModel/uploadimage')({
+                                            image: imageObj,
+                                            images: assets,
+                                            // uuid: uuid,
+                                            uuid: this.props.uuid,
+                                            callback: this.uploadImageCallBack
+                                        })
+                                    );
+                                }
+                            });
+                        }
+                    }
+                }
+            }]
+            :
+            [
                 {
                     txt: '打开相机',
                     btnStyle: { backgroundColor: '#fff' },
