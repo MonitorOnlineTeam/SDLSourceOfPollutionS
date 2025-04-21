@@ -937,7 +937,7 @@ class ListComponent extends Component {
                   NavigationActions.navigate({
                     routeName: 'BdRecordEdit_zb',
                     params: {
-                      item,
+                      ItemData: item,
                       columns,
                       label,
                     },
