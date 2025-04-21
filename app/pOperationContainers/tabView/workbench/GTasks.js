@@ -37,10 +37,11 @@ export default class GTasks extends Component {
             giveUpTask: null,// 弃领任务信息
             revokeTask: null, // 撤销任务
         };
+        this.isZB = props.configInfo.OperationOrderType === '1'; // 是否是淄博项目
 
         this.props.navigation.setOptions({
             // 根据配置信息判断是否显示转发按钮
-            headerRight: () => props.configInfo.OperationOrderType === '1' ? null : <TouchableOpacity
+            headerRight: () => this.isZB ? null : <TouchableOpacity
                 onPress={() => {
                     this.changeHeaderRight();
                     this.setState({ editState: !this.state.editState, selectArr: [] });
@@ -280,7 +281,7 @@ export default class GTasks extends Component {
                         <SDLText fontType={'small'} style={[{ color: '#49a1fe' }]}>
                             {`${SentencedToEmpty(item, ['TaskStatus'], '未知任务状态')}`}
                         </SDLText>
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1 }}>
+                        {this.isZB ? null : <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1 }}>
                             {/*//null 0 为 未审核   1 审核中 2 审核通过 3 审核未通过
                                 typeof item.AuditStatus != 'undefined'?<Image
                                 style={{ position: 'absolute', width: 24, height: 24, right: 0, bottom: 0 }}
@@ -303,7 +304,7 @@ export default class GTasks extends Component {
                                     SentencedToEmpty(item, ['AuditStatusName'], '')
                                 }
                             </SDLText>
-                        </View>
+                        </View>}
                     </View>
                     <SDLText fontType={'small'} style={[{ color: '#666', marginTop: 8 }]}>
                         {/* {`创建时间：${this.getItemTime(item, 'CreateTime', 'YYYY/MM/DD HH:mm', '----/--/-- --:--')}`} */}

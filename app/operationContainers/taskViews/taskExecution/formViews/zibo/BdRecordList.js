@@ -198,11 +198,10 @@ class BdRecordList extends PureComponent {
     );
   }
 
+  // 获取上次校验日期选择器
   getTimeSelectOption = () => {
-    // let type = this.props.datatype;
     let type = 'day';
     return {
-      // formatStr: 'YYYY-MM-DD HH:mm',
       formatStr: 'YYYY-MM-DD',
       type: type,
       defaultTime: this.props.LastCheckTime
@@ -220,17 +219,30 @@ class BdRecordList extends PureComponent {
 
   // 获取时间选择器
   getTimeOption = key => {
+    const { MainInfo } = this.props;
     return {
-      defaultTime: moment(this.props.MainInfo[key]).format(
-        'YYYY-MM-DD HH:mm:ss',
-      ),
-      //   type: 'hour',
+      defaultTime: MainInfo[key]
+        ? moment(MainInfo[key]).format('YYYY-MM-DD HH:mm:ss')
+        : undefined,
+      type: 'minute',
       onSureClickListener: time => {
+        // 验证开始时间不能大于结束时间
+        if (key === 'CheckBTime' && MainInfo.CheckETime && moment(time).isAfter(moment(MainInfo.CheckETime))) {
+          ShowToast('开始时间不能大于结束时间');
+          return;
+        }
+        
+        // 验证结束时间不能小于开始时间
+        if (key === 'CheckETime' && MainInfo.CheckBTime && moment(time).isBefore(moment(MainInfo.CheckBTime))) {
+          ShowToast('结束时间不能小于开始时间');
+          return;
+        }
+        
         this.props.dispatch(
           createAction('bdRecordZBModel/updateState')({
             MainInfo: {
               ...this.props.MainInfo,
-              [key]: moment(time).format('YYYY-MM-DD HH:mm:ss'),
+              [key]: moment(time).format('YYYY-MM-DD HH:mm:00'),
             },
           }),
         );
@@ -382,7 +394,7 @@ class BdRecordList extends PureComponent {
                   timeString={
                     MainInfo.CheckETime
                       ? moment(MainInfo.CheckETime).format(
-                          'YYYY-MM-DD HH:mm:ss',
+                          'YYYY-MM-DD HH:mm:00',
                         )
                       : '请选择结束时间'
                   }
@@ -527,7 +539,7 @@ class BdRecordList extends PureComponent {
                   source={require('../../../../../images/ic_commit.png')}
                 />
                 <Text style={{marginLeft: 20, fontSize: 15, color: '#ffffff'}}>
-                  提交保存
+                  确定提交
                 </Text>
               </TouchableOpacity>
             </View>

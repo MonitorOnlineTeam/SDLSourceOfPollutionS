@@ -248,6 +248,24 @@ export const createFormUrl = (TaskFormList, neturl, ID, TaskStatus) => {
         } else if (item.TypeID == 16  && ID && ID != '') {
             // 校准记录表 污水
             item.formUrl = neturl + '/appoperation/appWaterQualityCalibrationRecord' + '/' + ID + '/' + item.TypeID;
+        } else if(
+            // 淄博表单
+            item.TypeID == 76 || // 巡检完全抽取法
+            item.TypeID == 77 || // 巡检稀释采样法
+            item.TypeID == 78 || // 巡检直接测量法
+            item.TypeID == 79 || // 巡检 VOCs 监测
+            item.TypeID == 80 || // 巡检废水
+            item.TypeID == 81 || // 零点量程漂移校准 废水
+            item.TypeID == 82 || // //零点量程漂移校准 废气
+            item.TypeID == 83 || // 标准物质更换
+            item.TypeID == 84 || // 废气-易耗品更换
+            item.TypeID == 85 || // 废水-易耗品更换
+            item.TypeID == 86 || // 校验测试记录表
+            item.TypeID == 88 || // CEMS维护记录表
+            item.TypeID == 92  // 示值误差和响应时间 - 淄博
+        ){
+            console.log('淄博表单', '/appoperation/appCommonRecord' + '/' + ID + '/' + item.TypeID);
+            item.formUrl = neturl + '/appoperation/appCommonRecord' + '/' + ID + '/' + item.TypeID;
         } else {
             item.formUrl = '';
         }

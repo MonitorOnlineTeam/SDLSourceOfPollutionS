@@ -423,8 +423,8 @@ class BdRecordEdit extends PureComponent {
                 style={{width: 15, height: 15}}
                 source={require('../../../../../images/ic_commit.png')}
               />
-              <Text style={{marginLeft: 20, fontSize: 15, color: '#ffffff'}}>
-                提交保存
+              <Text style={{marginLeft: 10, fontSize: 15, color: '#ffffff'}}>
+                保存
               </Text>
             </TouchableOpacity>
           </View>

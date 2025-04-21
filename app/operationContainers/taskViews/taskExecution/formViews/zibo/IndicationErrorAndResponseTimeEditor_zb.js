@@ -663,7 +663,7 @@ export default function IndicationErrorAndResponseTimeEditor_zb({route}) {
     const range = `${parseFloat(formData.range.min)},${parseFloat(
       formData.range.max,
     )}`;
-
+    console.log('MainInfo', MainInfo)
     // 整理提交的数据
     const submitData = {
       taskID,
@@ -1090,7 +1090,7 @@ export default function IndicationErrorAndResponseTimeEditor_zb({route}) {
       {/* 提交按钮 - 固定在底部 */}
       <View style={styles.bottomButtonContainer}>
         <TouchableOpacity style={styles.submitButton} onPress={submitForm}>
-          <Text style={styles.submitButtonText}>提交</Text>
+          <Text style={styles.submitButtonText}>保存</Text>
         </TouchableOpacity>
       </View>
     </View>

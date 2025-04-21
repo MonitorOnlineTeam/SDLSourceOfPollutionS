@@ -63,7 +63,7 @@ class CalibrationRecordTimeZb extends Component {
 
     getEndTimeSelectOption = () => {
         return {
-            defaultTime: SentencedToEmpty(this.props.MainInfo, ['AdjustEndTime'], moment().format('YYYY-MM-DD HH:mm')),
+            defaultTime: SentencedToEmpty(this.props.MainInfo, ['AdjustEndTime'], moment().add(2, 'hour').format('YYYY-MM-DD HH:mm')),
             type: 'minute',
             onSureClickListener: time => {
                 let newMainInfo = { ...this.props.MainInfo };
@@ -106,7 +106,7 @@ class CalibrationRecordTimeZb extends Component {
                             <View style={[styles.layoutWithBottomBorder, { marginBottom: 20 }]}>
                                 <Text style={[styles.labelStyle]}>校准结束时间：</Text>
                                 <PickerSingleTimeTouchable option={this.getEndTimeSelectOption()} style={{ flexDirection: 'row', height: 45, alignItems: 'center', justifyContent: 'flex-end', flex: 1 }}>
-                                    <Text style={{ fontSize: 14, color: '#666' }}>{SentencedToEmpty(this.props.MainInfo, ['AdjustEndTime'], moment().format('YYYY-MM-DD HH:mm'))}</Text>
+                                    <Text style={{ fontSize: 14, color: '#666' }}>{SentencedToEmpty(this.props.MainInfo, ['AdjustEndTime'], moment().add(2, 'hour').format('YYYY-MM-DD HH:mm'))}</Text>
                                     <Image style={{ width: 10, height: 10, marginLeft: 4 }} source={ic_filt_arrows} />
                                 </PickerSingleTimeTouchable>
                             </View>

@@ -103,6 +103,9 @@ class IndicationErrorAndResponseTimeList extends Component {
       //   ]
       // }
       dataSource: {},
+      // 签名数据单独保存
+      signatureContent: null,
+      signatureTime: null,
       // selectedPollutants 存储当前选中的污染物数据，结构同 PointInfoList 中的元素
       selectedPollutants: [],
       FormMainID: props.route.params.params.FormMainID,
@@ -113,7 +116,6 @@ class IndicationErrorAndResponseTimeList extends Component {
       imageList5: [],
       imageList6: [],
     };
-    console.log('props1111', props);
   }
 
   componentDidMount() {
@@ -148,34 +150,53 @@ class IndicationErrorAndResponseTimeList extends Component {
           }
         }
       }
-      console.log('this.props.dataSource', this.props.dataSource)
-      // 处理图片数据
-      this.setState({
-        imageList1:
-          this.state.dataSource?.DFilePic?.ImgNameList?.map(item => ({
-            AttachID: item,
-          })) || [],
-        imageList2:
-          this.state.dataSource?.ZFilePic?.ImgNameList?.map(item => ({
-            AttachID: item,
-          })) || [],
-        imageList3:
-          this.state.dataSource?.GFilePic?.ImgNameList?.map(item => ({
-            AttachID: item,
-          })) || [],
-        imageList4:
-          this.state.dataSource?.BFilePic?.ImgNameList?.map(item => ({
-            AttachID: item,
-          })) || [],
-        imageList5:
-          this.state.dataSource?.BeforeFilePic?.ImgNameList?.map(item => ({
-            AttachID: item,
-          })) || [],
-        imageList6:
-          this.state.dataSource?.AfterFilePic?.ImgNameList?.map(item => ({
-            AttachID: item,
-          })) || [],
-      });
+      
+      // 从dataSource初始化图片列表，只在首次加载或API刷新时执行
+      if (
+        (this.state.imageList1.length === 0 && 
+         this.state.imageList2.length === 0 && 
+         this.state.imageList3.length === 0 && 
+         this.state.imageList4.length === 0 && 
+         this.state.imageList5.length === 0 && 
+         this.state.imageList6.length === 0) ||
+        (prevState.dataSource.DFilePic?.ImgNameList?.length !== this.state.dataSource.DFilePic?.ImgNameList?.length)
+      ) {
+        // 处理图片数据
+        this.setState({
+          imageList1:
+            this.state.dataSource?.DFilePic?.ImgNameList?.map(item => ({
+              AttachID: item,
+            })) || [],
+          imageList2:
+            this.state.dataSource?.ZFilePic?.ImgNameList?.map(item => ({
+              AttachID: item,
+            })) || [],
+          imageList3:
+            this.state.dataSource?.GFilePic?.ImgNameList?.map(item => ({
+              AttachID: item,
+            })) || [],
+          imageList4:
+            this.state.dataSource?.BFilePic?.ImgNameList?.map(item => ({
+              AttachID: item,
+            })) || [],
+          imageList5:
+            this.state.dataSource?.BeforeFilePic?.ImgNameList?.map(item => ({
+              AttachID: item,
+            })) || [],
+          imageList6:
+            this.state.dataSource?.AfterFilePic?.ImgNameList?.map(item => ({
+              AttachID: item,
+            })) || [],
+        });
+      }
+      
+      // 初始化签名数据（仅当从API获取时）
+      if(!this.state.signatureContent && this.state.dataSource.SignContent) {
+        this.setState({
+          signatureContent: this.state.dataSource.SignContent,
+          signatureTime: this.state.dataSource.SignTime,
+        });
+      }
     }
   }
 
@@ -194,6 +215,9 @@ class IndicationErrorAndResponseTimeList extends Component {
         callback: res => {
           this.setState({
             dataSource: res,
+            // 初始化签名数据
+            signatureContent: res.SignContent,
+            signatureTime: res.SignTime,
             AfterFile: res.AfterFile || new Date().getTime() + 'AfterFile',
             BeforeFile: res.BeforeFile || new Date().getTime() + 'BeforeFile',
             BFile: res.BFile || new Date().getTime() + 'BFile',
@@ -373,6 +397,8 @@ class IndicationErrorAndResponseTimeList extends Component {
       imageList4,
       imageList5,
       imageList6,
+      signatureContent,
+      signatureTime,
     } = this.state;
     const {params} = this.props.route.params;
     // 检验必填项是否已填写
@@ -399,8 +425,8 @@ class IndicationErrorAndResponseTimeList extends Component {
         WorkingDateBegin: dataSource.WorkingDateBegin,
         WorkingDateEnd: dataSource.WorkingDateEnd,
       },
-      signContent: dataSource.SignContent,
-      signTime: dataSource.SignTime,
+      signContent: signatureContent,
+      signTime: signatureTime,
     });
     if (!dataSource.MaintenanceManagementUnit) {
       ShowToast('请填写运维管理单位');
@@ -410,7 +436,7 @@ class IndicationErrorAndResponseTimeList extends Component {
       ShowToast('请填写测试人员');
       return;
     }
-    if (!dataSource.SignContent) {
+    if (!signatureContent) {
       ShowToast('请签名');
       return;
     }
@@ -472,8 +498,8 @@ class IndicationErrorAndResponseTimeList extends Component {
             WorkingDateBegin: dataSource.WorkingDateBegin,
             WorkingDateEnd: dataSource.WorkingDateEnd,
           },
-          signContent: dataSource.SignContent,
-          signTime: dataSource.SignTime,
+          signContent: signatureContent,
+          signTime: signatureTime,
         },
         callback: () => {
           this.props.navigation.goBack();
@@ -592,7 +618,7 @@ class IndicationErrorAndResponseTimeList extends Component {
   // 渲染量程项
   renderRangeItem = (pollutant, rangeData, index) => {
     const {params} = this.props.route.params;
-    const {dataSource, DFile, ZFile, GFile, BFile, BeforeFile, AfterFile} =
+    const {dataSource, DFile, ZFile, GFile, BFile, BeforeFile, AfterFile, signatureContent, signatureTime} =
       this.state;
 
     const handleRangePress = () => {
@@ -643,8 +669,8 @@ class IndicationErrorAndResponseTimeList extends Component {
               CheckETime: dataSource.CheckETime,
               WorkingDateBegin: dataSource.WorkingDateBegin,
               WorkingDateEnd: dataSource.WorkingDateEnd,
-              SignContent: dataSource.SignContent,
-              SignTime: dataSource.SignTime,
+              SignContent: signatureContent,
+              SignTime: signatureTime,
             },
 
             onResult: () => {
@@ -763,13 +789,11 @@ class IndicationErrorAndResponseTimeList extends Component {
 
   // 处理签名完成
   handleSignature = signature => {
-    this.setState(prevState => ({
-      dataSource: {
-        ...prevState.dataSource,
-        SignContent: signature,
-        SignTime: moment().format('YYYY-MM-DD HH:mm:ss'),
-      },
-    }));
+    // 签名数据不再保存到dataSource中，而是单独管理
+    this.setState({
+      signatureContent: signature,
+      signatureTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+    });
   };
 
   // 处理签名取消
@@ -791,7 +815,7 @@ class IndicationErrorAndResponseTimeList extends Component {
   };
 
   render() {
-    const {dataSource, selectedPollutants, FormMainID} = this.state;
+    const {dataSource, selectedPollutants, FormMainID, signatureContent} = this.state;
 
     const deleteFormOptions = {
       headTitle: '提示',
@@ -868,7 +892,8 @@ class IndicationErrorAndResponseTimeList extends Component {
               工作时间：
             </Text>
             <Text style={{fontSize: 14, color: globalcolor.datepickerGreyText}}>
-              {dataSource.WorkingDateBegin} ～ {dataSource.WorkingDateEnd}
+              {moment(dataSource.WorkingDateBegin).format('YYYY-MM-DD')} ～{' '}
+              {moment(dataSource.WorkingDateEnd).format('YYYY-MM-DD')}
             </Text>
           </View>
           <FormInput
@@ -937,12 +962,17 @@ class IndicationErrorAndResponseTimeList extends Component {
             required={true}
             getPickerOption={() => ({
               defaultTime: dataSource.CheckBTime,
-              type: 'day',
+              type: 'minute',
               onSureClickListener: time => {
+                // 验证开始时间不能大于结束时间
+                if (dataSource.CheckETime && moment(time).isAfter(moment(dataSource.CheckETime))) {
+                  ShowToast('开始时间不能大于结束时间');
+                  return;
+                }
                 // 只更新对应字段，保持其他数据不变
                 const newDataSource = {
                   ...this.state.dataSource,
-                  CheckBTime: time,
+                  CheckBTime: moment(time).format('YYYY-MM-DD HH:mm:00'),
                 };
                 // 确保 PointInfoList 的引用不变
                 newDataSource.PointInfoList =
@@ -963,12 +993,17 @@ class IndicationErrorAndResponseTimeList extends Component {
             required={true}
             getPickerOption={() => ({
               defaultTime: dataSource.CheckETime,
-              type: 'day',
+              type: 'minute',
               onSureClickListener: time => {
+                // 验证结束时间不能小于开始时间
+                if (dataSource.CheckBTime && moment(time).isBefore(moment(dataSource.CheckBTime))) {
+                  ShowToast('结束时间不能小于开始时间');
+                  return;
+                }
                 // 只更新对应字段，保持其他数据不变
                 const newDataSource = {
                   ...this.state.dataSource,
-                  CheckETime: time,
+                  CheckETime: moment(time).format('YYYY-MM-DD HH:mm:00'),
                 };
                 // 确保 PointInfoList 的引用不变
                 newDataSource.PointInfoList =
@@ -1034,9 +1069,9 @@ class IndicationErrorAndResponseTimeList extends Component {
           <TouchableOpacity
             style={styles.signatureContainer}
             onPress={this.openSignaturePage}>
-            {dataSource.SignContent ? (
+            {signatureContent ? (
               <Image
-                source={{uri: dataSource.SignContent}}
+                source={{uri: signatureContent}}
                 style={styles.signaturePreview}
               />
             ) : (
