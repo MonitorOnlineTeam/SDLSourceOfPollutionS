@@ -935,9 +935,9 @@ class ListComponent extends Component {
               onPress={() => {
                 this.props.dispatch(
                   NavigationActions.navigate({
-                    routeName: 'BdRecordEdit_zb',
+                    routeName: 'BdSelectedEdit_zb',
                     params: {
-                      ItemData: item,
+                      item,
                       columns,
                       label,
                     },
