@@ -2,12 +2,14 @@
  * @Author: outman0611 jia_anbo@163.com
  * @Date: 2025-04-15 14:01:48
  * @LastEditors: outman0611 jia_anbo@163.com
- * @LastEditTime: 2025-04-18 09:09:11
- * @Description: 宝武记录表头部组件
+ * @LastEditTime: 2025-04-21 14:33:12
+ * @Description: 宝武表单记录表头部组件
  */
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Dimensions, Image, Text, TextInput, TouchableOpacity } from 'react-native';
+import moment from 'moment';
 import FormInput from '../../../components/FormInput';
+import FormDatePicker from '../../../components/FormDatePicker';
 import globalcolor from '../../../../../../config/globalcolor';
 import { SCREEN_WIDTH } from '../../../../../../config/globalsize';
 import {  NavigationActions, } from '../../../../../../utils';
@@ -24,9 +26,11 @@ const MaintenanceOpera = (props) => {
   
 
 
-  const { dispatch,maintenanceManageUnit, unitCallback, operationPerson,userCallback,isJycs,cemsSupplier,checkDate,lastCheckDate } = props;
+  const { dispatch,maintenanceManageUnit, unitChange, operationPerson,userChange,isJycs,cemsSupplier,cemsChange,checkDate,checkDateChange,lastCheckDate,lastDateChange,isOperationPersonBorder, } = props;
+  
+  const {}  = props
   return (
-    <View style={styles.formContainer}>
+    <View style={[styles.formContainer,props.formContainerSty]}>
       {isJycs && 
           <FormInput
           label="CEMS供应商"
@@ -34,7 +38,7 @@ const MaintenanceOpera = (props) => {
           value={cemsSupplier}
           placeholder="请输入"
           onChangeText={text => {
-            unitCallback?.(text)
+            cemsChange?.(text)
           }}
         />}
 
@@ -44,17 +48,17 @@ const MaintenanceOpera = (props) => {
         value={maintenanceManageUnit}
         placeholder="请输入"
         onChangeText={text => {
-          unitCallback?.(text)
+          unitChange?.(text)
         }}
       />
-      <TouchableOpacity style={[styles.layoutStyle, { justifyContent: 'space-between', height: 45, }]}
+      <TouchableOpacity style={[styles.layoutStyle, { justifyContent: 'space-between', height: 45, }, isOperationPersonBorder && { borderBottomWidth: 1,borderBottomColor: globalcolor.borderBottomColor,}]}
         onPress={() => {
           dispatch(NavigationActions.navigate({
           routeName: 'PersonList',
           params: {
             selectUser:operationPerson.split(','),
             callback: (item)=>{
-              userCallback?.(item)
+              userChange?.(item)
             }
         }
         }));
@@ -84,15 +88,14 @@ const MaintenanceOpera = (props) => {
          getPickerOption={() => ({
            type: 'day',
            onSureClickListener: date => {
-             this.setState(prevState => ({
-               formData: {...prevState.formData, ExpirationDate: date},
-             }));
+             checkDateChange?.(date)
            },
          })}
        />
            <FormDatePicker
          label="上次校验日期"
          required={true}
+         last={true}
          timeString={
           lastCheckDate
              ? moment(lastCheckDate).format('YYYY-MM-DD')
@@ -101,9 +104,7 @@ const MaintenanceOpera = (props) => {
          getPickerOption={() => ({
            type: 'day',
            onSureClickListener: date => {
-             this.setState(prevState => ({
-               formData: {...prevState.formData, ExpirationDate: date},
-             }));
+            lastDateChange?.(date)
            },
          })}
        />
@@ -114,13 +115,15 @@ const MaintenanceOpera = (props) => {
 
 const styles = StyleSheet.create({
   formContainer: {
-    width: SCREEN_WIDTH,
-    paddingHorizontal: 28,
+    width: SCREEN_WIDTH - 16,
+    marginHorizontal:8,
+    paddingHorizontal: 10,
     backgroundColor: '#fff',
   },
   layoutStyle: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    
   },
   labelStyle: {
     fontSize: 14,

@@ -897,7 +897,7 @@ export default api = {
             AddOperationUserBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddOperationUserBW', //人员清单 添加
             GetOperationUserBW: 'rest/PollutantSourceApi/GasOperationFormApi/GetOperationUserBW', //人员清单
             DelOperationUserBW: 'rest/PollutantSourceApi/GasOperationFormApi/DelOperationUserBW', //人员清单 删除
-            //标准物质更换
+            //标准气体更换
             GetStandardGasRepalceRecordBW: '/rest/PollutantSourceApi/GasOperationFormApi/GetStandardGasRepalceRecordBW', //废气-获取更换记录
             AddOrUpdateStandardGasRepalceRecordBW: '/rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateStandardGasRepalceRecordBW', //废气-新增或者更新单条记录
             SubmitStandardGasRepalceRecordBW: '/rest/PollutantSourceApi/GasOperationFormApi/SubmitStandardGasRepalceRecordBW', //废气-提交记录
@@ -911,8 +911,8 @@ export default api = {
             DeletetConsumablesReplaceRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/DeletetConsumablesReplaceRecordBW', // 废气-表单删除
             //校验测试
             GetVerificationTestRecordBWList: 'rest/PollutantSourceApi/GasOperationFormApi/GetVerificationTestRecordBWList', //废气-获取更换记录
-            AddorUpdateVerificationTestParamsBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddorUpdateVerificationTestParamsBW', // 废气-添加或修改标气或测试设备或参比监测信息
             AddOrUpdateVerificationTestRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateVerificationTestRecordBW', //废气-新增或者更新记录
+            AddorUpdateVerificationTestParamsBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddorUpdateVerificationTestParamsBW', // 废气-添加或修改标气或测试设备或参比监测信息
             DeleteVerificationTestRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/DeleteVerificationTestRecordBW', // 废气-表单或者记录删除
 
         },

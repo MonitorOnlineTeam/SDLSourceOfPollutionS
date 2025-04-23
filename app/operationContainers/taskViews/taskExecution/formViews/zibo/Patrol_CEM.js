@@ -2,7 +2,7 @@
  * @Author: JiaQi 
  * @Date: 2025-04-02 10:48:34 
  * @Last Modified by: JiaQi
- * @Last Modified time: 2025-04-17 11:44:48
+ * @Last Modified time: 2025-04-18 17:02:33
  * @Description: 5个 CEMS 日常巡检
  */
 import React, { Component } from 'react';
@@ -189,7 +189,7 @@ class Patrol_CEM extends Component {
       ShowToast('请签名');
       return;
     }
-    if (!formData[pic1Name].length || !formData[pic2Name].length) {
+    if (!this.state[pic1Name + '_PIC'].length || !this.state[pic2Name + '_PIC'].length) {
       ShowToast('请上传照片');
       return;
     }
@@ -315,17 +315,22 @@ class Patrol_CEM extends Component {
 
   getMaintenanceStartTimeOption = () => {
     const { Content } = this.state;
-    console.log('Content', Content);
     return {
       defaultTime: Content.MaintenanceBeginTime
         ? moment(Content.MaintenanceBeginTime).format('YYYY-MM-DD HH:mm:ss')
         : undefined,
-      type: 'hour',
+      type: 'minute',
       onSureClickListener: time => {
+        // 验证开始时间不能大于结束时间
+        if (Content.MaintenanceEndTime && moment(time).isAfter(moment(Content.MaintenanceEndTime))) {
+          ShowToast('开始时间不能大于结束时间');
+          return;
+        }
+        
         this.setState(prevState => ({
           Content: {
             ...prevState.Content,
-            MaintenanceBeginTime: time,
+            MaintenanceBeginTime: moment(time).format('YYYY-MM-DD HH:mm:00'),
           },
         }));
       },
@@ -338,12 +343,18 @@ class Patrol_CEM extends Component {
       defaultTime: Content.MaintenanceEndTime
         ? moment(Content.MaintenanceEndTime).format('YYYY-MM-DD HH:mm:ss')
         : undefined,
-      type: 'hour',
+      type: 'minute',
       onSureClickListener: time => {
+        // 验证结束时间不能小于开始时间
+        if (Content.MaintenanceBeginTime && moment(time).isBefore(moment(Content.MaintenanceBeginTime))) {
+          ShowToast('结束时间不能小于开始时间');
+          return;
+        }
+        
         this.setState(prevState => ({
           Content: {
             ...prevState.Content,
-            MaintenanceEndTime: time,
+            MaintenanceEndTime: moment(time).format('YYYY-MM-DD HH:mm:00'),
           },
         }));
       },
@@ -405,7 +416,7 @@ class Patrol_CEM extends Component {
           timeString={
             Content.MaintenanceBeginTime
               ? moment(Content.MaintenanceBeginTime).format(
-                'YYYY-MM-DD HH:mm:ss',
+                'YYYY-MM-DD HH:mm:00',
               )
               : '请选择开始时间'
           }
@@ -416,7 +427,7 @@ class Patrol_CEM extends Component {
           label={'运行维护结束时间'}
           timeString={
             Content.MaintenanceEndTime
-              ? moment(Content.MaintenanceEndTime).format('YYYY-MM-DD HH:mm:ss')
+              ? moment(Content.MaintenanceEndTime).format('YYYY-MM-DD HH:mm:00')
               : '请选择结束时间'
           }
           last={true}

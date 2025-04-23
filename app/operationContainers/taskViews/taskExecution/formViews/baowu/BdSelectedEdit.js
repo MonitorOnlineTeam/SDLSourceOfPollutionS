@@ -1,8 +1,8 @@
 /*
  * @Description: CEMS校验测试记录 标气记录/设备 编辑页面
- * @LastEditors: hxf
+ * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2022-01-04 10:52:26
- * @LastEditTime: 2024-11-11 14:25:08
+ * @LastEditTime: 2025-04-21 16:57:04
  * @FilePath: /SDLSourceOfPollutionS/app/operationContainers/taskViews/taskExecution/formViews/BdSelectedEdit.js
  */
 import React, {Component} from 'react';
@@ -29,31 +29,13 @@ import {
   SentencedToEmpty,
 } from '../../../../../utils';
 
-@connect(({bdRecordZBModel}) => ({
-  BaseInfo: bdRecordZBModel.BaseInfo,
-  additionResult: bdRecordZBModel.additionResult,
-  delAdditionItmeStatus: bdRecordZBModel.delAdditionItmeStatus,
+@connect(({bdRecordBWModel}) => ({
+  BaseInfo: bdRecordBWModel.BaseInfo,
+  additionResult: bdRecordBWModel.additionResult,
+  delAdditionItmeStatus: bdRecordBWModel.delAdditionItmeStatus,
 }))
 export default class BdSelectedEdit extends Component {
-  static navigationOptions = ({navigation}) => {
-    let label = SentencedToEmpty(navigation, ['state', 'params', 'label'], '');
-    let title = '添加标准气体';
-    if (label == '参比方法测试设备') {
-      title = '添加测试设备';
-    }
-    if (label == '参比监测公司') {
-      title = '添加公司';
-    }
-    return createNavigationOptions({
-      title: title,
-      headerTitleStyle: {
-        flex: 1,
-        textAlign: 'center',
-        fontSize: 17,
-        marginRight: Platform.OS === 'android' ? 76 : 0,
-      }, //标题居中
-    });
-  };
+
 
   constructor(props) {
     super(props);
@@ -103,7 +85,7 @@ export default class BdSelectedEdit extends Component {
       '',
     );
     this.props.dispatch(
-      createAction('bdRecordZBModel/delAdditionItem')({
+      createAction('bdRecordBWModel/delAdditionItem')({
         params: {ID: itemData.ID},
       }),
     );
@@ -147,6 +129,12 @@ export default class BdSelectedEdit extends Component {
       ['route', 'params', 'params', 'columns'],
       [],
     );
+    const configList = SentencedToEmpty(
+      this.props,
+      ['route', 'params', 'params', 'configList'],
+      [],
+    );
+    // console.log(columns,configList,'2222222')
     return (
       <View
         style={[
@@ -192,6 +180,36 @@ export default class BdSelectedEdit extends Component {
                     onSelectListener: item => {
                       let params = {};
                       params[comlumn.code] = item.code;
+                      this.setState(params);
+                    },
+                  }}
+                  showText={this.state[comlumn.code]}
+                  placeHolder="请选择"
+                />
+              );
+            }else if(comlumn.name == '测试项目'){ 
+              return (
+                <FormPicker
+                  hasColon={true}
+                  propsLabelStyle={{
+                    fontSize: 14,
+                    color: '#333333',
+                  }}
+                  propsTextStyle={{
+                    color: globalcolor.datepickerGreyText,
+                    fontSize: 14,
+                    marginRight: 0,
+                  }}
+                  label={comlumn.name}
+                  defaultCode={this.state.PartType}
+                  option={{
+                    codeKey: 'Name',
+                    nameKey: 'Name',
+                    defaultCode: '',
+                    dataArr: configList,
+                    onSelectListener: item => {
+                      let params = {};
+                      params[comlumn.code] = item.Name;
                       this.setState(params);
                     },
                   }}
@@ -262,7 +280,7 @@ export default class BdSelectedEdit extends Component {
         <TouchableOpacity
           onPress={() => {
             this.props.dispatch(
-              createAction('bdRecordZBModel/addorUpdateCalibrationTestParams')(
+              createAction('bdRecordBWModel/addorUpdateCalibrationTestParams')(
                 this.state,
               ),
             );

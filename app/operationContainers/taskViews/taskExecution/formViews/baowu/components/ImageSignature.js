@@ -2,18 +2,18 @@
  * @Author: outman0611 jia_anbo@163.com
  * @Date: 2025-04-15 14:01:48
  * @LastEditors: outman0611 jia_anbo@163.com
- * @LastEditTime: 2025-04-17 14:48:37
+ * @LastEditTime: 2025-04-21 15:27:35
  * @Description: 上传图片和运维人员签字 组件
  */
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Dimensions, Image, Text, TextInput, TouchableOpacity } from 'react-native';
 import moment from 'moment';
-import FormInput from '../../../components/FormInput';
 import globalcolor from '../../../../../../config/globalcolor';
 import { SCREEN_WIDTH } from '../../../../../../config/globalsize';
 import { NavigationActions, } from '../../../../../../utils';
-const { width, height } = Dimensions.get('window');
 import ImageGrid from '../../../../../../components/form/images/ImageGrid';
+import FormInput from '../../../components/FormInput';
+const { width, height } = Dimensions.get('window');
 const ImageSignature = (props) => {
 
 
@@ -47,7 +47,7 @@ const ImageSignature = (props) => {
 
     const {signContent, uuid, imageList,  } = props;
     return (
-        <View style={styles.formContainer}>
+        <View style={[styles.formContainer,props.formContainerSty]}>
             <View style={styles.formSection}>
                 <Text style={styles.labelStyle}>
                     <Text style={[{ color: 'red' }]}>*</Text>上传图片：
@@ -59,6 +59,7 @@ const ImageSignature = (props) => {
                 </Text>
                 <ImageGrid
                     componentType={'normalWaterMaskCamera'}
+                    justRealTimePhotos
                     style={{
                         backgroundColor: '#fff',
                     }}
@@ -107,7 +108,7 @@ const ImageSignature = (props) => {
 const styles = StyleSheet.create({
     formContainer: {
         width: SCREEN_WIDTH - 16,
-        marginHorizontal: 8,
+        paddingHorizontal: 8,
     },
       formSection: {
         marginTop:10,

@@ -2,7 +2,7 @@
  * @Description:
  * @LastEditors: outman0611 jia_anbo@163.com
  * @Date: 2023-06-16 17:09:37
- * @LastEditTime: 2025-04-18 09:30:23
+ * @LastEditTime: 2025-04-21 09:35:02
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationModels/index.js
  */
 /**
@@ -87,10 +87,37 @@ import SignInTeamStatisticsModel from './SignInTeamStatisticsModel';
 /**淄博项目 */
 import calibrationRecordZb from './formModels/calibrationRecordZb';
 import calibrationRecordZbFs from './formModels/calibrationRecordZbFs';
+import zbRepairRecordModel from './zbRepairRecordModel';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**宝武项目 */
 import patrolModelBw from './formModels/patrolModelBw';
-import bdRecordBWModel from './formModels/bdRecordBWModel';
-import zbRepairRecordModel from './zbRepairRecordModel';
+import bdRecordBWModel from './formModels/bdRecordBWModel';//校验测试
 
 
 export function registerModels(app) {
@@ -174,6 +201,26 @@ export function registerModels(app) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
     /**宝武 */
     app.model(patrolModelBw);

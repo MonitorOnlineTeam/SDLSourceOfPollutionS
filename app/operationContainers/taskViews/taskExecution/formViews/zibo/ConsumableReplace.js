@@ -2,7 +2,7 @@
  * @Author: JiaQi
  * @Date: 2025-04-02 10:51:04
  * @Last Modified by: JiaQi
- * @Last Modified time: 2025-04-17 15:31:15
+ * @Last Modified time: 2025-04-18 15:29:24
  * @Description:  废气、废水易耗品更换记录
  */
 
@@ -293,7 +293,7 @@ class ConsumableReplace extends Component {
             alignItems: 'center',
             backgroundColor: globalcolor.white,
             // marginHorizontal: 12,
-            paddingHorizontal: 6,
+            // paddingHorizontal: 6,
             marginTop: 0,
             borderRadius: 4,
           },
@@ -304,10 +304,16 @@ class ConsumableReplace extends Component {
             defaultTime: Content.WorkingDateBegin,
             type: 'minute',
             onSureClickListener: time => {
+              // 验证开始时间不能大于结束时间
+              if (Content.WorkingDateEnd && moment(time).isAfter(moment(Content.WorkingDateEnd))) {
+                ShowToast('工作时间不能大于结束时间');
+                return;
+              }
+              
               this.setState(prevState => ({
                 Content: {
                   ...prevState.Content,
-                  WorkingDateBegin: time,
+                  WorkingDateBegin: moment(time).format('YYYY-MM-DD HH:mm:00'),
                 },
               }));
             },
@@ -323,10 +329,16 @@ class ConsumableReplace extends Component {
             defaultTime: Content.WorkingDateEnd,
             type: 'minute',
             onSureClickListener: time => {
+              // 验证结束时间不能小于开始时间
+              if (Content.WorkingDateBegin && moment(time).isBefore(moment(Content.WorkingDateBegin))) {
+                ShowToast('结束时间不能小于工作时间');
+                return;
+              }
+              
               this.setState(prevState => ({
                 Content: {
                   ...prevState.Content,
-                  WorkingDateEnd: time,
+                  WorkingDateEnd: moment(time).format('YYYY-MM-DD HH:mm:00'),
                 },
               }));
             },
@@ -343,7 +355,6 @@ class ConsumableReplace extends Component {
 
   // 渲染标准物质列表项
   renderStandardItem = ({item, index}) => {
-    console.log('record', record);
     let record = item.Data || {};
     return (
       <TouchableOpacity
