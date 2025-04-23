@@ -1,8 +1,8 @@
 /*
  * @Description:
- * @LastEditors: outman0611 jia_anbo@163.com
+ * @LastEditors: hxf
  * @Date: 2024-09-02 19:17:19
- * @LastEditTime: 2025-04-18 13:59:41
+ * @LastEditTime: 2025-04-23 11:47:08
  * @FilePath: /SDLSourceOfPollutionS_dev/app/Router.js
  */
 import { View, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
@@ -258,10 +258,11 @@ import ConsumableReplace from './operationContainers/taskViews/taskExecution/for
 import ConsumableReplaceForm from './operationContainers/taskViews/taskExecution/formViews/zibo/ConsumableReplaceForm';
 import SignaturePage from './operationContainers/taskViews/taskExecution/formViews/components/SignaturePage';
 // import OfflineImageUploadList from './components/page/account/OfflineImageUploadList';
-//淄博 废气废水校准
+//淄博 废气校准
 import CalibrationRecordListZb from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordListZb';
 import CalibrationRecordTimeZb from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordTimeZb';
 import CalibrationRecordEditZb from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordEditZb';
+//淄博 废水校准
 import CalibrationRecordListZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordListZbFs';
 import CalibrationRecordTimeZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordTimeZbFs';
 import CalibrationRecordEditZbFs from './operationContainers/taskViews/taskExecution/formViews/CalibrationRecordEditZbFs';
@@ -295,6 +296,8 @@ import BdRecordList_BW from './operationContainers/taskViews/taskExecution/formV
 import BdRecordEdit_BW from './operationContainers/taskViews/taskExecution/formViews/baowu/BdRecordEdit';
 import BdSelectedEdit_BW from './operationContainers/taskViews/taskExecution/formViews/baowu/BdSelectedEdit';
 import BdItemSetting_BW from './operationContainers/taskViews/taskExecution/formViews/baowu/BdItemSetting';
+// import FlowMeterComparisonRecordSheet from './operationContainers/taskViews/taskExecution/formViews/zibo/FlowMeterComparisonRecordSheet';
+// import FlowMeterComparisonChildSheet from './operationContainers/taskViews/taskExecution/formViews/zibo/FlowMeterComparisonChildSheet';
 function Test() {
     return (
         <View>
@@ -410,7 +413,6 @@ Actions.pushViewWithName(InformationBankOfEquipment, 'InformationBankOfEquipment
 
 Actions.pushViewWithName(TestView, 'TestView', { title: '测试页面' });
 Actions.pushViewWithName(ContactOperation, 'ContactOperation', { title: '监测目标' });
-Actions.pushViewWithName(ContactOperationMultiple, 'ContactOperationMultiple', { title: '人员清单' });
 Actions.pushViewWithName(SearchListWithoutLoad, 'SearchListWithoutLoad', { title: '监测点选择' });
 Actions.pushViewWithName(GTasks, 'GTasks', { title: '待办任务' });
 Actions.pushViewWithName(TaskTransfer, 'TaskTransfer', { title: '任务转移' });
@@ -651,6 +653,8 @@ Actions.pushViewWithName(CEMSMaintenanceItem, 'CEMSMaintenanceItem', { title: 'C
 Actions.pushViewWithName(WasteLiquidDisposalRecord, 'WasteLiquidDisposalRecord', { title: '废液处置记录表' });
 // Actions.pushViewWithName(PipelineFlowMeterMaintenanceRecord, 'PipelineFlowMeterMaintenanceRecord', { title: '管道流量计维护记录' });
 Actions.pushViewWithName(ContactOperationMultiple, 'ContactOperationMultiple', { title: '监测目标' });
+// Actions.pushViewWithName(FlowMeterComparisonRecordSheet, 'FlowMeterComparisonRecordSheet', { title: '流量计比对记录表' });
+// Actions.pushViewWithName(FlowMeterComparisonChildSheet, 'FlowMeterComparisonChildSheet', { title: '液位比对' });// 流量计比对记录表的子表
 
 // 标准物质更换记录表
 Actions.pushViewWithName(RMR, 'RMR', { title: '标准物质更换记录表' });
@@ -687,6 +691,7 @@ Actions.pushViewWithName(BdItemSetting_BW, 'BdItemSetting_BW', { title: '校验�
 
 
 Actions.pushView(Test, { headerShown: false });
+
 const Stack = createNativeStackNavigator();
 export default function Router() {
     // const { currentRoute } = useSelector(state => state.sdlNavigate);

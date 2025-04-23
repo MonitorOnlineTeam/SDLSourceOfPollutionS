@@ -437,7 +437,7 @@ export default api = {
             GetOperationTaskStatisticsInfoByDay: '/rest/PollutantSourceApi/VisualDashBoardApi/GetOperationTaskStatisticsInfoByDay', // 工单执行情况
         },
         Message: {
-            // 消息中心 20220531
+            // 消息中心 20220531 
             //netcore ✅ GetPushMessageList: 'rest/PollutantSourceApi/OperationBasicApi/GetPushMessageList', // 消息中心
             GetPushMessageList: 'rest/PollutantSourceApi/MessageApi/GetPushMessageList', // 消息中心
             //netcore ✅ GetMessageInfoList: 'rest/PollutantSourceApi/OperationBasicApi/GetMessageInfoList', // 消息中心详情
@@ -889,7 +889,7 @@ export default api = {
 
 
 
-                   
+
             /**
              * 2025.4.15
              * 宝武项目
@@ -909,7 +909,7 @@ export default api = {
             SubmitConsumablesReplaceRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/SubmitConsumablesReplaceRecordBW', //废气-提交记录
             DeletetConsumablesReplaceRecordBWById: 'rest/PollutantSourceApi/GasOperationFormApi/DeletetConsumablesReplaceRecordBWById', // 废气-单条记录删除
             DeletetConsumablesReplaceRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/DeletetConsumablesReplaceRecordBW', // 废气-表单删除
-             //校验测试
+            //校验测试
             GetVerificationTestRecordBWList: 'rest/PollutantSourceApi/GasOperationFormApi/GetVerificationTestRecordBWList', //废气-获取更换记录
             AddorUpdateVerificationTestParamsBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddorUpdateVerificationTestParamsBW', // 废气-添加或修改标气或测试设备或参比监测信息
             AddOrUpdateVerificationTestRecordBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateVerificationTestRecordBW', //废气-新增或者更新记录
