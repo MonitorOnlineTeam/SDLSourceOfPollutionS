@@ -40,7 +40,7 @@ class BdRecordList extends PureComponent {
         headerStyle: { backgroundColor: globalcolor.headerBackgroundColor, height: 45 },
         labelStyle: { fontSize: 14 },
         headerRight:
-            SentencedToEmpty(navigation, ['state', 'params', 'liststatus'], -1) == 200 ? (
+            SentencedToEmpty(navigation, ['state', 'params', 'liststatus', 'status'], -1) == 200 ? (
                 <TouchableOpacity
                     onPress={() => {
                         navigation.state.params.navigatePress();
@@ -54,7 +54,7 @@ class BdRecordList extends PureComponent {
     });
 
     static defaultProps = {
-        liststatus: 200
+        liststatus: { status: 200 }
     };
 
     constructor(props) {
@@ -67,7 +67,7 @@ class BdRecordList extends PureComponent {
         });
         this.props.navigation.setOptions({
             headerRight: () => {
-                if (SentencedToEmpty(this.props, ['liststatus'], -1)
+                if (SentencedToEmpty(this.props, ['liststatus', 'status'], -1)
                     == 200) {
                     return (<TouchableOpacity
                         onPress={() => {

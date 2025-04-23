@@ -71,7 +71,7 @@ export const axiosGet = async (api, param, headers) => {
     api = await geturl(api, null, headers);
     const result = await NetGet(api, param, headers);
     if (result.status == 200) {
-        if (result.data.requstresult != '1') {
+        if (result.data.IsSuccess != true) {
             result.status = 1000;
         }
     }

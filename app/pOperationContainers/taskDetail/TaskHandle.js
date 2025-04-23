@@ -291,22 +291,6 @@ export default class TaskHandle extends Component {
         const { TaskFormList } = this.props.taskDetail;
         // console.log('TaskFormList = ', TaskFormList);
         // noSelectFormList.push({
-        //     Abbreviation: "CMES维修记录表",
-        //     CnName: "CMES维修记录表",
-        //     // FormMainID: "2657933b-e31b-4785-8547-a6dab80bb6f9",
-        //     ID: 1182,
-        //     IsRequired: 0,
-        //     IsSign: true,
-        //     RecordType: "1",
-        //     Status: 1,
-        //     TaskID: "bb1b4687-eee1-4f75-b894-7a6b3c1cdcfd",
-        //     taskStatus: 2,
-        //     Type: "1",
-        //     TypeID: 80,
-        //     TypeName: "Fs80",
-        //     formUrl: "",
-        // });
-        // noSelectFormList.push({
         //     Abbreviation: "废水-废液处置记录表",
         //     CnName: "废水-废液处置记录表",
         //     // FormMainID: "2657933b-e31b-4785-8547-a6dab80bb6f9",
@@ -327,6 +311,23 @@ export default class TaskHandle extends Component {
         //     CnName: "管道流量计维护记录表",
         //     // FormMainID: "2657933b-e31b-4785-8547-a6dab80bb6f9",
         //     ID: 1181,
+        //     IsRequired: 0,
+        //     IsSign: true,
+        //     RecordType: "1",
+        //     Status: 1,
+        //     TaskID: "bb1b4687-eee1-4f75-b894-7a6b3c1cdcfd",
+        //     taskStatus: 2,
+        //     Type: "1",
+        //     TypeID: 80,
+        //     TypeName: "Fs80",
+        //     formUrl: "",
+        // });
+
+        // noSelectFormList.push({
+        //     Abbreviation: "流量计比对记录表",
+        //     CnName: "流量计比对记录表",
+        //     // FormMainID: "2657933b-e31b-4785-8547-a6dab80bb6f9",
+        //     ID: 1183,
         //     IsRequired: 0,
         //     IsSign: true,
         //     RecordType: "1",
@@ -515,6 +516,15 @@ export default class TaskHandle extends Component {
                             this.props.dispatch(
                                 NavigationActions.navigate({
                                     routeName: 'WasteLiquidDisposalRecord',
+                                    params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
+                                })
+                            );
+                            break;
+                        case 1183:
+                            // 流量计比对记录表
+                            this.props.dispatch(
+                                NavigationActions.navigate({
+                                    routeName: 'FlowMeterComparisonRecordSheet',
                                     params: { ...item, createForm: item.FormMainID != null ? true : false, viewTitle: SentencedToEmpty(item, ['CnName'], '图片表单') }
                                 })
                             );
@@ -762,7 +772,7 @@ export default class TaskHandle extends Component {
 
 
 
-                            
+
                         /** 宝武表单 */
                         case 89: // 废气易耗品更换
                             this.props.dispatch(
@@ -780,7 +790,7 @@ export default class TaskHandle extends Component {
                                 })
                             );
                             break;
-                         case 91: // 校验测试记录表
+                        case 91: // 校验测试记录表
                             this.props.dispatch(NavigationActions.navigate({ routeName: 'BdRecordList_BW', params: {} }));
                             break;
 

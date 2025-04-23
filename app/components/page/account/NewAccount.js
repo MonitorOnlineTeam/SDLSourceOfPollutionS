@@ -49,8 +49,6 @@ class Account extends PureComponent {
         // this.props.dispatch(createAction('provisioning/getPersonalCenterOrderInfo')({}));
     }
     render() {
-        console.log('SCREEN_WIDTH = ', SCREEN_WIDTH);
-        console.log('AccountConfig = ', AccountConfig);
         return (
             <ScrollView style={styles.container}>
                 {/*头像 用户名 联系方式等信息*/}

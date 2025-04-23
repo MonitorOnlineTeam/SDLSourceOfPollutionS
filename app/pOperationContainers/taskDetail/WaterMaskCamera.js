@@ -2,7 +2,7 @@
  * @Description: 水印相机
  * @LastEditors: hxf
  * @Date: 2023-06-01 14:09:24
- * @LastEditTime: 2025-04-21 17:30:59
+ * @LastEditTime: 2025-04-23 09:55:02
  * @FilePath: /SDLSourceOfPollutionS_dev/app/pOperationContainers/taskDetail/WaterMaskCamera.js
  */
 import React, { Component } from 'react'
@@ -91,6 +91,9 @@ export default class WaterMaskCamera extends Component {
             //     msg: `${JSON.stringify(logObject)}`
             // }));
         } else {
+            this.setState({
+                takingPhoto: false
+            });
             let logObject = {};
             logObject.result = images;
             this.props.dispatch(createAction('app/addClockInLog')({
