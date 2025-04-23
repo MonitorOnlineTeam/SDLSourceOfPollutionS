@@ -671,9 +671,9 @@ Actions.pushViewWithName(SignaturePage, 'SignaturePage', { title: '签名' });
 
 /**宝武 */
 Actions.pushViewWithName(PersonList, 'PersonList', { title: '人员清单' });
-//标准物质更换
-Actions.pushViewWithName(RMR_BW, 'RMR_BW', { title: '标准物质更换记录表' });
-Actions.pushViewWithName(RMRForm_BW, 'RMRForm_BW', { title: '标准物质更换记录表' });
+//标准气体更换
+Actions.pushViewWithName(RMR_BW, 'RMR_BW', { title: '标准气体更换记录表' });
+Actions.pushViewWithName(RMRForm_BW, 'RMRForm_BW', { title: '标准气体更换记录表' });
 //易耗品更换
 Actions.pushViewWithName(ConsumableReplace_BW, 'ConsumableReplace_BW', { title: '易耗品更换记录表' });
 Actions.pushViewWithName(ConsumableReplaceForm_BW, 'ConsumableReplaceForm_BW', { title: '易耗品更换记录表' });

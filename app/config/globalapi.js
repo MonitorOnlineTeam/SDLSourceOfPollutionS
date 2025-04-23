@@ -897,7 +897,7 @@ export default api = {
             AddOperationUserBW: 'rest/PollutantSourceApi/GasOperationFormApi/AddOperationUserBW', //人员清单 添加
             GetOperationUserBW: 'rest/PollutantSourceApi/GasOperationFormApi/GetOperationUserBW', //人员清单
             DelOperationUserBW: 'rest/PollutantSourceApi/GasOperationFormApi/DelOperationUserBW', //人员清单 删除
-            //标准物质更换
+            //标准气体更换
             GetStandardGasRepalceRecordBW: '/rest/PollutantSourceApi/GasOperationFormApi/GetStandardGasRepalceRecordBW', //废气-获取更换记录
             AddOrUpdateStandardGasRepalceRecordBW: '/rest/PollutantSourceApi/GasOperationFormApi/AddOrUpdateStandardGasRepalceRecordBW', //废气-新增或者更新单条记录
             SubmitStandardGasRepalceRecordBW: '/rest/PollutantSourceApi/GasOperationFormApi/SubmitStandardGasRepalceRecordBW', //废气-提交记录
