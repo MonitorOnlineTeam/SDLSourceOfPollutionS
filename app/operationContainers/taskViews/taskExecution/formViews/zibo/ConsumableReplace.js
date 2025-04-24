@@ -2,7 +2,7 @@
  * @Author: JiaQi
  * @Date: 2025-04-02 10:51:04
  * @Last Modified by: JiaQi
- * @Last Modified time: 2025-04-18 15:29:24
+ * @Last Modified time: 2025-04-23 19:19:04
  * @Description:  废气、废水易耗品更换记录
  */
 
@@ -305,11 +305,14 @@ class ConsumableReplace extends Component {
             type: 'minute',
             onSureClickListener: time => {
               // 验证开始时间不能大于结束时间
-              if (Content.WorkingDateEnd && moment(time).isAfter(moment(Content.WorkingDateEnd))) {
+              if (
+                Content.WorkingDateEnd &&
+                moment(time).isAfter(moment(Content.WorkingDateEnd))
+              ) {
                 ShowToast('工作时间不能大于结束时间');
                 return;
               }
-              
+
               this.setState(prevState => ({
                 Content: {
                   ...prevState.Content,
@@ -330,11 +333,14 @@ class ConsumableReplace extends Component {
             type: 'minute',
             onSureClickListener: time => {
               // 验证结束时间不能小于开始时间
-              if (Content.WorkingDateBegin && moment(time).isBefore(moment(Content.WorkingDateBegin))) {
+              if (
+                Content.WorkingDateBegin &&
+                moment(time).isBefore(moment(Content.WorkingDateBegin))
+              ) {
                 ShowToast('结束时间不能小于工作时间');
                 return;
               }
-              
+
               this.setState(prevState => ({
                 Content: {
                   ...prevState.Content,
@@ -450,6 +456,7 @@ class ConsumableReplace extends Component {
                       marginTop: 8,
                       marginLeft: 12,
                     }}>
+                    <Text style={[styles.labelStyle, {color: 'red'}]}>*</Text>
                     签名
                   </Text>
                   <TouchableOpacity
