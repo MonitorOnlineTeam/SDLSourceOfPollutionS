@@ -2,8 +2,8 @@
  * @Description: 维修项目编辑
  * @LastEditors: hxf
  * @Date: 2025-04-11 16:27:30
- * @LastEditTime: 2025-04-18 11:36:05
- * @FilePath: /SDLSourceOfPollutionS_dev/app/operationContainers/taskViews/taskExecution/formViews/zibo/CEMSMaintenanceItem.js
+ * @LastEditTime: 2025-04-23 19:33:48
+ * @FilePath: /sdlsourceofpollutions/app/operationContainers/taskViews/taskExecution/formViews/zibo/CEMSMaintenanceItem.js
  */
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useEffect, useRef } from 'react'
@@ -98,30 +98,30 @@ export default function CEMSMaintenanceItem(props) {
             return false;
         }
 
-        if (SentencedToEmpty(Content, ['WorkingDateBegin'], '') == '') {
-            // ShowToast('工作时间不能为空！');
-            ShowToast({
-                message: '工作时间不能为空！',
-                alertType: 'error',
-            });
-            return false;
-        }
-        if (SentencedToEmpty(Content, ['WorkingDateEnd'], '') == '') {
-            // ShowToast('结束时间不能为空！');
-            ShowToast({
-                message: '结束时间不能为空！',
-                alertType: 'error',
-            });
-            return false;
-        }
-        if (SentencedToEmpty(Content, ['EntName'], '') == '') {
-            // ShowToast('维护管理单位不能为空！');
-            ShowToast({
-                message: '维护管理单位不能为空！',
-                alertType: 'error',
-            });
-            return false;
-        }
+        // if (SentencedToEmpty(Content, ['WorkingDateBegin'], '') == '') {
+        //     // ShowToast('工作时间不能为空！');
+        //     ShowToast({
+        //         message: '工作时间不能为空！',
+        //         alertType: 'error',
+        //     });
+        //     return false;
+        // }
+        // if (SentencedToEmpty(Content, ['WorkingDateEnd'], '') == '') {
+        //     // ShowToast('结束时间不能为空！');
+        //     ShowToast({
+        //         message: '结束时间不能为空！',
+        //         alertType: 'error',
+        //     });
+        //     return false;
+        // }
+        // if (SentencedToEmpty(Content, ['EntName'], '') == '') {
+        //     // ShowToast('维护管理单位不能为空！');
+        //     ShowToast({
+        //         message: '维护管理单位不能为空！',
+        //         alertType: 'error',
+        //     });
+        //     return false;
+        // }
         // EntUserName
         // BDSB
         // if (SentencedToEmpty(Content, ['EntUserName'], '') == '') {
@@ -133,79 +133,79 @@ export default function CEMSMaintenanceItem(props) {
         //     return false;
         // }
 
-        if (SentencedToEmpty(Content, ['CheckBTime'], '') == '') {
-            // ShowToast('故障开始时间不能为空！');
-            ShowToast({
-                message: '故障开始时间不能为空！',
-                alertType: 'error',
-            });
-            return false;
-        }
+        // if (SentencedToEmpty(Content, ['CheckBTime'], '') == '') {
+        //     // ShowToast('故障开始时间不能为空！');
+        //     ShowToast({
+        //         message: '故障开始时间不能为空！',
+        //         alertType: 'error',
+        //     });
+        //     return false;
+        // }
 
-        if (SentencedToEmpty(Content, ['CheckETime'], '') == '') {
-            // ShowToast('故障结束时间不能为空！');
-            ShowToast({
-                message: '故障结束时间不能为空！',
-                alertType: 'error',
-            });
-            return false;
-        }
+        // if (SentencedToEmpty(Content, ['CheckETime'], '') == '') {
+        //     // ShowToast('故障结束时间不能为空！');
+        //     ShowToast({
+        //         message: '故障结束时间不能为空！',
+        //         alertType: 'error',
+        //     });
+        //     return false;
+        // }
 
-        if (SentencedToEmpty(Content, ['MaintenanceBeginTime'], '') == '') {
-            // ShowToast('维修开始时间不能为空！');
-            ShowToast({
-                message: '维修开始时间不能为空！',
-                alertType: 'error',
-            });
-            return false;
-        }
+        // if (SentencedToEmpty(Content, ['MaintenanceBeginTime'], '') == '') {
+        //     // ShowToast('维修开始时间不能为空！');
+        //     ShowToast({
+        //         message: '维修开始时间不能为空！',
+        //         alertType: 'error',
+        //     });
+        //     return false;
+        // }
 
-        if (SentencedToEmpty(Content, ['MaintenanceEndTime'], '') == '') {
-            // ShowToast('维修结束时间不能为空！');
-            ShowToast({
-                message: '维修结束时间不能为空！',
-                alertType: 'error',
-            });
-            return false;
-        }
+        // if (SentencedToEmpty(Content, ['MaintenanceEndTime'], '') == '') {
+        //     // ShowToast('维修结束时间不能为空！');
+        //     ShowToast({
+        //         message: '维修结束时间不能为空！',
+        //         alertType: 'error',
+        //     });
+        //     return false;
+        // }
 
-        if (SentencedToEmpty(Content, ['InspectionDate'], '') == '') {
-            // ShowToast('停机时间不能为空！');
-            ShowToast({
-                message: '停机时间不能为空！',
-                alertType: 'error',
-            });
-            return false;
-        }
+        // if (SentencedToEmpty(Content, ['InspectionDate'], '') == '') {
+        //     // ShowToast('停机时间不能为空！');
+        //     ShowToast({
+        //         message: '停机时间不能为空！',
+        //         alertType: 'error',
+        //     });
+        //     return false;
+        // }
 
-        if (SentencedToEmpty(Content, ['BDJG'], '') == ''
-            || BDJGPic.length == 0) {
-            // ShowToast('维修前照片不能为空！');
-            ShowToast({
-                message: '维修前照片不能为空！',
-                alertType: 'error',
-            });
-            return false;
-        }
+        // if (SentencedToEmpty(Content, ['BDJG'], '') == ''
+        //     || BDJGPic.length == 0) {
+        //     // ShowToast('维修前照片不能为空！');
+        //     ShowToast({
+        //         message: '维修前照片不能为空！',
+        //         alertType: 'error',
+        //     });
+        //     return false;
+        // }
 
-        if (SentencedToEmpty(Content, ['BDRY'], '') == ''
-            || BDRYPic.length == 0) {
-            // ShowToast('维修后照片不能为空！');
-            ShowToast({
-                message: '维修后照片不能为空！',
-                alertType: 'error',
-            });
-            return false;
-        }
+        // if (SentencedToEmpty(Content, ['BDRY'], '') == ''
+        //     || BDRYPic.length == 0) {
+        //     // ShowToast('维修后照片不能为空！');
+        //     ShowToast({
+        //         message: '维修后照片不能为空！',
+        //         alertType: 'error',
+        //     });
+        //     return false;
+        // }
 
-        if (signContent == '') {
-            // ShowToast('运维人员签字不能为空！');
-            ShowToast({
-                message: '运维人员签字不能为空！',
-                alertType: 'error',
-            });
-            return false;
-        }
+        // if (signContent == '') {
+        //     // ShowToast('运维人员签字不能为空！');
+        //     ShowToast({
+        //         message: '运维人员签字不能为空！',
+        //         alertType: 'error',
+        //     });
+        //     return false;
+        // }
 
         return true;
     }
@@ -470,39 +470,6 @@ export default function CEMSMaintenanceItem(props) {
                     <TouchableOpacity
                         style={{
                             width: (SCREEN_WIDTH - 100) / 2,
-                            marginVertical: 10,
-                            marginBottom: 15,
-                            height: 44,
-                            borderRadius: 22,
-                            backgroundColor: '#ee9944',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                        }}
-                        onPress={() => {
-                            if (recordList.length <= 1) {
-                                ShowToast({
-                                    // message: '维修记录不能为空！',
-                                    message: '最后一条维修记录不能删除！',
-                                    alertType: 'error',
-                                });
-                                return;
-                            } else if (repairRecordIndex != -1
-                                && recordList.length > repairRecordIndex
-                            ) {
-                                _delDialogRef.current.show();
-
-                            } else {
-                                ShowToast('数据错误');
-                            }
-                        }}
-                    >
-                        <Image style={{ width: 15, height: 15 }} source={require('../../../../../images/ic_commit.png')} />
-                        <Text style={{ marginLeft: 20, fontSize: 15, color: '#ffffff' }}>删除记录</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={{
-                            width: (SCREEN_WIDTH - 100) / 2,
                             marginTop: 10,
                             marginBottom: 15,
                             height: 44,
@@ -538,8 +505,42 @@ export default function CEMSMaintenanceItem(props) {
                         }}
                     >
                         <Image style={{ width: 15, height: 15 }} source={require('../../../../../images/ic_commit.png')} />
-                        <Text style={{ marginLeft: 20, fontSize: 15, color: '#ffffff' }}>提交保存</Text>
+                        <Text style={{ marginLeft: 20, fontSize: 15, color: '#ffffff' }}>保存</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity
+                        style={{
+                            width: (SCREEN_WIDTH - 100) / 2,
+                            marginVertical: 10,
+                            marginBottom: 15,
+                            height: 44,
+                            borderRadius: 22,
+                            backgroundColor: '#ee9944',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
+                        onPress={() => {
+                            if (recordList.length <= 1) {
+                                ShowToast({
+                                    // message: '维修记录不能为空！',
+                                    message: '最后一条维修记录不能删除！',
+                                    alertType: 'error',
+                                });
+                                return;
+                            } else if (repairRecordIndex != -1
+                                && recordList.length > repairRecordIndex
+                            ) {
+                                _delDialogRef.current.show();
+
+                            } else {
+                                ShowToast('数据错误');
+                            }
+                        }}
+                    >
+                        <Image style={{ width: 15, height: 15 }} source={require('../../../../../images/ic_commit.png')} />
+                        <Text style={{ marginLeft: 20, fontSize: 15, color: '#ffffff' }}>删除记录</Text>
+                    </TouchableOpacity>
+
                 </View>
                 : <View
                     style={[{
@@ -571,7 +572,7 @@ export default function CEMSMaintenanceItem(props) {
                         }}
                     >
                         <Image style={{ width: 15, height: 15 }} source={require('../../../../../images/ic_commit.png')} />
-                        <Text style={{ marginLeft: 20, fontSize: 15, color: '#ffffff' }}>提交保存</Text>
+                        <Text style={{ marginLeft: 20, fontSize: 15, color: '#ffffff' }}>保存</Text>
                     </TouchableOpacity>
                 </View>
             }

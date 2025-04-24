@@ -2,8 +2,8 @@
  * @Description: CMES维修记录表
  * @LastEditors: hxf
  * @Date: 2025-04-11 11:00:45
- * @LastEditTime: 2025-04-21 17:30:09
- * @FilePath: /SDLSourceOfPollutionS_dev/app/operationContainers/taskViews/taskExecution/formViews/zibo/CEMSMaintenanceRecordSheet.js
+ * @LastEditTime: 2025-04-23 19:27:12
+ * @FilePath: /sdlsourceofpollutions/app/operationContainers/taskViews/taskExecution/formViews/zibo/CEMSMaintenanceRecordSheet.js
  */
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, DeviceEventEmitter } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
@@ -576,17 +576,17 @@ export default function CEMSMaintenanceRecordSheet(props) {
                     <TouchableOpacity
                         style={[{ marginVertical: 6 }]}
                         onPress={() => {
-                            if (masterTableCheck({ checkList: false })) {
-                                dispatch(createAction('zbRepairRecordModel/updateState')({
-                                    repairRecordIndex: -1,
-                                    oneRepairRecord: {}
-                                }));
-                                dispatch(NavigationActions.navigate({
-                                    routeName: 'CEMSMaintenanceItem',
-                                    params: {
-                                    }
-                                }));
-                            }
+                            // if (masterTableCheck({ checkList: false })) {
+                            dispatch(createAction('zbRepairRecordModel/updateState')({
+                                repairRecordIndex: -1,
+                                oneRepairRecord: {}
+                            }));
+                            dispatch(NavigationActions.navigate({
+                                routeName: 'CEMSMaintenanceItem',
+                                params: {
+                                }
+                            }));
+                            // }
                         }}
                     >
                         <View style={{
@@ -861,25 +861,7 @@ export default function CEMSMaintenanceRecordSheet(props) {
                         , justifyContent: 'space-around', alignItems: 'center'
                     }]}
                 >
-                    <TouchableOpacity
-                        style={{
-                            width: (SCREEN_WIDTH - 100) / 2,
-                            marginVertical: 10,
-                            marginBottom: 15,
-                            height: 44,
-                            borderRadius: 22,
-                            backgroundColor: '#ee9944',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                        }}
-                        onPress={() => {
-                            _delDialogRef.current.show();
-                        }}
-                    >
-                        <Image style={{ width: 15, height: 15 }} source={require('../../../../../images/ic_commit.png')} />
-                        <Text style={{ marginLeft: 20, fontSize: 15, color: '#ffffff' }}>删除记录</Text>
-                    </TouchableOpacity>
+
                     <TouchableOpacity
                         style={{
                             width: (SCREEN_WIDTH - 100) / 2,
@@ -913,7 +895,26 @@ export default function CEMSMaintenanceRecordSheet(props) {
                         }}
                     >
                         <Image style={{ width: 15, height: 15 }} source={require('../../../../../images/ic_commit.png')} />
-                        <Text style={{ marginLeft: 20, fontSize: 15, color: '#ffffff' }}>提交保存</Text>
+                        <Text style={{ marginLeft: 20, fontSize: 15, color: '#ffffff' }}>确认提交</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={{
+                            width: (SCREEN_WIDTH - 100) / 2,
+                            marginVertical: 10,
+                            marginBottom: 15,
+                            height: 44,
+                            borderRadius: 22,
+                            backgroundColor: '#ee9944',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
+                        onPress={() => {
+                            _delDialogRef.current.show();
+                        }}
+                    >
+                        <Image style={{ width: 15, height: 15 }} source={require('../../../../../images/ic_commit.png')} />
+                        <Text style={{ marginLeft: 20, fontSize: 15, color: '#ffffff' }}>删除记录</Text>
                     </TouchableOpacity>
                 </View>}
             <AlertDialog options={options} ref={_delDialogRef} />
