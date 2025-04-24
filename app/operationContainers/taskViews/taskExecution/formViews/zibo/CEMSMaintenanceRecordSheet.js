@@ -2,8 +2,8 @@
  * @Description: CMES维修记录表
  * @LastEditors: hxf
  * @Date: 2025-04-11 11:00:45
- * @LastEditTime: 2025-04-23 19:27:12
- * @FilePath: /sdlsourceofpollutions/app/operationContainers/taskViews/taskExecution/formViews/zibo/CEMSMaintenanceRecordSheet.js
+ * @LastEditTime: 2025-04-24 14:26:15
+ * @FilePath: /SDLSourceOfPollutionS/app/operationContainers/taskViews/taskExecution/formViews/zibo/CEMSMaintenanceRecordSheet.js
  */
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, DeviceEventEmitter } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
@@ -842,6 +842,7 @@ export default function CEMSMaintenanceRecordSheet(props) {
                                 callback: (IsSuccess) => {
                                     if (IsSuccess) {
                                         ShowToast('保存成功');
+                                        dispatch(NavigationActions.back());
                                     } else {
                                         ShowToast('保存失败');
                                     }
@@ -851,7 +852,7 @@ export default function CEMSMaintenanceRecordSheet(props) {
                     }}
                 >
                     <Image style={{ width: 15, height: 15 }} source={require('../../../../../images/ic_commit.png')} />
-                    <Text style={{ marginLeft: 20, fontSize: 15, color: '#ffffff' }}>提交保存</Text>
+                    <Text style={{ marginLeft: 20, fontSize: 15, color: '#ffffff' }}>确认提交</Text>
                 </TouchableOpacity>
             </View>
                 : <View
@@ -886,6 +887,7 @@ export default function CEMSMaintenanceRecordSheet(props) {
                                     callback: (IsSuccess) => {
                                         if (IsSuccess) {
                                             ShowToast('保存成功');
+                                            dispatch(NavigationActions.back());
                                         } else {
                                             ShowToast('保存失败');
                                         }
